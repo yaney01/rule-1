@@ -13,6 +13,7 @@ DOMAIN,httpdns.n.netease.com,REJECT-NO-DROP
 DOMAIN,gdt.qq.com,REJECT-NO-DROP
 DOMAIN-SUFFIX,163jiasu.com,REJECT-NO-DROP
 
+
 [Map Local]
 ^https?:\/\/interface3?\.music\.163\.com\/eapi\/ad data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
 ^https?:\/\/interface3?\.music\.163\.com\/eapi\/(community\/friends\/fans-group\/artist\/group\/get|user\/sub\/artist|music\/songshare\/text\/recommend\/get|mine\/applet\/redpoint) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
