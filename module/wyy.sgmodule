@@ -2,6 +2,7 @@
 #!desc=version:8.9.20
 #Thank RuCu6, kokoryh, plao, laoliu
 [General]
+
 force-http-engine-hosts = %APPEND% 59.111.*:0
 
 [Rule]
