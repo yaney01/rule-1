@@ -4,7 +4,6 @@
 [General]
 force-http-engine-hosts = %APPEND% 59.111.*:0
 
-
 [Rule]
 DOMAIN,iadmusicmat.music.126.net,REJECT-NO-DROP
 DOMAIN,iadmat.nosdn.127.net,REJECT-NO-DROP
