@@ -9,7 +9,7 @@ const REQUEST_HEADERS = {
   let panel_result = {
     title: 'Network Connectivity Test',
     content: '',
-    icon: 'wifi.circle',
+    icon: 'timer',
     'icon-color': '#FF5A9AF9',
   }
 
