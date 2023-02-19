@@ -1,10 +1,10 @@
 // 加入了百度和bilibili测速,感谢@小白脸重写脚本原脚本,原作者@yibeizipeini来自于https://raw.githubusercontent.com/yibeizipeini/JavaScript/Surge/ConnectivityTest.js
 let $ = {
-baidu:'https://www.baidu.com',
 bilibili:'https://www.bilibili.com',
+baidu:'https://www.baidu.com',
+youtube:'https://www.youtube.com/',
 google:'https://www.google.com/generate_204',
-github:'https://www.github.com',
-youtube:'https://www.youtube.com/'
+github:'https://www.github.com'
 }
 !(async () => {
 await Promise.all([http($.baidu),http($.bilibili),http($. github),http($. google),http($.youtube)]).then((x)=>{
@@ -16,7 +16,6 @@ await Promise.all([http($.baidu),http($.bilibili),http($. github),http($. google
   })
 })
 })();
-
 function http(req) {
     return new Promise((r) => {
 			let time = Date.now();
