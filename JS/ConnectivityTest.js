@@ -90,7 +90,7 @@ async function test_youtube() {
         youtube_endTime = Date.now()
         resolve('1')
       })
-    }
+    })
   }
 
   youtube_test_result =  'YouTube' + '\xa0\xa0' + ': '
