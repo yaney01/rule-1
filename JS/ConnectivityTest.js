@@ -3,7 +3,7 @@ let $ = {
 baidu:'https://www.baidu.com',
 bilibili:'https://www.bilibili.com',
 google:'https://www.google.com/generate_204',
-github:'https://www.github.com'
+github:'https://www.github.com',
 youtube:'https://www.youtube.com/'
 }
 !(async () => {
