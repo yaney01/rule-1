@@ -89,10 +89,10 @@ async function test_youtube() {
         youtube_endTime = Date.now()
         resolve('1')
       })
-    })
+    }
   }
 
-  youtube_test_result =  'Youtube' + '\xa0\xa0' + ': '
+  youtube_test_result =  'YouTube' + '\xa0\xa0' + ': '
   await inner_check()
     .then((code) => {
       youtube_Delay = youtube_endTime-youtube_startTime + ""
