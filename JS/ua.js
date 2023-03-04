@@ -1,5 +1,5 @@
-#@kokoryh
-#http-request amdc\.m\.taobao\.com requires-body=0,script-path=https://raw.githubusercontent.com/kokoryh/Script/master/js/self_use.js
+//@kokoryh
+//http-request amdc\.m\.taobao\.com requires-body=0,script-path=https://raw.githubusercontent.com/kokoryh/Script/master/js/self_use.js
 let url = $request.url,
     body = null;
 if (url.includes("manga.bilibili.com")) {
