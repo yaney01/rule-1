@@ -18,8 +18,11 @@ DOMAIN-SUFFIX,163jiasu.com,REJECT-NO-DROP
 
 [Map Local]
 ^https?:\/\/interface3?\.music\.163\.com\/eapi\/ad data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
+
 ^https?:\/\/interface3?\.music\.163\.com\/eapi\/(community\/friends\/fans-group\/artist\/group\/get|user\/sub\/artist|music\/songshare\/text\/recommend\/get|mine\/applet\/redpoint|resniche\/position\/play\/new\/get) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
+
 ^https?:\/\/interface3?\.music\.163.com\/eapi\/(comment\/feed\/inserted|v\d\/content\/exposure\/comment\/banner|link\/(position\/show\/(strategy|resource)|scene\/show)|comment\/hotcomment\/collect|vipcenter\/tspopup\/get|mlivestream\/entrance\/playpage|vipauth\/app\/auth|music-vip-membership\/client\/vip\/info) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
+
 ^https?:\/\/interface3?\.music\.163.com\/w?e?api\/(search\/(chart|default|rcmd\/keyword|specialkeyword)|(resource-exposure\/|middle\/clientcfg\/config)|activity\/bonus\/playpage\/time\/query) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
 
 [MITM]
