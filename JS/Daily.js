@@ -6,7 +6,7 @@
 hostname = %APPEND% m.pvp.xoyo.com
 
 [Script]
-mm = type=http-response,pattern=^https\:\/\/m\.pvp\.xoyo\.com\/conf\/server-mapping,requires-body=1,max-size=0,script-path=https://github.com/Keywos/rule/raw/main/JS/tl.js
+mm = type=http-response,pattern=^https\:\/\/m\.pvp\.xoyo\.com\/conf\/server-mapping,requires-body=1,max-size=0,script-path=https://github.com/Keywos/rule/raw/main/JS/Daily.js
 */
 let obj = JSON.parse($response.body);
 obj.data.splashConfNew.forEach(item => {  
