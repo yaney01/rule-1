@@ -4,11 +4,11 @@
 * [我修改的主题，自定义代码style放到对应地方](https://github.com/Keywos/rule/raw/main/conf/key.css)
 * 按月流量统计，避免vps重启后过去的监控流量数据丢失
 ### 预览图
-![](tv/nzpc.png)
-![](tv/nzpc2.png)
+![](https://github.com/Keywos/rule/raw/main/tv/nzpc.png)
+![](https://github.com/Keywos/rule/raw/main/tv/nzpc2.png)
 
 ### iOS预览图
-![](tv/nz.jpg)
+![](https://github.com/Keywos/rule/raw/main/tv/nz.jpg)
 
 * 以下为解释：详细说明请看原作者文档
 ```
@@ -26,5 +26,5 @@
 ```
 [{"type":"transfer_all_cycle","max":1099511627776,"cycle_start":"2023-02-05T21:00:00+08:00","cycle_interval":1,"cycle_unit":"month","cover":1,"ignore":{"1":true}}]
 ```
-![](tv/nzjc.png)
-![](tv/nzjc2.png)
+![](https://github.com/Keywos/rule/raw/main/tv/nzjc.png)
+![](https://github.com/Keywos/rule/raw/main/tv/nzjc2.png)
