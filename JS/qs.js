@@ -1,5 +1,5 @@
 // 转自https://github.com/chengkongyiban/stash/raw/main/js/QX_Rewrite_Parser.js
-// 修改为 “仅支持将QX转Surge” 感谢 @小白脸 @xream @chengkongyiban
+// 修改为 “仅支持将Qx转Surge” 提高效率 感谢 @小白脸 @xream @chengkongyiban
 var name = "";
 var desc = "";
 var req
