@@ -1,8 +1,7 @@
 #!name=Qx to Surge
-#!desc=仅支持将Qx重写转Surge 
-# 使用方法在链接最后面加上qx 
+#!desc=仅支持将Qx重写转Surge 最直接可以最后面加上qx 使用
 # 改自 https://github.com/chengkongyiban/stash/blob/main/Rewrite_Parser_Wiki/README.md
-# 参数说明：
+# 或者加参数：
 # n= 修改名字+简介 ，名字和简介以"+"相连，可缺省名字或简介  ?n=名字+说明
 # y= 根据关键词保留相关重写(即去掉注释) 多关键词以"+"分隔
 # x= 根据关键词排除相关重写(即添加注释) 多关键词以"+"分隔
