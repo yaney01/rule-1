@@ -1,1 +1,136 @@
-#
+# 微信
+DOMAIN-KEYWORD,112.46.
+DOMAIN-KEYWORD,112.53.
+DOMAIN-KEYWORD,112.60.
+DOMAIN-KEYWORD,117.157.
+DOMAIN-KEYWORD,120.232.
+DOMAIN-KEYWORD,120.241.
+DOMAIN-KEYWORD,120.233.
+DOMAIN-KEYWORD,111.22.76
+DOMAIN-KEYWORD,111.9.246.
+DOMAIN-KEYWORD,36.156.
+# 网易
+DOMAIN-KEYWORD,59.111.
+DOMAIN-KEYWORD,112.13.
+DOMAIN-KEYWORD,223.252.196.41
+DOMAIN-KEYWORD,apple
+DOMAIN-KEYWORD,icloud
+DOMAIN-KEYWORD,baidu
+DOMAIN-KEYWORD,csdn
+DOMAIN-KEYWORD,douyin
+DOMAIN-KEYWORD,taobao
+DOMAIN-KEYWORD,tencent
+DOMAIN-KEYWORD,wechat
+DOMAIN-KEYWORD,weixin
+DOMAIN-KEYWORD,pinduoduo
+DOMAIN-KEYWORD,mojie
+DOMAIN-KEYWORD,xsus
+DOMAIN-KEYWORD,95516
+DOMAIN-KEYWORD,toutiao
+DOMAIN-SUFFIX,biliapi.com
+DOMAIN-SUFFIX,biliapi.net
+DOMAIN-SUFFIX,bilibili.com
+DOMAIN-SUFFIX,bilibili.tv
+DOMAIN-SUFFIX,bilivideo.com
+DOMAIN-SUFFIX,hdslb.com
+DOMAIN-SUFFIX,mzstatic.com
+DOMAIN-SUFFIX,amap.com
+DOMAIN-SUFFIX,autonavi.com
+DOMAIN-SUFFIX,qq.com
+DOMAIN-SUFFIX,qq.com.cn
+DOMAIN-SUFFIX,qlogo.cn
+DOMAIN-SUFFIX,gtimg.com
+DOMAIN-SUFFIX,akamaized.net
+DOMAIN-SUFFIX,bstarstatic.com
+# 简讯
+DOMAIN-SUFFIX,tipsoon.com
+DOMAIN-SUFFIX,gcloudsdk.com
+DOMAIN-SUFFIX,caiyunapp.com
+# 百度输入法
+DOMAIN-SUFFIX,baidu.com
+DOMAIN-SUFFIX,baidubcr.com
+DOMAIN-SUFFIX,bdstatic.com
+DOMAIN-SUFFIX,mmstat.com
+DOMAIN-SUFFIX,10086.cn
+DOMAIN-SUFFIX,sinaimg.cn
+DOMAIN-SUFFIX,gitclone.com
+DOMAIN-SUFFIX,skk.moe
+DOMAIN-SUFFIX,pusher.com
+DOMAIN-SUFFIX,inftab.com
+DOMAIN-SUFFIX,infinitynewtab.com
+DOMAIN-SUFFIX,nssurge.com
+DOMAIN-SUFFIX,cdn.jsdelivr.net
+DOMAIN-SUFFIX,chinamobile.com
+DOMAIN-SUFFIX,alookweb.com
+DOMAIN-SUFFIX,yangkeduo.com
+DOMAIN-SUFFIX,gcloudcs.com
+DOMAIN-SUFFIX,freenom.com
+DOMAIN-SUFFIX,revenuecat.com
+# 京东
+DOMAIN-SUFFIX,360buyimg.com
+DOMAIN-SUFFIX,jd.com
+DOMAIN-SUFFIX,jd.hk
+DOMAIN-SUFFIX,jdpay.com
+DOMAIN-SUFFIX,pddpic.com
+# 慢慢买
+DOMAIN-SUFFIX,meiqia.com
+DOMAIN-SUFFIX,manmanbuy.com
+DOMAIN-SUFFIX,cpatrk.net
+# 美团
+DOMAIN-SUFFIX,meituan.com
+DOMAIN-SUFFIX,meituan.net
+# 临时
+DOMAIN-SUFFIX,qxnav.com
+# ipa
+DOMAIN,pan.dumpapp.com
+# 知乎
+DOMAIN-SUFFIX,zhihu.com
+# 阿里影
+DOMAIN-SUFFIX,aipanxiaozhan.com
+# it
+DOMAIN-SUFFIX,ithome.com
+# 汽水
+DOMAIN-SUFFIX,qishui.com
+DOMAIN-SUFFIX,bytedance.net
+DOMAIN-SUFFIX,huoshanimg.com
+# 抖音
+DOMAIN-SUFFIX,bytescm.com
+DOMAIN-SUFFIX,bdurl.net
+DOMAIN-SUFFIX,snssdk.com
+DOMAIN-SUFFIX,kuiniuca.com
+DOMAIN-SUFFIX,zijieapi.com
+DOMAIN-SUFFIX,awemeughun.com
+DOMAIN-SUFFIX,amemv.com
+DOMAIN-SUFFIX,ecombdapi.com
+DOMAIN-SUFFIX,xycdn.com
+DOMAIN-SUFFIX,pstatp.com
+DOMAIN-SUFFIX,bytemaimg.com
+DOMAIN-SUFFIX,ibytedapm.com
+DOMAIN-SUFFIX,byteactivity.com
+DOMAIN-SUFFIX,bytedance.com
+DOMAIN-SUFFIX,byteeffecttos.com
+DOMAIN-SUFFIX,bytednsdoc.com
+DOMAIN-SUFFIX,baike.com
+DOMAIN-SUFFIX,ksyuncdn.com
+# aptv
+DOMAIN-SUFFIX,o.lencr.org
+DOMAIN-SUFFIX,epg.112114.xyz
+DOMAIN-SUFFIX,in.appcenter.ms
+# 酷我
+DOMAIN-SUFFIX,koowo.com
+DOMAIN-SUFFIX,kugou.com
+DOMAIN-SUFFIX,kuwo.cn
+# 小米
+DOMAIN-SUFFIX,mi.com
+DOMAIN-SUFFIX,wp.com
+DOMAIN-SUFFIX,yanetflix.com
+DOMAIN-SUFFIX,mi-img.com
+DOMAIN-SUFFIX,cdn2020.com
+# 网易
+DOMAIN-SUFFIX,netease.com
+DOMAIN-SUFFIX,netease.im
+DOMAIN-SUFFIX,126.net
+DOMAIN-SUFFIX,127.net
+DOMAIN-SUFFIX,163.com
+DOMAIN-SUFFIX,cn
+DOMAIN-KEYWORD,-cn
