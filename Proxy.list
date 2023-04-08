@@ -143,6 +143,17 @@ DOMAIN-SUFFIX,ip-api.com
 DOMAIN-SUFFIX,amazonaws.com
 DOMAIN-SUFFIX,cloudflare.com
 DOMAIN-SUFFIX,mapbox.com
+# rss
+DOMAIN-SUFFIX,feedx.net
+DOMAIN-SUFFIX,rssfeed.today
+DOMAIN-SUFFIX,nicegram.app
+DOMAIN-SUFFIX,mudvod.tv 
+DOMAIN-SUFFIX,my.freenom.com
+DOMAIN-SUFFIX,macbl.com
+DOMAIN-SUFFIX,misakaf.org
+DOMAIN-SUFFIX,poloemby.xyz
+DOMAIN-SUFFIX,emby.vip
+DOMAIN,xn--cnq51x.live
 # twitter 推特
 DOMAIN-SUFFIX,periscope.tv
 DOMAIN-SUFFIX,pscp.tv
@@ -155,11 +166,3 @@ DOMAIN-SUFFIX,twitter.com
 DOMAIN-SUFFIX,twitter.jp
 DOMAIN-SUFFIX,vine.co
 DOMAIN-KEYWORD,twitter
-# rss
-DOMAIN-SUFFIX,feedx.net // 
-DOMAIN-SUFFIX,rssfeed.today
-DOMAIN-SUFFIX,nicegram.app
-DOMAIN-SUFFIX,mudvod.tv 
-# 
-DOMAIN-SUFFIX,my.freenom.com
-DOMAIN-SUFFIX,macbl.com
