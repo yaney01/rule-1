@@ -86,6 +86,8 @@ DOMAIN-SUFFIX,meituan.com
 DOMAIN-SUFFIX,meituan.net
 # 临时
 DOMAIN-SUFFIX,qxnav.com
+DOMAIN-SUFFIX,umengcloud.com
+DOMAIN-SUFFIX,umeng.com
 # ipa
 DOMAIN,pan.dumpapp.com
 # 知乎
