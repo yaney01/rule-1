@@ -7,10 +7,13 @@ IP-CIDR,117.128.0.0/10,no-resolve
 IP-CIDR,218.200.0.0/14,no-resolve
 IP-CIDR,218.204.0.0/15,no-resolve
 IP-CIDR,218.206.0.0/15,no-resolve
-# Netease
+# Netease ali
 IP-CIDR,117.128.0.0/10,no-resolve
 IP-CIDR,59.111.128.0/17,no-resolve
 IP-CIDR,223.252.192.0/19,no-resolve
+IP-CIDR,110.76.0.0/19,no-resolve
+IP-CIDR,203.209.224.0/19,no-resolve
+# key
 DOMAIN-KEYWORD,apple
 DOMAIN-KEYWORD,icloud
 DOMAIN-KEYWORD,baidu
