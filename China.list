@@ -16,6 +16,10 @@ IP-CIDR,203.209.224.0/19,no-resolve
 IP-CIDR,223.64.0.0/11,no-resolve
 IP-CIDR,223.96.0.0/12,no-resolve
 IP-CIDR,223.112.0.0/13,no-resolve
+# biji
+IP-CIDR,122.9.0.0/16,no-resolve
+IP-CIDR,203.107.0.0/17,no-resolve
+IP-CIDR,116.63.0.0/16,no-resolve
 # key
 DOMAIN-KEYWORD,apple
 DOMAIN-KEYWORD,alipay
@@ -40,6 +44,7 @@ DOMAIN-SUFFIX,biliapi.net
 DOMAIN-SUFFIX,bilibili.com
 DOMAIN-SUFFIX,bilibili.tv
 DOMAIN-SUFFIX,bilivideo.com
+DOMAIN-SUFFIX,biligame.com
 DOMAIN-SUFFIX,hdslb.com
 DOMAIN-SUFFIX,mzstatic.com
 DOMAIN-SUFFIX,amap.com
