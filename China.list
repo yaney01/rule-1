@@ -13,6 +13,9 @@ IP-CIDR,59.111.128.0/17,no-resolve
 IP-CIDR,223.252.192.0/19,no-resolve
 IP-CIDR,110.76.0.0/19,no-resolve
 IP-CIDR,203.209.224.0/19,no-resolve
+IP-CIDR,223.64.0.0/11,no-resolve
+IP-CIDR,223.96.0.0/12,no-resolve
+IP-CIDR,223.112.0.0/13,no-resolve
 # key
 DOMAIN-KEYWORD,apple
 DOMAIN-KEYWORD,alipay
@@ -71,6 +74,7 @@ DOMAIN-SUFFIX,yangkeduo.com
 DOMAIN-SUFFIX,gcloudcs.com
 DOMAIN-SUFFIX,freenom.com
 DOMAIN-SUFFIX,revenuecat.com
+DOMAIN-SUFFIX,pki.goog
 # 京东
 DOMAIN-SUFFIX,360buyimg.com
 DOMAIN-SUFFIX,jd.com
