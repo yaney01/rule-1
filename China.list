@@ -1,4 +1,4 @@
-# Wechat chinamobile
+# Wechat chinamobile 注释20 line
 IP-CIDR,36.128.0.0/10,no-resolve
 IP-CIDR,120.192.0.0/10,no-resolve
 IP-CIDR,111.0.0.0/10,no-resolve
@@ -83,7 +83,6 @@ DOMAIN-SUFFIX,revenuecat.com
 DOMAIN-SUFFIX,pki.goog
 DOMAIN-SUFFIX,cmpassport.com
 DOMAIN-SUFFIX,ucweb.com
-
 # 京东
 DOMAIN-SUFFIX,360buyimg.com
 DOMAIN-SUFFIX,jd.com
