@@ -17,10 +17,12 @@ IP-CIDR,223.64.0.0/11,no-resolve
 IP-CIDR,223.96.0.0/12,no-resolve
 IP-CIDR,223.112.0.0/13,no-resolve
 IP-CIDR,59.82.0.0/16,no-resolve
-# biji
+# biji or ...
 IP-CIDR,122.9.0.0/16,no-resolve
 IP-CIDR,203.107.0.0/17,no-resolve
 IP-CIDR,116.63.0.0/16,no-resolve
+IP-CIDR,183.204.0.0/16,no-resolve
+IP-CIDR,183.192.0.0/10,no-resolve
 # key
 DOMAIN-KEYWORD,apple
 DOMAIN-KEYWORD,alipay
