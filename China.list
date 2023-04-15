@@ -61,6 +61,12 @@ DOMAIN-SUFFIX,bstarstatic.com
 DOMAIN-SUFFIX,tipsoon.com
 DOMAIN-SUFFIX,gcloudsdk.com
 DOMAIN-SUFFIX,caiyunapp.com
+# 网易
+DOMAIN-SUFFIX,netease.com
+DOMAIN-SUFFIX,netease.im
+DOMAIN-SUFFIX,126.net
+DOMAIN-SUFFIX,127.net
+DOMAIN-SUFFIX,163.com
 # 百度等
 DOMAIN-SUFFIX,baidu.com
 DOMAIN-SUFFIX,baidubcr.com
@@ -140,17 +146,12 @@ DOMAIN-SUFFIX,epg.112114.xyz
 DOMAIN-SUFFIX,koowo.com
 DOMAIN-SUFFIX,kugou.com
 DOMAIN-SUFFIX,kuwo.cn
-# 小米
+# 小米等
 DOMAIN-SUFFIX,mi.com
 DOMAIN-SUFFIX,wp.com
 DOMAIN-SUFFIX,yanetflix.com
 DOMAIN-SUFFIX,mi-img.com
 DOMAIN-SUFFIX,cdn2020.com
-# 网易
-DOMAIN-SUFFIX,netease.com
-DOMAIN-SUFFIX,netease.im
-DOMAIN-SUFFIX,126.net
-DOMAIN-SUFFIX,127.net
-DOMAIN-SUFFIX,163.com
+DOMAIN-SUFFIX,tcdnos.com
 DOMAIN-SUFFIX,cn
 DOMAIN-KEYWORD,-cn
