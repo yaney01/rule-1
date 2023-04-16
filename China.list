@@ -1,4 +1,4 @@
-# Wechat chinamobile 注释20 line
+# Wechat cmcc 注释20 2023.4.17 02
 IP-CIDR,36.128.0.0/10,no-resolve
 IP-CIDR,120.192.0.0/10,no-resolve
 IP-CIDR,111.0.0.0/10,no-resolve
@@ -31,6 +31,7 @@ DOMAIN-KEYWORD,apple
 DOMAIN-KEYWORD,alipay
 DOMAIN-KEYWORD,aliyun
 DOMAIN-KEYWORD,aliapp
+DOMAIN-KEYWORD,alicdn
 DOMAIN-KEYWORD,alibaba
 DOMAIN-KEYWORD,icloud
 DOMAIN-KEYWORD,baidu
