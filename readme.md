@@ -4,17 +4,16 @@
 
 * China分流ip规则只针我遇到的陕移对应软件
 
-* 测试 
-
-##
+## 测试
 
 | Rule | ikey | github |
 | :-----| :-----| :-----|
-| DIRECT | https://ikey.eu.org/China.list | https://keywos.github.io/rule/China.list |
-| Proxy | https://ikey.eu.org/Proxy.list | https://keywos.github.io/rule/Proxy.list |
-| Team | https://ikey.eu.org/Team.list | https://keywos.github.io/rule/Team.list |
-| AD | https://ikey.eu.org/AD.list | https://keywos.github.io/rule/AD.list |
+| DIRECT | [China](https://ikey.eu.org/China.list) | [China](https://keywos.github.io/rule/China.list) |
+| Proxy | [Proxy](https://ikey.eu.org/Proxy.list) | [Proxy](https://keywos.github.io/rule/Proxy.list) |
+| Team | [Team](https://ikey.eu.org/Team.list) | [Team](https://keywos.github.io/rule/Team.list) |
+| AD | [AD](https://ikey.eu.org/AD.list) | [AD](https://keywos.github.io/rule/AD.list) |
 
-##
+## Github
 
-- [域名](https://ikey.eu.org)
+- [Eu.org](https://ikey.eu.org)
+- [Keywos](https://github.com/Keywos)
