@@ -23,6 +23,7 @@ IP-CIDR,203.107.0.0/17,no-resolve
 IP-CIDR,116.63.0.0/16,no-resolve
 IP-CIDR,183.204.0.0/16,no-resolve
 IP-CIDR,183.192.0.0/10,no-resolve
+IP-CIDR,211.142.0.0/18,no-resolve
 # key
 DOMAIN-KEYWORD,apple
 DOMAIN-KEYWORD,alipay
