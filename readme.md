@@ -9,7 +9,7 @@
 ##
 
 | Rule | ikey | github |
-| :-----| :------ | :------ |
+| :-----| :-----| :-----|
 | DIRECT | https://ikey.eu.org/China.list | https://keywos.github.io/rule/China.list |
 | Proxy | https://ikey.eu.org/Proxy.list | https://keywos.github.io/rule/Proxy.list |
 | Team | https://ikey.eu.org/Team.list | https://keywos.github.io/rule/Team.list |
