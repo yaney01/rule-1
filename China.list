@@ -67,10 +67,12 @@ DOMAIN-SUFFIX,qlogo.cn
 DOMAIN-SUFFIX,gtimg.com
 DOMAIN-SUFFIX,akamaized.net
 DOMAIN-SUFFIX,bstarstatic.com
-# 简讯
+# 简讯 彩云
 DOMAIN-SUFFIX,tipsoon.com
 DOMAIN-SUFFIX,gcloudsdk.com
 DOMAIN-SUFFIX,caiyunapp.com
+DOMAIN-SUFFIX,caiyuncdn.com
+DOMAIN-SUFFIX,colorfulclouds.net
 # 网易
 DOMAIN-SUFFIX,netease.com
 DOMAIN-SUFFIX,netease.im
