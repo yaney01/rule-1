@@ -1,5 +1,5 @@
 #!name=Qx Loon to Surge
-#!desc=将Qx Loon重写转Surge; qx规则最直接链接最后面加上qx 例如 http...confqx; loon规则最直接链接最后面加上loon使用 例如 http...pluginloon
+#!desc=将Qx 或 Loon重写转Surge ++++ qx规则直接链接最后面加上qx 例如 http...confqx ++++ loon规则直接链接最后面加上loon 例如 http...pluginloon
 # 改自 https://github.com/chengkongyiban/stash/blob/main/Rewrite_Parser_Wiki/README.md
 # 或者加参数：
 # n= 修改名字+简介 ，名字和简介以"+"相连，可缺省名字或简介  ?n=名字+说明(名字与说明Surge不能用中文从url传入)
