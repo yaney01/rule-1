@@ -68,19 +68,19 @@ DOMAIN-SUFFIX,qlogo.cn
 DOMAIN-SUFFIX,gtimg.com
 DOMAIN-SUFFIX,akamaized.net
 DOMAIN-SUFFIX,bstarstatic.com
-# 简讯 彩云
+# jian xun  caiyun
 DOMAIN-SUFFIX,tipsoon.com
 DOMAIN-SUFFIX,gcloudsdk.com
 DOMAIN-SUFFIX,caiyunapp.com
 DOMAIN-SUFFIX,caiyuncdn.com
 DOMAIN-SUFFIX,colorfulclouds.net
-# 网易
+# netease
 DOMAIN-SUFFIX,netease.com
 DOMAIN-SUFFIX,netease.im
 DOMAIN-SUFFIX,126.net
 DOMAIN-SUFFIX,127.net
 DOMAIN-SUFFIX,163.com
-# 百度等
+# baidu ...
 DOMAIN-SUFFIX,baidu.com
 DOMAIN-SUFFIX,baidubcr.com
 DOMAIN-SUFFIX,bdstatic.com
@@ -104,36 +104,36 @@ DOMAIN-SUFFIX,pki.goog
 DOMAIN-SUFFIX,globalsign.com
 DOMAIN-SUFFIX,cmpassport.com
 DOMAIN-SUFFIX,ucweb.com
-# 京东
+# jd
 DOMAIN-SUFFIX,360buyimg.com
 DOMAIN-SUFFIX,jd.com
 DOMAIN-SUFFIX,jd.hk
 DOMAIN-SUFFIX,jdpay.com
 DOMAIN-SUFFIX,pddpic.com
-# 慢慢买
+# manmanmai
 DOMAIN-SUFFIX,meiqia.com
 DOMAIN-SUFFIX,manmanbuy.com
 DOMAIN-SUFFIX,cpatrk.net
-# 美团
+# meituan
 DOMAIN-SUFFIX,meituan.com
 DOMAIN-SUFFIX,meituan.net
-# 临时
+# ...
 DOMAIN-SUFFIX,qxnav.com
 DOMAIN-SUFFIX,umengcloud.com
 DOMAIN-SUFFIX,umeng.com
 # ipa
 DOMAIN,pan.dumpapp.com
-# 知乎
+# zhihu
 DOMAIN-SUFFIX,zhihu.com
-# 阿里影
+# ali
 DOMAIN-SUFFIX,aipanxiaozhan.com
 # it
 DOMAIN-SUFFIX,ithome.com
-# 汽水
+# qishui
 DOMAIN-SUFFIX,qishui.com
 DOMAIN-SUFFIX,bytedance.net
 DOMAIN-SUFFIX,huoshanimg.com
-# 抖音
+# dy
 DOMAIN-SUFFIX,bytescm.com
 DOMAIN-SUFFIX,bdurl.net
 DOMAIN-SUFFIX,snssdk.com
@@ -155,11 +155,11 @@ DOMAIN-SUFFIX,ksyuncdn.com
 # aptv
 DOMAIN-SUFFIX,o.lencr.org
 DOMAIN-SUFFIX,epg.112114.xyz
-# 酷我
+# kuwo
 DOMAIN-SUFFIX,koowo.com
 DOMAIN-SUFFIX,kugou.com
 DOMAIN-SUFFIX,kuwo.cn
-# 小米等
+# mi ...
 DOMAIN-SUFFIX,mi.com
 DOMAIN-SUFFIX,wp.com
 DOMAIN-SUFFIX,yanetflix.com
