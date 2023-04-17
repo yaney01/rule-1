@@ -1,5 +1,5 @@
-#!name=Qx to Surge
-#!desc=仅支持将Qx重写转Surge 最直接可以最后面加上qx 使用
+#!name=Qx Loon to Surge
+#!desc=将Qx Loon重写转Surge; qx规则最直接链接最后面加上qx http...confqx; loon规则最直接链接最后面加上loon使用 http...pluginloon
 # 改自 https://github.com/chengkongyiban/stash/blob/main/Rewrite_Parser_Wiki/README.md
 # 或者加参数：
 # n= 修改名字+简介 ，名字和简介以"+"相连，可缺省名字或简介  ?n=名字+说明(名字与说明Surge不能用中文从url传入)
@@ -15,5 +15,7 @@
 [Script]
 QxtoSurge = type=http-request,pattern=^https?:\/\/(github|raw\.githubusercontent)\.com\/.+(qx$|qx\?(jsc|hnadd|hndel|n|y|x|del|i)=),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/qs.js
 
+LoontoSurge = type=http-request,pattern=^https?:\/\/(github|gitlab|raw\.githubusercontent)\.com\/.+pluginloon$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/Loon_to_Surge.js, timeout=120
+
 [MITM]
-hostname = %APPEND% github.com:443, raw.githubusercontent.com:443
+hostname = %APPEND% github.com:443, raw.githubusercontent.com:443, gitlab.com
