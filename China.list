@@ -1,4 +1,4 @@
-# Wechat cmcc 20line 2023.4.17 04
+# Wechat cmcc 20line 2023.4.17 06
 IP-CIDR,36.128.0.0/10,no-resolve
 IP-CIDR,42.187.128.0/17,no-resolve
 IP-CIDR,120.192.0.0/10,no-resolve
@@ -11,6 +11,7 @@ IP-CIDR,218.206.0.0/15,no-resolve
 IP-CIDR,182.254.0.0/17,no-resolve
 IP-CIDR,211.142.0.0/18,no-resolve
 IP-CIDR,211.142.64.0/19,no-resolve
+IP-CIDR,183.0.0.0/10,no-resolve
 # Netease ali
 IP-CIDR,117.128.0.0/10,no-resolve
 IP-CIDR,59.111.128.0/17,no-resolve
