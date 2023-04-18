@@ -142,9 +142,10 @@ DOMAIN,testflight.apple.com
 DOMAIN-KEYWORD,testflight
 DOMAIN-SUFFIX,eu.org
 DOMAIN-SUFFIX,ip-api.com
-# ...
+# ... 
 DOMAIN-SUFFIX,amazonaws.com
 DOMAIN-SUFFIX,mapbox.com
+DOMAIN-SUFFIX,jsdelivr.net
 # rss
 DOMAIN-SUFFIX,feedx.net
 DOMAIN-SUFFIX,rssfeed.today
