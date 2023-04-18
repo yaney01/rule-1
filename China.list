@@ -93,8 +93,8 @@ DOMAIN-SUFFIX,skk.moe
 DOMAIN-SUFFIX,pusher.com
 DOMAIN-SUFFIX,inftab.com
 DOMAIN-SUFFIX,infinitynewtab.com
-DOMAIN-SUFFIX,nssurge.com
-#DOMAIN-SUFFIX,cdn.jsdelivr.net
+# DOMAIN-SUFFIX,nssurge.com
+# DOMAIN-SUFFIX,cdn.jsdelivr.net
 DOMAIN-SUFFIX,chinamobile.com
 DOMAIN-SUFFIX,alookweb.com
 DOMAIN-SUFFIX,yangkeduo.com

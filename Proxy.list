@@ -146,6 +146,7 @@ DOMAIN-SUFFIX,ip-api.com
 DOMAIN-SUFFIX,amazonaws.com
 DOMAIN-SUFFIX,mapbox.com
 DOMAIN-SUFFIX,jsdelivr.net
+DOMAIN-SUFFIX,nssurge.com
 # rss
 DOMAIN-SUFFIX,feedx.net
 DOMAIN-SUFFIX,rssfeed.today
