@@ -18,7 +18,7 @@ DOMAIN-SUFFIX,gstatic.com
 DOMAIN-SUFFIX,adobelogin.com
 DOMAIN-SUFFIX,adobe.io
 DOMAIN-SUFFIX,dlercloud.com
-# TG
+# TG or ...
 DOMAIN-SUFFIX,t.me
 DOMAIN-SUFFIX,tdesktop.com
 DOMAIN-SUFFIX,telegra.ph
@@ -115,7 +115,7 @@ DOMAIN-SUFFIX,yammer.com
 DOMAIN-SUFFIX,yammerusercontent.com
 DOMAIN-KEYWORD,1drv
 DOMAIN-KEYWORD,microsoft
-# youtube 油管
+# youtube
 DOMAIN,yt3.ggpht.com
 DOMAIN-SUFFIX,gvt2.com
 DOMAIN-SUFFIX,withyoutube.com
@@ -142,7 +142,7 @@ DOMAIN,testflight.apple.com
 DOMAIN-KEYWORD,testflight
 DOMAIN-SUFFIX,eu.org
 DOMAIN-SUFFIX,ip-api.com
-# 常用
+# ...
 DOMAIN-SUFFIX,amazonaws.com
 DOMAIN-SUFFIX,mapbox.com
 # rss
@@ -156,7 +156,7 @@ DOMAIN-SUFFIX,misakaf.org
 DOMAIN-SUFFIX,poloemby.xyz
 DOMAIN-SUFFIX,emby.vip
 DOMAIN,xn--cnq51x.live
-# twitter 推特
+# twitter
 DOMAIN-SUFFIX,periscope.tv
 DOMAIN-SUFFIX,pscp.tv
 DOMAIN-SUFFIX,t.co
