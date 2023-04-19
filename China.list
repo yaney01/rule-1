@@ -152,6 +152,11 @@ DOMAIN-SUFFIX,cdn2020.com
 DOMAIN-SUFFIX,tcdnos.com
 DOMAIN-SUFFIX,cn
 DOMAIN-KEYWORD,-cn
+# IP-ASN,56047,DIRECT,no-resolve
+# IP-ASN,45090,DIRECT,no-resolve
+# IP-ASN,56040,DIRECT,no-resolve
+# IP-ASN,56042,DIRECT,no-resolve
+# IP-ASN,9808,DIRECT,no-resolve
 # Wechat cmcc 
 IP-CIDR,36.128.0.0/10,no-resolve
 IP-CIDR,42.187.128.0/17,no-resolve
