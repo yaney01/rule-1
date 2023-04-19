@@ -115,13 +115,15 @@ DOMAIN-SUFFIX,cpatrk.net
 # meituan
 DOMAIN-SUFFIX,meituan.com
 DOMAIN-SUFFIX,meituan.net
-# ... zhaoshang
+# ... zhaoshang pay
 DOMAIN-SUFFIX,qxnav.com
 DOMAIN-SUFFIX,umengcloud.com
 DOMAIN-SUFFIX,umeng.com
 DOMAIN-SUFFIX,cmbimg.com
 DOMAIN-SUFFIX,joying.com
 DOMAIN-SUFFIX,cmbchina.com
+DOMAIN-SUFFIX,ai-rtc.com
+DOMAIN-SUFFIX,snowballtech.com
 # ipa
 DOMAIN,pan.dumpapp.com
 # zhihu
