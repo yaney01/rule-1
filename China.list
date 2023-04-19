@@ -202,11 +202,11 @@ IP-CIDR,183.0.0.0/10,no-resolve
 # IP-CIDR,221.131.64.0/18,no-resolve
 # IP-CIDR,221.131.128.0/19,no-resolve
 
-IP-ASN,9808,no-resolve
-IP-ASN,37963,no-resolve
-IP-ASN,45090,no-resolve
-IP-ASN,56040,no-resolve
-IP-ASN,56041,no-resolve
-IP-ASN,56042,no-resolve
-IP-ASN,56047,no-resolve
-IP-ASN,132203,no-resolve
+#IP-ASN,9808,no-resolve
+#IP-ASN,37963,no-resolve
+#IP-ASN,45090,no-resolve
+#IP-ASN,56040,no-resolve
+#IP-ASN,56041,no-resolve
+#IP-ASN,56042,no-resolve
+#IP-ASN,56047,no-resolve
+#IP-ASN,132203,no-resolve
