@@ -26,6 +26,7 @@ DOMAIN-KEYWORD,39.2
 DOMAIN-KEYWORD,59.1
 DOMAIN-KEYWORD,59.82.
 DOMAIN-KEYWORD,110.76.
+DOMAIN-KEYWORD,111.
 DOMAIN-KEYWORD,112.46.
 DOMAIN-KEYWORD,112.53.
 DOMAIN-KEYWORD,112.60.
@@ -173,7 +174,7 @@ DOMAIN-KEYWORD,-cn
 # IP-CIDR,42.187.128.0/17,no-resolve
 # IP-CIDR,39.128.0.0/10,no-resolve
 # IP-CIDR,120.192.0.0/10,no-resolve
-IP-CIDR,111.0.0.0/10,no-resolve
+# IP-CIDR,111.0.0.0/10,no-resolve
 # IP-CIDR,112.0.0.0/10,no-resolve
 # IP-CIDR,117.128.0.0/10,no-resolve
 # IP-CIDR,218.200.0.0/14,no-resolve
@@ -204,11 +205,11 @@ IP-CIDR,111.0.0.0/10,no-resolve
 # IP-CIDR,221.131.64.0/18,no-resolve
 # IP-CIDR,221.131.128.0/19,no-resolve
 
-#IP-ASN,9808,no-resolve
-#IP-ASN,37963,no-resolve
-#IP-ASN,45090,no-resolve
-#IP-ASN,56040,no-resolve
-#IP-ASN,56041,no-resolve
-#IP-ASN,56042,no-resolve
-#IP-ASN,56047,no-resolve
-#IP-ASN,132203,no-resolve
+# IP-ASN,9808,no-resolve
+# IP-ASN,37963,no-resolve
+# IP-ASN,45090,no-resolve
+# IP-ASN,56040,no-resolve
+# IP-ASN,56041,no-resolve
+# IP-ASN,56042,no-resolve
+# IP-ASN,56047,no-resolve
+# IP-ASN,132203,no-resolve
