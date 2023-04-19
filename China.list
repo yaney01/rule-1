@@ -1,4 +1,4 @@
-# key
+# key 2023.4.19
 DOMAIN-KEYWORD,apple
 DOMAIN-KEYWORD,alipay
 DOMAIN-KEYWORD,aliyun
@@ -30,7 +30,7 @@ DOMAIN-KEYWORD,203.
 DOMAIN-KEYWORD,211.
 DOMAIN-KEYWORD,218.
 DOMAIN-KEYWORD,223.
-
+# bili
 DOMAIN-SUFFIX,biliapi.com
 DOMAIN-SUFFIX,biliapi.net
 DOMAIN-SUFFIX,bilibili.com
@@ -152,7 +152,7 @@ DOMAIN-SUFFIX,cdn2020.com
 DOMAIN-SUFFIX,tcdnos.com
 DOMAIN-SUFFIX,cn
 DOMAIN-KEYWORD,-cn
-# Wechat cmcc 20line 2023.4.17 06
+# Wechat cmcc 
 IP-CIDR,36.128.0.0/10,no-resolve
 IP-CIDR,42.187.128.0/17,no-resolve
 IP-CIDR,39.128.0.0/10,no-resolve
