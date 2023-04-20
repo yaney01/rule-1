@@ -117,7 +117,12 @@ function simplify(cc) {
 // 主函数
 function operator(proxies) {
   proxies.map((res) => {
-
+  if ($arguments.nx) {
+    proxies = proxies.filter(item => nx.test(item.name));
+  };
+  if ($arguments.delnx) {
+    proxies = proxies.filter(item => !nx.test(item.name));
+  };
     const resultArray = [airport];
     var matched = false
     for (const elem of Object.keys(countries)) {
@@ -147,12 +152,5 @@ function operator(proxies) {
     proxies = stripOnes(proxies);
     proxies = proxies.filter(item => !nameclear.test(item.name));
   };
-  if ($arguments.nx) {
-    proxies = proxies.filter(item => nx.test(item.name));
-  };
-  if ($arguments.delnx) {
-    proxies = proxies.filter(item => !nx.test(item.name));
-  };
-  
   return proxies;
 }
