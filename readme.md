@@ -6,7 +6,7 @@
 
 ## 测试
 
-| Rule | ikey | github |
+| Rule | raw | io |
 | :-----| :-----| :-----|
 | DIRECT | [China](https://raw.githubusercontent.com/Keywos/rule/main/China.list) | [China](https://keywos.github.io/rule/China.list) |
 | Proxy | [Proxy](https://raw.githubusercontent.com/Keywos/rule/main/Proxy.list) | [Proxy](https://keywos.github.io/rule/Proxy.list) |
