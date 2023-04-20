@@ -6,10 +6,15 @@
 * 使用方法：
 * SubStore内选择"脚本操作"，然后填写上面的脚本地址
 * 可配合argument一同使用。现支持参数：
-* in：机场原节点名, 配置关键词列表 默认cn 香港 01 香港 02 ...（可选us，cn, quan)
-* out：脚本修改后节点名, 配置输出国家列表默认us 缩写 HK 01 HK 02 ...（可选us，cn, quan)
+* cn 中文地区名称 例如 香港
+* us 英文地区名称 例如 HK
+* quan 英文全地名 例如 Hong Kong
+*
+* in：机场原节点名, 默认cn 香港 01 香港 02 ...（可选us，cn, quan)
+* out：脚本修改后节点名, 默认us 缩写 HK 01 HK 02 ...（可选us，cn, quan)
 * name：每个节点前面添加自义定机场名
 * clear: 过滤掉关键词里正则匹配的对应节点, 如果一个地区只有一个节点，则去除它的"1"
+*
 * 示例：https://github.com/Keywos/rule/raw/main/JS/rename.js#in=cn&out=us&name=Key&clear
 */
 const nameclear = /(套餐|到期|有效|剩余|版本|已用|过期|失联|测试|官方|网址|备用|群|TEST)/i; 
