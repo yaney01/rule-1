@@ -6,7 +6,7 @@
 // out：配置输出国家列表默认us 缩写 HK 01 HK 02 ...（可选us，cn, qua)
 // name：机场名
 // del1: 如果一个地区只有一个节点，则去除它的“1”
-// 示例：https://github.com/Keywos/rule/raw/main/JS/rename.js#in=cn&out=us&name=test&del1
+// 示例：https://github.com/Keywos/rule/raw/main/JS/rename.js#in=cn&out=us&name=Key&clear
 
 
 const us = ['HK', 'MO', 'TW', 'JP', 'KR', 'SG', 'SG', 'US', 'UK', 'FR', 'DE', 'AU', 'AU', 'AF', 'AL', 'DZ', 'AO', 'AR', 'AM', 'AT', 'AZ', 'BH', 'BD', 'BY', 'BE', 'BZ', 'BJ', 'BT', 'BO', 'BA', 'BA', 'BW', 'BR', 'VG', 'BN', 'BG', 'BF', 'BI', 'KH', 'CM', 'CA', 'CV', 'KY', 'CF', 'TD', 'CL', 'CN', 'CO', 'KM', 'CG', 'CD', 'CR', 'HR', 'CY', 'CZ', 'DK', 'DJ', 'DO', 'EC', 'EG', 'SV', 'GQ', 'ER', 'EE', 'ET', 'FJ', 'FI', 'GA', 'GM', 'GE', 'GH', 'GR', 'GL', 'GT', 'GN', 'GY', 'HT', 'HN', 'HU', 'IS', 'IN', 'ID', 'ID', 'IR', 'IQ', 'IE', 'IM', 'IL', 'IT', 'CI', 'JM', 'JO', 'KZ', 'KE', 'KW', 'KG', 'LA', 'LV', 'LB', 'LS', 'LR', 'LY', 'LT', 'LU', 'MK', 'MG', 'MW', 'MY', 'MV', 'ML', 'MT', 'MR', 'MU', 'MX', 'MD', 'MC', 'MN', 'ME', 'MA', 'MZ', 'MM', 'NA', 'NP', 'NL', 'NZ', 'NI', 'NE', 'NG', 'KP', 'NO', 'OM', 'PK', 'PA', 'PY', 'PE', 'PH', 'PT', 'PR', 'QA', 'RE', 'RO', 'RU', 'RW', 'SM', 'SA', 'SN', 'RS', 'SL', 'SK', 'SI', 'SO', 'ZA', 'ES', 'LK', 'SD', 'SR', 'SZ', 'SE', 'CH', 'SY', 'TJ', 'TZ', 'TH', 'TG', 'TO', 'TT', 'TN', 'TR', 'TM', 'VI', 'UG', 'UA', 'AE', 'AE', 'UY', 'UZ', 'VA', 'VE', 'VN', 'YE', 'YU', 'ZR', 'ZM', 'ZW', 'BD', 'CZ', 'AD','Chuncheon','Seoul','Osaka','Tokyo','London','Taipei','Taipei','Los Angeles','San Jose','Silicon Valley','Michigan','Mumbai','Frankfurt','Zurich','Moscow','Reunion','PL'];
@@ -83,11 +83,6 @@ function stripOnes(proxies) {
       });
     };
   });
-  const nameToDelete = /(测试|官方|网址|备用|群|TEST)/i; 
-// 使用正则表达式进行模式匹配，忽略大小写 删除特定 节点
-
-  proxies = proxies.filter(item => !nameToDelete.test(item.name));
-  console.log(proxies)
   return proxies
 };
 // 简繁转换
@@ -139,8 +134,11 @@ function operator(proxies) {
     });
     res.name = resultArray.join(' ');
   });
-  if ($arguments.del1) {
+  if ($arguments.clear) {
     proxies = stripOnes(proxies);
+    const nameToDelete = /(测试|官方|网址|备用|群|TEST)/i; 
+    // 正则匹配，忽略大小写 删除特定 节点
+    proxies = proxies.filter(item => !nameToDelete.test(item.name));
   };
   return proxies;
 }
