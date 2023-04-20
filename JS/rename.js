@@ -83,6 +83,11 @@ function stripOnes(proxies) {
       });
     };
   });
+  const nameToDelete = /(测试|官方|网址|备用|群|TEST)/i; 
+// 使用正则表达式进行模式匹配，忽略大小写 删除特定 节点
+
+  proxies = proxies.filter(item => !nameToDelete.test(item.name));
+
   return proxies
 };
 // 简繁转换
