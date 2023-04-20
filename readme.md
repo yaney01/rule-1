@@ -8,12 +8,11 @@
 
 | Rule | ikey | github |
 | :-----| :-----| :-----|
-| DIRECT | [China](https://ikey.eu.org/China.list) | [China](https://keywos.github.io/rule/China.list) |
-| Proxy | [Proxy](https://ikey.eu.org/Proxy.list) | [Proxy](https://keywos.github.io/rule/Proxy.list) |
-| Team | [Team](https://ikey.eu.org/Team.list) | [Team](https://keywos.github.io/rule/Team.list) |
-| AD | [AD](https://ikey.eu.org/AD.list) | [AD](https://keywos.github.io/rule/AD.list) |
+| DIRECT | [China](https://raw.githubusercontent.com/Keywos/rule/main/China.list) | [China](https://keywos.github.io/rule/China.list) |
+| Proxy | [Proxy](https://raw.githubusercontent.com/Keywos/rule/main/Proxy.list) | [Proxy](https://keywos.github.io/rule/Proxy.list) |
+| Team | [Team](https://raw.githubusercontent.com/Keywos/rule/main/Team.list) | [Team](https://keywos.github.io/rule/Team.list) |
+| AD | [AD](https://raw.githubusercontent.com/Keywos/rule/main/AD.list) | [AD](https://keywos.github.io/rule/AD.list) |
 
 ## Github
 
-- [Eu.org](https://ikey.eu.org)
 - [Keywos](https://github.com/Keywos)
