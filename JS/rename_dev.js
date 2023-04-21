@@ -120,10 +120,10 @@ function simplify(cc) {
 
 // 主函数
 function operator(proxies) {
-  if ($arguments.nx) {
+  if ($arguments.nxx) {
   proxies = proxies.filter((res) => {
-console.log(regexString)
-    if (res.name.match(regexString)) {
+  console.log("正则")
+    if (res.name.match(/(韩国|((?!.*(1|0\.\d))\d+x|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰ˣ))/)) {
       return false; // regex del
     }
     return true;
