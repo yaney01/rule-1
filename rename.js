@@ -25,6 +25,7 @@
  * ----------------------------
  * 示例: https://github.com/Keywos/rule/raw/main/rename.js#in=cn&out=us&clear&nx
  * https://keywos.cf/rename.js#in=cn&out=us&clear
+ * https://keywos.cf/rename.js#&clear
  */
 
 
