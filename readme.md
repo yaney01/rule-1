@@ -15,35 +15,53 @@
 
 ## Rename
 
-- [Keywos](https://github.com/Keywos)
+- [修改自](https://github.com/qwerzl/rename.js) https://github.com/qwerzl/rename.js
+* 在SubStore内对节点重命名为：地区 01 ...
+* 过滤掉不规范命名的节点 例如 剩余,过期...
+* SubStore内选择"脚本操作"，填写脚本地址
+### argument
+* 可配合argument一同使用。现支持参数：
+* ### in：
+* 机场原节点名, 默认cn 
+* 
+```
+ (可选 us, cn, quan)
+cn 中文地区名称 例如 香港
+us 英文地区名称 例如 HK
+quan 英文全地名 例如 Hong Kong
+```
+* 
+```
+ 例如 香港 01 香港 02 ...
+```
+* ### out：
+* 修改后节点名, 默认us（可选us,cn,quan)
+* 
+```
+ 例如 HK 01 HK 02 ...
+```
+* ### name：
+* 每个节点前面添加自义定机场名
+  
+* ### clear: 
+ 
+* 过滤掉关键词里正则匹配的「无用」节点
+* 
+```
+(高倍|((?!.*(1|0\.\d))\d+倍|x|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰)) 
+```
+* 如果一个地区只有一个节点，则去除它的"01"
+ 
+* ### nx:
+* 过滤掉高倍率 或者0.n倍 
+* 可选: 加nx为过滤 不加为不过滤
+ 
+### 示例: 
 
- * 修改自 https://github.com/qwerzl/rename.js
- * 在SubStore内对节点重命名为：地区 01 ...
- * 过滤掉不规范命名的节点 例如 剩余,过期...
- * SubStore内选择"脚本操作"，填写脚本地址
- * 可配合argument一同使用。现支持参数：
- * cn 中文地区名称 例如 香港
- * us 英文地区名称 例如 HK
- * quan 英文全地名 例如 Hong Kong
- * ----------------------------
- * in：
- * 机场原节点名, 默认cn (可选us,cn,quan)
- * 例如 香港 01 香港 02 ...
- * out：
- * 修改后节点名, 默认us（可选us,cn,quan)
- * 例如 HK 01 HK 02 ...
- * name：
- * 每个节点前面添加自义定机场名
- * clear: 
- * 过滤掉关键词里正则匹配的「无用」节点
- * 如果一个地区只有一个节点，则去除它的"01"
- * nx:
- * 过滤掉高倍率 或者0.n倍 
- * 可选: 加nx为过滤 不加为不过滤
- * ----------------------------
- * 示例: 
- * https://github.com/Keywos/rule/raw/main/rename.js#in=cn&out=us&clear&nx
- *
- * https://keywos.cf/rename.js#in=cn&out=us&clear
- *
- * https://keywos.cf/rename.js#&clear
+```
+https://keywos.cf/rename.js#&clear
+
+https://keywos.cf/rename.js#in=cn&out=us&clear
+
+https://github.com/Keywos/rule/raw/main/rename.js#in=cn&out=us&clear&nx
+ ```
