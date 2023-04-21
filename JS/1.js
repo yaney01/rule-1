@@ -16,12 +16,15 @@ switch ($arguments['in']) {
 };
 
 switch ($arguments['out']) {
-  case 'cn':
-    var outputList = cn;
+  case 'us':
+    var outputList = us;
     break;
   case 'quan':
     var outputList = quan;
     break;
+  case 'zh':
+    var outputList = zh;
+    break; 
   default:
     var outputList = us;
 };
