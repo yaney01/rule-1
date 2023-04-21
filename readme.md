@@ -44,7 +44,7 @@ https://github.com/Keywos/rule/raw/main/rename.js#in=cn&out=us&clear&nx
 ```
 (高倍|((?!.*(1|0\.\d))\d+倍|x|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰)) 
 ```
- 
+
 ## nx:
 * 过滤掉高倍率 或者0.n倍 
 * 可选: 加nx为过滤 不加为不过滤
