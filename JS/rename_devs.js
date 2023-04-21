@@ -16,9 +16,9 @@
  * clear: 过滤掉关键词里正则匹配的对应节点
  * 如果一个地区只有一个节点，则去除它的"1"
  * nx
- * 过滤掉高倍率 或者0.n倍
- *
- * 示例：https://github.com/Keywos/rule/raw/main/JS/rename.js#in=cn&out=us&name=Key&clear
+ * 过滤掉高倍率 或者0.n倍 
+ * 可选: 加nx为过滤 不加为不过滤
+ * 示例: https://github.com/Keywos/rule/raw/main/JS/rename.js#in=cn&out=us&name=Key&clear
  */
 
 
