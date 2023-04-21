@@ -28,7 +28,7 @@
 ## out：
 * 修改后节点名, 默认us
 * 例如 HK 01 HK 02 ...
-* ### in&out 可选  `us, cn, quan`
+* #### in&out 可选  `us, cn, quan`
 * cn 中文地区名称 例如 香港
 * us 英文地区名称 例如 HK
 * quan 英文全地名 例如 Hong Kong
