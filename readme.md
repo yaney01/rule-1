@@ -13,14 +13,14 @@
 | Team | [Team](https://raw.githubusercontent.com/Keywos/rule/main/Team.list) | [Team](https://keywos.github.io/rule/Team.list) |
 | AD | [AD](https://raw.githubusercontent.com/Keywos/rule/main/AD.list) | [AD](https://keywos.github.io/rule/AD.list) |
 
-## Rename
+## Rename 
 
 - [修改自](https://github.com/qwerzl/rename.js) https://github.com/qwerzl/rename.js
 * 在SubStore内对节点重命名为：地区 01 ...
 * 过滤掉不规范命名的节点 例如 剩余,过期...
 * SubStore内选择"脚本操作"，填写脚本地址
 * 可配合argument一同使用。现支持参数：
-* 全部为本地操作
+* 节点批量重命名 全部为本地操作
 ## in：
 * 机场原节点名, 默认cn 
 * 例如 香港 01 香港 02 ...
