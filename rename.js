@@ -8,17 +8,22 @@
  * us 英文地区名称 例如 HK
  * quan 英文全地名 例如 Hong Kong
  *
- * in：机场原节点名, 默认cn (可选us,cn,quan)
+ * in：
+ * 机场原节点名, 默认cn (可选us,cn,quan)
  * 例如 香港 01 香港 02 ...
- * out：修改后节点名, 默认us（可选us,cn,quan)
+ * out：
+ * 修改后节点名, 默认us（可选us,cn,quan)
  * 例如 HK 01 HK 02 ...
- * name：每个节点前面添加自义定机场名
- * clear: 过滤掉关键词里正则匹配的对应节点
+ * name：
+ * 每个节点前面添加自义定机场名
+ * clear: 
+ * 过滤掉关键词里正则匹配的对应节点
  * 如果一个地区只有一个节点，则去除它的"1"
- * nx
+ * nx:
  * 过滤掉高倍率 或者0.n倍 
  * 可选: 加nx为过滤 不加为不过滤
- * 示例: https://github.com/Keywos/rule/raw/main/JS/rename.js#in=cn&out=us&name=Key&clear
+ * 示例: https://github.com/Keywos/rule/raw/main/rename.js#in=cn&out=us&clear&nx
+ * https://keywos.cf/rename.js#in=cn&out=us&clear
  */
 
 
