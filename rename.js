@@ -23,8 +23,11 @@
  * 过滤掉高倍率 或者0.n倍 
  * 可选: 加nx为过滤 不加为不过滤
  * ----------------------------
- * 示例: https://github.com/Keywos/rule/raw/main/rename.js#in=cn&out=us&clear&nx
+ * 示例: 
+ * https://github.com/Keywos/rule/raw/main/rename.js#in=cn&out=us&clear&nx
+ *
  * https://keywos.cf/rename.js#in=cn&out=us&clear
+ *
  * https://keywos.cf/rename.js#&clear
  */
 
