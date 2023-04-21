@@ -32,7 +32,7 @@
  */
 
 
-// 正则过滤高倍率 (高倍|((?!.*(1|0\.\d))\d+倍|x|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰ˣ))
+// 正则过滤高倍率 (高倍|((?!.*(1|0\.\d))\d+倍|x|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰))
 const nameclear = /(套餐|到期|有效|剩余|版本|已用|过期|失联|测试|官方|网址|备用|群|TEST)/i;
 
 const regexString = " ";
@@ -134,7 +134,7 @@ function simplify(cc) {
 // 主函数
 function operator(proxies) {
    proxies = proxies.filter((res) => {
-    if (res.name.match(/(高倍|((?!.*(1|0\.\d))\d+倍|x|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰ˣ))/i)) {
+    if (res.name.match(/(高倍|((?!.*(1|0\.\d))\d+倍|x|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰))/i)) {
       if ($arguments.nx) {
       return false; // regex: false del   true nodel
       } else {
