@@ -122,6 +122,7 @@ function simplify(cc) {
 function operator(proxies) {
   if ($arguments.nx) {
   proxies = proxies.filter((res) => {
+console.log(regexString)
     if (res.name.match(regexString)) {
       return false; // regex del
     }
