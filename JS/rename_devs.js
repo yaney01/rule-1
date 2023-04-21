@@ -15,6 +15,8 @@
  * name：每个节点前面添加自义定机场名
  * clear: 过滤掉关键词里正则匹配的对应节点
  * 如果一个地区只有一个节点，则去除它的"1"
+ * nx
+ * 过滤掉高倍率 或者0.n倍
  *
  * 示例：https://github.com/Keywos/rule/raw/main/JS/rename.js#in=cn&out=us&name=Key&clear
  */
@@ -123,7 +125,7 @@ function simplify(cc) {
 function operator(proxies) {
    proxies = proxies.filter((res) => {
   console.log("正则")
-    if (res.name.match(/(韩国|((?!.*(1|0\.\d))\d+x|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰ˣ))/)) {
+    if (res.name.match(/(韩国|((?!.*(1|0\.\d))\d+倍|x|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰ˣ))/i)) {
       if ($arguments.nx) {
       return false; // regex: false del   true nodel
       } else {
