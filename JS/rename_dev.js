@@ -120,7 +120,7 @@ function simplify(cc) {
 
 // 主函数
 function operator(proxies) {
-  if ($arguments.nxx) {
+  //if ($arguments.nxx) {
   proxies = proxies.filter((res) => {
   console.log("正则")
     if (res.name.match(/(韩国|((?!.*(1|0\.\d))\d+x|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰ˣ))/)) {
@@ -128,7 +128,7 @@ function operator(proxies) {
     }
     return true;
   });
-  }
+  //}
   const toBeDeleted = [];
   proxies.forEach((res) => {
     const resultArray = [airport];
