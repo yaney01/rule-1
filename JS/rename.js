@@ -38,8 +38,8 @@ switch ($arguments['in']) {
 };
 
 switch ($arguments['out']) {
-  case 'us':
-    var outputList = us;
+  case 'cn':
+    var outputList = cn;
     break;
   case 'quan':
     var outputList = quan;
