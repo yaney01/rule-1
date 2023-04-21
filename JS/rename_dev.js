@@ -118,42 +118,54 @@ function simplify(cc) {
 
 // 主函数
 function operator(proxies) {
-    const toBeDeleted = [];
-    proxies.forEach((res) => {
-      const resultArray = [airport];
-      var matched = false;
-      for (const elem of Object.keys(countries)) {
-        if (simplify(res.name).indexOf(elem) !== -1) {
-          countries[elem][1] += 1;
-          if (!autofill) {
-            resultArray.push(countries[elem][0], countries[elem][1].toString().padStart(2, '0'));
-          } else {
-            resultArray.push(countries[elem][0], countries[elem][1].toString().padStart(autofill, '0'));
-          }
-          matched = true;
-          break;
-        };
-      };
-      if (!matched) {
-        resultArray.push(res.name);
-        toBeDeleted.push(res);
-      };
-      Object.keys(others).forEach((elem, index) => {
-        if (simplify(res.name).indexOf(elem) !== -1) {
-          resultArray.splice(2, 0, others[elem]);
+  proxies = proxies.filter((res) => {
+    if (res.name.match(/美国|日本/)) {
+      return false; // regex del
+    }
+    return true;
+  });
+  const toBeDeleted = [];
+  proxies.forEach((res) => {
+    const resultArray = [airport];
+    var matched = false;
+    for (const elem of Object.keys(countries)) {
+      if (simplify(res.name).indexOf(elem) !== -1) {
+        countries[elem][1] += 1;
+        if (!autofill) {
+          resultArray.push(
+            countries[elem][0],
+            countries[elem][1].toString().padStart(2, "0")
+          );
+        } else {
+          resultArray.push(
+            countries[elem][0],
+            countries[elem][1].toString().padStart(autofill, "0")
+          );
         }
-      });
-      res.name = resultArray.join(' ');
-    });
-    // Remove
-    toBeDeleted.forEach((proxy) => {
-      const index = proxies.indexOf(proxy);
-      if (index !== -1) {
-        proxies.splice(index, 1);
+        matched = true;
+        break;
+      }
+    }
+    if (!matched) {
+      resultArray.push(res.name);
+      toBeDeleted.push(res);
+    }
+    Object.keys(others).forEach((elem, index) => {
+      if (simplify(res.name).indexOf(elem) !== -1) {
+        resultArray.splice(2, 0, others[elem]);
       }
     });
-    if ($arguments.del1) {
-      proxies = stripOnes(proxies);
-    };
-    return proxies;
+    res.name = resultArray.join(" ");
+  });
+  // 移除未匹配到的节点名
+  toBeDeleted.forEach((proxy) => {
+    const index = proxies.indexOf(proxy);
+    if (index !== -1) {
+      proxies.splice(index, 1);
+    }
+  });
+  if ($arguments.del1) {
+    proxies = stripOnes(proxies);
   }
+  return proxies;
+}
