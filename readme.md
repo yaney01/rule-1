@@ -4,16 +4,17 @@
 
 * China分流ip规则只针我遇到的陕移对应软件
 
-## 测试 
-
-| Rule | raw | io |
-| :-----| :-----| :-----|
-| DIRECT | [China](https://raw.githubusercontent.com/Keywos/rule/main/China.list) | [China](https://keywos.github.io/rule/China.list) |
-| Proxy | [Proxy](https://raw.githubusercontent.com/Keywos/rule/main/Proxy.list) | [Proxy](https://keywos.github.io/rule/Proxy.list) |
-| Team | [Team](https://raw.githubusercontent.com/Keywos/rule/main/Team.list) | [Team](https://keywos.github.io/rule/Team.list) |
-| AD | [AD](https://raw.githubusercontent.com/Keywos/rule/main/AD.list) | [AD](https://keywos.github.io/rule/AD.list) |
-
 ## Rename 
+
+### 示例: 
+
+```
+https://keywos.cf/rename.js#&clear
+
+https://keywos.cf/rename.js#in=cn&out=us&clear
+
+https://github.com/Keywos/rule/raw/main/rename.js#in=cn&out=us&clear&nx
+ ```
 
 - [修改自](https://github.com/qwerzl/rename.js) https://github.com/qwerzl/rename.js
 * 在SubStore内对节点重命名为：地区 01 ...
@@ -47,13 +48,13 @@
 ## nx:
 * 过滤掉高倍率 或者0.n倍 
 * 可选: 加nx为过滤 不加为不过滤
- 
-### 示例: 
 
-```
-https://keywos.cf/rename.js#&clear
 
-https://keywos.cf/rename.js#in=cn&out=us&clear
+## 测试 
 
-https://github.com/Keywos/rule/raw/main/rename.js#in=cn&out=us&clear&nx
- ```
+| Rule | raw | io |
+| :-----| :-----| :-----|
+| DIRECT | [China](https://raw.githubusercontent.com/Keywos/rule/main/China.list) | [China](https://keywos.github.io/rule/China.list) |
+| Proxy | [Proxy](https://raw.githubusercontent.com/Keywos/rule/main/Proxy.list) | [Proxy](https://keywos.github.io/rule/Proxy.list) |
+| Team | [Team](https://raw.githubusercontent.com/Keywos/rule/main/Team.list) | [Team](https://keywos.github.io/rule/Team.list) |
+| AD | [AD](https://raw.githubusercontent.com/Keywos/rule/main/AD.list) | [AD](https://keywos.github.io/rule/AD.list) | 
