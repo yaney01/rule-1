@@ -124,7 +124,6 @@ function simplify(cc) {
 // 主函数
 function operator(proxies) {
    proxies = proxies.filter((res) => {
-   console.log("正则开始")
     if (res.name.match(/(高倍|((?!.*(1|0\.\d))\d+倍|x|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰ˣ))/i)) {
       if ($arguments.nx) {
       return false; // regex: false del   true nodel
