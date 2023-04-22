@@ -26,6 +26,7 @@ DOMAIN-KEYWORD,39.2
 DOMAIN-KEYWORD,42.187.
 DOMAIN-KEYWORD,59.1
 DOMAIN-KEYWORD,59.82.
+DOMAIN-KEYWORD,106.55.
 DOMAIN-KEYWORD,110.76.
 DOMAIN-KEYWORD,111.
 DOMAIN-KEYWORD,112.
@@ -49,8 +50,10 @@ DOMAIN-KEYWORD,117.
 DOMAIN-KEYWORD,210.22.252.
 DOMAIN-KEYWORD,157.255.
 # tencent
-DOMAIN-SUFFIX,anticheatexpert.com
 DOMAIN-SUFFIX,gcloudgbs.com
+DOMAIN-SUFFIX,myapp.com
+DOMAIN-SUFFIX,gdtimg.com
+DOMAIN-SUFFIX,anticheatexpert.com
 # bili
 DOMAIN-SUFFIX,biliapi.com
 DOMAIN-SUFFIX,biliapi.net
@@ -94,8 +97,6 @@ DOMAIN-SUFFIX,skk.moe
 DOMAIN-SUFFIX,pusher.com
 DOMAIN-SUFFIX,inftab.com
 DOMAIN-SUFFIX,infinitynewtab.com
-# DOMAIN-SUFFIX,nssurge.com
-# DOMAIN-SUFFIX,cdn.jsdelivr.net
 DOMAIN-SUFFIX,chinamobile.com
 DOMAIN-SUFFIX,alookweb.com
 DOMAIN-SUFFIX,yangkeduo.com
@@ -184,6 +185,8 @@ DOMAIN-SUFFIX,tcdnos.com
 DOMAIN-SUFFIX,cn
 DOMAIN-KEYWORD,-cn
 
+# DOMAIN-SUFFIX,nssurge.com
+# DOMAIN-SUFFIX,cdn.jsdelivr.net
 # Wechat cmcc 
 # IP-CIDR,36.128.0.0/10,no-resolve
 # IP-CIDR,42.187.128.0/17,no-resolve
