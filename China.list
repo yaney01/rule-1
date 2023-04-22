@@ -199,6 +199,10 @@ DOMAIN-SUFFIX,yanetflix.com
 DOMAIN-SUFFIX,mi-img.com
 DOMAIN-SUFFIX,cdn2020.com
 DOMAIN-SUFFIX,tcdnos.com
+# xiaohongshu
+DOMAIN-SUFFIX,fengkongcloud.com
+DOMAIN-SUFFIX,xhscdn.com
+DOMAIN-SUFFIX,xiaohongshu.com
 DOMAIN-SUFFIX,cn
 DOMAIN-KEYWORD,-cn
 
