@@ -29,11 +29,11 @@ https://github.com/Keywos/rule/raw/main/rename.js#in=cn&out=us&clear&nx
    
 ## in：
 * 机场原节点名, 默认cn 
-* 例如 香港 01 香港 02 ...
+* 例如 `in=cn` 香港 01 香港 02 ...
 
 ## out：
 * 修改后节点名, 默认us
-* 例如 HK 01 HK 02 ...
+* 例如 `out=us` HK 01 HK 02 ...
 * #### in&out 可选  `us, cn, quan`
 * cn 中文地区名称 例如 香港
 * us 英文地区名称 例如 HK
@@ -41,7 +41,8 @@ https://github.com/Keywos/rule/raw/main/rename.js#in=cn&out=us&clear&nx
 
 ## name：
 * 每个节点前面添加自义定机场名
-  
+* 例如 `name=KKK` KKK 香港 01 ...
+
 ## clear: 
 * 如果一个地区只有一个节点，则去除它的"01"
 * 过滤掉关键词里正则匹配的「无用」节点
