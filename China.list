@@ -14,6 +14,7 @@ DOMAIN-KEYWORD,tencent
 DOMAIN-KEYWORD,wechat
 DOMAIN-KEYWORD,weixin
 DOMAIN-KEYWORD,weibo
+DOMAIN-KEYWORD,cainiao
 DOMAIN-KEYWORD,pinduoduo
 DOMAIN-KEYWORD,jdcloud
 DOMAIN-KEYWORD,mojie
@@ -214,6 +215,8 @@ DOMAIN-SUFFIX,yanetflix.com
 DOMAIN-SUFFIX,mi-img.com
 DOMAIN-SUFFIX,cdn2020.com
 DOMAIN-SUFFIX,tcdnos.com
+DOMAIN-SUFFIX,guoguo-app.com
+DOMAIN-SUFFIX,xiaog.xyz
 # xiaohongshu
 DOMAIN-SUFFIX,fengkongcloud.com
 DOMAIN-SUFFIX,xhscdn.com
