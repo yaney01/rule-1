@@ -26,6 +26,7 @@ https://github.com/Keywos/rule/raw/main/rename.js#in=cn&out=us&clear&nx
 * SubStore内选择"脚本操作"，填写脚本地址
 * 可配合argument一同使用。现支持参数：
 * 节点批量重命名 全部为本地操作
+   
 ## in：
 * 机场原节点名, 默认cn 
 * 例如 香港 01 香港 02 ...
