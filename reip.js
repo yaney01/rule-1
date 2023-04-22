@@ -1,4 +1,5 @@
 //####################################
+// 单独 ip-api.com ip去重需联网
 // 转自 奶茶姐 https://raw.githubusercontent.com/fmz200/wool_scripts/main/scripts/server_rename_dev.js
 // 原始地址：https://github.com/sub-store-org/Sub-Store/blob/master/scripts/ip-flag.js
 // 脚本地址：https://raw.githubusercontent.com/fmz200/wool_scripts/main/scripts/rename_simple.js
