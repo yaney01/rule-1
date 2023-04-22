@@ -156,6 +156,8 @@ DOMAIN-SUFFIX,gorgon.youdao.com,REJECT
 
 ^https:\/\/boot\.biz\.weibo\.com\/v1\/ad\/realtime$ reject-dict
 
+#ysgc
+^https:\/\/i\.imgtg\.com\/.+\.gif$ reject
 [Script]
 #12306
 http-request ^https?:\/\/ad\.12306\.cn\/ad\/ser\/getAdList script-path=https://cdn.jsdelivr.net/gh/keywos/rule@master/JS/12306.js, requires-body=true, timeout=10, tag=12306
@@ -167,4 +169,4 @@ http-request ^https?:\/\/ad\.12306\.cn\/ad\/ser\/getAdList script-path=https://c
 force-http-engine-hosts = 59.111.*:0
 
 [MITM]
-hostname = interface*.music.163.com, sdk.alibaba.com.ailbaba.me, vip7.fzwdyy.cn, vpic.cms.qq.com, client.app.coc.10086.cn,api.songguo7.com, wallet.95516.com, commimg-1.pddpic.com,  list-app-m.i4.cn, rescdn.qqmail.com,api.aliyundrive.com, heic.alicdn.com, m*.amap.com, sns.amap.com, optimus-ads.amap.com, ad.12306.cn, gw.alicdn.com, httpdns.n.netease.com, *.163jiasu.com, 59.111.*, 112.13.*, 117.147.199.59, boot.biz.weibo.com, sdkapp.uve.weibo.com
+hostname = interface*.music.163.com, sdk.alibaba.com.ailbaba.me, vip7.fzwdyy.cn, vpic.cms.qq.com, client.app.coc.10086.cn,api.songguo7.com, wallet.95516.com, commimg-1.pddpic.com,  list-app-m.i4.cn, rescdn.qqmail.com,api.aliyundrive.com, heic.alicdn.com, m*.amap.com, sns.amap.com, optimus-ads.amap.com, ad.12306.cn, gw.alicdn.com, httpdns.n.netease.com, *.163jiasu.com, 59.111.*, 112.13.*, 117.147.199.59, boot.biz.weibo.com, sdkapp.uve.weibo.com, i.imgtg.com
