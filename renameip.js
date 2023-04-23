@@ -1,7 +1,7 @@
 /*
- * 根据远程 `落地ip` 与 `入口ip` 去重, 需要查询ip-api, 所以速度可能慢点,根据节点数量需要数十秒以上,需耐心等待
+ * 根据远程 `落地ip` 与 `入口ip` 去重, 需要查询ip-api, 所以速度可能慢点,根据节点数量需要数十秒以上,需耐心等待 增加超时机制
  * 测试 二合一 先ip-api.com去重 后 重命名
- * 奶茶姐
+ * 奶茶姐 
  * 原始地址：https://github.com/sub-store-org/Sub-Store/blob/master/scripts/ip-flag.js
  * 脚本地址：https://raw.githubusercontent.com/fmz200/wool_scripts/main/scripts/server_rename.js
  * 脚本作用：在SubStore内对节点重命名为：旗帜|地区代码|地区名称|IP|序号，
@@ -373,7 +373,6 @@ function removeDuplicates(arr, fields) {
 }
 
 const tasks = new Map();
-
 async function queryIpApi(proxy) {
   // 如果节点的server和port一样就认为是重复的，这里就不会去重新请求而是直接返回
   const id = getId(proxy);
@@ -391,7 +390,6 @@ async function queryIpApi(proxy) {
     if (cached) {
       resolve(cached);
     }
-    // http://ip-api.com/json/24.48.0.1?lang=zh-CN
     const url = `http://ip-api.com/json?lang=zh-CN`;
     let node = ProxyUtils.produce([proxy], target);
 
@@ -408,7 +406,13 @@ async function queryIpApi(proxy) {
       policy: QXTag
     };
 
-    $.http.get({
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => {
+        reject(new Error("请求超时"));
+      }, 300); // 设置超时时间ms
+    });
+
+    const queryPromise = $.http.get({
       url,
       headers,
       opts: opts, // QX的写法
@@ -429,7 +433,13 @@ async function queryIpApi(proxy) {
       console.log("💕err =" + err);
       reject(err);
     });
+
+    Promise.race([timeoutPromise, queryPromise])
+      .catch(err => {
+        reject(err);
+      });
   });
+
   tasks.set(id, result);
   return result;
 }

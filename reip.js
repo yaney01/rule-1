@@ -1,6 +1,6 @@
 //####################################
 // 根据远程 `落地ip` 与 `入口ip` 去重, 需要查询ip-api, 所以速度可能慢点,根据节点数量需要数十秒以上,需耐心等待
-// 单独 ip-api.com ip去重需联网
+// 单独 ip-api.com ip去重需联网 增加超时机制,缩短去重时间
 // 转自 奶茶姐 https://raw.githubusercontent.com/fmz200/wool_scripts/main/scripts/server_rename_dev.js
 // 原始地址：https://github.com/sub-store-org/Sub-Store/blob/master/scripts/ip-flag.js
 // 脚本地址：https://raw.githubusercontent.com/fmz200/wool_scripts/main/scripts/rename_simple.js
@@ -126,7 +126,7 @@ async function operator(proxies) {
       }
     }));
 
-    await sleep(1000);
+    await sleep(600);
     i += BATCH_SIZE;
   }
   // 去除重复的节点
@@ -162,22 +162,6 @@ function removeDuplicateName(arr) {
   return result;
 }
 
-/**
- * 假设你有一个包含对象的数组，每个对象中有多个属性，你想根据其中的某一个或多个属性去除重复的元素并返回一个新数组。
- * 示例用法：
- * const arr = [
- *   { name: "John", age: 30, country: "USA" },
- *   { name: "Jane", age: 25, country: "Canada" },
- *   { name: "John", age: 40, country: "USA" },
- *   { name: "Bob", age: 50, country: "UK" },
- * ];
- * const uniqueArr = removeDuplicates(arr, ["name", "country"]);
- * console.log(uniqueArr); // 输出 [{ name: "John", age: 30, country: "USA" }, { name: "Jane", age: 25, country: "Canada" }, { name: "Bob", age: 50, country: "UK" }]
- *
- * @param arr 一个对象数组
- * @param fields 一个字段名数组，表示根据哪些属性去除重复的元素
- * @returns {*}
- */
 function removeDuplicates(arr, fields) {
   const map = new Map();
   return arr.filter(item => {
@@ -192,7 +176,6 @@ function removeDuplicates(arr, fields) {
 }
 
 const tasks = new Map();
-
 async function queryIpApi(proxy) {
   // 如果节点的server和port一样就认为是重复的，这里就不会去重新请求而是直接返回
   const id = getId(proxy);
@@ -210,7 +193,6 @@ async function queryIpApi(proxy) {
     if (cached) {
       resolve(cached);
     }
-    // http://ip-api.com/json/24.48.0.1?lang=zh-CN
     const url = `http://ip-api.com/json?lang=zh-CN`;
     let node = ProxyUtils.produce([proxy], target);
 
@@ -227,7 +209,13 @@ async function queryIpApi(proxy) {
       policy: QXTag
     };
 
-    $.http.get({
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => {
+        reject(new Error("请求超时"));
+      }, 300); // 设置超时时间ms
+    });
+
+    const queryPromise = $.http.get({
       url,
       headers,
       opts: opts, // QX的写法
@@ -248,7 +236,13 @@ async function queryIpApi(proxy) {
       console.log("💕err =" + err);
       reject(err);
     });
+
+    Promise.race([timeoutPromise, queryPromise])
+      .catch(err => {
+        reject(err);
+      });
   });
+
   tasks.set(id, result);
   return result;
 }
