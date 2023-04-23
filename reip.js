@@ -68,7 +68,7 @@ class ResourceCache {
 
 const resourceCache = new ResourceCache(CACHE_EXPIRATION_TIME_MS);
 // let nodes = [];
-const DELIMITER = "|"; // 分隔符
+const DELIMITER = " "; // 分隔符
 
 const {isLoon, isSurge, isQX} = $substore.env;
 
@@ -119,7 +119,7 @@ async function operator(proxies) {
         const code_name = await queryIpApi(proxy);
         // 地区代码|地区名称|IP
         const countryCode = code_name.substring(0, code_name.indexOf(DELIMITER));
-        // 节点重命名为：旗帜|地区代码|地区名称|IP|序号
+        // 节点重命名为：旗帜|地区代码|地区名称|IP|序号 getFlagEmoji(countryCode) + 
         proxy.name = getFlagEmoji(countryCode) + DELIMITER + code_name;
       } catch (err) {
         console.log(`✅💕err=${err}`);
@@ -226,7 +226,7 @@ async function queryIpApi(proxy) {
       const data = JSON.parse(body);
       if (data.status === "success") {
         // 地区代码|地区名称|IP ：SG|新加坡|13.215.162.99
-        const nodeInfo = data.countryCode + DELIMITER + data.country + DELIMITER + data.query+ "|QC";
+        const nodeInfo = data.countryCode + DELIMITER + data.country + DELIMITER + data.query + "|QC";
         resourceCache.set(id, nodeInfo);
         resolve(nodeInfo);
       } else {
