@@ -1,4 +1,5 @@
 DOMAIN,ulogs.umeng.com
+DOMAIN-SUFFIX,umsns.com 
 DOMAIN,app-measurement.com
 DOMAIN-SUFFIX,yximgs.com
 #微博
@@ -61,6 +62,7 @@ DOMAIN-SUFFIX,sdk-conf.getui.com
 DOMAIN-SUFFIX,cm-10-138.getui.com
 DOMAIN-SUFFIX,ads.95516.com
 DOMAIN-SUFFIX,ctobsnssdk.com
+#cpu-x ...
 DOMAIN-SUFFIX,doubleclick.net
 DOMAIN-SUFFIX,doubleclick-cn.net
 DOMAIN,google.com.miaozhen.com
@@ -76,3 +78,5 @@ DOMAIN,udpolimenew.baidu.com
 DOMAIN,app-alpha.bytedance.net
 #大师兄 影视工厂 优量汇
 DOMAIN,mi.gdt.qq.com
+#手机硬件管家
+DOMAIN,api-access.pangolin-sdk-toutiao.com
