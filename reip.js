@@ -10,7 +10,6 @@
 // 更新时间：2023.04.21 22:20
 // 这个脚本是测试脚本，请使用 server_rename.js
 //####################################
-
 const RESOURCE_CACHE_KEY = '#sub-store-cached-resource';
 const CACHE_EXPIRATION_TIME_MS = 10 * 60 * 1000;
 const $ = $substore;
@@ -68,7 +67,7 @@ class ResourceCache {
 
 const resourceCache = new ResourceCache(CACHE_EXPIRATION_TIME_MS);
 // let nodes = [];
-const DELIMITER = " "; // 分隔符
+const DELIMITER = "|"; // 分隔符
 
 const {isLoon, isSurge, isQX} = $substore.env;
 
@@ -119,7 +118,7 @@ async function operator(proxies) {
         const code_name = await queryIpApi(proxy);
         // 地区代码|地区名称|IP
         const countryCode = code_name.substring(0, code_name.indexOf(DELIMITER));
-        // 节点重命名为：旗帜|地区代码|地区名称|IP|序号 getFlagEmoji(countryCode) + 
+        // 节点重命名为：旗帜|地区代码|地区名称|IP|序号
         proxy.name = getFlagEmoji(countryCode) + DELIMITER + code_name;
       } catch (err) {
         console.log(`✅💕err=${err}`);
@@ -212,7 +211,7 @@ async function queryIpApi(proxy) {
     const timeoutPromise = new Promise((_, reject) => {
       setTimeout(() => {
         reject(new Error("请求超时"));
-      }, 200); // 设置超时时间ms
+      }, 300); // 设置超时时间ms
     });
 
     const queryPromise = $.http.get({
@@ -226,7 +225,7 @@ async function queryIpApi(proxy) {
       const data = JSON.parse(body);
       if (data.status === "success") {
         // 地区代码|地区名称|IP ：SG|新加坡|13.215.162.99
-        const nodeInfo = data.countryCode + DELIMITER + data.country + DELIMITER + data.query + "|QC";
+        const nodeInfo = data.countryCode + DELIMITER + data.country + DELIMITER + data.query+ "|QC";
         resourceCache.set(id, nodeInfo);
         resolve(nodeInfo);
       } else {
