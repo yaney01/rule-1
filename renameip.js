@@ -1,5 +1,5 @@
 /*
- * 根据远程 `落地ip` 与 `入口ip` 去重, 需要查询ip-api, 所以速度可能慢点,根据节点数量需要数十秒以上,需耐心等待 增加超时机制 测试100
+ * 根据远程 `落地ip` 与 `入口ip` 去重, 需要查询ip-api, 所以速度可能慢点,根据节点数量需要数十秒以上,需耐心等待 增加超时机制 测试100 200
  * 测试 二合一 先ip-api.com去重 后 重命名
  * 奶茶姐 
  * 原始地址：https://github.com/sub-store-org/Sub-Store/blob/master/scripts/ip-flag.js
@@ -409,7 +409,7 @@ async function queryIpApi(proxy) {
     const timeoutPromise = new Promise((_, reject) => {
       setTimeout(() => {
         reject(new Error("请求超时"));
-      }, 300); // 设置超时时间ms
+      }, 200); // 设置超时时间ms
     });
 
     const queryPromise = $.http.get({
