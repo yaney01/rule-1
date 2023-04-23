@@ -2,7 +2,7 @@
 DOMAIN,ulogs.umeng.com
 DOMAIN-SUFFIX,umsns.com 
 DOMAIN,app-measurement.com
-DOMAIN-SUFFIX,yximgs.com
+#DOMAIN-SUFFIX,yximgs.com
 #微博
 DOMAIN,adimg.uve.weibo.com
 DOMAIN,adimg.vue.weibo.com
