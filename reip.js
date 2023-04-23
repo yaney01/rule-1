@@ -83,7 +83,7 @@ if (isLoon) {
 
 async function operator(proxies) {
   // console.log("✅💕proxies = " + JSON.stringify(proxies));
-  console.log("✅💕初始节点个数 = " + proxies.length);
+  // console.log("✅💕初始节点个数 = " + proxies.length);
   // $.write(JSON.stringify(proxies), "#sub-store-proxies");
 
   let support = false;
@@ -132,7 +132,7 @@ async function operator(proxies) {
   // 去除重复的节点
   // 直接写proxies = removeDuplicateName(proxies);不生效
   proxies = removeDuplicateName(proxies);
-  console.log(`✅💕去重后的节点个数 = ${proxies.length}`);
+  // console.log(`✅💕去重后的节点个数 = ${proxies.length}`);
   // 再加个序号
   for (let j = 0; j < proxies.length; j++) {
     const index = (j + 1).toString().padStart(2, '0');
