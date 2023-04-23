@@ -126,7 +126,7 @@ async function operator(proxies) {
       }
     }));
 
-    await sleep(600);
+    await sleep(100);
     i += BATCH_SIZE;
   }
   // 去除重复的节点
