@@ -1,15 +1,9 @@
-/*
- * 根据远程 `落地ip` 与 `入口ip` 去重, 需要查询ip-api, 所以速度可能慢点,根据节点数量需要数十秒以上,需耐心等待 增加超时机制 测试100 200
+/* 根据ip去重, 需要查询ip-api, 所以速度可能慢点,根据节点数量需要数十秒以上,需耐心等待 增加超时机制 测试100 200
  * 测试 二合一 先ip-api.com去重 后 重命名
- * 奶茶姐 
- * 原始地址：https://github.com/sub-store-org/Sub-Store/blob/master/scripts/ip-flag.js
- * 脚本地址：https://raw.githubusercontent.com/fmz200/wool_scripts/main/scripts/server_rename.js
+ * 合并 @奶茶姐 脚本地址：https://raw.githubusercontent.com/fmz200/wool_scripts/main/scripts/server_rename.js
  * 脚本作用：在SubStore内对节点重命名为：旗帜|地区代码|地区名称|IP|序号，
  * 使用方法：SubStore内选择“脚本操作”，然后填写上面的脚本地址
  * 支持平台：目前只支持Loon，Surge
- * 更新时间：2023.04.18 22:20
- * 这个脚本是测试脚本，请使用 server_rename.js
- * --------------------------------------------
  * key
  * 修改自 https://github.com/qwerzl/rename.js
  * 在SubStore内对节点重命名为：地区 01 ...
@@ -41,9 +35,7 @@
  * https://keywos.cf/rename.js#in=cn&out=us&clear
  *
  * https://keywos.cf/rename.js#&clear
- * --------------------------------------------
  */
-
 
 // 正则过滤高倍率 (高倍|((?!.*(1|0\.\d))\d+倍|x|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰))
 const nameclear = /(套餐|到期|有效|剩余|版本|已用|过期|失联|测试|官方|网址|备用|群|TEST|客服|网站|获取|订阅|流量|机场|下次|官址|联系|邮箱|工单|USE|USED|TOTAL|EXPIRE|EMAIL)/i;
@@ -160,7 +152,6 @@ class ResourceCache {
     }
     this._cleanup();
   }
-
   _cleanup() {
     // clear obsolete cached resource
     let clear = false;
@@ -175,16 +166,13 @@ class ResourceCache {
     });
     if (clear) this._persist();
   }
-
   revokeAll() {
     this.resourceCache = {};
     this._persist();
   }
-
   _persist() {
     $.write(JSON.stringify(this.resourceCache), RESOURCE_CACHE_KEY);
   }
-
   get(id) {
     const updated = this.resourceCache[id] && this.resourceCache[id].time;
     if (updated && new Date().getTime() - updated <= this.expires) {
@@ -192,20 +180,15 @@ class ResourceCache {
     }
     return null;
   }
-
   set(id, value) {
     this.resourceCache[id] = {time: new Date().getTime(), data: value}
     this._persist();
   }
 }
-
-
 const resourceCache = new ResourceCache(CACHE_EXPIRATION_TIME_MS);
 // let nodes = [];
 const DELIMITER = "|"; // 分隔符
-
 const {isLoon, isSurge, isQX} = $substore.env;
-
 let target; // 节点转换的目标类型
 if (isLoon) {
   target = "Loon";
@@ -214,7 +197,6 @@ if (isLoon) {
 } else if (isQX) {
   target = "QX";
 }
-
 async function operator(proxies) {
   //console.log("✅💕初始节点个数 = " + proxies.length);
   let support = false;
@@ -247,7 +229,7 @@ async function operator(proxies) {
       }
     }));
 
-    await sleep(100); // 等待
+    await sleep(100); // 等待 时间
     i += BATCH_SIZE;
   }
   // 去除重复的节点

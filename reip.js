@@ -1,19 +1,13 @@
-//####################################
-// 根据远程 `落地ip` 与 `入口ip` 去重, 需要查询ip-api, 所以速度可能慢点,根据节点数量需要数十秒以上,需耐心等待
-// 单独 ip-api.com ip去重需联网 增加超时机制,缩短去重时间
-// 转自 奶茶姐 https://raw.githubusercontent.com/fmz200/wool_scripts/main/scripts/server_rename_dev.js
-// 原始地址：https://github.com/sub-store-org/Sub-Store/blob/master/scripts/ip-flag.js
-// 脚本地址：https://raw.githubusercontent.com/fmz200/wool_scripts/main/scripts/rename_simple.js
+// 根据ip去重, 需要查询ip-api, 所以速度可能慢点,根据节点数量需要数十秒以上,需耐心等待
+// 增加超时机制,缩短去重时间
+// 转自 @奶茶姐 https://raw.githubusercontent.com/fmz200/wool_scripts/main/scripts/server_rename_dev.js
 // 脚本作用：在SubStore内对节点重命名为：旗帜|地区代码|地区名称|IP|序号，
 // 使用方法：SubStore内选择"脚本操作"，然后填写上面的脚本地址
 // 支持平台：目前只支持Loon，Surge
-// 更新时间：2023.04.21 22:20
-// 这个脚本是测试脚本，请使用 server_rename.js
-//####################################
+
 const RESOURCE_CACHE_KEY = '#sub-store-cached-resource';
 const CACHE_EXPIRATION_TIME_MS = 10 * 60 * 1000;
 const $ = $substore;
-
 class ResourceCache {
   constructor(expires) {
     this.expires = expires;
@@ -26,7 +20,6 @@ class ResourceCache {
     }
     this._cleanup();
   }
-
   _cleanup() {
     // clear obsolete cached resource
     let clear = false;
@@ -41,30 +34,25 @@ class ResourceCache {
     });
     if (clear) this._persist();
   }
-
   revokeAll() {
     this.resourceCache = {};
     this._persist();
   }
-
   _persist() {
-    $.write(JSON.stringify(this.resourceCache), RESOURCE_CACHE_KEY);
+ $.write(JSON.stringify(this.resourceCache), RESOURCE_CACHE_KEY);
   }
-
   get(id) {
     const updated = this.resourceCache[id] && this.resourceCache[id].time;
     if (updated && new Date().getTime() - updated <= this.expires) {
       return this.resourceCache[id].data;
     }
     return null;
-  }
-
+  } 
   set(id, value) {
     this.resourceCache[id] = {time: new Date().getTime(), data: value}
     this._persist();
   }
 }
-
 const resourceCache = new ResourceCache(CACHE_EXPIRATION_TIME_MS);
 // let nodes = [];
 const DELIMITER = "|"; // 分隔符
@@ -81,10 +69,7 @@ if (isLoon) {
 }
 
 async function operator(proxies) {
-  // console.log("✅💕proxies = " + JSON.stringify(proxies));
   // console.log("✅💕初始节点个数 = " + proxies.length);
-  // $.write(JSON.stringify(proxies), "#sub-store-proxies");
-
   let support = false;
   if (isLoon || isQX) {
     support = true;
@@ -94,26 +79,18 @@ async function operator(proxies) {
       support = true;
     }
   }
-
   if (!support) {
     $.error(`🚫IP Flag only supports Loon and Surge!`);
     return proxies;
   }
-
   const BATCH_SIZE = 10; // 每一次处理的节点个数
   let i = 0;
   while (i < proxies.length) {
     const batch = proxies.slice(i, i + BATCH_SIZE);
     await Promise.allSettled(batch.map(async proxy => {
       try {
-        // 这里最理想的处理方式是只把节点名字中的旗帜和地区名字删除，但保留其他信息
-        // 例如：[🇭🇰香港 专线|3倍率] 只保留👉🏻 [专线|3倍率]
-        // 最后节点重命名为：旗帜|地区代码|地区名称|ip|其他信息
-        // 例如：[🇺🇸|US|美国|1.2.3.4|专线|3倍率]
-
-        // remove the original flag 移除旗帜
+       // remove flag 移除旗帜
         // let proxyName = removeFlag(proxy.name);
-        // 本来想把原来的标签加上删除线或者下划线，但是实现不了
         // query ip-api
         const code_name = await queryIpApi(proxy);
         // 地区代码|地区名称|IP
@@ -129,7 +106,6 @@ async function operator(proxies) {
     i += BATCH_SIZE;
   }
   // 去除重复的节点
-  // 直接写proxies = removeDuplicateName(proxies);不生效
   proxies = removeDuplicateName(proxies);
   // console.log(`✅💕去重后的节点个数 = ${proxies.length}`);
   // 再加个序号
@@ -137,8 +113,6 @@ async function operator(proxies) {
     const index = (j + 1).toString().padStart(2, '0');
     proxies[j].name = proxies[j].name + DELIMITER + index;
   }
-
-  // $.write(JSON.stringify(nodes), "#sub-store-nodes");
   return proxies;
 }
 

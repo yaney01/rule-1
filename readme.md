@@ -5,9 +5,9 @@
 
 ## Rename 分为三个版本
 * [rename.js](https://keywos.cf/rename.js) : 本地批量重命名 速度最快
-* ##### 以下两个因为根据远程 `落地ip` 与 `入口ip` 去重, 需要查询ip-api, 所以速度可能慢点,根据节点数量需要数十秒以上,需耐心等待
-* [renameip.js](https://keywos.cf/renameip.js) : ip-api入口与落地 去重后,批量重命名
-* [reip.js](https://keywos.cf/reip.js) : ip-api入口与落地 去重
+* ##### 以下两个因为根据远程 ip 去重, 需要查询ip-api, 所以速度可能慢点,根据节点数量需要数十秒
+* [renameip.js](https://keywos.cf/renameip.js) : ip-api ip去重后,批量重命名
+* [reip.js](https://keywos.cf/reip.js) : ip-api ip 去重
 
 ### 示例: 
 
