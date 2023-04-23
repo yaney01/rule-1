@@ -12,7 +12,7 @@
 ### 示例: 
 
 ```
-https://keywos.cf/rename.js#&clear
+https://keywos.cf/rename.js#clear
 
 https://keywos.cf/rename.js#in=cn&out=us&clear
 
