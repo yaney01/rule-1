@@ -22,7 +22,6 @@ DOMAIN-KEYWORD,mojie
 DOMAIN-KEYWORD,xsus
 DOMAIN-KEYWORD,95516
 DOMAIN-KEYWORD,toutiao
-
 # tencent
 DOMAIN-SUFFIX,gcloudgbs.com
 DOMAIN-SUFFIX,myapp.com
@@ -187,7 +186,6 @@ DOMAIN-SUFFIX,fengkongcloud.com
 DOMAIN-SUFFIX,xhscdn.com
 DOMAIN-SUFFIX,xiaohongshu.com
 DOMAIN-SUFFIX,cn
-
 #DOMAIN-KEYWORD,-cn
 # DOMAIN-SUFFIX,nssurge.com
 # DOMAIN-SUFFIX,cdn.jsdelivr.net
