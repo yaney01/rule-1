@@ -1,16 +1,16 @@
-// 修改@奶茶姐 测试!!! alidns-解析入口 + ipapi-解析落地 去重
+//############################################
 // 重要提示：这个脚本是测试脚本，请使用 https://raw.githubusercontent.com/fmz200/wool_scripts/main/scripts/server_rename.js
 // 原始地址：https://github.com/sub-store-org/Sub-Store/blob/master/scripts/ip-flag.js
 // 脚本地址：https://raw.githubusercontent.com/fmz200/wool_scripts/main/scripts/server_rename_dev.js
 // 脚本作用：在SubStore内对节点重命名为：旗帜|地区代码|地区名称|IP|序号，
 // 使用方法：SubStore内选择“脚本操作”，然后填写上面的脚本地址
 // 支持平台：目前只支持Loon，Surge
-// 更新时间：2023.04.25
+// 更新时间：2023.04.25 00:05
+//############################################
 
 const RESOURCE_CACHE_KEY = '#sub-store-cached-resource';
 const CACHE_EXPIRATION_TIME_MS = 10 * 60 * 1000;
 const $ = $substore;
-
 class ResourceCache {
   constructor(expires) {
     this.expires = expires;
@@ -23,7 +23,6 @@ class ResourceCache {
     }
     this._cleanup();
   }
-
   _cleanup() {
     // clear obsolete cached resource
     let clear = false;
@@ -38,16 +37,13 @@ class ResourceCache {
     });
     if (clear) this._persist();
   }
-
   revokeAll() {
     this.resourceCache = {};
     this._persist();
   }
-
   _persist() {
     $.write(JSON.stringify(this.resourceCache), RESOURCE_CACHE_KEY);
   }
-
   get(id) {
     const updated = this.resourceCache[id] && this.resourceCache[id].time;
     if (updated && new Date().getTime() - updated <= this.expires) {
@@ -55,13 +51,11 @@ class ResourceCache {
     }
     return null;
   }
-
   set(id, value) {
     this.resourceCache[id] = {time: new Date().getTime(), data: value}
     this._persist();
   }
 }
-
 const resourceCache = new ResourceCache(CACHE_EXPIRATION_TIME_MS);
 // let nodes = [];
 const DELIMITER = " | "; // 分隔符
@@ -73,7 +67,6 @@ async function operator(proxies) {
   // console.log("✅💕proxies = " + JSON.stringify(proxies));
   // console.log("✅💕初始节点个数 = " + proxies.length);
   // $.write(JSON.stringify(proxies), "#sub-store-proxies");
-
   const support = (isLoon || isQX || (isSurge && parseInt($environment['surge-build']) >= 2000));
 
   if (!support) {
@@ -107,58 +100,60 @@ async function operator(proxies) {
 
         // 新增一个去重用字段，该字段重复那就是重复节点
         proxy.qc = in_info + " " + out_info.query;
-        console.log(proxy)
+        // console.log(proxy)
 
       } catch (err) {
         console.log(`✅💕err 02 =${err}`);
       }
     }));
-
     // await sleep(300);
     i += BATCH_SIZE;
   }
-  // console.log("💰💕去重前的节点信息 = " + JSON.stringify(proxies));
+//   console.log("💰💕去重前的节点信息 = " + JSON.stringify(proxies));
 
-  // // 去除重复的节点
+  // 去除重复的节点
   proxies = removeDuplicateName(proxies);
-  // console.log("✅💕去重后的节点信息 = " + JSON.stringify(proxies));
+//   console.log("✅💕去重后的节点信息 = " + JSON.stringify(proxies));
+  // 去除去重时添加的qc属性: ip 与 dns解析ip
+  proxies = removeqcName(proxies);
+//   console.log("🍉🍉恢复后的节点信息 = " + JSON.stringify(proxies));
   console.log(`✅💕去重后的节点个数 = ${proxies.length}`);
-  // 再加个序号
+  // 再加个序号 01 02 ...
   for (let j = 0; j < proxies.length; j++) {
     const index = (j + 1).toString().padStart(2, '0');
     proxies[j].name = proxies[j].name + DELIMITER + index;
   }
-
   // $.write(JSON.stringify(nodes), "#sub-store-nodes");
   return proxies;
 }
 
-// 根据节点名字去除重复的节点
+// 根据qc入口 落地ip去除重复的节点 如果该节点对象不存在名为 qc 的属性则则代表ping不通，删除
 function removeDuplicateName(arr) {
-  const nameSet = new Set();
-  const result = [];
-  for (const e of arr) {
-    if (!nameSet.has(e.qc)) {
-      nameSet.add(e.qc);
-      result.push(e);
-    }
+    const nameSet = new Set();
+    const result = [];
+    for (let i = 0; i < arr.length; ) {
+      const e = arr[i]; 
+      if (e.hasOwnProperty("qc") && !nameSet.has(e.qc)) {
+        nameSet.add(e.qc);
+        result.push(e);
+        i++;
+      } else {arr.splice(i, 1);}}
+    return result;
   }
-  return result;
-}
-
-
-function removeDuplicates(arr, fields) {
-  const map = new Map();
-  return arr.filter(item => {
-    const key = fields.map(field => item[field]).join("-");
-    if (map.has(key)) {
-      return false;
-    } else {
-      map.set(key, true);
-      return true;
+  // 恢复去重时添加的qc
+  function removeqcName(arr) {
+    const nameSet = new Set();
+    const result = [];
+    for (const e of arr) {
+      if (!nameSet.has(e.qc)) {
+        nameSet.add(e.qc);
+        const modifiedE = { ...e };
+        delete modifiedE.qc;
+        result.push(modifiedE);
+      }
     }
-  });
-}
+    return result;
+  }
 
 const tasks = new Map();
 
@@ -194,11 +189,16 @@ async function queryIpApi(proxy) {
     const opts = {
       policy: QXTag
     };
-    ///////////////////////////////////////////////////////////////////////
+  
+    if ($arguments['timeout']) {
+    const timeout = $arguments['timeout']; // 超时值，单位：ms
+    }else {
+        const timeout = 400;
+    };
     const timeoutPromise = new Promise((_, reject) => {
       setTimeout(() => {
         reject(new Error("请求超时"));
-      }, 400); // 超时 延迟 时间ms
+      }, timeout); // 超时 延迟 时间ms
     });
 
     const queryPromise = $.http.get({
@@ -306,12 +306,10 @@ async function queryIpApiInfo(server) {
     if (data.Status === 0) {
         // Status: 0,成功，返回最下面的ip
         const ips = data.Answer[data.Answer.length - 1].data;
-        console.log(ips);
         resolve(ips);
       } else if (data.Status === 3) {
         // 阿里dns Status: 3,失败，返回server
         const ips = data.Question.name;
-        console.log(ips);
         resolve(ips);
       } else {
         reject(new Error(data.message));
