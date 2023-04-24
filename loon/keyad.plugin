@@ -57,8 +57,8 @@ DOMAIN,h-adashx.ut.taobao.com,REJECT-DROP
 #京东
 #^https:\/\/m\.360buyimg\.com\/(mobilecms|babel)\/.+\.jpg$ reject
 
-#松果
-^https:\/\/api.songguo7.com\/(\w{3})?mp\/v2\/misc\/toast reject
+# 松果出行
+^https:\/\/api\.songguo7\.com\/(\w{3})?mp\/v2\/misc\/(toast|user_operate_info|unlock_without_order|unlock_operate_info) reject-dict
 
 #高德地图 暂停更新
 ^https?:\/\/m\d\.amap\.com\/ws\/valueadded\/ reject
