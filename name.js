@@ -195,6 +195,7 @@ async function queryIpApi(proxy) {
     }else {
         const timeout = 400;
     };
+    console.log($arguments['timeout'])
     const timeoutPromise = new Promise((_, reject) => {
       setTimeout(() => {
         reject(new Error("请求超时"));
