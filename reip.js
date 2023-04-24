@@ -102,7 +102,7 @@ async function operator(proxies) {
       }
     }));
 
-    await sleep(200); //等待
+    await sleep(250); //等待
     i += BATCH_SIZE;
   }
   // 去除重复的节点
