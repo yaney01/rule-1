@@ -16,12 +16,12 @@ async function operator(proxies) {
   const startTime = new Date(); // 获取当前时间作为开始时间
   console.log("初始节点个数 = " + proxies.length);
   console.log("超时时间 = " + timeout);
-  console.log("每一次处理的节点个数 = " + batch_size);
+  // console.log("每一次处理的节点个数 = " + batch_size);
   // console.log("proxies = " + JSON.stringify(proxies));
-
+  console.log("国旗 = " + flag)
   const support = (isLoon || isQX || (isSurge && parseInt($environment['surge-build']) >= 2000));
   if (!support) {
-    $.error(`🚫IP Flag only supports Loon and Surge!`);
+    $.error(`IP Flag only supports Loon and Surge!!!!`);
     return proxies;
   }
 
@@ -32,11 +32,11 @@ async function operator(proxies) {
       try {
         // 查询入口IP信息
         const in_info = await queryDNSInfo(proxy.server);
-        // console.log(proxy.server + "in节点信息 = " + JSON.stringify(in_info));
+        // // console.log(proxy.server + "in节点信息 = " + JSON.stringify(in_info));
 
         // 查询出口IP信息
         const out_info = await queryIpApi(proxy);
-        // console.log(proxy.server + "out节点信息 = " + JSON.stringify(out_info));
+        // // console.log(proxy.server + "out节点信息 = " + JSON.stringify(out_info));
 
         // 节点重命名为：旗帜|策略|序号
         // const type = in_info.data === out_info.query ? "直连" : "中转";
@@ -47,7 +47,7 @@ async function operator(proxies) {
         // proxy.qc = in_info.data + DELIMITER + out_info.query;
         proxy.qc = in_info + DELIMITER + out_info.query;
       } catch (err) {
-        console.log(`err 02 =${err}`);
+        // console.log(`err 02 =${err}`);
       }
     }));
 
@@ -57,19 +57,19 @@ async function operator(proxies) {
   // console.log("💰💕去重前的节点信息 = " + JSON.stringify(proxies));
   // 去除重复的节点
   proxies = removeDuplicateName(proxies);
-  console.log("去重后的节点信息 = " + JSON.stringify(proxies));
+  // console.log("去重后的节点信息 = " + JSON.stringify(proxies));
   console.log(`去重后的节点个数 = ${proxies.length}`);
 
   // 去除去重时添加的qc属性: ip 与 dns解析ip
   proxies = removeqcName(proxies);
-  console.log("去qc后的节点信息 = " + JSON.stringify(proxies));
+  // console.log("去qc后的节点信息 = " + JSON.stringify(proxies));
   
   // 加序号
   const processedProxies = processProxies(proxies);
   
   // 排序
   const sortedProxies = sortProxies(proxies);
-  console.log("排序后的节点信息 = " + JSON.stringify(proxies));
+  // console.log("排序后的节点信息 = " + JSON.stringify(proxies));
 
   const endTime = new Date(); // 获取当前时间作为结束时间
   const timeDiff = endTime.getTime() - startTime.getTime(); // 获取时间差（以毫秒为单位）
@@ -100,7 +100,7 @@ async function queryDNSInfo(server) {
         reject(new Error(data.message));
       }
     }).catch(err => {
-      console.log("💕err 03 =" + err);
+      // console.log("💕err 03 =" + err);
       reject(err);
     });
   });
@@ -139,7 +139,7 @@ async function queryIpApi(proxy) {
           reject(new Error(data.message));
         }
       }).catch(err => {
-        console.log("💕err 01 =" + err);
+        // console.log("💕err 01 =" + err);
         reject(err);
       });
     // 超时处理
