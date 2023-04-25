@@ -63,11 +63,25 @@ async function operator(proxies) {
   proxies = removeqcName(proxies);
   console.log("✅💕去qc后的节点信息 = " + JSON.stringify(proxies));
   // 加个序号
+  // for (let j = 0; j < proxies.length; j++) {
+  //   const index = (j + 1).toString().padStart(2, '0');
+  //   proxies[j].name = proxies[j].name + DELIMITER + index;
+  // }
+  let proxyCountries = {};
   for (let j = 0; j < proxies.length; j++) {
-    const index = (j + 1).toString().padStart(2, '0');
-    proxies[j].name = proxies[j].name + DELIMITER + index;
+    const country = proxies[j].name.match(/^.+/)[0];
+    if (proxyCountries[country] === undefined) {
+      proxyCountries[country] = 1;
+    } else {
+      proxyCountries[country]++;
+    }
+    const index = proxyCountries[country].toString().padStart(2, '0');
+    proxies[j].name = country + ' ' + index;
   }
 
+  proxies.sort((a, b) => {
+    return proxies.indexOf(a) - proxies.indexOf(b);
+  });
   const endTime = new Date(); // 获取当前时间作为结束时间
   const timeDiff = endTime.getTime() - startTime.getTime(); // 获取时间差（以毫秒为单位）
   console.log(`✅💕方法总耗时: ${timeDiff / 1000} seconds`); // 将时间差转换为秒并打印到控制台上
