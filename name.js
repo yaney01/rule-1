@@ -46,7 +46,6 @@ class ResourceCache {
     this._persist();}
 }
 const resourceCache = new ResourceCache(CACHE_EXPIRATION_TIME_MS);
-// const DELIMITER = " "; // 分隔符
 const {isLoon, isSurge, isQX} = $substore.env;
  // 节点转换的目标类型
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
@@ -102,13 +101,6 @@ async function operator(proxies) {
 //   console.log("🍉🍉恢复后的节点信息 = " + JSON.stringify(proxies));
 //   console.log(`✅💕去重后的节点个数 = ${proxies.length}`);
 // 再加个序号 01 02 ...
-/*
-  for (let j = 0; j < proxies.length; j++) {
-    const index = (j + 1).toString().padStart(2, '0');
-    proxies[j].name = proxies[j].name + DELIMITER + index;
-  }
-*/
-
 let proxyCountries = {};
 for (let j = 0; j < proxies.length; j++) {
   //name.split() 匹配不到空格
