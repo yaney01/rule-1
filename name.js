@@ -4,7 +4,7 @@
 // 例如： https://keywos.cf/name.js#timeout=1000  为1秒
 // 多个参数 & 连接 https://keywos.cf/name.js#timeout=1000&flag  加国旗+超时1s
 // 奶茶姐：https://raw.githubusercontent.com/fmz200/wool_scripts/main/scripts/server_rename.js
-// 脚本作用：在SubStore内对节点重命名为：旗帜|地区代码|地区名称|IP|序号，
+// 脚本作用：在SubStore内对节点重命名为：旗帜可选  地区 序号，
 // 使用方法：SubStore内选择“脚本操作”，然后填写上面的脚本地址
 // 支持平台：目前只支持Loon，Surge 更新时间：2023.04.25
 const RESOURCE_CACHE_KEY = '#sub-store-cached-resource';
