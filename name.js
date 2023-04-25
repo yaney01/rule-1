@@ -103,7 +103,6 @@ async function operator(proxies) {
 // 再加个序号 01 02 ...
 let proxyCountries = {};
 for (let j = 0; j < proxies.length; j++) {
-  //name.split() 匹配不到空格
   const country = proxies[j].name.match(/^.+/)[0];
   if (proxyCountries[country] === undefined) {
     proxyCountries[country] = 1;
@@ -113,7 +112,10 @@ for (let j = 0; j < proxies.length; j++) {
   const index = proxyCountries[country].toString().padStart(2, '0');
   proxies[j].name = country + ' ' + index;
 }
- 
+proxies.sort((a, b) => {
+  return proxies.indexOf(a) - proxies.indexOf(b);
+});
+
 // $.write(JSON.stringify(nodes), "#sub-store-nodes");
   return proxies;
 }
