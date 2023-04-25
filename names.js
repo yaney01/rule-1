@@ -39,8 +39,6 @@ async function operator(proxies) {
         console.log(`err 02 =${err}`);
       }
     }));
-
-    // await sleep(300);
     i += batch_size;
   }
   // console.log("💰💕去重前的节点信息 = " + JSON.stringify(proxies));
@@ -48,25 +46,19 @@ async function operator(proxies) {
   proxies = removeDuplicateName(proxies);
   // console.log("去重后的节点信息 = " + JSON.stringify(proxies));
   console.log(`去重后个数 = ${proxies.length}`);
-
   // 去除去重时添加的qc属性: ip 与 dns解析ip
   proxies = removeqcName(proxies);
   // console.log("去qc后的节点信息 = " + JSON.stringify(proxies));
-  
   // 加序号
   const processedProxies = processProxies(proxies);
-  
   // 排序
   const sp = sortProxies(proxies);
   // console.log("排序后的节点信息 = " + JSON.stringify(proxies));
-
   const endTime = new Date(); // 获取当前时间作为结束时间
   const timeDiff = endTime.getTime() - startTime.getTime(); // 获取时间差（以毫秒为单位）
   console.log(`方法总耗时 = ${timeDiff / 1000} 秒`); // 将时间差转换为秒并打印到控制台上
-
   return proxies;
 }
-
 //查询入口 阿里dns 不返回国家信息 速度快 去重够用
 async function queryDNSInfo(server) {
   return new Promise((resolve, reject) => {
@@ -94,7 +86,6 @@ async function queryDNSInfo(server) {
     });
   });
 }
-
 // 查询落地ip
 async function queryIpApi(proxy) {
   return new Promise((resolve, reject) => {
@@ -138,7 +129,6 @@ async function queryIpApi(proxy) {
       });
   });
 }
-
 function removeDuplicateName(arr){const nameSet=new Set;const result=[];for(const e of arr){if(e.qc&&!nameSet.has(e.qc)){nameSet.add(e.qc);result.push(e)}}return result}
 function removeqcName(arr){const nameSet=new Set;const result=[];for(const e of arr){if(!nameSet.has(e.qc)){nameSet.add(e.qc);const modifiedE={...e};delete modifiedE.qc;result.push(modifiedE)}}return result}
 function processProxies(proxies){let prs={};for(let j=0;j<proxies.length;j++){const country=proxies[j].name.match(/^.+/)[0];if(prs[country]===undefined){prs[country]=1}else{prs[country]++}const index=prs[country].toString().padStart(2,"0");proxies[j].name=country+" "+index}return proxies}
