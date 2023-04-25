@@ -46,7 +46,7 @@ class ResourceCache {
     this._persist();}
 }
 const resourceCache = new ResourceCache(CACHE_EXPIRATION_TIME_MS);
-const DELIMITER = " "; // 分隔符
+// const DELIMITER = " "; // 分隔符
 const {isLoon, isSurge, isQX} = $substore.env;
  // 节点转换的目标类型
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
@@ -79,7 +79,7 @@ async function operator(proxies) {
         // https://keywos.cf/name.js#flag
         // argument传入 flag 时候，添加国旗
         if ($arguments.flag) {
-            proxy.name = getFlagEmoji(countryCode) + DELIMITER + out_info.country;
+            proxy.name = getFlagEmoji(countryCode) + ' ' + out_info.country;
         }else {
             proxy.name = out_info.country;   
         };
@@ -102,25 +102,26 @@ async function operator(proxies) {
 //   console.log("🍉🍉恢复后的节点信息 = " + JSON.stringify(proxies));
 //   console.log(`✅💕去重后的节点个数 = ${proxies.length}`);
 // 再加个序号 01 02 ...
-
+/*
   for (let j = 0; j < proxies.length; j++) {
     const index = (j + 1).toString().padStart(2, '0');
     proxies[j].name = proxies[j].name + DELIMITER + index;
   }
+*/
 
-/*
 let proxyCountries = {};
 for (let j = 0; j < proxies.length; j++) {
-  const country = proxies[j].name.split(DELIMITER)[0];
+  //name.split() 匹配不到空格
+  const country = proxies[j].name.match(/^.+/)[0];
   if (proxyCountries[country] === undefined) {
     proxyCountries[country] = 1;
   } else {
     proxyCountries[country]++;
   }
   const index = proxyCountries[country].toString().padStart(2, '0');
-  proxies[j].name = country + DELIMITER + index;
+  proxies[j].name = country + ' ' + index;
 }
- */
+ 
 // $.write(JSON.stringify(nodes), "#sub-store-nodes");
   return proxies;
 }
