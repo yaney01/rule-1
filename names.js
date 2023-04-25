@@ -69,7 +69,7 @@ async function operator(proxies) {
   const processedProxies = processProxies(proxies);
   
   // 排序
-  const sortedProxies = sortProxies(proxies);
+  const sp = sortProxies(proxies);
   // console.log("排序后的节点信息 = " + JSON.stringify(proxies));
 
   const endTime = new Date(); // 获取当前时间作为结束时间
@@ -153,6 +153,6 @@ async function queryIpApi(proxy) {
 
 function removeDuplicateName(arr){const nameSet=new Set;const result=[];for(const e of arr){if(e.qc&&!nameSet.has(e.qc)){nameSet.add(e.qc);result.push(e)}}return result}
 function removeqcName(arr){const nameSet=new Set;const result=[];for(const e of arr){if(!nameSet.has(e.qc)){nameSet.add(e.qc);const modifiedE={...e};delete modifiedE.qc;result.push(modifiedE)}}return result}
-function processProxies(proxies){let proxyCountries={};for(let j=0;j<proxies.length;j++){const country=proxies[j].name.match(/^.+/)[0];if(proxyCountries[country]===undefined){proxyCountries[country]=1}else{proxyCountries[country]++}const index=proxyCountries[country].toString().padStart(2,"0");proxies[j].name=country+" "+index}return proxies}
-function sortProxies(proxies){const reference=proxies[0].name.split("|")[0];proxies.sort(((a,b)=>{const aPrefix=a.name.split("|")[0];const bPrefix=b.name.split("|")[0];if(aPrefix===reference&&bPrefix!==reference)return-1;if(bPrefix===reference&&aPrefix!==reference)return 1;return a.name.localeCompare(b.name)}));return proxies}
+function processProxies(proxies){let prs={};for(let j=0;j<proxies.length;j++){const country=proxies[j].name.match(/^.+/)[0];if(prs[country]===undefined){prs[country]=1}else{prs[country]++}const index=prs[country].toString().padStart(2,"0");proxies[j].name=country+" "+index}return proxies}
+function sortProxies(proxies){const r=proxies[0],s=[r],t=proxies.filter((e,t)=>0!==t);t.sort((e,t)=>e.name.localeCompare(t.name));let e=0;while(e<t.length){const n=t[e],o=[n];let i=e+1;while(i<t.length&&t[i].name===n.name){o.push(t[i]),i++}n.name===r.name?s.unshift(...o.slice(1)):o.sort((e,t)=>e.name.localeCompare(t.name)),s.push(...o),e=i}}
 function getFlagEmoji(countryCode){const codePoints=countryCode.toUpperCase().split("").map((char=>127397+char.charCodeAt()));return String.fromCodePoint(...codePoints).replace(/🇹🇼/g,"🇨🇳")}
