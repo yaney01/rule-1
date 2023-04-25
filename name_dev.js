@@ -9,6 +9,8 @@ const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 const timeout = $arguments['timeout'] ? $arguments['timeout'] : 4000;
 // argument传入 flag 时候，添加国旗
 const flag = $arguments['flag'];
+// argument传入 zz 时候，添加中转or直连
+const zz = $arguments['zz'];
 // 每一次处理的节点个数
 const batch_size = $arguments['batch']? $arguments['batch'] : 20;
 
@@ -18,10 +20,10 @@ async function operator(proxies) {
   console.log("超时时间 = " + timeout);
   // console.log("每一次处理的节点个数 = " + batch_size);
   // console.log("proxies = " + JSON.stringify(proxies));
-  console.log("国旗 = " + flag)
+  console.log("国旗 = " + flag);
   const support = (isLoon || isQX || (isSurge && parseInt($environment['surge-build']) >= 2000));
   if (!support) {
-    $.error(`IP Flag only supports Loon and Surge!!!!`);
+    $.error(`Only supports Loon and Surge!!!`);
     return proxies;
   }
 
@@ -41,8 +43,8 @@ async function operator(proxies) {
         // 节点重命名为：旗帜|策略|序号
         // const type = in_info.data === out_info.query ? "直连" : "中转";
         const type = in_info === out_info.query ? "直连" : "中转";
-        proxy.name = getFlagEmoji(out_info.countryCode) + DELIMITER + type + "->" + out_info.country;
-
+        // proxy.name = getFlagEmoji(out_info.countryCode) + DELIMITER + type + "->" + out_info.country;
+        proxy.name = flag ? getFlagEmoji(out_info.countryCode) + DELIMITER + type + "->" + out_info.country : (zz ? type + "->" + out_info.country : out_info.country);
         // 新增一个去重用字段，该字段重复那就是重复节点：入口IP|出口IP
         // proxy.qc = in_info.data + DELIMITER + out_info.query;
         proxy.qc = in_info + DELIMITER + out_info.query;
