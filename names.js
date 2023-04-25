@@ -16,16 +16,6 @@ const batch_size = $arguments['batch']? $arguments['batch'] : 20;
 async function operator(proxies) {
   const startTime = new Date(); // 获取当前时间作为开始时间
   console.log("初始节点数 = " + proxies.length);
-  // console.log("设置超时时间 = " + timeout);
-  // console.log("每一次处理的节点个数 = " + batch_size);
-  // console.log("proxies = " + JSON.stringify(proxies));
-  // console.log("国旗 = " + flag);
-  // const support = (isLoon || isQX || isSurge);
-  // if (!support) {
-  //   $.error(`Only supports Loon and Surge!!!`);
-  //   return proxies;
-  // }
-
   let i = 0;
   while (i < proxies.length) {
     const batch = proxies.slice(i, i + batch_size);
@@ -34,11 +24,9 @@ async function operator(proxies) {
         // 查询入口IP信息
         const in_info = await queryDNSInfo(proxy.server);
         // console.log(proxy.server + "in节点信息 = " + JSON.stringify(in_info));
-
         // 查询出口IP信息
         const out_info = await queryIpApi(proxy);
         // console.log(proxy.server + "out节点信息 = " + JSON.stringify(out_info));
-
         // 节点重命名为：旗帜|策略|序号
         // const type = in_info.data === out_info.query ? "直连" : "中转";
         const type = in_info === out_info.query ? "直连" : "中转";
@@ -48,7 +36,7 @@ async function operator(proxies) {
         // proxy.qc = in_info.data + DELIMITER + out_info.query;
         proxy.qc = in_info + "|" + out_info.query;
       } catch (err) {
-        // console.log(`err 02 =${err}`);
+        console.log(`err 02 =${err}`);
       }
     }));
 
@@ -101,7 +89,7 @@ async function queryDNSInfo(server) {
         reject(new Error(data.message));
       }
     }).catch(err => {
-      // console.log("💕err 03 =" + err);
+      console.log("err 03 =" + err);
       reject(err);
     });
   });
@@ -140,7 +128,7 @@ async function queryIpApi(proxy) {
           reject(new Error(data.message));
         }
       }).catch(err => {
-        // console.log("💕err 01 =" + err);
+        console.log("err 01 =" + err);
         reject(err);
       });
     // 超时处理
