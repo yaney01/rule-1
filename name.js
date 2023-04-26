@@ -43,7 +43,7 @@ async function operator(proxies) {
         // 新增一个去重用字段，该字段不显示在节点名字不需要修改 ,只用于去重, 重复那就是重复节点：入口IP|出口IP
         proxy.qc = in_info + "|" + out_info.query;
       } catch (err) { 
-        console.log(`err 02 =${err}`);
+        console.log(`err = ${err}`);
       }
     }));
     i += batch_size;
@@ -86,7 +86,7 @@ async function queryDNSInfo(server) {
         reject(new Error(data.message));
       }
     }).catch(err => {
-      console.log("err 03 =" + err);
+      console.log("err dns = " + err);
       reject(err);
     });
   });
@@ -106,7 +106,7 @@ async function queryIpApi(proxy) {
 
     const timeoutPromise = new Promise((_, reject) => {
       setTimeout(() => {
-        reject(new Error("请求超时"));
+        reject(new Error("请求超时,丢弃节点"));
       }, timeout);
     });
 
@@ -124,7 +124,7 @@ async function queryIpApi(proxy) {
           reject(new Error(data.message));
         }
       }).catch(err => {
-        console.log("err 01 =" + err);
+        console.log("err api = " + err);
         reject(err);
       });
     // 超时处理
