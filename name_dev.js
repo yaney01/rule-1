@@ -41,7 +41,7 @@ async function operator(proxies) {
         
          //proxy.name = getFlagEmoji(out_info.countryCode) + ' ' + type + "->" + out_info.country;
         //proxy.name = flag ? getFlagEmoji(out_info.countryCode) + " " + type + "->" + out_info.country : out_info.country;        
-        proxy.name = flag ? getFlagEmoji(out_info.countryCode) + " " + (in_info === out_info.query ? "直连" : "中转") + "->" + out_info.country : out_info.country;
+        proxy.name = flag ? getFlagEmoji(out_info.countryCode) + " " + (in_info === out_info.query ? "直连" : "中转") + "→" + out_info.country : out_info.country;
         
         // 新增一个去重用字段，该字段不显示在节点名字不需要修改 ,只用于去重, 重复那就是重复节点：入口IP|出口IP
         proxy.qc = in_info + "|" + out_info.query;
