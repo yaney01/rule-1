@@ -6,7 +6,7 @@
 // 奶茶姐：https://github.com/fmz200/wool_scripts/blob/main/scripts/rename_simple.js
 // 脚本作用：在SubStore内对节点重命名为：旗帜可选  地区 序号，
 // 使用方法：SubStore内选择“脚本操作”，然后填写上面的脚本地址
-// 支持平台：目前只支持Loon，Surge 更新时间：2023.04.26 4.45
+// 支持平台：目前只支持Loon，Surge ,不支持qx 因为qx目前不能指定节点更新时间：2023.04.26
 const $ = $substore;
 const {isLoon, isSurge, isQX} = $substore.env;
 // 节点转换的目标类型
