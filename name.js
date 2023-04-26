@@ -86,7 +86,7 @@ async function queryDNSInfo(server) {
         reject(new Error(data.message));
       }
     }).catch(err => {
-      console.log("err dns = " + err);
+      console.log("dns = " + err);
       reject(err);
     });
   });
@@ -124,7 +124,7 @@ async function queryIpApi(proxy) {
           reject(new Error(data.message));
         }
       }).catch(err => {
-        console.log("err api = " + err);
+        console.log("api = " + err);
         reject(err);
       });
     // 超时处理
