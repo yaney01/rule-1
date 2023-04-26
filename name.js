@@ -41,7 +41,7 @@ async function operator(proxies) {
         proxy.name = flag ? getFlagEmoji(out_info.countryCode) + " " + type + "->" + out_info.country : out_info.country;
         // 新增一个去重用字段，该字段重复那就是重复节点：入口IP|出口IP
         proxy.qc = in_info + "|" + out_info.query;
-      } catch (err) {
+      } catch (err) { 
         console.log(`err 02 =${err}`);
       }
     }));
