@@ -8,7 +8,6 @@
 // 使用方法：SubStore内选择“脚本操作”，然后填写上面的脚本地址
 // 支持平台：目前只支持Loon，Surge 更新时间：2023.04.26 4.45
 const $ = $substore;
-// const DELIMITER = "|"; // 分隔符
 const {isLoon, isSurge, isQX} = $substore.env;
 // 节点转换的目标类型
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
