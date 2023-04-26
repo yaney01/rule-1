@@ -26,7 +26,7 @@ https://github.com/Keywos/rule/raw/main/name.js
 
 ## timeout= : 
 * 传入每次测试节点的延迟,默认800ms
-* 例如 'timeout=1000' 为一秒
+* 例如 `timeout=1000` 为一秒
 
 
  
