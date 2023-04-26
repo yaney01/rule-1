@@ -31,7 +31,7 @@ https://github.com/Keywos/rule/raw/main/name.js
 
  
 # rename.js 示例: 
-* 支持 q s l
+* rename支持: q s l
 
 ```
 https://keywos.cf/rename.js#clear
