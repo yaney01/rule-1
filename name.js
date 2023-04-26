@@ -13,7 +13,7 @@ const {isLoon, isSurge, isQX} = $substore.env;
 // 节点转换的目标类型
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 // 判断传入超时 值，单位：ms
-const timeout = $arguments['timeout'] ? $arguments['timeout'] : 400;
+const timeout = $arguments['timeout'] ? $arguments['timeout'] : 800;
 // argument传入 flag 时候，添加国旗
 const flag = $arguments['flag'];
 // const zz = $arguments['zz'];
