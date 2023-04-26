@@ -8,7 +8,7 @@
 * [renameip.js](https://keywos.cf/name.js) : 联网: 入口ip->落地真实ip 去重并重命名
 
 
-## name.js 示例: 
+# name.js 示例: 
 
 * 不支持qx
   
@@ -20,7 +20,7 @@ https://keywos.cf/name.js#flag&timeout=1000
 https://github.com/Keywos/rule/raw/main/name.js
 ```
 
-## flag :
+##flag :
 * 每个节点添加: 国旗和 直连or中转
 * 例如 `flag` 国旗 中转->香港 01 ...
 
@@ -30,7 +30,7 @@ https://github.com/Keywos/rule/raw/main/name.js
 
 
  
-## rename.js 示例: 
+# rename.js 示例: 
 
 ```
 https://keywos.cf/rename.js#clear
