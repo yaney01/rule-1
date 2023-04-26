@@ -3,13 +3,34 @@
 
 * 未经允许禁用转载与传播,此库仅为个人备份
 
-## Rename 分为三个版本
-* [rename.js](https://keywos.cf/rename.js) : 本地批量重命名 速度最快
-* ##### 以下两个因为根据远程 ip 去重, 需要查询ip-api, 所以速度可能慢点,根据节点数量需要数十秒
-* [renameip.js](https://keywos.cf/renameip.js) : ip-api ip去重后,批量重命名
-* [reip.js](https://keywos.cf/reip.js) : ip-api ip 去重
+## Rename 分为两个版本
+* [rename.js](https://keywos.cf/rename.js) : 本地: 按原节点, 批量重命名, 速度最快
+* [renameip.js](https://keywos.cf/name.js) : 联网: 入口ip->落地真实ip 去重并重命名
 
-### 示例: 
+
+## name.js 示例: 
+
+* 不支持qx
+  
+```
+https://keywos.cf/name.js#flag
+
+https://keywos.cf/name.js#flag&timeout=1000
+
+https://github.com/Keywos/rule/raw/main/name.js
+```
+
+## flag :
+* 每个节点添加国旗和 直连or中转
+* 例如 `flag` 国旗 中转->香港 01 ...
+
+## timeout= : 
+* 传入每次测试节点的延迟,默认800ms
+* 例如 'timeout=1000' 为一秒
+
+
+ 
+## rename.js 示例: 
 
 ```
 https://keywos.cf/rename.js#clear
