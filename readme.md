@@ -10,7 +10,7 @@
 
 # name.js 示例: 
 
-* name不支持qx
+* name不支持q
   
 ```
 https://keywos.cf/name.js#flag
@@ -31,6 +31,7 @@ https://github.com/Keywos/rule/raw/main/name.js
 
  
 # rename.js 示例: 
+* 支持 q s l
 
 ```
 https://keywos.cf/rename.js#clear
