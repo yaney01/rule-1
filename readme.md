@@ -10,7 +10,7 @@
 
 # name.js 示例: 
 
-* 不支持qx
+* name不支持qx
   
 ```
 https://keywos.cf/name.js#flag
