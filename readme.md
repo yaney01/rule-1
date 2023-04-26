@@ -21,7 +21,7 @@ https://github.com/Keywos/rule/raw/main/name.js
 ```
 
 ## flag :
-* 每个节点添加国旗和 直连or中转
+* 每个节点添加: 国旗和 直连or中转
 * 例如 `flag` 国旗 中转->香港 01 ...
 
 ## timeout= : 
