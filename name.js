@@ -37,8 +37,10 @@ async function operator(proxies) {
         // 节点重命名为：旗帜|策略|序号
         // const type = in_info.data === out_info.query ? "直连" : "中转";
         const type = in_info === out_info.query ? "直连" : "中转";
+        
          //proxy.name = getFlagEmoji(out_info.countryCode) + ' ' + type + "->" + out_info.country;
         proxy.name = flag ? getFlagEmoji(out_info.countryCode) + " " + type + "->" + out_info.country : out_info.country;
+        
         // 新增一个去重用字段，该字段重复那就是重复节点：入口IP|出口IP
         proxy.qc = in_info + "|" + out_info.query;
       } catch (err) { 
