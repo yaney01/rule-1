@@ -58,16 +58,15 @@ async function operator(proxies) {
   // 去除重复的节点
   proxies = removeDuplicateName(proxies);
   // console.log("去重后的节点信息 = " + JSON.stringify(proxies));
-  console.log(`去重后个数 = ${proxies.length}`);
   // 加序号
   const processedProxies = processProxies(proxies);
   // console.log("排序后的节点信息 = " + JSON.stringify(proxies));
   // proxies = re(proxies);
-  console.log(`去重后个数 = ${proxies.length}`);
   // 去除去重时添加的qc属性: ip 与 dns解析ip
   proxies = removeqcName(proxies);
   // console.log("去qc后的节点信息 = " + JSON.stringify(proxies));
   // console.log("排序后的节点信息 = " + JSON.stringify(proxies));
+  console.log(`去重后个数 = ${proxies.length}`); 
   const endTime = new Date(); // 获取当前时间作为结束时间
   const timeDiff = endTime.getTime() - startTime.getTime(); // 获取时间差（以毫秒为单位）
   console.log(`方法总耗时 = ${timeDiff / 1000} 秒`); // 将时间差转换为秒并打印到控制台上
