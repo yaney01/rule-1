@@ -10,9 +10,11 @@
 const $ = $substore;
 const {isLoon, isSurge, isQX} = $substore.env;
 // console.log($substore.env)
+console.log("http.get = " + $.http.get)
 // {"isQX":false,"isLoon":false,"isSurge":true,"isNode":false,"isShadowRocket":false}
 // 节点转换的目标类型
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
+// console.log("target = " + target)
 // 判断传入超时 值，单位：ms
 const timeout = $arguments['timeout'] ? $arguments['timeout'] : 800;
 // argument传入 flag 时候，添加国旗
@@ -31,7 +33,7 @@ async function operator(proxies) {
       try {
         // 查询入口IP信息
         const in_info = await queryDNSInfo(proxy.server);
-        // console.log(proxy.server + "in节点信息 = " + JSON.stringify(in_info));
+        console.log(proxy.server + "in节点信息 = " + JSON.stringify(in_info));
         // 查询出口IP信息
         const out_info = await queryIpApi(proxy);
         // console.log(proxy.server + "out节点信息 = " + JSON.stringify(out_info));
@@ -83,7 +85,7 @@ async function queryDNSInfo(server) {
       } else if (data.Status === 3) {
         // 阿里dns Status: 3,失败，返回server
         // resolve(data.Question);
-        const ips = data.Question.name;
+        const ips = data.Question.name.slice(0, -1);
         resolve(ips);
       } else {
         reject(new Error(data.message));
