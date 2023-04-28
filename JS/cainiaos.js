@@ -1,5 +1,4 @@
 var okk = JSON.parse($response.body);
-console.log($response.body);
 if (okk) {
   if (/cainiao\.nbpresentation\.protocol\.homepage\.get\.cn/.test(
     $request.url
