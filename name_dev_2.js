@@ -25,10 +25,10 @@ async function operator(proxies) {
 
           // proxy.name = out_info.country;
 
-          // const type = in_info === out_info.ip ? "直连" : "中转";
-          // proxy.name = getFlagEmoji(out_info.cc) + " " + type + "→" + out_info.country;
+        //    const type = in_info === out_info.ip ? out_info.cc : "CN";
+        //   proxy.name = getFlagEmoji(out_info.cc) + " " + type + "→" + out_info.cc;
             
-          proxy.name = flag ? getFlagEmoji(out_info.cc) + " " + (in_info === out_info.ip ? "直连" : "中转") + "→" + out_info.country : out_info.country;
+          proxy.name = flag ? getFlagEmoji(out_info.cc) + " " + (in_info === out_info.ip ? out_info.cc : "CN") + "→" + out_info.country : out_info.country;
 
           // 新增一个去重用字段，该字段不显示在节点名字不需要修改 ,只用于去重, 重复那就是重复节点：入口IP|出口IP
           proxy.qc = in_info + "|" + out_info.ip;
