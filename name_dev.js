@@ -9,12 +9,12 @@
 // 支持平台：目前只支持Loon，Surge ,不支持qx 因为qx目前不能指定节点更新时间：2023.04.26
 
 const $ = $substore;
-const { isLoon, isSurge, isQX } = $substore.env;
+const { isLoon, isSurge, isQX, isNode} = $substore.env;
 // console.log($substore.env)
 // console.log("http.get = " + $.http.get)
 // {"isQX":false,"isLoon":false,"isSurge":true,"isNode":false,"isShadowRocket":false}
 // 节点转换的目标类型
-const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
+const target = isLoon ? "Loon" : isSurge ? "Surge" : isNode ? "Node" : isQX ? "QX" : undefined;
 
 // 判断传入超时 值，单位：ms
 const timeout = $arguments["timeout"] ? $arguments["timeout"] : 800;
@@ -26,7 +26,8 @@ const batch_size = $arguments["batch"] ? $arguments["batch"] : 20;
 
 async function operator(proxies) {
   const startTime = new Date(); // 获取当前时间作为开始时间
-  console.log("初始节点数 = " + proxies.length);
+  const prs = proxies.length //初始节点数
+  // console.log("初始节点数 = " + proxies.length);
   let i = 0;
   while (i < proxies.length) {
     const batch = proxies.slice(i, i + batch_size);
@@ -36,10 +37,11 @@ async function operator(proxies) {
           // 查询入口IP信息
           const in_info = await queryDNSInfo(proxy.server);
           // console.log(proxy.server + "in节点ip = " + JSON.stringify(in_info));
+         
           // 查询出口IP信息
           const out_info = await queryIpApi(proxy);
           // console.log(proxy.server + "out节点信息 = " + JSON.stringify(out_info));
-          // 节点重命名为：旗帜|策略|序号
+          
           // const type = in_info === out_info.query ? "直连" : "中转";
           // proxy.name = out_info.country;
           // proxy.name = getFlagEmoji(out_info.countryCode) + " " + type + "→" + out_info.country;
@@ -55,18 +57,18 @@ async function operator(proxies) {
     );
     i += batch_size;
   }
-    // console.log("💰💕去重前的节点信息 = " + JSON.stringify(proxies));
+  // console.log("💰💕去重前的节点信息 = " + JSON.stringify(proxies));
   // 去除重复的节点
   proxies = removeDuplicateName(proxies);
   // console.log("去重后的节点信息 = " + JSON.stringify(proxies));
   // 加序号
   const processedProxies = processProxies(proxies);
   // console.log("排序后的节点信息 = " + JSON.stringify(proxies));
-  // proxies = re(proxies);
+  //!! proxies = re(proxies);
   // 去除去重时添加的qc属性: ip 与 dns解析ip
   proxies = removeqcName(proxies);
   // console.log("去qc后的节点信息 = " + JSON.stringify(proxies));
-  // console.log("排序后的节点信息 = " + JSON.stringify(proxies));
+  console.log(`初始节点数 = `+ prs); 
   console.log(`去重后个数 = ${proxies.length}`); 
   const endTime = new Date(); // 获取当前时间作为结束时间
   const timeDiff = endTime.getTime() - startTime.getTime(); // 获取时间差（以毫秒为单位）
@@ -100,8 +102,8 @@ async function queryIpApi(proxy) {
     const url = `http://ip-api.com/json?lang=zh-CN&fields=status,message,country,countryCode,city,query`;
     let node = ProxyUtils.produce([proxy], target);
     // console.log(" node 节点 "+node)
-    // Loon 需要去掉节点名字
-    // if (isLoon) {
+   
+    // if (isLoon) { // 已支持
     //   node = node.substring(node.indexOf("=") + 1);
     // }
     // QX只要tag的名字，目前QX本身不支持
@@ -114,8 +116,7 @@ async function queryIpApi(proxy) {
     });
 
     const queryPromise = $.http
-      .get({
-        url,
+      .get({ url,
         // opts: opts, // QX的写法
         node: node, // Loon和Surge IOS
         "policy-descriptor": node, // Surge MAC
