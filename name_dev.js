@@ -99,7 +99,7 @@ async function queryIpApi(proxy) {
   return new Promise((resolve, reject) => {
     const url = `http://ip-api.com/json?lang=zh-CN&fields=status,message,country,countryCode,city,query`;
     let node = ProxyUtils.produce([proxy], target);
-    console.log(" node 节点 "+node)
+    // console.log(" node 节点 "+node)
     // Loon 需要去掉节点名字
     // if (isLoon) {
     //   node = node.substring(node.indexOf("=") + 1);
