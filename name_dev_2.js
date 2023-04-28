@@ -21,7 +21,7 @@ async function operator(proxies) {
          
           // 查询出口IP信息
           const out_info = await queryIpApi(proxy);
-        //   console.log(proxy.server + "out节点信息 = " + JSON.stringify(out_info));
+          //   console.log(proxy.server + "out节点信息 = " + JSON.stringify(out_info));
 
           // proxy.name = out_info.country;
 
