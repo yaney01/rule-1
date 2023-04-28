@@ -51,7 +51,7 @@ function operator(proxies) {
           //  const countryFlag = getFlagEmoji(us[Object.keys(countries).indexOf(elem)]);
           //  resultArray.push(getFlagEmoji(us[Object.keys(countries).indexOf(elem)]) +' '+ countries[elem][0])
           if (addflag) {
-            resultArray.push(getFlagEmoji(us[Object.keys(countries).indexOf(elem)]) + countries[elem][0]);
+            resultArray.push(getFlagEmoji(us[Object.keys(countries).indexOf(elem)]) + ' ' + countries[elem][0]);
           } else {
             resultArray.push(countries[elem][0]);
           }if(bl){ // others
