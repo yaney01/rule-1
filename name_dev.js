@@ -9,12 +9,12 @@
 // 支持平台：目前只支持Loon，Surge ,不支持qx 因为qx目前不能指定节点更新时间：2023.04.26
 
 const $ = $substore;
-const { isLoon, isSurge, isQX, isNode} = $substore.env;
+const { isLoon, isSurge, isQX} = $substore.env;
 // console.log($substore.env)
 // console.log("http.get = " + $.http.get)
 // {"isQX":false,"isLoon":false,"isSurge":true,"isNode":false,"isShadowRocket":false}
 // 节点转换的目标类型
-const target = isLoon ? "Loon" : isSurge ? "Surge" : isNode ? "Node" : isQX ? "QX" : undefined;
+const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 
 // 判断传入超时 值，单位：ms
 const timeout = $arguments["timeout"] ? $arguments["timeout"] : 800;
