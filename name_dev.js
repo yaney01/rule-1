@@ -1,7 +1,7 @@
-// @key修改@奶茶姐 update 2023.4.28 -6 测试!!! 优化速度 alidns-解析入口ip + ip-api-解析落地ip 节点去重重命名为： 旗帜(可选) 地区 序号
+// @key修改@奶茶姐 update 2023.4.28 -7 测试!!! 优化速度 alidns-解析入口ip + ip-api-解析落地ip 节点去重重命名为： 旗帜(可选) 地区 序号
 // argument传入： flag 时候，添加国旗，默认不添加，例如： https://keywos.cf/name.js#flag
-// argument传入： timeout=数字（单位ms） 设置节点ping超时时间 不传入参数默认为800ms
-// 例如： https://keywos.cf/name.js#timeout=1000  为1秒
+// argument传入： timeout=数字（单位ms） 设置节点ping超时时间 不传入参数默认为1000ms
+// 例如： https://keywos.cf/name.js#timeout=2000  为1秒
 // 多个参数 & 连接 https://keywos.cf/name.js#timeout=1000&flag  加国旗+超时1s
 // 奶茶姐：https://github.com/fmz200/wool_scripts/blob/main/scripts/rename_simple.js
 // 脚本作用：在SubStore内对节点重命名为：旗帜可选  地区 序号，
