@@ -1,5 +1,6 @@
 
 var okk = JSON.parse($response.body);
+console.log($response.body)
 if (okk) {
   switch (true) {
     case /cainiao\.nbpresentation\.protocol\.homepage\.get\.cn/.test(
