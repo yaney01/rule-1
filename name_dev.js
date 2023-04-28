@@ -62,7 +62,7 @@ async function operator(proxies) {
   // 加序号
   const processedProxies = processProxies(proxies);
   // console.log("排序后的节点信息 = " + JSON.stringify(proxies));
-  //!! proxies = re(proxies);
+  // proxies = re(proxies);
   // 去除去重时添加的qc属性: ip 与 dns解析ip
   proxies = removeqcName(proxies);
   // console.log("去qc后的节点信息 = " + JSON.stringify(proxies));
