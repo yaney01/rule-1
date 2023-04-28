@@ -10,9 +10,6 @@
 
 const $ = $substore;
 const { isLoon, isSurge, isQX} = $substore.env;
-// console.log($substore.env)
-// console.log("http.get = " + $.http.get)
-// {"isQX":false,"isLoon":false,"isSurge":true,"isNode":false,"isShadowRocket":false}
 // 节点转换的目标类型
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 
