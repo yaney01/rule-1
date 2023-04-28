@@ -1,4 +1,4 @@
-// @key修改@奶茶姐 update 2023.4.28 -2 测试!!! 优化速度 alidns-解析入口ip + ip-api-解析落地ip 节点去重重命名为： 旗帜(可选) 地区 序号
+// @key修改@奶茶姐 update 2023.4.28 -3 测试!!! 优化速度 alidns-解析入口ip + ip-api-解析落地ip 节点去重重命名为： 旗帜(可选) 地区 序号
 // argument传入： flag 时候，添加国旗，默认不添加，例如： https://keywos.cf/name.js#flag
 // argument传入： timeout=数字（单位ms） 设置节点ping超时时间 不传入参数默认为800ms
 // 例如： https://keywos.cf/name.js#timeout=1000  为1秒
@@ -7,6 +7,7 @@
 // 脚本作用：在SubStore内对节点重命名为：旗帜可选  地区 序号，
 // 使用方法：SubStore内选择"脚本操作"，然后填写上面的脚本地址
 // 支持平台：目前只支持Loon，Surge ,不支持qx 因为qx目前不能指定节点更新时间：2023.04.26
+
 const $ = $substore;
 const { isLoon, isSurge, isQX } = $substore.env;
 // console.log($substore.env)
@@ -14,7 +15,7 @@ const { isLoon, isSurge, isQX } = $substore.env;
 // {"isQX":false,"isLoon":false,"isSurge":true,"isNode":false,"isShadowRocket":false}
 // 节点转换的目标类型
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
-// console.log("target = " + target)
+
 // 判断传入超时 值，单位：ms
 const timeout = $arguments["timeout"] ? $arguments["timeout"] : 800;
 // argument传入 flag 时候，添加国旗
@@ -58,7 +59,7 @@ async function operator(proxies) {
   // 去除重复的节点
   proxies = removeDuplicateName(proxies);
   // console.log("去重后的节点信息 = " + JSON.stringify(proxies));
-  console.log(`去重后个数 = ${proxies.length}`);
+  // console.log(`去重后个数 = ${proxies.length}`);
   // 加序号
   const processedProxies = processProxies(proxies);
   // console.log("排序后的节点信息 = " + JSON.stringify(proxies));
@@ -75,7 +76,7 @@ async function operator(proxies) {
 }
 //查询入口 阿里dns 不返回国家信息 速度快 去重够用
 async function queryDNSInfo(server) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const ips = server;
     const url = `http://223.5.5.5/resolve?name=${server}&type=A&short=1`;
     $.http
@@ -99,13 +100,13 @@ async function queryIpApi(proxy) {
   return new Promise((resolve, reject) => {
     const url = `http://ip-api.com/json?lang=zh-CN&fields=status,message,country,countryCode,city,query`;
     let node = ProxyUtils.produce([proxy], target);
-
+    console.log(" node 节点 "+node)
     // Loon 需要去掉节点名字
-    if (isLoon) {
-      node = node.substring(node.indexOf("=") + 1);
-    }
+    // if (isLoon) {
+    //   node = node.substring(node.indexOf("=") + 1);
+    // }
     // QX只要tag的名字，目前QX本身不支持
-    const opts = { policy: node.substring(node.lastIndexOf("=") + 1) };
+    // const opts = { policy: node.substring(node.lastIndexOf("=") + 1) };
 
     const timeoutPromise = new Promise((_, reject) => {
       setTimeout(() => {
@@ -116,7 +117,7 @@ async function queryIpApi(proxy) {
     const queryPromise = $.http
       .get({
         url,
-        opts: opts, // QX的写法
+        // opts: opts, // QX的写法
         node: node, // Loon和Surge IOS
         "policy-descriptor": node, // Surge MAC
       })
