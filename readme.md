@@ -5,7 +5,7 @@
 
 ## Rename 分为两个版本
 * [rename.js](https://keywos.cf/rename.js) : 本地: 按原节点, 批量重命名, 速度最快
-* [renameip.js](https://keywos.cf/name.js) : 联网: 入口ip->落地真实ip 去重并重命名
+* [name.js](https://keywos.cf/name.js) : 联网: 入口ip->落地真实ip 去重并重命名
 
 
 # name.js 示例: 
@@ -25,7 +25,7 @@ https://github.com/Keywos/rule/raw/main/name.js
 * 例如 `flag` 国旗 中转->香港 01 ...
 
 ## timeout= : 
-* 传入每次测试节点的延迟,默认800ms
+* 传入每次测试节点的延迟,默认1000ms
 * 例如 `timeout=1000` 为一秒
 
 
