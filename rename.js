@@ -11,7 +11,7 @@ const nx = $arguments["nx"];
 const clear = $arguments["clear"];
 // bl: -------保留家宽 ，IPLC 之类的
 const bl = $arguments["bl"];
-// name: -----添加机场名前缀
+// name=: -----添加机场名前缀
 const jcname = $arguments.name == undefined ? "" : decodeURI($arguments.name);
 const namenx = /(高倍|((?!.*(1|0\.\d))\d+倍|x|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰))/i;
 const nameclear =/(套餐|到期|有效|剩余|版本|已用|过期|失联|测试|官方|网址|备用|群|TEST|客服|网站|获取|订阅|流量|机场|下次|官址|联系|邮箱|工单|USE|USED|TOTAL|EXPIRE|EMAIL)/i;
