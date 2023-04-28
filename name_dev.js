@@ -1,4 +1,4 @@
-// @key修改@奶茶姐 update 2023.4.28 -3 测试!!! 优化速度 alidns-解析入口ip + ip-api-解析落地ip 节点去重重命名为： 旗帜(可选) 地区 序号
+// @key修改@奶茶姐 update 2023.4.28 -4 测试!!! 优化速度 alidns-解析入口ip + ip-api-解析落地ip 节点去重重命名为： 旗帜(可选) 地区 序号
 // argument传入： flag 时候，添加国旗，默认不添加，例如： https://keywos.cf/name.js#flag
 // argument传入： timeout=数字（单位ms） 设置节点ping超时时间 不传入参数默认为800ms
 // 例如： https://keywos.cf/name.js#timeout=1000  为1秒
@@ -59,16 +59,19 @@ async function operator(proxies) {
   // 去除重复的节点
   proxies = removeDuplicateName(proxies);
   // console.log("去重后的节点信息 = " + JSON.stringify(proxies));
+<<<<<<< HEAD
   // console.log(`去重后个数 = ${proxies.length}`);
+=======
+>>>>>>> 67e6141d95d1a835cb782612514d32063fc6536e
   // 加序号
   const processedProxies = processProxies(proxies);
   // console.log("排序后的节点信息 = " + JSON.stringify(proxies));
   // proxies = re(proxies);
-  console.log(`去重后个数 = ${proxies.length}`);
   // 去除去重时添加的qc属性: ip 与 dns解析ip
   proxies = removeqcName(proxies);
   // console.log("去qc后的节点信息 = " + JSON.stringify(proxies));
   // console.log("排序后的节点信息 = " + JSON.stringify(proxies));
+  console.log(`去重后个数 = ${proxies.length}`); 
   const endTime = new Date(); // 获取当前时间作为结束时间
   const timeDiff = endTime.getTime() - startTime.getTime(); // 获取时间差（以毫秒为单位）
   console.log(`方法总耗时 = ${timeDiff / 1000} 秒`); // 将时间差转换为秒并打印到控制台上
