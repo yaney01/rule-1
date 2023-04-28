@@ -35,7 +35,7 @@ if (okk) {
       break;
     case /cainiao\.guoguo\.nbnetflow\.ads\.index\.cn/.test($request.url):
       // 底部商品推广
-      okk.data.result = [{}];
+      okk.data.result = [];
       break;
     default:
       $done({});
