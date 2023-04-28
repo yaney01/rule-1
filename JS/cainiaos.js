@@ -34,11 +34,13 @@ if (okk) {
   } else if (/cainiao\.guoguo\.nbnetflow\.ads\.index\.cn/.test($request.url)) {
     // 底部商品推广
     okk.data.result = [];
-  } else {
-    $done({});
-    return;
-  }
-  $done({ body: JSON.stringify(okk) });
-} else {
-  $done({});
-}
+  } 
+//   else {
+    var body = JSON.stringify(okk);
+    $done({body});
+//     return;
+//   }
+//   $done({ body: JSON.stringify(okk) });
+// } else {
+//   $done({});
+// }
