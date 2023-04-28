@@ -64,6 +64,7 @@ switch ($arguments['out']) {
 var countries = {};
 for (let i in inputList) {
   countries[inputList[i]] = [outputList[i], 0];
+  // console.log(countries)
 }
 
 // 其它
@@ -89,32 +90,20 @@ var others = {
   //莞港: 'DG-Hong Kong',  
 };
 
-var additionalOthers = $arguments.others || '{}';
-additionalOthers = JSON.parse(additionalOthers);
-others = Object.assign({}, additionalOthers, others);
+// var additionalOthers = $arguments.others || '{}';
+// additionalOthers = JSON.parse(additionalOthers);
+// others = Object.assign({}, additionalOthers, others);
 
-var autofill = parseInt($arguments.autofill) || false;
 
 // 获取机场名
 const airport = ($arguments.name == undefined) ? '' : decodeURI($arguments.name);
 
-//删除非必要的1
-function stripOnes(proxies) {
-  Object.keys(countries).forEach((item,index,array)=>{
-    if (countries[item][1] === 1) {
-      proxies.map((res) => {
-        if (res.name.indexOf(countries[item][0]) !== -1) {
-          res.name = res.name.replace("1", '').replace('0', '');
-        };
-      });
-    };
-  });
-  return proxies
-};
+
 // 删除简繁转换
 
 // 主函数
 function operator(proxies) {
+  console.log(proxies)
    proxies = proxies.filter((res) => {
     if (res.name.match(/(高倍|((?!.*(1|0\.\d))\d+倍|x|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰))/i)) {
       if ($arguments.nx) {
@@ -132,17 +121,12 @@ function operator(proxies) {
     for (const elem of Object.keys(countries)) {
       if (res.name.indexOf(elem) !== -1) {
         countries[elem][1] += 1;
-        if (!autofill) {
+        
           resultArray.push(
             countries[elem][0],
             countries[elem][1].toString().padStart(2, "0")
           );
-        } else {
-          resultArray.push(
-            countries[elem][0],
-            countries[elem][1].toString().padStart(autofill, "0")
-          );
-        }
+     
         matched = true;
         break;
       }
@@ -151,11 +135,13 @@ function operator(proxies) {
       resultArray.push(res.name);
       toBeDeleted.push(res);
     }
+    // others
     Object.keys(others).forEach((elem, index) => {
       if (res.name.indexOf(elem) !== -1) {
         resultArray.splice(2, 0, others[elem]);
       }
     });
+
     res.name = resultArray.join(" ");
   });
   // 移除未匹配到的节点名
@@ -169,5 +155,33 @@ function operator(proxies) {
     proxies = stripOnes(proxies);
     proxies = proxies.filter(item => !nameclear.test(item.name));
   }
+  
   return proxies;
+}
+
+
+
+
+
+
+//删除非必要的1
+function stripOnes(proxies) {
+  Object.keys(countries).forEach((item,index,array)=>{
+    if (countries[item][1] === 1) {
+      proxies.map((res) => {
+        if (res.name.indexOf(countries[item][0]) !== -1) {
+          res.name = res.name.replace("1", '').replace('0', '');
+        };
+      });
+    };
+  });
+  return proxies
+};
+
+function getFlagEmoji(us) {
+  const codePoints = us
+    .toUpperCase()
+    .split("")
+    .map((char) => 127397 + char.charCodeAt());
+  return String.fromCodePoint(...codePoints).replace(/🇹🇼/g, "🇨🇳");
 }

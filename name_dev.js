@@ -20,6 +20,7 @@ const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 const timeout = $arguments["timeout"] ? $arguments["timeout"] : 1000;
 // argument传入 flag 时候，添加国旗
 const flag = $arguments["flag"];
+// console.log(flag)
 // const zz = $arguments['zz'];
 // 每一次处理的节点个数
 const batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
@@ -45,7 +46,7 @@ async function operator(proxies) {
           // const type = in_info === out_info.query ? "直连" : "中转";
           // proxy.name = out_info.country;
           // proxy.name = getFlagEmoji(out_info.countryCode) + " " + type + "→" + out_info.country;
-            proxy.name = flag ? getFlagEmoji(out_info.countryCode) + " " + (in_info === out_info.query ? "直连" : "中转") + "→" + out_info.country : out_info.country;
+          proxy.name = flag ? getFlagEmoji(out_info.countryCode) + " " + (in_info === out_info.query ? "直连" : "中转") + "→" + out_info.country : out_info.country;
 
           // 新增一个去重用字段，该字段不显示在节点名字不需要修改 ,只用于去重, 重复那就是重复节点：入口IP|出口IP
           proxy.qc = in_info + "|" + out_info.query;
