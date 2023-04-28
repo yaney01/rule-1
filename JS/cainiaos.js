@@ -35,12 +35,11 @@ if (okk) {
     // 底部商品推广
     okk.data.result = [];
   } 
-//   else {
-    var body = JSON.stringify(okk);
-    $done({body});
-//     return;
-//   }
-//   $done({ body: JSON.stringify(okk) });
-// } else {
-//   $done({});
-// }
+   else {
+ 
+     return;
+   }
+   $done({ body: JSON.stringify(okk) });
+ } else {
+   $done({});
+ }
