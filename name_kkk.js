@@ -1,12 +1,15 @@
 // 测试别的api 入口inte.net  落地ip-api(入口真实城市 运营商 落地真实位置)
+// timeout=900     默认1000单位ms
+const timeout = $arguments["timeout"] ? $arguments["timeout"] : 1000;
+// 加国旗 和运营商 首字母 🅳电信 🅻联通 🆈移动
+const flag = $arguments["flag"];
+// 添加city则为入口城市，不加参数则是省份
+const citys = $arguments["city"];
+// 一次检查多少节点 默认16
+const batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
 const $ = $substore;
 const { isLoon, isSurge, isQX } = $substore.env;
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
-const timeout = $arguments["timeout"] ? $arguments["timeout"] : 1000;
-const flag = $arguments["flag"];
-// const noflag = $arguments["noflag"];
-const citys = $arguments["city"];
-const batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
 async function operator(proxies) {
   const startTime = new Date(); // 获取当前时间作为开始时间
   const prs = proxies.length; //初始节点数
