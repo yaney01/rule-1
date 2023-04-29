@@ -8,7 +8,7 @@ DOMAIN-KEYWORD,alibaba
 DOMAIN-KEYWORD,icloud
 DOMAIN-KEYWORD,baidu
 DOMAIN-KEYWORD,csdn
-DOMAIN-KEYWORD,douyin
+DOMAIN-KEYWORD,douyinfa
 DOMAIN-KEYWORD,douban
 DOMAIN-KEYWORD,didi
 DOMAIN-KEYWORD,taobao
@@ -126,6 +126,7 @@ DOMAIN,pan.dumpapp.com
 DOMAIN-SUFFIX,zhihu.com
 # ali
 DOMAIN-SUFFIX,aipanxiaozhan.com
+DOMAIN-SUFFIX,youdao.com
 # it
 DOMAIN-SUFFIX,ithome.com
 DOMAIN-SUFFIX,ruanmei.com
