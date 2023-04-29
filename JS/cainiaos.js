@@ -11,23 +11,24 @@ var okk = JSON.parse($response.body);
     //tcqs 同城取送
     //qydq 亲友代取
     const kkkey = ["gjjf", "bgxq", "cngreen", "ttlhb", "ljjq"];
-    const delkey = okk.data.result.dataList.filter((item) => {
+    okk.data.result.dataList = okk.data.result.dataList.filter((item) => {
+      if (item.type === "big_banner_area_v870") {
+        return false; // "big_banner_area_v870" 新人福利
+      }
       if (item.bizData.items) {
-        item.bizData.items = item.bizData.items.filter(
-          (subItem) => !kkkey.includes(subItem.key)
-        );
+        item.bizData.items = item.bizData.items.filter((subItem) => {
+          return !kkkey.includes(subItem.key); // 过滤掉 key 在 kkkey 中的子元素
+        });
       }
-      return true;
+      return true; //其他保留
     });
-    okk.data.result.dataList = delkey;
     // 遍历 items 数组
-    for ( let i = 0; i < okk.data.result.dataList.length; i++) {
-      for ( let j = 0; j < okk.data.result.dataList[i].bizData.items.length; j++ ) {
-        // 将 rightIcon 和 bubbleText 红点提醒 设为 null
-        okk.data.result.dataList[i].bizData.items[j].rightIcon = null;
-        okk.data.result.dataList[i].bizData.items[j].bubbleText = null;
-      }
-    }
+    okk.data.result.dataList.forEach((data) => {
+      data.bizData.items.forEach((item) => {
+        item.rightIcon = null;
+        item.bubbleText = null;
+      });
+    });
   } if (/cainiao\.adkeyword/.test($request.url)) {
     // 搜索框下方今日好物推荐
     okk.data.result.adHotKeywords = [];
