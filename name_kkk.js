@@ -1,11 +1,11 @@
-// 测试别的api 入口inte.net  落地ip-api(入口真实城市 运营商 落地真实位置)
-// timeout=900     默认1000单位ms
+// 测试别的api 入口inte.net  落地ip-api(入口真实城市 运营商 落地真实位置) @Key @奶茶姐
+// 参数 timeout=900  默认1000单位ms
 const timeout = $arguments["timeout"] ? $arguments["timeout"] : 1000;
-// 加国旗 和运营商 首字母 🅳电信 🅻联通 🆈移动
+// 参数 flag 参数为加 国旗、运营商:首字母 🅳电信 🅻联通 🆈移动
 const flag = $arguments["flag"];
-// 添加city则为入口城市，不加参数则是省份
+// 参数 city 则为入口城市，不加参数则是省份
 const citys = $arguments["city"];
-// 一次检查多少节点 默认16
+// 参数 batch=  一次检查多少节点 默认16
 const batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
 const $ = $substore;
 const { isLoon, isSurge, isQX } = $substore.env;
@@ -20,7 +20,6 @@ async function operator(proxies) {
     await Promise.allSettled(
       batch.map(async (proxy) => {
         try {
-          //   查询入口IP信息 alidns
           //   const in_info = await queryDNSInfo(proxy.server);
           //   console.log(proxy.server + "in节点ip = " + JSON.stringify(in_info));
           //   🅳电信
