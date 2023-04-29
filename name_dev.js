@@ -1,4 +1,4 @@
-// @key修改@奶茶姐 update 2023.4.28 -7 测试!!! 优化速度 alidns-解析入口ip + ip-api-解析落地ip 节点去重重命名为： 旗帜(可选) 地区 序号
+// 66 @key修改@奶茶姐 update 2023.4.28 -7 测试!!! 优化速度 alidns-解析入口ip + ip-api-解析落地ip 节点去重重命名为： 旗帜(可选) 地区 序号
 // argument传入： flag 时候，添加国旗，默认不添加，例如： https://keywos.cf/name.js#flag
 // argument传入： timeout=数字（单位ms） 设置节点ping超时时间 不传入参数默认为1000ms
 // 例如： https://keywos.cf/name.js#timeout=2000  为1秒

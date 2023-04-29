@@ -1,4 +1,4 @@
-// 测试别的api 入口inte.net  落地ip-api(入口真实省份 运营商 落地真实位置)
+// 66 测试别的api 入口inte.net  落地ip-api(入口真实省份 运营商 落地真实位置)
 const $ = $substore;
 const { isLoon, isSurge } = $substore.env;
 const target = isLoon ? "Loon" : isSurge ? "Surge" : undefined;

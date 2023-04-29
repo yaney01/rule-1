@@ -1,4 +1,4 @@
-// 测试别的api 入口阿里dns 落地v4.ident.me
+// 66 测试别的api 入口阿里dns 落地v4.ident.me
 const $ = $substore;
 const { isLoon, isSurge} = $substore.env;
 const target = isLoon ? "Loon" : isSurge ? "Surge" : undefined;

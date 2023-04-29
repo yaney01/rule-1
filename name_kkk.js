@@ -1,4 +1,4 @@
-// 测试别的 api 入口inte.net  落地ip-api(入口真实城市 运营商 落地真实位置) @Key @奶茶姐
+// 66 测试别的 api 入口inte.net  落地ip-api(入口真实城市 运营商 落地真实位置) @Key @奶茶姐
 // Sub-Store脚本操作:例如: https://keywos.cf/name_kkk.js#flag&timeout=1000
 // 参数 timeout=900  ！默认1000单位ms
 const timeout = $arguments["timeout"] ? $arguments["timeout"] : 1000;
