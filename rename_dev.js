@@ -87,11 +87,11 @@ function operator(proxies) {
       proxies.splice(index, 1);
     }
   });
+  // 分组加序号
+  const processedProxies = processProxies(proxies);
   if (clear) {
     proxies = stripOnes(proxies);
     proxies = proxies.filter((item) => !nameclear.test(item.name));}
-  // 分组加序号
-  const processedProxies = processProxies(proxies);
   console.log(`处理后节点总数 = ${proxies.length}`);
   const endTime = new Date();
   const timeDiff = endTime.getTime() - startTime.getTime();
