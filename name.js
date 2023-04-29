@@ -26,7 +26,7 @@ async function operator(proxies) {
     $.error(`Only supports Loon and Surge!`);
     return proxies;
   }
-  const startTime = new Date(); // 获取当前时间作为开始时间
+  const startTime = new Date();
   const prs = proxies.length; //初始节点数
   // console.log("初始节点数 = " + proxies.length);
   let i = 0;
