@@ -40,16 +40,13 @@ async function operator(proxies) {
               : in_info.data[in_info.data.length - 1] === "移动"
               ? "🆈"
               : "";
-
           //   let dly = '';
           //   if (in_info.data[in_info.data.length - 1] === '电信') {
           //     dly = 'D';
           //   } else if (in_info.data[in_info.data.length - 1] === '联通') {
           //     dly = 'L';
           //   }
-
           // console.log("in节点信息🍉" + JSON.stringify(in_info));
-
           // 查询出口IP信息
           const out_info = await queryIpApi(proxy);
           //   console.log(proxy.server + "out节点信息 = " + JSON.stringify(out_info));
@@ -72,7 +69,7 @@ async function operator(proxies) {
             }
           } else {
             // no emoji
-            // proxy.name = out_info.country;
+            // proxy.name = out_info.country; 只有国家
             if (in_info.ip === out_info.query) {
               proxy.name =
                 "直连" +
