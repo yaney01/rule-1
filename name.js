@@ -50,14 +50,14 @@ async function operator(proxies) {
             } else {
                 proxy.name = dly + incity + "→" + getFlagEmoji(out_info.countryCode) + out_info.country;
             }
-          } else if(sim){
+          } else if (sim) {
           // simple
             if (in_info.ip === out_info.query) {
                 proxy.name = "直连" + "→" + out_info.country;
             } else {                
                 proxy.name = incity.slice(0, 1) + (in_info.data[in_info.data.length - 1].length === 2 ? in_info.data[in_info.data.length - 1].slice(-1) : "中转") + "→" + out_info.country;
-          
-          }
+            }
+          } else {
             // no emoji
             if (in_info.ip === out_info.query) {
                 proxy.name = "直连" + "→" + out_info.country;
