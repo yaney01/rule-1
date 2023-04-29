@@ -11,7 +11,7 @@
 const $ = $substore;
 const { isLoon, isSurge } = $substore.env;
 // 节点转换的目标类型
-const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
+const target = isLoon ? "Loon" : isSurge ? "Surge" : undefined;
 
 // 判断传入超时 值，单位：ms
 const timeout = $arguments["timeout"] ? $arguments["timeout"] : 1000;

@@ -1,7 +1,7 @@
 // 测试别的api 入口阿里dns 落地v4.ident.me
 const $ = $substore;
 const { isLoon, isSurge} = $substore.env;
-const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
+const target = isLoon ? "Loon" : isSurge ? "Surge" : undefined;
 const timeout = $arguments["timeout"] ? $arguments["timeout"] : 1000;
 const flag = $arguments["flag"];
 const batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
