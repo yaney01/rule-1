@@ -53,9 +53,9 @@ async function operator(proxies) {
             // no emoji
             if (in_info.ip === out_info.query) {
                 proxy.name = "直连" + "→" + out_info.country;
-            } else {
-                proxy.name = incity + (in_info.data[in_info.data.length - 1].length === 2 
-                ? in_info.data[in_info.data.length - 1] : "中转") + "→" + out_info.country;
+            } else {                
+                proxy.name = incity + (in_info.data[in_info.data.length - 1].length === 2 ? in_info.data[in_info.data.length - 1] : "中转") + "→" + out_info.country;
+                console.log(proxy.name)
             }
           }
           // proxy.name = out_info.country; 只有国家
@@ -69,10 +69,12 @@ async function operator(proxies) {
   // console.log("去重前的节点信息 = " + JSON.stringify(proxies));
   proxies = removeDuplicateName(proxies);
   // console.log("去重后的节点信息 = " + JSON.stringify(proxies));
-  // 按节点全名分组加序号
-  const processedProxies = processProxies(proxies);
   // 去除去重时添加的qc属性
   proxies = removeqcName(proxies);
+  console.log("去重后的节点信息 = " + JSON.stringify(proxies));
+  // 按节点全名分组加序号
+  const processedProxies = processProxies(proxies);
+  console.log("加序号后的节点信息 = " + JSON.stringify(proxies));
   console.log(`初始节点数 = ` + prs);
   console.log(`去重后个数 = ${proxies.length}`);
   const endTime = new Date();
@@ -119,37 +121,7 @@ async function queryIpApi(proxy) {
     Promise.race([timeoutPromise, queryPromise]).catch((err) => { reject(err); });
   });
 }
-function removeDuplicateName(arr) {
-  const nameSet = new Set();
-  const result = [];
-  for (const e of arr) {
-    if (e.qc && !nameSet.has(e.qc)) {
-    nameSet.add(e.qc); result.push(e); } }
-  return result;
-}
-function removeqcName(arr) {
-  const nameSet = new Set();
-  const result = [];
-  for (const e of arr) {
-    if (!nameSet.has(e.qc)) {
-      nameSet.add(e.qc);
-      const modifiedE = { ...e };
-      delete modifiedE.qc;
-      result.push(modifiedE); } }
-  return result;
-}
-function getFlagEmoji(cc) {
-    const codePoints = cc .toUpperCase() .split("") .map((char) => 127397 + char.charCodeAt());
-    return String.fromCodePoint(...codePoints).replace(/🇹🇼/g, "🇨🇳");
-  }
-function processProxies(proxies) {
-  const groupedProxies = proxies.reduce((groups, item) => {
-    const existingGroup = groups.find((group) => group.name === item.name);
-    if (existingGroup) { existingGroup.count++;
-      existingGroup.items.push({ ...item, name: `${item.name} 
-      ${existingGroup.count.toString().padStart(2, "0")}`, }); } else {
-      groups.push({ name: item.name, count: 1, items: [{ ...item, name: `${item.name} 01` }], }); }
-    return groups; }, []); const sortedProxies = groupedProxies.flatMap((group) => group.items);
-  proxies.splice(0, proxies.length, ...sortedProxies);
-  return proxies;
-}
+function removeDuplicateName(arr){const nameSet=new Set;const result=[];for(const e of arr){if(e.qc&&!nameSet.has(e.qc)){nameSet.add(e.qc);result.push(e)}}return result}
+function removeqcName(arr){const nameSet=new Set;const result=[];for(const e of arr){if(!nameSet.has(e.qc)){nameSet.add(e.qc);const modifiedE={...e};delete modifiedE.qc;result.push(modifiedE)}}return result}
+function processProxies(proxies) {const groupedProxies = proxies.reduce((groups, item) => {const existingGroup = groups.find(group => group.name === item.name);if (existingGroup) {existingGroup.count++;existingGroup.items.push({ ...item, name: `${item.name} ${existingGroup.count.toString().padStart(2, '0')}` });} else {groups.push({ name: item.name, count: 1, items: [{ ...item, name: `${item.name} 01` }] });}return groups;}, []);const sortedProxies = groupedProxies.flatMap(group =>group.items);proxies.splice(0,proxies.length, ...sortedProxies);return proxies;}
+function getFlagEmoji(cc){const codePoints=cc.toUpperCase().split("").map((char=>127397+char.charCodeAt()));return String.fromCodePoint(...codePoints).replace(/🇹🇼/g,"🇨🇳")}
