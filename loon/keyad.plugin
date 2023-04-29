@@ -85,7 +85,7 @@ DOMAIN,h-adashx.ut.taobao.com,REJECT-DROP
 http-request ^https?:\/\/ad\.12306\.cn\/ad\/ser\/getAdList script-path=https://cdn.jsdelivr.net/gh/keywos/rule@master/JS/12306.js, requires-body=true, timeout=10, tag=12306
 
 #高德ua
-#http-request amdc\.m\.taobao\.com script-path=https://cdn.jsdelivr.net/gh/keywos/rule@master/JS/ua.js,requires-body=true, timeout=10, tag=amap ua
+#http-response amdc\.m\.taobao\.com script-path=https://cdn.jsdelivr.net/gh/keywos/rule@master/JS/ua.js,requires-body=true, timeout=10, tag=amap ua
 
 [General]
 force-http-engine-hosts = 59.111.*:0
