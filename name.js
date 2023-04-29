@@ -14,19 +14,17 @@
 [batch=16]每次检查多少节点，默认每次16个节点。
 */
 
+const $ = $substore
 const flag = $arguments["flag"];
 const citys = $arguments["city"];
-const timeout = $arguments["timeout"] ? $arguments["timeout"] : 1000;
-const batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
-const $ = $substore
 const { isLoon, isSurge, isQX } = $substore.env;
+const batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
+const timeout = $arguments["timeout"] ? $arguments["timeout"] : 1000;
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 async function operator(proxies) {
   const support = (isLoon || isSurge);
-  if (!support) {
-    $.error(`Only supports Loon and Surge!`);
-    return proxies;
-  }
+  if (!support) { $.error(`No Loon or Surge`);
+    return proxies; }
   const startTime = new Date();
   const prs = proxies.length; //初始节点数
   // console.log("初始节点数 = " + proxies.length);
@@ -42,15 +40,9 @@ async function operator(proxies) {
             ? (in_info.data[2] || in_info.data[1] || in_info.data[0]).slice(0, 2)
             : (in_info.data[1] || in_info.data[0]).slice(0, 2);
             const out_info = await queryIpApi(proxy);
-            if (flag) {
-                const kkEmoji = {
-                    '电信': '🅳',
-                    '联通': '🅻',
-                    '移动': '🆈',
-                };
+            if (flag) { const kkEmoji = { '电信': '🅳', '联通': '🅻', '移动': '🆈', };
               const operator = in_info.data[in_info.data.length - 1].slice(-2);
               const dly = kkEmoji[operator] || '🅶';
-              
             // emoji
             if (in_info.ip === out_info.query) { 
                 proxy.name = "🆉直连" + "→" + getFlagEmoji(out_info.countryCode) + out_info.country;
@@ -71,13 +63,9 @@ async function operator(proxies) {
         //   console.log(proxy.qc)
         } catch (err) {
           console.log(`err = ${err}`);
-        }
-      })
-    );
-    i += batch_size;
+        } }) ); i += batch_size;
   }
   // console.log("去重前的节点信息 = " + JSON.stringify(proxies));
-  // 去除重复的节点
   proxies = removeDuplicateName(proxies);
   // console.log("去重后的节点信息 = " + JSON.stringify(proxies));
   // 按节点全名分组加序号
@@ -117,7 +105,6 @@ async function queryIpApi(proxy) {
         reject(new Error("请求超时,丢弃节点"));
       }, timeout);
     });
-
     const queryPromise = $.http.get({url, node: node, // Loon or Surge IOS 
         "policy-descriptor": node, // Surge MAC
       }).then((resp) => {
@@ -126,15 +113,9 @@ async function queryIpApi(proxy) {
           resolve(data);
         } else {
           reject(new Error(data.message));
-        }
-      }).catch((err) => {
-        console.log("api = " + err);
-        reject(err);
-      });
+        } }).catch((err) => { console.log("api = " + err); reject(err); });
     // 超时处理
-    Promise.race([timeoutPromise, queryPromise]).catch((err) => {
-      reject(err);
-    });
+    Promise.race([timeoutPromise, queryPromise]).catch((err) => { reject(err); });
   });
 }
 function removeDuplicateName(arr) {
@@ -142,10 +123,7 @@ function removeDuplicateName(arr) {
   const result = [];
   for (const e of arr) {
     if (e.qc && !nameSet.has(e.qc)) {
-      nameSet.add(e.qc);
-      result.push(e);
-    }
-  }
+    nameSet.add(e.qc); result.push(e); } }
   return result;
 }
 function removeqcName(arr) {
@@ -156,37 +134,21 @@ function removeqcName(arr) {
       nameSet.add(e.qc);
       const modifiedE = { ...e };
       delete modifiedE.qc;
-      result.push(modifiedE);
-    }
-  }
+      result.push(modifiedE); } }
   return result;
 }
 function getFlagEmoji(cc) {
-    const codePoints = cc
-      .toUpperCase()
-      .split("")
-      .map((char) => 127397 + char.charCodeAt());
+    const codePoints = cc .toUpperCase() .split("") .map((char) => 127397 + char.charCodeAt());
     return String.fromCodePoint(...codePoints).replace(/🇹🇼/g, "🇨🇳");
   }
 function processProxies(proxies) {
   const groupedProxies = proxies.reduce((groups, item) => {
     const existingGroup = groups.find((group) => group.name === item.name);
-    if (existingGroup) {
-      existingGroup.count++;
-      existingGroup.items.push({
-        ...item,
-        name: `${item.name} ${existingGroup.count.toString().padStart(2, "0")}`,
-      });
-    } else {
-      groups.push({
-        name: item.name,
-        count: 1,
-        items: [{ ...item, name: `${item.name} 01` }],
-      });
-    }
-    return groups;
-  }, []);
-  const sortedProxies = groupedProxies.flatMap((group) => group.items);
+    if (existingGroup) { existingGroup.count++;
+      existingGroup.items.push({ ...item, name: `${item.name} 
+      ${existingGroup.count.toString().padStart(2, "0")}`, }); } else {
+      groups.push({ name: item.name, count: 1, items: [{ ...item, name: `${item.name} 01` }], }); }
+    return groups; }, []); const sortedProxies = groupedProxies.flatMap((group) => group.items);
   proxies.splice(0, proxies.length, ...sortedProxies);
   return proxies;
 }
