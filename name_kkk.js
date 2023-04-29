@@ -13,6 +13,11 @@ const { isLoon, isSurge, isQX } = $substore.env;
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 async function operator(proxies) {
   const startTime = new Date(); // 获取当前时间作为开始时间
+  const support = (isLoon || isQX || isSurge);
+  if (!support) {
+    $.error(`Only supports Loon and Surge!`);
+    return proxies;
+  }
   const prs = proxies.length; //初始节点数
   // console.log("初始节点数 = " + proxies.length);
   let i = 0;
