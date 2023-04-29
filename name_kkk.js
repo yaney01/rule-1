@@ -78,7 +78,7 @@ async function operator(proxies) {
                 getFlagEmoji(out_info.countryCode) +
                 out_info.country;
             } else {
-              proxy.name = incity + "→" + out_info.country;
+              proxy.name = incity+in_info.data[in_info.data.length - 1] + "→" + out_info.country;
             }
           }
 
