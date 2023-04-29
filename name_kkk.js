@@ -2,7 +2,7 @@
 // Sub-Store脚本操作:例如: https://keywos.cf/name_kkk.js#flag&timeout=1000
 // 参数 timeout=900  ！默认1000单位ms
 const timeout = $arguments["timeout"] ? $arguments["timeout"] : 1000;
-// 参数 flag 参数为加 国旗、运营商:首字母 🅳电信 🅻联通 🆈移动 ！默认不加
+// 参数 flag 参数为加 国旗、运营商:首字母 🅳=电信,🅻=联通,🆈=移动,🆉直连 ！默认不加 
 const flag = $arguments["flag"];
 // 参数 city 则为入口城市，！默认不加参数则是省份
 const citys = $arguments["city"];
