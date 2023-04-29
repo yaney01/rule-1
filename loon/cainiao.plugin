@@ -20,7 +20,7 @@
 #http-response ^http:\/\/amdc\.m\.taobao\.com\/amdc\/mobileDispatch script-path = https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Resource/Script/Cainiao/Cainiao_amdc_reject.js, tag = 移除不明请求
 
 #菜鸟ua拦截
-http-response ^http:\/\/amdc\.m\.taobao\.com\/amdc\/mobileDispatch script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/cnua.js, timeout=10, tag=移除不明请求
+http-response ^http:\/\/amdc\.m\.taobao\.com\/amdc\/mobileDispatch script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/ua.js, timeout=10, tag=移除不明请求
 
 # 首页 - 惊喜福利推广
 http-response ^https?:\/\/cn-acs\.m\.cainiao\.com\/gw\/mtop\.cainiao\.nbpresentation\.protocol\.homepage\.get\.cn script-path = https://raw.githubusercontent.com/Keywos/rule/main/JS/cainiaos.js, tag = 移除首页惊喜福利推广

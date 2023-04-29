@@ -1,7 +1,6 @@
-const url = $request.url;
-const header = $request.headers;
-const ua = header["User-Agent"] || header["user-agent"];
-if (url.includes("/amdc/mobileDispatch") && (ua.includes("AMapiPhone") || ua.includes("Cainiao"))) {
-$done({ status: "HTTP/1.1 404 Not Found" });
-return;}
-$done({});
+let header = $request.headers
+    let ua = header["User-Agent"] || header["user-agent"]
+    if (ua.includes("AMap") || ua.includes("Cainiao")) {
+        if ('undefined' !== typeof $task) $done({status: 'HTTP/1.1 404 Not Found'})
+        else $done()
+    } else $done({})
