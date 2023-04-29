@@ -60,7 +60,7 @@ async function operator(proxies) {
           } else {
             // no emoji
             if (in_info.ip === out_info.query) {
-                 proxy.name = "直连" + "→" + getFlagEmoji(out_info.countryCode) + out_info.country;
+                 proxy.name = "直连" + "→" + out_info.country;
             } else {
               proxy.name = incity+in_info.data[in_info.data.length - 1] + "→" + out_info.country;
             }
