@@ -9,6 +9,7 @@ var okk = JSON.parse($response.body);
     //bgxq 包裹星球
     //cngreen 绿色家园
     //tcqs 同城取送
+    //qydq 亲友代取
     const kkkey = ["gjjf", "bgxq", "cngreen", "ttlhb", "ljjq"];
     const delkey = okk.data.result.dataList.filter((item) => {
       if (item.bizData.items) {
