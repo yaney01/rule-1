@@ -4,6 +4,8 @@ const { isLoon, isSurge, isQX } = $substore.env;
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 const timeout = $arguments["timeout"] ? $arguments["timeout"] : 1000;
 const flag = $arguments["flag"];
+// const noflag = $arguments["noflag"];
+const citys = $arguments["city"];
 const batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
 async function operator(proxies) {
   const startTime = new Date(); // 获取当前时间作为开始时间
@@ -15,12 +17,34 @@ async function operator(proxies) {
     await Promise.allSettled(
       batch.map(async (proxy) => {
         try {
-          // 查询入口IP信息 alidns
-          // const in_info = await queryDNSInfo(proxy.server);
+          //   查询入口IP信息 alidns
+          //   const in_info = await queryDNSInfo(proxy.server);
           //   console.log(proxy.server + "in节点ip = " + JSON.stringify(in_info));
-
-          // 其他api
+          //   🅳电信
+          //   🅻联通
+          //   🆈移动
+          //   其他api
           const in_info = await queryDNSInfo(proxy.server);
+
+          const incity = $arguments["city"]
+            ? in_info.data[2].substring(0, 2)
+            : in_info.data[1].substring(0, 2);
+
+          const dly =
+            in_info.data[in_info.data.length - 1] === "电信"
+              ? "🅳"
+              : in_info.data[in_info.data.length - 1] === "联通"
+              ? "🅻"
+              : in_info.data[in_info.data.length - 1] === "移动"
+              ? "🆈"
+              : "";
+
+          //   let dly = '';
+          //   if (in_info.data[in_info.data.length - 1] === '电信') {
+          //     dly = 'D';
+          //   } else if (in_info.data[in_info.data.length - 1] === '联通') {
+          //     dly = 'L';
+          //   }
 
           // console.log("in节点信息🍉" + JSON.stringify(in_info));
 
@@ -29,24 +53,33 @@ async function operator(proxies) {
           //   console.log(proxy.server + "out节点信息 = " + JSON.stringify(out_info));
 
           if (flag) {
+            // emoji
             if (in_info.ip === out_info.query) {
               proxy.name =
-                getFlagEmoji(out_info.countryCode) +
-                " " +
-                "直连" +
+                "🆉直连" +
                 "→" +
+                getFlagEmoji(out_info.countryCode) +
                 out_info.country;
             } else {
               proxy.name =
-                getFlagEmoji(out_info.countryCode) +
-                " " +
-                in_info.data[2].substring(0, 2) +
-                in_info.data[in_info.data.length - 1] +
+                dly +
+                incity +
                 "→" +
+                getFlagEmoji(out_info.countryCode) +
                 out_info.country;
             }
           } else {
-            proxy.name = out_info.country;
+            // no emoji
+            // proxy.name = out_info.country;
+            if (in_info.ip === out_info.query) {
+              proxy.name =
+                "直连" +
+                "→" +
+                getFlagEmoji(out_info.countryCode) +
+                out_info.country;
+            } else {
+              proxy.name = incity + "→" + out_info.country;
+            }
           }
 
           // 🇸🇬 广东省 佛山市 移动→新加坡 01
@@ -54,7 +87,7 @@ async function operator(proxies) {
 
           // 新增一个去重用字段，该字段不显示在节点名字不需要修改 ,只用于去重, 重复那就是重复节点：入口IP|出口IP
           proxy.qc = in_info.ip + "|" + out_info.query;
-        //   console.log(proxy.qc);
+          //   console.log(proxy.qc);
           // proxy.px = out_info.cc;
         } catch (err) {
           console.log(`err = ${err}`);
@@ -157,7 +190,6 @@ async function queryIpApi(proxy) {
   return new Promise((resolve, reject) => {
     const url = `http://ip-api.com/json?lang=zh-CN&fields=status,message,country,countryCode,city,query`;
     let node = ProxyUtils.produce([proxy], target);
-
 
     const timeoutPromise = new Promise((_, reject) => {
       setTimeout(() => {
