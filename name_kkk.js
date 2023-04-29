@@ -9,9 +9,14 @@ const citys = $arguments["city"];
 // 参数 batch=  一次检查多少节点 ！默认16
 const batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
 const $ = $substore
-const { isLoon, isSurge } = $substore.env;
-const target = isLoon ? "Loon" : isSurge ? "Surge" : undefined;
+const { isLoon, isSurge, isQX } = $substore.env;
+const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 async function operator(proxies) {
+  const support = (isLoon || isSurge);
+  if (!support) {
+    $.error(`Only supports Loon and Surge!`);
+    return proxies;
+  }
   const startTime = new Date(); // 获取当前时间作为开始时间
   const prs = proxies.length; //初始节点数
   // console.log("初始节点数 = " + proxies.length);
