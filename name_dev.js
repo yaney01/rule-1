@@ -9,7 +9,7 @@
 // 支持平台：目前只支持Loon，Surge ,不支持qx 因为qx目前不能指定节点更新时间：2023.04.26
 
 const $ = $substore;
-const { isLoon, isSurge, isQX} = $substore.env;
+const { isLoon, isSurge } = $substore.env;
 // 节点转换的目标类型
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 
@@ -23,11 +23,6 @@ const flag = $arguments["flag"];
 const batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
 
 async function operator(proxies) {
-  const support = (isLoon || isQX || isSurge);
-  if (!support) {
-    $.error(`Only supports Loon and Surge!`);
-    return proxies;
-  }
   const startTime = new Date(); // 获取当前时间作为开始时间
   const prs = proxies.length //初始节点数
   // console.log("初始节点数 = " + proxies.length);
