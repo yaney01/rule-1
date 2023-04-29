@@ -23,43 +23,11 @@ async function operator(proxies) {
           const in_info = await queryDNSInfo(proxy.server);
 
           // console.log("in节点信息🍉" + JSON.stringify(in_info));
-          // console.log(
-          //   proxy.name + "in节点ipss = " + JSON.stringify(in_info.ip)
-          // );
-          // console.log(
-          //   proxy.name + "in节点省 = " + JSON.stringify(in_info.data[1])
-          // );
-
-          // console.log(
-          //   proxy.name +
-          //     "in节点省-1 = " +
-          //     JSON.stringify(in_info.data[1].slice(0, -1))
-          // );
 
           // 查询出口IP信息
           const out_info = await queryIpApi(proxy);
           //   console.log(proxy.server + "out节点信息 = " + JSON.stringify(out_info));
 
-          // proxy.name = out_info.country;
-
-          //   const inisp = in_info.data[1] + " "+ in_info.data[2] + " " + in_info.data[in_info.data.length - 1]
-          //   console.log(inisp)
-          //.slice(0, -1)去掉后一个
-          //.substring(0, 2)前两个
-
-          //   const inisp =
-          //     in_info.data[1].substring(0, 2) +
-          //     in_info.data[in_info.data.length - 1];
-
-          //  const type = in_info.ip === out_info.ip ? "直连" : "中转";
-
-          //   proxy.name =
-          //     getFlagEmoji(out_info.countryCode) +
-          //     " " +
-          //     inisp + type +
-          //     "→" +
-          //     out_info.country;
-          //   console.log(proxy.name + "in节点ipss = " + JSON.stringify(in_info.ip));
           if (flag) {
             if (in_info.ip === out_info.query) {
               proxy.name =

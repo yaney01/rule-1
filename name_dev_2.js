@@ -75,7 +75,6 @@ async function queryDNSInfo(server) {
   });
 }
 
-
 // 查询落地ip
 async function queryIpApi(proxy) {
   return new Promise((resolve, reject) => {
