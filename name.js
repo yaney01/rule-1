@@ -62,7 +62,7 @@ async function operator(proxies) {
             if (in_info.ip === out_info.query) {
                 proxy.name = "直连" + "→" + out_info.country;
             } else {                
-                proxy.name = incity + (in_info.data[in_info.data.length - 1].length === 2 ? in_info.data[in_info.data.length - 1].slice : "中转") + "→" + out_info.country;
+                proxy.name = incity + (in_info.data[in_info.data.length - 1].length === 2 ? in_info.data[in_info.data.length - 1] : "中转") + "→" + out_info.country;
           //console.log(proxy.name)
             }
           }
