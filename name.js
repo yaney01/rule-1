@@ -13,7 +13,6 @@
 
 // 参数 batch 每次检查多少节点，默认每次16个节点
 
-
 const flag = $arguments["flag"];
 const citys = $arguments["city"];
 const timeout = $arguments["timeout"] ? $arguments["timeout"] : 1000;
@@ -125,7 +124,6 @@ async function queryIpApi(proxy) {
     });
   });
 }
-
 function removeDuplicateName(arr) {
   const nameSet = new Set();
   const result = [];
