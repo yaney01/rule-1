@@ -1,4 +1,4 @@
-// 测试别的api
+// 测试别的api 入口阿里dns 落地v4.ident.me
 const $ = $substore;
 const { isLoon, isSurge, isQX} = $substore.env;
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
@@ -53,8 +53,12 @@ async function operator(proxies) {
   return proxies;
 }
 async function queryDNSInfo(server) {
-  return new Promise((resolve) => {
-    const ips = server;
+  // 如果是ip直接返回
+  const isIP = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(server);
+  if (isIP) {
+    console.log("此节点入口为IP不查DNS")
+    return server;}
+  return new Promise((resolve, reject) => {
     const url = `http://223.5.5.5/resolve?name=${server}&type=A&short=1`;
     $.http
       .get({ url })
@@ -62,8 +66,6 @@ async function queryDNSInfo(server) {
         const body = JSON.parse(resp.body);
         if (body.length > 0) {
           resolve(body[0]);
-        } else {
-          resolve(ips);
         }
       })
       .catch((err) => {
@@ -72,6 +74,8 @@ async function queryDNSInfo(server) {
       });
   });
 }
+
+
 // 查询落地ip
 async function queryIpApi(proxy) {
   return new Promise((resolve, reject) => {

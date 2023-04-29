@@ -73,10 +73,14 @@ async function operator(proxies) {
   console.log(`方法总耗时 = ${timeDiff / 1000} 秒`); // 将时间差转换为秒并打印到控制台上
   return proxies;
 }
-//查询入口 阿里dns 不返回国家信息 速度快 去重够用
+//查询入口 阿里dns 没有回国家信息 速度快
 async function queryDNSInfo(server) {
-  return new Promise((resolve) => {
-    const ips = server;
+  // 如果是ip直接返回
+  const isIP = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(server);
+  if (isIP) {
+    console.log("此节点入口为IP不查DNS")
+    return server;}
+  return new Promise((resolve, reject) => {
     const url = `http://223.5.5.5/resolve?name=${server}&type=A&short=1`;
     $.http
       .get({ url })
@@ -84,8 +88,6 @@ async function queryDNSInfo(server) {
         const body = JSON.parse(resp.body);
         if (body.length > 0) {
           resolve(body[0]);
-        } else {
-          resolve(ips);
         }
       })
       .catch((err) => {
