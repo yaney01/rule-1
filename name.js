@@ -1,17 +1,18 @@
 /*
-节点：🅳 = 电信 🅻 = 联通 🆈 = 移动 🆉 = 直连 [默认不加此参数]
-接口：dns查询接口入口为 inte.net 落地为 ip-api
-功能：根据接口返回的真实结果，重新对节点命名，添加入口城市、落地国家或地区、国内运营商信息。
+符号：🅳=电信 🅻=联通 🆈=移动 🆉=直连
+接口：入口查询[inte.net],落地查询[ip-api]；
+功能：根据接口返回的真实结果，重新对节点命名，添加入口城市、落地国家或地区、国内运营商信息；
 作者：@Key @奶茶姐
-用法：Sub-Store脚本操作添加 https://脚本地址/name.js#flag&timeout=1000
+用法：Sub-Store脚本操作添加；
+地址：https://脚本地址/name.js#flag&timeout=1000
+日期：2023/04/30
+--------
+以下是此脚本支持的参数，多个参数使用"&"连接，参考上述地址为例使用参数。
+[timeout=2000ms]最大超时参数，超出允许范围则判定为无效节点，默认1000ms；
+[flag]添加旗帜、运营商符号和直连符号，默认无此参数；
+[city]添加入口城市名，默认不添加城市名，无 city 参数则只输出省份不输出城市；
+[batch=16]每次检查多少节点，默认每次16个节点。
 */
-// 参数 timeout ：最大超时参数，超出允许范围则判定为无效节点，默认1000ms
-
-// 参数 flag ：添加旗帜
-
-// 参数 city ：添加入口城市名，默认不添加城市名，无 city 参数则只输出省份不输出城市
-
-// 参数 batch 每次检查多少节点，默认每次16个节点
 
 const flag = $arguments["flag"];
 const citys = $arguments["city"];
@@ -57,7 +58,6 @@ async function operator(proxies) {
           // proxy.name = out_info.country; 只有国家
           // 新增一个去重用字段，该字段不显示在节点名字不需要修改 ,只用于去重, 重复那就是重复节点：入口IP|出口IP
           proxy.qc = in_info.ip + "|" + out_info.query;
-          console.log(qc)
         } catch (err) {
           console.log(`err = ${err}`);
         }
