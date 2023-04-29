@@ -51,7 +51,7 @@ async function operator(proxies) {
             } else {
                 proxy.name = dly + incity + "→" + getFlagEmoji(out_info.countryCode) + out_info.country;
             }
-          } else if (sim) {
+          } if (sim) {
           // simple
             if (in_info.ip === out_info.query) {
                 proxy.name = "直连" + "→" + out_info.country;
