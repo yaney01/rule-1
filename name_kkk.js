@@ -1,4 +1,4 @@
-// 测试别的api 入口inte.net  落地ip-api(入口真实城市 运营商 落地真实位置) @Key @奶茶姐
+// 测试别的 api 入口inte.net  落地ip-api(入口真实城市 运营商 落地真实位置) @Key @奶茶姐
 // 参数 timeout=900  默认1000单位ms
 const timeout = $arguments["timeout"] ? $arguments["timeout"] : 1000;
 // 参数 flag 参数为加 国旗、运营商:首字母 🅳电信 🅻联通 🆈移动
@@ -133,7 +133,7 @@ async function queryDNSInfo(server) {
       });
   });
 }
-// //baiduapi解析位置 弃用
+// //baiduapi解析位置 弃
 // //http://opendata.baidu.com/api.php?query=112.34.112.246&co=&resource_id=6006&oe=utf8
 // async function queryDNSInfo(serverip) {
 //     return new Promise((resolve) => {
@@ -155,7 +155,7 @@ async function queryDNSInfo(server) {
 //         });
 //     });
 // //   }
-// // 查询落地ip 没有中文 弃用
+// // 查询落地ip 没有中文 弃
 // async function queryIpApi(proxy) {
 //   return new Promise((resolve, reject) => {
 //     const url = `http://v4.ident.me/json`;
