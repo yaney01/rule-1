@@ -41,20 +41,21 @@ async function operator(proxies) {
             : (in_info.data[1] || in_info.data[0]).slice(0, 2);
             const out_info = await queryIpApi(proxy);
             if (flag) { const kkEmoji = { '电信': '🅳', '联通': '🅻', '移动': '🆈', };
-              const operator = in_info.data[in_info.data.length - 1].slice(-2);
+              const operator = in_info.data[in_info.data.length - 1];
               const dly = kkEmoji[operator] || '🅶';
             // emoji
             if (in_info.ip === out_info.query) { 
                 proxy.name = "🆉直连" + "→" + getFlagEmoji(out_info.countryCode) + out_info.country;
             } else {
-              proxy.name = dly + incity + "→" + getFlagEmoji(out_info.countryCode) + out_info.country;
+                proxy.name = dly + incity + "→" + getFlagEmoji(out_info.countryCode) + out_info.country;
             }
           } else {
             // no emoji
             if (in_info.ip === out_info.query) {
-                 proxy.name = "直连" + "→" + out_info.country;
+                proxy.name = "直连" + "→" + out_info.country;
             } else {
-              proxy.name = incity+in_info.data[in_info.data.length - 1].slice(-2) + "→" + out_info.country;
+                proxy.name = incity + (in_info.data[in_info.data.length - 1].length === 2 
+                ? in_info.data[in_info.data.length - 1] : "") + "→" + out_info.country;
             }
           }
           // proxy.name = out_info.country; 只有国家
