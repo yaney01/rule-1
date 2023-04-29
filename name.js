@@ -1,4 +1,4 @@
-/* 66
+/* 666
 符号：🅳=电信 🅻=联通 🆈=移动 🆉=直连
 接口：入口查询[inte.net],落地查询[ip-api]；
 功能：根据接口返回的真实结果，重新对节点命名，添加入口城市、落地国家或地区、国内运营商信息；
@@ -40,15 +40,14 @@ async function operator(proxies) {
           
             // console.log(proxy.server + "in节点ip = " + JSON.stringify(in_info));
           const incity = $arguments["city"]
-          ? (in_info.data[2] ? in_info.data[2].substring(0, 2)
-            : (in_info.data[1] ? in_info.data[1].substring(0, 2) 
-              : in_info.data[0].substring(0, 2)))
-          : (in_info.data[1] ? in_info.data[1].substring(0, 2) 
-            : in_info.data[0].substring(0, 2));
+          ? (in_info.data[2] ? in_info.data[2].slice(0, 2)
+            : (in_info.data[1] ? in_info.data[1].slice(0, 2) 
+              : in_info.data[0].slice(0, 2)))
+          : (in_info.data[1] ? in_info.data[1].slice(0, 2) 
+            : in_info.data[0].slice(0, 2));
 
-         
-          const dly =in_info.data[in_info.data.length - 1] === "电信"? "🅳": in_info.data[in_info.data.length - 1] === "联通"
-              ? "🅻": in_info.data[in_info.data.length - 1] === "移动"? "🆈": "";
+          const dly =in_info.data[in_info.data.length - 1].slice(-2) === "电信"? "🅳": in_info.data[in_info.data.length - 1].slice(-2) === "联通"
+              ? "🅻": in_info.data[in_info.data.length - 1].slice(-2) === "移动"? "🆈": "";
           const out_info = await queryIpApi(proxy);
           if (flag) {
             // emoji
@@ -62,7 +61,7 @@ async function operator(proxies) {
             if (in_info.ip === out_info.query) {
                  proxy.name = "直连" + "→" + out_info.country;
             } else {
-              proxy.name = incity+in_info.data[in_info.data.length - 1] + "→" + out_info.country;
+              proxy.name = incity+in_info.data[in_info.data.length - 1].slice(-2) + "→" + out_info.country;
             }
           }
           // proxy.name = out_info.country; 只有国家
