@@ -1,4 +1,4 @@
-/* 6668
+/* 66688
 符号：🅳=电信 🅻=联通 🆈=移动 🆉=直连 🅶=垃圾
 接口：入口查询[inte.net],落地查询[ip-api]；
 功能：根据接口返回的真实结果，重新对节点命名，添加入口城市、落地国家或地区、国内运营商信息；
@@ -55,14 +55,14 @@ async function operator(proxies) {
             if (in_info.ip === out_info.query) {
                 proxy.name = "直连" + "→" + out_info.country;
             } else {                
-                proxy.name = incity.slice(0, 1) + (in_info.data[in_info.data.length - 1].length === 2 ? in_info.data[in_info.data.length - 1].slice(-1) : "中转") + "→" + out_info.country;
+                proxy.name = incity.slice(0, 1) + (in_info.data[in_info.data.length - 1].length === 2 ? in_info.data[in_info.data.length - 1].slice(0 ,1) : "中转") + "→" + out_info.country;
             }
           } else {
             // no emoji
             if (in_info.ip === out_info.query) {
                 proxy.name = "直连" + "→" + out_info.country;
             } else {                
-                proxy.name = incity + (in_info.data[in_info.data.length - 1].length === 2 ? in_info.data[in_info.data.length - 1] : "中转") + "→" + out_info.country;
+                proxy.name = incity + (in_info.data[in_info.data.length - 1].length === 2 ? in_info.data[in_info.data.length - 1].slice : "中转") + "→" + out_info.country;
           //console.log(proxy.name)
             }
           }
