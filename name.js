@@ -57,6 +57,7 @@ async function operator(proxies) {
           // proxy.name = out_info.country; 只有国家
           // 新增一个去重用字段，该字段不显示在节点名字不需要修改 ,只用于去重, 重复那就是重复节点：入口IP|出口IP
           proxy.qc = in_info.ip + "|" + out_info.query;
+          console.log(qc)
         } catch (err) {
           console.log(`err = ${err}`);
         }
@@ -77,6 +78,7 @@ async function operator(proxies) {
   const endTime = new Date();
   const timeDiff = endTime.getTime() - startTime.getTime();
   console.log(`方法总耗时 = ${timeDiff / 1000} 秒`);
+  return proxies;
 }
 //入口ip解析
 async function queryDNSInfo(server) {
