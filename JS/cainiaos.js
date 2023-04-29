@@ -1,5 +1,4 @@
 var okk = JSON.parse($response.body);
-if (okk) {
   if (/cainiao\.nbpresentation\.protocol\.homepage\.get\.cn/.test(
     $request.url
   )) {
@@ -28,18 +27,11 @@ if (okk) {
         okk.data.result.dataList[i].bizData.items[j].bubbleText = null;
       }
     }
-  } else if (/cainiao\.adkeyword/.test($request.url)) {
+  } if (/cainiao\.adkeyword/.test($request.url)) {
     // 搜索框下方今日好物推荐
     okk.data.result.adHotKeywords = [];
-  } else if (/cainiao\.guoguo\.nbnetflow\.ads\.index\.cn/.test($request.url)) {
+  } if (/cainiao\.guoguo\.nbnetflow\.ads\.index\.cn/.test($request.url)) {
     // 底部商品推广
     okk.data.result = [];
-  } 
-   else {
- 
-     return;
-   }
+  }
    $done({ body: JSON.stringify(okk) });
- } else {
-   $done({});
- }
