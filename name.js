@@ -70,7 +70,7 @@ async function operator(proxies) {
                     proxy.name = "直连" + "→" + out_info.country;
                 } else {                
                     proxy.name = incity + (in_info.data[in_info.data.length - 1].length === 2 ? in_info.data[in_info.data.length - 1] : "中转") + "→" + out_info.country;
-                //console.log(proxy.name)
+                // console.log(proxy.name)
               }
             }
           // proxy.name = out_info.country; //只有国家
