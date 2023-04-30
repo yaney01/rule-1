@@ -105,7 +105,7 @@ async function operator(proxies) {
   console.log(`去复用后: ` + prso + "个");
   const endTime = new Date();
   const timeDiff = endTime.getTime() - startTime.getTime();
-  console.log(`方法耗时 = ${timeDiff / 1000} 秒`);
+  console.log(`方法耗时: ${timeDiff / 1000} 秒`);
   //$notification.post( "节点处理完成",'', "用时" + timeDiff / 1000 + "秒，共计" + prs + "个节点\n剔除复用与无效节点" +  (prs - prso) + "个，获得" + prso + "个节点" )
   $notification.post( prs + "个节点处理已完成",'',"处理无效节点后剩余" + prso + "个节点，用时" + timeDiff / 1000 + "秒" )
   // "剔除复用与无效节点" +  (prs - prso) + 
