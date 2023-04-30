@@ -49,7 +49,7 @@ async function operator(proxies) {
               console.log(`进度: ${progress.toFixed(0)}%`);
             }
               // console.log("..");
-              const in_info = await queryDNSInfo(proxy.server);
+              const in_info = await queryDNSInfo(proxy.server, dnsCache);
               // console.log(proxy.server + "in节点ip = " + JSON.stringify(in_info));
               const out_info = await queryIpApi(proxy);
               //入口 省 or 市
@@ -113,43 +113,48 @@ async function operator(proxies) {
   return proxies;
   
 }
-//入口ip解析
+// 入口ip解析，添加对象来缓存已经查询过的 DNS 信息
+const dnsCache = {};
 async function queryDNSInfo(server) {
-  return new Promise((resolve) => {
+  // 先从缓存中查找是否已经查询过该 DNS 信息
+  if (dnsCache[server]) { return dnsCache[server]; }
+  return new Promise((resolve,reject) => {
     const ips = server;
     const url = `http://www.inte.net/tool/ip/api.ashx?ip=${server}&datatype=json`;
     $.http.get({ url }).then((resp) => {
-        const kkk = JSON.parse(resp.body);
-        if (kkk.ip !== "0.0.0.0") {
-          resolve(kkk);
+        const dnsInfo = JSON.parse(resp.body);
+        // 将查询到的 DNS 信息缓存起来，以便下次直接使用
+        dnsCache[server] = dnsInfo;
+        if (dnsInfo.ip !== "0.0.0.0") {
+          resolve(dnsInfo);
         } else {resolve(ips);}
-      }).catch((err) => {
-        // console.log("dns = " + err);
-        reject(err);
-      });
+      }).catch((err) => {reject(err);});
   });
 }
-// 查询落地ip
+// 查询落地ip，定义代理缓存对象
+const proxyCache = {};
 async function queryIpApi(proxy) {
+  // 检查是否已经有该代理的缓存信息
+  const cacheKey = `${proxy.server}:${proxy.port}`;
+  if (proxyCache[cacheKey]) {return proxyCache[cacheKey];}
   return new Promise((resolve, reject) => {
     const url = `http://ip-api.com/json?lang=zh-CN&fields=status,message,country,countryCode,city,query`;
     let node = ProxyUtils.produce([proxy], target);
     const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => {
-        reject();
-      }, timeout);
-    });
-    const queryPromise = $.http.get({url, node: node, // Loon or Surge IOS 
-        "policy-descriptor": node, // Surge MAC
-      }).then((resp) => {
-        const data = JSON.parse(resp.body);
-        if (data.status === "success") {
-          resolve(data);
-        } else {
-          reject();
-        } }).catch((err) => { reject(err);/*console.log("......");*/ });
+      setTimeout(() => {reject();}, timeout);});
+    const queryPromise = $.http.get({ url,
+      node: node, // Loon or Surge IOS 
+      "policy-descriptor": node, // Surge MAC
+    }).then((resp) => {
+      const data = JSON.parse(resp.body);
+      if (data.status === "success") {
+        // 将查询到的代理信息缓存起来
+        proxyCache[cacheKey] = data;
+        resolve(data);
+      } else {reject();}
+    }).catch((err) => {reject(err);});
     // 超时处理
-    Promise.race([timeoutPromise, queryPromise]).catch((err) => { reject(err); });
+    Promise.race([timeoutPromise, queryPromise]).catch((err) => {reject(err);});
   });
 }
 function removeDuplicateName(arr){const nameSet=new Set;const result=[];for(const e of arr){if(e.qc&&!nameSet.has(e.qc)){nameSet.add(e.qc);result.push(e)}}return result}
