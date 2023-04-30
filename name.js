@@ -30,20 +30,23 @@ async function operator(proxies) {
   const startTime = new Date();
   console.log(`初始节点数 = ` + proxies.length);
   console.log("处理节点中");
-  console.log("...");
-  // console.log("初始节点数 = " + proxies.length);
+  console.log("进度: 0%");
   let i = 0;
+  let completed = 0;
   while (i < proxies.length) {
     const batch = proxies.slice(i, i + batch_size);
     await Promise.allSettled(
       batch.map(async (proxy) => {
+    // const batchPromises = batch.map(async (proxy) => {
         try {
-
+            completed++;
+            const progress = (completed / proxies.length) * 100;
+            // console.log(`数量:${completed}/${proxies.length} `);
+            console.log(`进度: ${progress.toFixed(0)}%`);
+            // console.log("..");
             const in_info = await queryDNSInfo(proxy.server);
             // console.log(proxy.server + "in节点ip = " + JSON.stringify(in_info));
-
             const out_info = await queryIpApi(proxy);
-
             //入口 省 or 市
             const incity = citys
             ? (in_info.data[2] || in_info.data[1] || in_info.data[0]).slice(0, 2)
@@ -81,7 +84,8 @@ async function operator(proxies) {
         //   console.log(proxy.qc)
         } catch (err) {
           // console.log(`err = ${err}`);
-        } }) ); i += batch_size;
+        } }) );
+         i += batch_size;
   }
   // console.log("去重前的节点信息 = " + JSON.stringify(proxies));
   proxies = removeDuplicateName(proxies);
@@ -132,7 +136,7 @@ async function queryIpApi(proxy) {
           resolve(data);
         } else {
           reject();
-        } }).catch((err) => { reject(err);console.log("..."); });
+        } }).catch((err) => { reject(err);/*console.log("......");*/ });
     // 超时处理
     Promise.race([timeoutPromise, queryPromise]).catch((err) => { reject(err); });
   });
