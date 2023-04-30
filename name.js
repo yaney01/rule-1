@@ -88,23 +88,20 @@ async function operator(proxies) {
           // proxy.name = out_info.country; //只有国家
           // 去重字段不显示在节点名,判断方法：入口IP 与 出口IP
           proxy.qc = in_info.ip + "|" + out_info.query;
-        //   console.log(proxy.qc)
+          // console.log(proxy.qc)
         } catch (err) {
-          // console.log(`err = ${err}`);
-        } }) );
-         i += batch_size;
+        // console.log(`err = ${err}`);
+        }}));i += batch_size;
   }
   // console.log("去重前的节点信息 = " + JSON.stringify(proxies));
   proxies = removeDuplicateName(proxies);
-  // console.log("去重后的节点信息 = " + JSON.stringify(proxies));
   // 去除去重时添加的qc属性
   proxies = removeqcName(proxies);
-  //console.log("去重后的节点信息 = " + JSON.stringify(proxies));
   // 按节点全名分组加序号
   const processedProxies = processProxies(proxies);
-  //console.log("加序号后的节点信息 = " + JSON.stringify(proxies));
-  if (keynames !== "") {
-  proxies.forEach(proxy => { proxy.name = keynames + ' ' + proxy.name;});}
+  // console.log("加序号后的节点信息 = " + JSON.stringify(proxies));
+  if (keynames !== "") { proxies.forEach(proxy => { 
+  proxy.name = keynames + ' ' + proxy.name;});}
   const prso = proxies.length
   console.log("处理进度: 100%");
   console.log(`去复用后: ` + prso + "个");
@@ -113,10 +110,7 @@ async function operator(proxies) {
   console.log(`方法耗时: ${timeDiff / 1000} 秒`);
   //$notification.post( "节点处理完成",'', "用时" + timeDiff / 1000 + "秒，共计" + prs + "个节点\n剔除复用与无效节点" +  (prs - prso) + "个，获得" + prso + "个节点" )
   $notification.post( prs + "个节点处理已完成",'',"去除无效节点后剩" + prso + "个，耗时" + timeDiff / 1000 + "秒" )
-  // "剔除复用与无效节点" +  (prs - prso) + 
-  return proxies;
-  
-}
+  return proxies;}
 // 入口ip解析，添加对象来缓存已经查询过的 DNS 信息
 const dnsCache = {};
 async function queryDNSInfo(server) {
