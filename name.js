@@ -103,8 +103,9 @@ async function operator(proxies) {
   const endTime = new Date();
   const timeDiff = endTime.getTime() - startTime.getTime();
   console.log(`方法总耗时 = ${timeDiff / 1000} 秒`);
-  $notification.post( "本设备: " + target , "总耗时: " + timeDiff / 1000 +"秒" ,"去重前: " + prs + "个, " + "去重后:" + prso + "个")
+  
   return proxies;
+  $notification.post( "本设备: " + target , "总耗时: " + timeDiff / 1000 +"秒" ,"去重前: " + prs + "个, " + "去重后:" + prso + "个")
 }
 //入口ip解析
 async function queryDNSInfo(server) {
