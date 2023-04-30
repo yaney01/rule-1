@@ -108,8 +108,9 @@ async function operator(proxies) {
   const endTime = new Date();
   const timeDiff = endTime.getTime() - startTime.getTime();
   console.log(`方法总耗时 = ${timeDiff / 1000} 秒`);
-  $notification.post( "设备: " + target , "总耗时: " + timeDiff / 1000 +"秒" ,"去重前: " + prs + "个, " + "去重后:" + prso + "个")
-  console.log("完成✅");
+  //$notification.post( "节点处理完成",'', "用时" + timeDiff / 1000 + "秒，共计" + prs + "个节点\n剔除复用与无效节点" +  (prs - prso) + "个，获得" + prso + "个节点" )
+  $notification.post( prs + "个节点处理已完成",'',"获得" + prso + "个节点，用时" + timeDiff / 1000 + "秒" )
+  // "剔除复用与无效节点" +  (prs - prso) + 
   return proxies;
   
 }
