@@ -38,8 +38,8 @@ var others = {
    //沪日: 'SH-Japan', //沪韩: 'SH-Korea', //沪美: 'SH-United States', //广港: 'GZ-Hong Kong', //广新: 'GZ-Singapore', //深港: 'SZ-Hong Kong', //莞港: 'DG-Hong Kong',
 };
 function operator(proxies) {
-  console.log(`处理前节点总数 = ${proxies.length}`);
-  const startTime = new Date();
+  // console.log(`处理前节点总数 = ${proxies.length}`);
+  // const startTime = new Date();
   const toBeDeleted = [];
   proxies = proxies
     .map((res) => {
@@ -92,10 +92,10 @@ function operator(proxies) {
   if (clear) {
     proxies = stripOnes(proxies);
     proxies = proxies.filter((item) => !nameclear.test(item.name));}
-  console.log(`处理后节点总数 = ${proxies.length}`);
-  const endTime = new Date();
-  const timeDiff = endTime.getTime() - startTime.getTime();
-  console.log(`批量重命名耗时: ${timeDiff} ms`);
+  // console.log(`处理后节点总数 = ${proxies.length}`);
+  // const endTime = new Date();
+  // const timeDiff = endTime.getTime() - startTime.getTime();
+  // console.log(`批量重命名耗时: ${timeDiff} ms`);
   return proxies;
 }
 function stripOnes(e){Object.keys(countries).forEach(((n,t,r)=>{if(countries[n][1]===1){e.map((e=>{if(e.name.indexOf(countries[n][0])!==-1){e.name=e.name.replace("1","").replace("0","")}}))}}));return e}
