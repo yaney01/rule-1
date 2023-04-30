@@ -36,13 +36,17 @@ async function operator(proxies) {
     await Promise.allSettled(
       batch.map(async (proxy) => {
         try {
-          const in_info = await queryDNSInfo(proxy.server);
+
+            const in_info = await queryDNSInfo(proxy.server);
             // console.log(proxy.server + "in节点ip = " + JSON.stringify(in_info));
-            const incity = citys
-              ? (in_info.data[2] || in_info.data[1] || in_info.data[0]).slice(0, 2)
-              : (in_info.data[1] || in_info.data[0]).slice(0, 2);
+
             const out_info = await queryIpApi(proxy);
-            
+
+            const incity = citys
+            ? (in_info.data[2] || in_info.data[1] || in_info.data[0]).slice(0, 2)
+            : (in_info.data[1] || in_info.data[0]).slice(0, 2);
+
+            console.log(flag)
             if (flag) { 
                 // emoji
                 const kkEmoji = { '电信': '🅳', '联通': '🅻', '移动': '🆈', };
@@ -53,7 +57,8 @@ async function operator(proxies) {
                 } else {
                   proxy.name = dly + incity + "→" + getFlagEmoji(out_info.countryCode) + out_info.country;
                 }
-            } if (sim) {
+                console.log(proxy.name)
+            } else if (sim) {
                 // simple
                 if (in_info.ip === out_info.query) {
                     proxy.name = "直连" + "→" + out_info.country;
