@@ -26,12 +26,14 @@ const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 async function operator(proxies) {
   const support = (isLoon || isSurge);
   if (!support) { $.error(`No Loon or Surge`);
-    return proxies; }
+  $notification.post("不支持此设备","本脚本仅支持 Loon or Surge",'')
+  return proxies; }
   const startTime = new Date();
   const prs = proxies.length //初始节点数
   console.log(`初始节点数 = ` + prs);
   console.log("处理节点中");
   console.log("进度: 0%");
+
   let i = 0;
   let completed = 0;
   while (i < proxies.length) {
