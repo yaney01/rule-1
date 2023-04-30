@@ -104,6 +104,7 @@ async function operator(proxies) {
   const timeDiff = endTime.getTime() - startTime.getTime();
   console.log(`方法总耗时 = ${timeDiff / 1000} 秒`);
   $notification.post( "本设备: " + target , "总耗时: " + timeDiff / 1000 +"秒" ,"去重前: " + prs + "个, " + "去重后:" + prso + "个")
+  console.log("完成✅");
   return proxies;
   
 }
