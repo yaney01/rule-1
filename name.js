@@ -28,7 +28,7 @@ async function operator(proxies) {
   if (!support) { $.error(`No Loon or Surge`);
     return proxies; }
   const startTime = new Date();
-  const prs = proxies.length; //初始节点数
+  console.log(`初始节点数 = ` + proxies.length);
   // console.log("初始节点数 = " + proxies.length);
   let i = 0;
   while (i < proxies.length) {
@@ -90,7 +90,6 @@ async function operator(proxies) {
   // 按节点全名分组加序号
   const processedProxies = processProxies(proxies);
   //console.log("加序号后的节点信息 = " + JSON.stringify(proxies));
-  console.log(`初始节点数 = ` + prs);
   console.log(`去重后个数 = ${proxies.length}`);
   const endTime = new Date();
   const timeDiff = endTime.getTime() - startTime.getTime();
