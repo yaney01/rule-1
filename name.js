@@ -38,35 +38,36 @@ async function operator(proxies) {
         try {
           const in_info = await queryDNSInfo(proxy.server);
             // console.log(proxy.server + "in节点ip = " + JSON.stringify(in_info));
-            const incity = $arguments["city"]
-            ? (in_info.data[2] || in_info.data[1] || in_info.data[0]).slice(0, 2)
-            : (in_info.data[1] || in_info.data[0]).slice(0, 2);
+            const incity = citys
+              ? (in_info.data[2] || in_info.data[1] || in_info.data[0]).slice(0, 2)
+              : (in_info.data[1] || in_info.data[0]).slice(0, 2);
             const out_info = await queryIpApi(proxy);
-            if (flag) { const kkEmoji = { '电信': '🅳', '联通': '🅻', '移动': '🆈', };
-              const operator = in_info.data[in_info.data.length - 1];
-              const dly = kkEmoji[operator] || '🅶';
-            // emoji
-            if (in_info.ip === out_info.query) { 
-                proxy.name = "🆉直连" + "→" + getFlagEmoji(out_info.countryCode) + out_info.country;
+            if (flag) { 
+                // emoji
+                const kkEmoji = { '电信': '🅳', '联通': '🅻', '移动': '🆈', };
+                const operator = in_info.data[in_info.data.length - 1];
+                const dly = kkEmoji[operator] || '🅶';
+                if (in_info.ip === out_info.query) { 
+                  proxy.name = "🆉直连" + "→" + getFlagEmoji(out_info.countryCode) + out_info.country;
+                } else {
+                  proxy.name = dly + incity + "→" + getFlagEmoji(out_info.countryCode) + out_info.country;
+                }
+            } if (sim) {
+                // simple
+                if (in_info.ip === out_info.query) {
+                    proxy.name = "直连" + "→" + out_info.country;
+                } else {                
+                    proxy.name = incity.slice(0, 1) + (in_info.data[in_info.data.length - 1].length === 2 ? in_info.data[in_info.data.length - 1].slice(0 ,1) : "中转") + "→" + out_info.country;
+                }
             } else {
-                proxy.name = dly + incity + "→" + getFlagEmoji(out_info.countryCode) + out_info.country;
+                // no emoji
+                if (in_info.ip === out_info.query) {
+                    proxy.name = "直连" + "→" + out_info.country;
+                } else {                
+                    proxy.name = incity + (in_info.data[in_info.data.length - 1].length === 2 ? in_info.data[in_info.data.length - 1] : "中转") + "→" + out_info.country;
+                    //console.log(proxy.name)
+              }
             }
-          } if (sim) {
-          // simple
-            if (in_info.ip === out_info.query) {
-                proxy.name = "直连" + "→" + out_info.country;
-            } else {                
-                proxy.name = incity.slice(0, 1) + (in_info.data[in_info.data.length - 1].length === 2 ? in_info.data[in_info.data.length - 1].slice(0 ,1) : "中转") + "→" + out_info.country;
-            }
-          } else {
-            // no emoji
-            if (in_info.ip === out_info.query) {
-                proxy.name = "直连" + "→" + out_info.country;
-            } else {                
-                proxy.name = incity + (in_info.data[in_info.data.length - 1].length === 2 ? in_info.data[in_info.data.length - 1] : "中转") + "→" + out_info.country;
-          //console.log(proxy.name)
-            }
-          }
           // proxy.name = out_info.country; 只有国家
           // 去重用字段，该字段不显示在节点名字不需要修改 ,只用于去重, 判断方法：入口IP 与 出口IP
           proxy.qc = in_info.ip + "|" + out_info.query;
