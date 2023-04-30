@@ -4,7 +4,7 @@
 功能：根据接口返回的真实结果，重新对节点命名，添加入口城市、落地国家或地区、国内运营商信息；
 作者：@Key @奶茶姐
 用法：Sub-Store脚本操作添加； 只支持 Surge Loon
-地址：https://脚本地址/name.js#flag&timeout=1000
+地址：https://脚本地址/name.js#flag&timeout=2000
 日期：2023/04/30
 --------
 以下是此脚本支持的参数，多个参数使用"&"连接，参考上述地址为例使用参数。
@@ -71,7 +71,8 @@ async function operator(proxies) {
                 if (in_info.ip === out_info.query) {
                     proxy.name = "直连" + "→" + out_info.country;
                 } else {                
-                    proxy.name = incity.slice(0, 1) + (in_info.data[in_info.data.length - 1].length === 2 ? in_info.data[in_info.data.length - 1].slice(0 ,1) : "中转") + "→" + out_info.country;
+                    // proxy.name = incity.slice(0, 1) + (in_info.data[in_info.data.length - 1].length === 2 ? in_info.data[in_info.data.length - 1].slice(0 ,1) : "中转") + "→" + out_info.country; // 两个字运营商
+                    proxy.name = incity.slice(0, 1) + in_info.data[in_info.data.length - 1].slice(0 ,1) + "→" + out_info.country; // 电信ADSL  api 数据库 不行 乱来
                 }
             } else {
                 // no emoji
