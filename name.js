@@ -26,82 +26,81 @@ const keynames = $arguments.name ? decodeURI($arguments.name) : "";
 const timeout = $arguments["timeout"] ? $arguments["timeout"] : 1000;
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 async function operator(proxies) {
-  const support = (isLoon || isSurge);
-  if (!support) { $.error(`No Loon or Surge`);
-  $notify("不支持此设备","本脚本仅支持 Loon or Surge",'')
-  return proxies; }
-  const startTime = new Date();
-  const prs = proxies.length //初始节点数
-  console.log(`初始节点: ` + prs + "个");
-  console.log("处理节点: 0%");
-  let i = 0;
-  let completed = 0;
-  let counter = 0;
-  while (i < proxies.length) {
-    const batch = proxies.slice(i, i + batch_size);
-    await Promise.allSettled(
-      batch.map(async (proxy) => {
-        try {
-            completed++; counter++;
-            if (counter % 4 === 0) {
-              const progress = (completed / proxies.length) * 98;
-              // console.log(`数量:${completed}/${proxies.length} `);
-              console.log(`处理进度: ${progress.toFixed(0)}%`);
-            }
-              // console.log("..");
-              const in_info = await queryDNSInfo(proxy.server, dnsCache);
-              // console.log(proxy.server + "in节点ip = " + JSON.stringify(in_info));
-              const out_info = await queryIpApi(proxy);
-              //入口 省 or 市
-              const incity = citys
-              ? (in_info.data[2] || in_info.data[1] || in_info.data[0]).slice(0, 2)
-              : (in_info.data[1] || in_info.data[0]).slice(0, 2);
+const support = (isLoon || isSurge);
+if (!support) { $.error(`No Loon or Surge`);
+$notify("不支持此设备","本脚本仅支持 Loon or Surge",'')
+return proxies; }
+const startTime = new Date();
+const prs = proxies.length //初始节点数
+console.log(`初始节点: ` + prs + "个");
+console.log("处理节点: 0%");
+let i = 0;
+let completed = 0;
+let counter = 0;
+while (i < proxies.length) {
+const batch = proxies.slice(i, i + batch_size);
+await Promise.allSettled( batch.map(async (proxy) => {
+  try {
+    completed++; counter++;
+    if (counter % 4 === 0) {
+      const progress = (completed / proxies.length) * 98;
+      // console.log(`数量:${completed}/${proxies.length} `);
+      console.log(`处理进度: ${progress.toFixed(0)}%`);
+    }
+      // console.log("..");
+      const in_info = await queryDNSInfo(proxy.server, dnsCache);
+      // console.log(proxy.server + "in节点ip = " + JSON.stringify(in_info));
+      const out_info = await queryIpApi(proxy);
+      //入口 省 or 市
+      const incity = citys
+      ? (in_info.data[2] || in_info.data[1] || in_info.data[0]).slice(0, 2)
+      : (in_info.data[1] || in_info.data[0]).slice(0, 2);
 
-            if (flag) { 
-                // emoji
-                const kkEmoji = { '电信': '🅳', '联通': '🅻', '移动': '🆈', '移通': '🆈'};
-                const operator = in_info.data[in_info.data.length - 1];
-                const dly = kkEmoji[operator] || '🅶';
-                if (in_info.ip === out_info.query) { 
-                  proxy.name = "🆉直连" + "→" + getFlagEmoji(out_info.countryCode) + out_info.country;
-                } else {
-                  proxy.name = dly + incity + "→" + getFlagEmoji(out_info.countryCode) + out_info.country;
-                }
-            } else if (sim) {
-                // simple
-                if (in_info.ip === out_info.query) {
-                    proxy.name = "直连" + "→" + out_info.country;
-                } else {                
-                    // proxy.name = incity.slice(0, 1) + (in_info.data[in_info.data.length - 1].length === 2 ? in_info.data[in_info.data.length - 1].slice(0 ,1) : "中转") + "→" + out_info.country; // 两个字运营商
-                    proxy.name = incity.slice(0, 1) + in_info.data[in_info.data.length - 1].slice(0 ,1) + "→" + out_info.country; // 电信ADSL  api 数据库 不行 乱来
-                }
-            } else {
-                // no emoji
-                if (in_info.ip === out_info.query) {
-                    proxy.name = "直连" + "→" + out_info.country;
-                } else {                
-                    // proxy.name = incity + (in_info.data[in_info.data.length - 1].length === 2 ? in_info.data[in_info.data.length - 1] : "中转") + "→" + out_info.country;
-                    proxy.name = incity + in_info.data[in_info.data.length - 1] + "→" + out_info.country;
-                // console.log(proxy.name)
-              }
-            }
-          // proxy.name = out_info.country; //只有国家
-          // 去重字段不显示在节点名,判断方法：入口IP 与 出口IP
-          proxy.qc = in_info.ip + "|" + out_info.query;
-          // console.log(proxy.qc)
-        } catch (err) {
-        // console.log(`err = ${err}`);
-        }}));i += batch_size;
-  }
-  // console.log("去重前的节点信息 = " + JSON.stringify(proxies));
+    if (flag) { 
+        // emoji
+        const kkEmoji = { '电信': '🅳', '联通': '🅻', '移动': '🆈', '移通': '🆈'};
+        const operator = in_info.data[in_info.data.length - 1];
+        const dly = kkEmoji[operator] || '🅶';
+        if (in_info.ip === out_info.query) { 
+          proxy.name = "🆉直连" + "→" + getFlagEmoji(out_info.countryCode) + out_info.country;
+        } else {
+          proxy.name = dly + incity + "→" + getFlagEmoji(out_info.countryCode) + out_info.country;
+        }
+    } else if (sim) {
+        // simple
+        if (in_info.ip === out_info.query) {
+            proxy.name = "直连" + "→" + out_info.country;
+        } else {                
+            // proxy.name = incity.slice(0, 1) + (in_info.data[in_info.data.length - 1].length === 2 ? in_info.data[in_info.data.length - 1].slice(0 ,1) : "中转") + "→" + out_info.country; // 两个字运营商
+            proxy.name = incity.slice(0, 1) + in_info.data[in_info.data.length - 1].slice(0 ,1) + "→" + out_info.country; // 电信ADSL  api 数据库 不行 乱来
+        }
+    } else {
+        // no emoji
+        if (in_info.ip === out_info.query) {
+            proxy.name = "直连" + "→" + out_info.country;
+        } else {                
+            // proxy.name = incity + (in_info.data[in_info.data.length - 1].length === 2 ? in_info.data[in_info.data.length - 1] : "中转") + "→" + out_info.country;
+            proxy.name = incity + in_info.data[in_info.data.length - 1] + "→" + out_info.country;
+        // console.log(proxy.name)
+      }
+    }
+  // proxy.name = out_info.country; //只有国家
+  // 去重字段不显示在节点名,判断方法：入口IP 与 出口IP
+proxy.qc = in_info.ip + "|" + out_info.query;
+// console.log(proxy.qc)
+} catch (err) {
+// console.log(`err = ${err}`);
+}}));i += batch_size;
+}
   proxies = removeDuplicateName(proxies);
   // 去除去重时添加的qc属性
   proxies = removeqcName(proxies);
   // 按节点全名分组加序号
   const processedProxies = processProxies(proxies);
-  // console.log("加序号后的节点信息 = " + JSON.stringify(proxies));
   if (keynames !== "") { proxies.forEach(proxy => { 
   proxy.name = keynames + ' ' + proxy.name;});}
+  // console.log("节点信息 = " + JSON.stringify(proxies));
+  // log or push
   const prso = proxies.length
   console.log("处理进度: 100%");
   console.log(`去复用后: ` + prso + "个");
@@ -110,6 +109,7 @@ async function operator(proxies) {
   console.log(`方法耗时: ${timeDiff / 1000} 秒`);
   //$notification.post( "节点处理完成",'', "用时" + timeDiff / 1000 + "秒，共计" + prs + "个节点\n剔除复用与无效节点" +  (prs - prso) + "个，获得" + prso + "个节点" )
   $notification.post( prs + "个节点处理已完成",'',"去除无效节点后剩" + prso + "个，耗时" + timeDiff / 1000 + "秒" )
+  
   return proxies;}
 // 入口ip解析，添加对象来缓存已经查询过的 DNS 信息
 const dnsCache = {};
