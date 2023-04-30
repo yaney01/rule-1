@@ -23,6 +23,7 @@ const { isLoon, isSurge, isQX } = $substore.env;
 const batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
 const timeout = $arguments["timeout"] ? $arguments["timeout"] : 1000;
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
+
 async function operator(proxies) {
   const support = (isLoon || isSurge);
   if (!support) { $.error(`No Loon or Surge`);
@@ -40,23 +41,21 @@ async function operator(proxies) {
     const batch = proxies.slice(i, i + batch_size);
     await Promise.allSettled(
       batch.map(async (proxy) => {
-    // const batchPromises = batch.map(async (proxy) => {
         try {
-            completed++;
-            counter++;
+            completed++; counter++;
             if (counter % 4 === 0) {
               const progress = (completed / proxies.length) * 98;
               // console.log(`数量:${completed}/${proxies.length} `);
               console.log(`进度: ${progress.toFixed(0)}%`);
             }
-            // console.log("..");
-            const in_info = await queryDNSInfo(proxy.server);
-            // console.log(proxy.server + "in节点ip = " + JSON.stringify(in_info));
-            const out_info = await queryIpApi(proxy);
-            //入口 省 or 市
-            const incity = citys
-            ? (in_info.data[2] || in_info.data[1] || in_info.data[0]).slice(0, 2)
-            : (in_info.data[1] || in_info.data[0]).slice(0, 2);
+              // console.log("..");
+              const in_info = await queryDNSInfo(proxy.server);
+              // console.log(proxy.server + "in节点ip = " + JSON.stringify(in_info));
+              const out_info = await queryIpApi(proxy);
+              //入口 省 or 市
+              const incity = citys
+              ? (in_info.data[2] || in_info.data[1] || in_info.data[0]).slice(0, 2)
+              : (in_info.data[1] || in_info.data[0]).slice(0, 2);
 
             if (flag) { 
                 // emoji
