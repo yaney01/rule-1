@@ -31,9 +31,8 @@ async function operator(proxies) {
   return proxies; }
   const startTime = new Date();
   const prs = proxies.length //初始节点数
-  console.log(`初始节点数 = ` + prs);
-  console.log("处理节点中");
-  console.log("进度: 0%");
+  console.log(`初始节点: ` + prs + "个");
+  console.log("处理节点: 0%");
   let i = 0;
   let completed = 0;
   let counter = 0;
@@ -46,7 +45,7 @@ async function operator(proxies) {
             if (counter % 4 === 0) {
               const progress = (completed / proxies.length) * 98;
               // console.log(`数量:${completed}/${proxies.length} `);
-              console.log(`进度: ${progress.toFixed(0)}%`);
+              console.log(`处理进度: ${progress.toFixed(0)}%`);
             }
               // console.log("..");
               const in_info = await queryDNSInfo(proxy.server, dnsCache);
@@ -102,8 +101,8 @@ async function operator(proxies) {
   const processedProxies = processProxies(proxies);
   //console.log("加序号后的节点信息 = " + JSON.stringify(proxies));
   const prso = proxies.length
-  console.log("进度: 100%");
-  console.log(`去重后个数 = ` + prso);
+  console.log("处理进度: 100%");
+  console.log(`去复用后: ` + prso + "个");
   const endTime = new Date();
   const timeDiff = endTime.getTime() - startTime.getTime();
   console.log(`方法总耗时 = ${timeDiff / 1000} 秒`);
