@@ -26,7 +26,7 @@ const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 async function operator(proxies) {
   const support = (isLoon || isSurge);
   if (!support) { $.error(`No Loon or Surge`);
-  $notification.post("不支持此设备","本脚本仅支持 Loon or Surge",'')
+  $notify.post("不支持此设备","本脚本仅支持 Loon or Surge",'')
   console.log("本脚本仅支持 Loon or Surge")
   return proxies; }
   const startTime = new Date();
