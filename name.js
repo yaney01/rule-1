@@ -33,7 +33,6 @@ async function operator(proxies) {
   console.log(`初始节点数 = ` + prs);
   console.log("处理节点中");
   console.log("进度: 0%");
-
   let i = 0;
   let completed = 0;
   while (i < proxies.length) {
