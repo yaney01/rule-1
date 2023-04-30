@@ -42,6 +42,7 @@ async function operator(proxies) {
 
             const out_info = await queryIpApi(proxy);
 
+            //入口 省 or 市
             const incity = citys
             ? (in_info.data[2] || in_info.data[1] || in_info.data[0]).slice(0, 2)
             : (in_info.data[1] || in_info.data[0]).slice(0, 2);
