@@ -28,7 +28,8 @@ async function operator(proxies) {
   if (!support) { $.error(`No Loon or Surge`);
     return proxies; }
   const startTime = new Date();
-  console.log(`初始节点数 = ` + proxies.length);
+  const prs = proxies.length //初始节点数
+  console.log(`初始节点数 = ` + prs);
   console.log("处理节点中");
   console.log("进度: 0%");
   let i = 0;
@@ -96,10 +97,12 @@ async function operator(proxies) {
   // 按节点全名分组加序号
   const processedProxies = processProxies(proxies);
   //console.log("加序号后的节点信息 = " + JSON.stringify(proxies));
-  console.log(`去重后个数 = ${proxies.length}`);
+  const prso = proxies.length
+  console.log(`去重后个数 = ` + prso);
   const endTime = new Date();
   const timeDiff = endTime.getTime() - startTime.getTime();
   console.log(`方法总耗时 = ${timeDiff / 1000} 秒`);
+  $notification.post( "本设备: " + target , "总耗时: " + timeDiff / 1000 +"秒" ,"去重前: " + prs + "个, " + "去重后:" + prso + "个")
   return proxies;
 }
 //入口ip解析
