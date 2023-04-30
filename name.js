@@ -54,7 +54,7 @@ async function operator(proxies) {
 
             if (flag) { 
                 // emoji
-                const kkEmoji = { '电信': '🅳', '联通': '🅻', '移动': '🆈', };
+                const kkEmoji = { '电信': '🅳', '联通': '🅻', '移动': '🆈', '移通': '🆈'};
                 const operator = in_info.data[in_info.data.length - 1];
                 const dly = kkEmoji[operator] || '🅶';
                 if (in_info.ip === out_info.query) { 
