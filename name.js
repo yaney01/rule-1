@@ -42,6 +42,7 @@ async function operator(proxies) {
               ? (in_info.data[2] || in_info.data[1] || in_info.data[0]).slice(0, 2)
               : (in_info.data[1] || in_info.data[0]).slice(0, 2);
             const out_info = await queryIpApi(proxy);
+            
             if (flag) { 
                 // emoji
                 const kkEmoji = { '电信': '🅳', '联通': '🅻', '移动': '🆈', };
