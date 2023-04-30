@@ -119,7 +119,7 @@ async function queryIpApi(proxy) {
     let node = ProxyUtils.produce([proxy], target);
     const timeoutPromise = new Promise((_, reject) => {
       setTimeout(() => {
-        reject(new Error("超过timeout设定时间,过滤此节点"));
+        reject();
       }, timeout);
     });
     const queryPromise = $.http.get({url, node: node, // Loon or Surge IOS 
@@ -129,7 +129,7 @@ async function queryIpApi(proxy) {
         if (data.status === "success") {
           resolve(data);
         } else {
-          reject(new Error(data.message));
+          reject();
         } }).catch((err) => { reject(err); });
     // 超时处理
     Promise.race([timeoutPromise, queryPromise]).catch((err) => { reject(err); });
