@@ -21,9 +21,9 @@ const flag = $arguments["flag"];
 const citys = $arguments["city"];
 const { isLoon, isSurge, isQX } = $substore.env;
 const batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
+const keynames = $arguments.name ? decodeURI($arguments.name) : "";
 const timeout = $arguments["timeout"] ? $arguments["timeout"] : 1000;
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
-
 async function operator(proxies) {
   const support = (isLoon || isSurge);
   if (!support) { $.error(`No Loon or Surge`);
@@ -102,6 +102,8 @@ async function operator(proxies) {
   // 按节点全名分组加序号
   const processedProxies = processProxies(proxies);
   //console.log("加序号后的节点信息 = " + JSON.stringify(proxies));
+  if (keynames !== "") {
+  proxies.forEach(proxy => { proxy.name = keynames + ' ' + proxy.name;});}
   const prso = proxies.length
   console.log("处理进度: 100%");
   console.log(`去复用后: ` + prso + "个");
