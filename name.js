@@ -45,7 +45,7 @@ async function operator(proxies) {
             completed++;
             counter++;
             if (counter % 4 === 0) {
-              const progress = (completed / proxies.length) * 100;
+              const progress = (completed / proxies.length) * 98;
               // console.log(`数量:${completed}/${proxies.length} `);
               console.log(`进度: ${progress.toFixed(0)}%`);
             }
@@ -103,6 +103,7 @@ async function operator(proxies) {
   const processedProxies = processProxies(proxies);
   //console.log("加序号后的节点信息 = " + JSON.stringify(proxies));
   const prso = proxies.length
+  console.log("进度: 100%");
   console.log(`去重后个数 = ` + prso);
   const endTime = new Date();
   const timeDiff = endTime.getTime() - startTime.getTime();
