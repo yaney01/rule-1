@@ -77,7 +77,7 @@ async function operator(proxies) {
           proxy.qc = in_info.ip + "|" + out_info.query;
         //   console.log(proxy.qc)
         } catch (err) {
-          console.log(`err = ${err}`);
+          // console.log(`err = ${err}`);
         } }) ); i += batch_size;
   }
   // console.log("去重前的节点信息 = " + JSON.stringify(proxies));
@@ -107,7 +107,7 @@ async function queryDNSInfo(server) {
           resolve(kkk);
         } else {resolve(ips);}
       }).catch((err) => {
-        console.log("dns = " + err);
+        // console.log("dns = " + err);
         reject(err);
       });
   });
@@ -119,7 +119,7 @@ async function queryIpApi(proxy) {
     let node = ProxyUtils.produce([proxy], target);
     const timeoutPromise = new Promise((_, reject) => {
       setTimeout(() => {
-        reject(new Error("请求超时,丢弃节点"));
+        reject(new Error("超过timeout设定时间,过滤此节点"));
       }, timeout);
     });
     const queryPromise = $.http.get({url, node: node, // Loon or Surge IOS 
@@ -130,7 +130,7 @@ async function queryIpApi(proxy) {
           resolve(data);
         } else {
           reject(new Error(data.message));
-        } }).catch((err) => { console.log("api = " + err); reject(err); });
+        } }).catch((err) => { reject(err); });
     // 超时处理
     Promise.race([timeoutPromise, queryPromise]).catch((err) => { reject(err); });
   });
