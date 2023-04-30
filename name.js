@@ -29,6 +29,8 @@ async function operator(proxies) {
     return proxies; }
   const startTime = new Date();
   console.log(`初始节点数 = ` + proxies.length);
+  console.log("处理节点中");
+  console.log("...");
   // console.log("初始节点数 = " + proxies.length);
   let i = 0;
   while (i < proxies.length) {
@@ -130,7 +132,7 @@ async function queryIpApi(proxy) {
           resolve(data);
         } else {
           reject();
-        } }).catch((err) => { reject(err); });
+        } }).catch((err) => { reject(err);console.log("..."); });
     // 超时处理
     Promise.race([timeoutPromise, queryPromise]).catch((err) => { reject(err); });
   });
