@@ -35,6 +35,7 @@ async function operator(proxies) {
   console.log("进度: 0%");
   let i = 0;
   let completed = 0;
+  let counter = 0;
   while (i < proxies.length) {
     const batch = proxies.slice(i, i + batch_size);
     await Promise.allSettled(
@@ -42,9 +43,12 @@ async function operator(proxies) {
     // const batchPromises = batch.map(async (proxy) => {
         try {
             completed++;
-            const progress = (completed / proxies.length) * 100;
-            // console.log(`数量:${completed}/${proxies.length} `);
-            console.log(`进度: ${progress.toFixed(0)}%`);
+            counter++;
+            if (counter % 4 === 0) {
+              const progress = (completed / proxies.length) * 100;
+              // console.log(`数量:${completed}/${proxies.length} `);
+              console.log(`进度: ${progress.toFixed(0)}%`);
+            }
             // console.log("..");
             const in_info = await queryDNSInfo(proxy.server);
             // console.log(proxy.server + "in节点ip = " + JSON.stringify(in_info));
