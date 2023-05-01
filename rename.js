@@ -6,8 +6,9 @@
 日期：2023/05/01
 -------------------------------- 
  * 以下是此脚本支持的参数，必须以 # 为开头多个参数使用"&"连接，参考上述地址为例使用参数。
-[nx]:    过滤高低倍率
 [bl]:    保留: 家宽 ，IPLC 之类的
+[nx]:    保留1倍率与不显示倍率的
+[blnx]:  只保留高倍率
 [one]:   清理只有一个节点的地区的01 
 [flag]:  给节点前面加国旗
 [clear]: 清理乱七八糟的名字
@@ -19,9 +20,11 @@
 
 const bl = $arguments["bl"];
 const nx = $arguments["nx"];
+const blnx = $arguments["blnx"];
 const numone = $arguments["one"];
 const clear = $arguments["clear"];
 const addflag = $arguments["flag"];
+const nameblnx = /(高倍|(?!1)2+(x|倍)|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰)i;
 const namenx = /(高倍|(?!1)(0\.|\d)+(x|倍)|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰)/i;
 const jcname = $arguments.name == undefined ? "" : decodeURI($arguments.name);
 const inname = $arguments["in"] === "cn" ? "cn" : $arguments["in"] === "us" ? "us" : $arguments["in"] === "quan" ? "quan" : "";
@@ -59,10 +62,8 @@ function operator(proxies) {
   // const startTime = new Date();
   if (clear) {
   proxies = proxies.filter((item) => !nameclear.test(item.name));}
-  if (nx) {proxies = proxies.filter((res) => {
-      if (res.name.match(namenx)) {
-        return false; // regex: false del   true nodel
-      } else {return true;}return true;});}
+  if (nx) { proxies = proxies.filter((res) => res.name.match(namenx) ? false : true);}
+  if (blnx) {proxies = proxies.filter((res) => res.name.match(nameblnx) ? true : false);}
   const toBeDeleted = [];
   const newProxies = [];
   proxies.forEach((res) => {
