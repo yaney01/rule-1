@@ -2,7 +2,7 @@
 
 @key 重构本地批量重命名
 用法：Sub-Store脚本操作添加
-例如：https://raw.githubusercontent.com/Keywos/rule/main/rename.js#timeout=2000&name=测试&flag
+例如：https://raw.githubusercontent.com/Keywos/rule/main/rename.js#name=测试&flag
 日期：2023/05/01
 -------------------------------- 
 rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数使用"&"连接，参考上述地址为例使用参数。
@@ -24,7 +24,7 @@ const blnx = $arguments["blnx"];
 const numone = $arguments["one"];
 const clear = $arguments["clear"];
 const addflag = $arguments["flag"];
-const nameblnx = /(高倍|(?!1)2+(x|倍)|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰)i;
+const nameblnx = /(高倍|(?!1)2+(x|倍)|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰)/i;
 const namenx = /(高倍|(?!1)(0\.|\d)+(x|倍)|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰)/i;
 const jcname = $arguments.name == undefined ? "" : decodeURI($arguments.name);
 const inname = $arguments["in"] === "cn" ? "cn" : $arguments["in"] === "us" ? "us" : $arguments["in"] === "quan" ? "quan" : "";
