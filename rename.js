@@ -70,6 +70,7 @@ function operator(proxies) {
   const resultArray = [jcname];
   for (const elem of Object.keys(countries)) {
     if (res.name.indexOf(elem) !== -1) {
+      if (!isMatched) {
       isMatched = true;
       countries[elem][1] += 1;
       if (addflag) {
@@ -81,7 +82,7 @@ function operator(proxies) {
         Object.keys(others).forEach((otherElem, index) => {
           if (res.name.indexOf(otherElem) !== -1) {
             resultArray.splice(2, 0, others[otherElem]);
-          }});}}}
+          }});}}}}
     if (isMatched) {
       newProxies.push({...res, name: resultArray.join(" ")});
     } else {
