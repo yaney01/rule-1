@@ -48,8 +48,8 @@ function operator(proxies) {
       var inputList = getList(inname); 
     } else {
       const startIndex = proxies.length - 1 - 10;
-      const endIndex = proxies.length - 1;
-      const regionCounts = proxies.slice(startIndex, endIndex + 1).map(proxy => 
+      const endIndex = proxies.length;
+      const regionCounts = proxies.slice(startIndex, endIndex).map(proxy => 
       getRegion(proxy.name)).reduce((counts, region) => {
       counts[region] = (counts[region] || 0) + 1; return counts; }, {});
       const regionEntries = Object.entries(regionCounts);
