@@ -113,7 +113,7 @@ proxy.qc = in_info.ip + "|" + out_info.query;
   const endTime = new Date();
   const timeDiff = endTime.getTime() - startTime.getTime();
   console.log(`方法耗时: ${timeDiff / 1000} 秒`);
-  const tzs = (prso == prs) ? "没有重复的节点，" : "去除无效节点后剩" + prso + "个，";
+  const tzs = (prso == prs) ? "无复用节点，" : "去除无效节点后剩" + prso + "个，";
   $notification.post( prs + "个节点处理已完成",'', tzs + "耗时" + timeDiff / 1000 + "秒" )
   
   return proxies;}
