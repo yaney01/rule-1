@@ -56,7 +56,7 @@ https://github.com/Keywos/rule/raw/main/rename.js#in=cn&out=us&clear&nx
 * 节点批量重命名 全部为本地操作
    
 ## in：
-* 机场原节点名, 现在无需配置, 自动选择前9个中类型最多的哪个
+* 机场原节点名, 现在无需配置, 自动选择类型最多的哪个
 * 也可以手动指定, 例如 `in=cn` 香港 01 香港 02 ...
 
 ## out：
