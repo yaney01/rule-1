@@ -7,8 +7,8 @@
 -------------------------------- 
  * 以下是此脚本支持的参数，必须以 # 为开头多个参数使用"&"连接，参考上述地址为例使用参数。
 [nx]:    过滤高低倍率
-[01]:    清理相同地区节点的01
 [bl]:    保留: 家宽 ，IPLC 之类的
+[one]:   清理节点的01
 [flag]:  给节点前面加国旗
 [clear]: 清理乱七八糟的名字
 [in=]:   自动判断机场节点名类型(根据前面9个节点，那种类型多就判断为那种) 也可以加参数指定
@@ -19,7 +19,7 @@
 
 const bl = $arguments["bl"];
 const nx = $arguments["nx"];
-const num01 = $arguments["01"];
+const numone = $arguments["one"];
 const clear = $arguments["clear"];
 const addflag = $arguments["flag"];
 const namenx = /(高倍|((?!.*(1|0\.\d))\d+倍|x|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰))/i;
@@ -92,12 +92,12 @@ function operator(proxies) {
   toBeDeleted.forEach((proxy) => {
     const index = proxies.indexOf(proxy);
     if (index !== -1) {
-      proxies.splice(index, 1);}});
+    proxies.splice(index, 1);}});
   proxies = newProxies;
   // 分组加序号
   const processedProxies = processProxies(proxies);  
   //清理相同地区节点的01
-  num01 && (proxies = oneProxies(proxies));
+  numone && (proxies = oneProxies(proxies));
   // console.log(`处理后节点总数 = ${proxies.length}`);
   // const endTime = new Date();
   // const timeDiff = endTime.getTime() - startTime.getTime();

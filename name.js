@@ -9,7 +9,7 @@
 例如：https://raw.githubusercontent.com/Keywos/rule/main/name.js#timeout=2000&name=测试&flag
 ----------------
  * 以下是此脚本支持的参数，必须以 # 为开头多个参数使用"&"连接，参考上述地址为例使用参数。
-[01]     清理相同地区节点的01
+[one]    清理节点的01
 [sim]    使用简写(第一个字),如: 广移, 而不是: 广东移动 ...
 [flag]   添加旗帜、运营商符号和直连符号，默认无此参数；
 [city]   添加入口城市名，默认不添加城市名，无 city 参数则只输出省份不输出城市；
@@ -105,7 +105,7 @@ proxy.qc = in_info.ip + "|" + out_info.query;
   proxy.name = keynames + ' ' + proxy.name;});}
   // console.log("节点信息 = " + JSON.stringify(proxies));
   //清理相同地区节点的01
-  num01 && (proxies = oneProxies(proxies));
+  numone && (proxies = oneProxies(proxies));
   // log or push
   const prso = proxies.length
   console.log("处理进度: 100%");
