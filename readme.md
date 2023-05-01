@@ -28,7 +28,14 @@ https://github.com/Keywos/rule/raw/main/name.js
 * 传入每次测试节点的延迟,默认1000ms
 * 例如 `timeout=1000` 为一秒
 
+## name：
+* 每个节点前面添加自义定机场名
 
+## sim:
+* 简称 
+
+## one 
+* 清理只有一个地区的节点后面的01 
  
 # rename.js 示例: 
 * rename支持: q s l
@@ -49,11 +56,11 @@ https://github.com/Keywos/rule/raw/main/rename.js#in=cn&out=us&clear&nx
 * 节点批量重命名 全部为本地操作
    
 ## in：
-* 机场原节点名, 默认cn 
-* 例如 `in=cn` 香港 01 香港 02 ...
+* 机场原节点名, 现在无需配置, 自动选择前9个中类型最多的哪个
+* 也可以手动指定, 例如 `in=cn` 香港 01 香港 02 ...
 
 ## out：
-* 修改后节点名, 默认us
+* 修改后节点名, 默认cn
 * 例如 `out=us` HK 01 HK 02 ...
 * #### in&out 可选  `us, cn, quan`
 * cn 中文地区名称 例如 香港
@@ -64,9 +71,15 @@ https://github.com/Keywos/rule/raw/main/rename.js#in=cn&out=us&clear&nx
 * 每个节点前面添加自义定机场名
 * 例如 `name=KKK` KKK 香港 01 ...
 
+## bl:
+* 保留家宽, iplc 之类的节点后缀 
+
+## one 
+* 清理只有一个地区的节点后面的01  
+
 ## clear: 
-* 如果一个地区只有一个节点，则去除它的"01"
 * 过滤掉关键词里正则匹配的「无用」节点
+
 
 ```
 (套餐|到期|有效|剩余|版本|已用|过期|失联|测试|官方|网址|备用|群|TEST|客服|网站|获取|订阅|流量|机场|下次|官址|联系|邮箱|工单|USE|USED|TOTAL|EXPIRE|EMAIL)
@@ -75,6 +88,7 @@ https://github.com/Keywos/rule/raw/main/rename.js#in=cn&out=us&clear&nx
 ## nx:
 * 过滤掉高倍率 或者0.n倍 
 * 可选: 加nx为过滤 不加为不过滤
+ 
   
 ```
 (高倍|((?!.*(1|0\.\d))\d+倍|x|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰)) 
