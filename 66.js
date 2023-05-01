@@ -20,7 +20,7 @@
 const bl = $arguments["bl"];
 const nx = $arguments["nx"];
 const blnx = $arguments["blnx"];
-console.log("blnx"+blnx)
+console.log("blnx是"+blnx)
 // const nx = true;
 const numone = $arguments["one"];
 const clear = $arguments["clear"];
