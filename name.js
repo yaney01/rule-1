@@ -1,4 +1,5 @@
 /* nolog
+
 符号：🅳=电信 🅻=联通 🆈=移动 🆉=直连 🅶=垃圾
 接口：入口查询[inte.net],落地查询[ip-api]；
 功能：根据接口返回的真实结果，重新对节点命名，添加入口城市、落地国家或地区、国内运营商信息；
@@ -7,17 +8,20 @@
 日期：2023/05/01
 例如：https://raw.githubusercontent.com/Keywos/rule/main/name.js#timeout=2000&name=测试&flag
 ----------------
-以下是此脚本支持的参数，必须以 # 为开头多个参数使用"&"连接，参考上述地址为例使用参数。
-[sim]  使用简写(第一个字),如: 广移, 而不是: 广东移动 ...
-[flag] 添加旗帜、运营商符号和直连符号，默认无此参数；
-[city] 添加入口城市名，默认不添加城市名，无 city 参数则只输出省份不输出城市；
+ * 以下是此脚本支持的参数，必须以 # 为开头多个参数使用"&"连接，参考上述地址为例使用参数。
+[01]     清理相同地区节点的01
+[sim]    使用简写(第一个字),如: 广移, 而不是: 广东移动 ...
+[flag]   添加旗帜、运营商符号和直连符号，默认无此参数；
+[city]   添加入口城市名，默认不添加城市名，无 city 参数则只输出省份不输出城市；
 [name= ]    添加机场名前缀
 [batch= ]   每次检查多少节点，默认每次16个节点。
 [timeout= ] 最大超时参数，超出允许范围则判定为无效节点，默认1000ms；
+
 */
 
 const $ = $substore
 const sim = $arguments["sim"];
+const num01 = $arguments["01"];
 const flag = $arguments["flag"];
 const citys = $arguments["city"];
 const {isLoon, isSurge, isQX} = $substore.env;
@@ -100,6 +104,8 @@ proxy.qc = in_info.ip + "|" + out_info.query;
   if (keynames !== "") { proxies.forEach(proxy => { 
   proxy.name = keynames + ' ' + proxy.name;});}
   // console.log("节点信息 = " + JSON.stringify(proxies));
+  //清理相同地区节点的01
+  num01 && (proxies = oneProxies(proxies));
   // log or push
   const prso = proxies.length
   console.log("处理进度: 100%");
@@ -159,3 +165,7 @@ function removeDuplicateName(arr){const nameSet=new Set;const result=[];for(cons
 function removeqcName(arr){const nameSet=new Set;const result=[];for(const e of arr){if(!nameSet.has(e.qc)){nameSet.add(e.qc);const modifiedE={...e};delete modifiedE.qc;result.push(modifiedE)}}return result}
 function processProxies(proxies) {const groupedProxies = proxies.reduce((groups, item) => {const existingGroup = groups.find(group => group.name === item.name);if (existingGroup) {existingGroup.count++;existingGroup.items.push({ ...item, name: `${item.name} ${existingGroup.count.toString().padStart(2, '0')}` });} else {groups.push({ name: item.name, count: 1, items: [{ ...item, name: `${item.name} 01` }] });}return groups;}, []);const sortedProxies = groupedProxies.flatMap(group =>group.items);proxies.splice(0,proxies.length, ...sortedProxies);return proxies;}
 function getFlagEmoji(cc){const codePoints=cc.toUpperCase().split("").map((char=>127397+char.charCodeAt()));return String.fromCodePoint(...codePoints).replace(/🇹🇼/g,"🇨🇳")}
+function oneProxies(proxies) { proxies = proxies.map((proxy) => { const name = proxy.name.replace(/\s01$/, '');return { ...proxy, name };});
+proxies = proxies.map((proxy) => {if (!/\d/.test(proxy.name)) {return proxy;}const nameWithoutNumber = proxy.name.replace(/\d+/g, '');
+const hasSameName = proxies.filter((p) => {return p !== proxy && p.name.includes(nameWithoutNumber) && /\d/.test(p.name);}).length > 0;
+const name = /\s01$/.test(proxy.name) && hasSameName ? nameWithoutNumber + ' 01' : proxy.name;return { ...proxy, name };});return proxies;}
