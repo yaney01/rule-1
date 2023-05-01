@@ -21,8 +21,8 @@
 
 const $ = $substore
 const sim = $arguments["sim"];
-const num01 = $arguments["01"];
 const flag = $arguments["flag"];
+const numone = $arguments["one"];
 const citys = $arguments["city"];
 const {isLoon, isSurge, isQX} = $substore.env;
 const batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
