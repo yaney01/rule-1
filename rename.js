@@ -32,8 +32,7 @@ function getList(arg) { switch (arg) { case "us": return us; case "quan": return
 function processProxies(e){const n=e.reduce(((e,n)=>{const t=e.find((e=>e.name===n.name));if(t){t.count++;t.items.push({...n,name:`${n.name} ${t.count.toString().padStart(2,"0")}`})}
 else{e.push({name:n.name,count:1,items:[{...n,name:`${n.name} 01`}]})}return e}),[]);const t=n.flatMap((e=>e.items));e.splice(0,e.length,...t);return e}
 function getFlagEmoji(e){const n=e.toUpperCase().split("").map((e=>127397+e.charCodeAt()));return String.fromCodePoint(...n).replace(/🇹🇼/g,"🇨🇳")}
-function getRegion(proxyName) {if (us.some(name => proxyName.includes(name))) { return 'us'; } else if (cn.some(name => proxyName.includes(name))) 
-{return 'cn';} else if (quan.some(name => proxyName.includes(name))) {return 'quan';} else {return null;}}
+function getRegion(proxyName) {if (cn.some((name) => proxyName.includes(name))) {return "cn";} else if (us.some((name) => proxyName.includes(name))) {return "us";} else if (quan.some((name) => proxyName.includes(name))) {return "quan";} else {return null;}}
 function oneProxies(proxies){const groups = proxies.reduce((groups, proxy) => { const name = proxy.name.replace(/\s\d+$/, ''); if (!groups[name]) { groups[name] = []; } groups[name].push(proxy);
 return groups; }, {});for(const name in groups) {if (groups[name].length === 1 && groups[name][0].name.endsWith(' 01')) {const proxy = groups[name][0];proxy.name = name;}};return proxies;}
 const nameclear =/(套餐|到期|有效|剩余|版本|已用|过期|失联|测试|官方|网址|备用|群|TEST|客服|网站|获取|订阅|流量|机场|下次|官址|联系|邮箱|工单|学术|USE|USED|TOTAL|EXPIRE|EMAIL)/i;
@@ -47,9 +46,9 @@ function operator(proxies) {
     if (inname !== "") { 
       var inputList = getList(inname); 
     } else {
-      const startIndex = proxies.length - 1 - 10;
-      const endIndex = proxies.length;
-      const regionCounts = proxies.slice(startIndex, endIndex).map(proxy => 
+      // const startIndex = proxies.length - 1 - 10;
+      // const endIndex = proxies.length; //startIndex, endIndex
+      const regionCounts = proxies.slice(0,10).map(proxy => 
       getRegion(proxy.name)).reduce((counts, region) => {
       counts[region] = (counts[region] || 0) + 1; return counts; }, {});
       const regionEntries = Object.entries(regionCounts);
