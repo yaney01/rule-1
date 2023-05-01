@@ -18,8 +18,10 @@
 */
 
 const bl = $arguments["bl"];
-// const nx = $arguments["nx"];
-const nx = true;
+const nx = $arguments["nx"];
+const blnx = $arguments["blnx"];
+console.log("blnx"+blnx)
+// const nx = true;
 const numone = $arguments["one"];
 const clear = $arguments["clear"];
 const addflag = $arguments["flag"];
