@@ -18,11 +18,15 @@
 */
 
 const bl = $arguments["bl"];
-const nx = $arguments["nx"];
+// const nx = $arguments["nx"];
+const nx = true;
 const numone = $arguments["one"];
 const clear = $arguments["clear"];
 const addflag = $arguments["flag"];
-const namenx = /(高倍|((?!.*(1|0\.\d))\d+倍|x|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰))/i;
+
+// const namenx = /(高倍|((?!.*(1|0\.\d))\d+倍|x|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰))/i;
+const namenx = /(高倍|(?!1)(0\.|\d)+(x|倍)|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰)/i;
+
 const jcname = $arguments.name == undefined ? "" : decodeURI($arguments.name);
 const inname = $arguments["in"] === "cn" ? "cn" : $arguments["in"] === "us" ? "us" : $arguments["in"] === "quan" ? "quan" : "";
 function getList(arg) { switch (arg) { case "us": return us; case "quan": return quan; default: return cn;}}
