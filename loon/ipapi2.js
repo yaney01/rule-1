@@ -1,4 +1,4 @@
-/*
+/* 测试 api
  * 地理位置查询
  * 感谢并修改自https://raw.githubusercontent.com/KOP-XIAO/QuantumultX/master/Scripts/geo_location.js
  * 脚本功能：检查节点是否支持Dazn/Discovery/Param/Disney/Netflix/ChatGPT/YouTube解锁服务
@@ -43,7 +43,7 @@ $httpClient.get(requestParams, (error, response, data) => {
     } else {
         console.log(data);
         message = data ? json2info(data, paras) : "";
-        $done({"title": "  测试位置查询", "htmlMessage": message});
+        $done({"title": "  测试地区查询", "htmlMessage": message});
     }
 })
 
