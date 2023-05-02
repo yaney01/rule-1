@@ -43,7 +43,7 @@ $httpClient.get(requestParams, (error, response, data) => {
     } else {
         console.log(data);
         message = data ? json2info(data, paras) : "";
-        $done({"title": "  地理位置查询", "htmlMessage": message});
+        $done({"title": "  测试位置查询", "htmlMessage": message});
     }
 })
 
