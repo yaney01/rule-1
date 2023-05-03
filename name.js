@@ -100,11 +100,11 @@ proxy.qc = in_info.ip + "|" + out_info.query;
   // 去除去重时添加的qc属性
   proxies = removeqcName(proxies);
   // 按节点全名分组加序号
-  const processedProxies = processProxies(proxies);
+  proxies = processProxies(proxies);
   if (keynames !== "") { proxies.forEach(proxy => { 
   proxy.name = keynames + ' ' + proxy.name;});}
   // console.log("节点信息 = " + JSON.stringify(proxies));
-  //清理相同地区节点的01
+  // 清理相同地区节点的01
   numone && (proxies = oneProxies(proxies));
   // log or push
   const prso = proxies.length
