@@ -11,7 +11,7 @@ const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 // 第一次没有缓存的ping超时时间
 var timeout = $arguments["timeout"] ? $arguments["timeout"] : 3000;
 // 有缓存后ping超时时间
-var with_cache = $arguments["ntimeout"] ? $arguments["ntimeout"] : 100;
+var with_cache = $arguments["ntimeout"] ? $arguments["ntimeout"] : 400;
 // 节点前面加机场名
 const keynames = $arguments.name ? decodeURI($arguments.name) : "";
 // 清理相同地区节点的01
