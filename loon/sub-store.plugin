@@ -1,14 +1,13 @@
 #!name=Sub-Store
-#!desc=高级订阅管理工具 Nolog
+#!desc=高级订阅管理工具 Nolog  持久化缓存, 感谢 @小一 修改 SubStore 源码 scriptResourceCache 默认持久化缓存超时时间48小时
 #!openUrl=https://sub.store
 #!author=Peng-YM
 #!homepage=https://github.com/Peng-YM/Sub-Store
 #!icon=https://raw.githubusercontent.com/58xinian/icon/master/Sub-Store1.png
+#https://github.com/xream/Sub-Store/tree/feature/scriptResourceCache
 
 [MITM]
 hostname=sub.store
 
 [Script]
-http-request https?:\/\/sub\.store script-path=https://github.com/Keywos/rule/raw/main/JS/sub-store.nologys.js, requires-body=true, timeout=120, tag=Sub-Store  
-
-#去掉log,这是原脚本 https://raw.githubusercontent.com/Peng-YM/Sub-Store/master/backend/sub-store.min.js
+http-request https?:\/\/sub\.store script-path=https://github.com/Keywos/rule/raw/main/JS/sub-store.minxy_s_nolog.js, requires-body=true, timeout=120, tag=Sub-Store  

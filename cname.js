@@ -1,113 +1,199 @@
-// key cname: cache name
+// Surge: https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule
+// Loon: https://github.com/Keywos/rule/raw/main/loon/Sub-Store.plugin
+// @key @小一 @奶茶姐
+// 持久化缓存 查询到的节点信息，避免更新订阅超时: 默认48小时 感谢 @小一 修改 SubStore 源码
+// [name] 节点前面加机场名
+// [one] 清理相同地区节点的01
+// [timeout=] 第一次没有缓存的ping api超时时间
+// [cd=] 有缓存后ping 没有缓存成功的 api超时时间, 设置小点比如 [cd=0] 的情况下可以直接读取缓存，几乎无需等待， 如果设置 [cd=600] 最低等600+ms, 但是可以写入上次没有写入成功的缓存
+
 const $ = $substore;
-// 持久化缓存
-const FILE_CACHE_KEY = '#KEYNAME';
-// 传入为分钟, 默认48小时
-const CD_KEY = $arguments["cd"] ? $arguments["cd"] * 60000 : 48 * 3600 * 1000;
-// api lj
-// const citys = $arguments["city"];
-const { isLoon, isSurge, isQX } = $substore.env;
-const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
-// 第一次没有缓存的ping超时时间
-var timeout = $arguments["timeout"] ? $arguments["timeout"] : 3000;
-// 有缓存后ping超时时间
-var with_cache = $arguments["ntimeout"] ? $arguments["ntimeout"] : 100;
-// 节点前面加机场名
-const keynames = $arguments.name ? decodeURI($arguments.name) : "";
-// 清理相同地区节点的01
 const numone = $arguments["one"];
+const { isLoon, isSurge, isQX } = $substore.env;
+var timeout = $arguments["timeout"] ? $arguments["timeout"] : 3000;
+var with_cache = $arguments["cd"] ? $arguments["cd"] : 600;
+const keynames = $arguments.name ? decodeURI($arguments.name) : "";
+const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
+
+function getId(proxy) {
+  return MD5(`DATAKEY-${proxy.server}-${proxy.port}`);
+}
+
+function getinId(proxy) {
+  return MD5(`INKEY-${proxy.server}`);
+}
+
+function getFlagEmoji(countryCode) {
+  const codePoints = countryCode
+    .toUpperCase()
+    .split("")
+    .map((char) => 127397 + char.charCodeAt());
+  return String.fromCodePoint(...codePoints).replace(/🇹🇼/g, "🇨🇳");
+}
+
+function removeDuplicateName(arr) {
+  const nameSet = new Set();
+  const result = [];
+  for (const e of arr) {
+    if (e.qc && !nameSet.has(e.qc)) {
+      nameSet.add(e.qc);
+      result.push(e);
+    }
+  }
+  return result;
+}
+
+function removeqcName(arr) {
+  const nameSet = new Set();
+  const result = [];
+  for (const e of arr) {
+    if (!nameSet.has(e.qc)) {
+      nameSet.add(e.qc);
+      const modifiedE = { ...e };
+      delete modifiedE.qc;
+      result.push(modifiedE);
+    }
+  }
+  return result;
+}
+
+function processProxies(proxies) {
+  const groupedProxies = proxies.reduce((groups, item) => {
+    const existingGroup = groups.find((group) => group.name === item.name);
+    if (existingGroup) {
+      existingGroup.count++;
+      existingGroup.items.push({
+        ...item,
+        name: `${item.name} ${existingGroup.count.toString().padStart(2, "0")}`,
+      });
+    } else {
+      groups.push({
+        name: item.name,
+        count: 1,
+        items: [{ ...item, name: `${item.name} 01` }],
+      });
+    }
+    return groups;
+  }, []);
+  const sortedProxies = groupedProxies.flatMap((group) => group.items);
+  proxies.splice(0, proxies.length, ...sortedProxies);
+  return proxies;
+}
+
+function oneProxies(proxies) {
+  const groups = proxies.reduce((groups, proxy) => {
+    const name = proxy.name.replace(/\s\d+$/, "");
+    if (!groups[name]) {
+      groups[name] = [];
+    }
+    groups[name].push(proxy);
+    return groups;
+  }, {});
+  for (const name in groups) {
+    if (groups[name].length === 1 && groups[name][0].name.endsWith(" 01")) {
+      const proxy = groups[name][0];
+      proxy.name = name;
+    }
+  }
+  return proxies;
+}
+
+function mTIme(timeDiff) {
+  if (timeDiff < 1000) {
+    return `${Math.round(timeDiff)} 毫秒`;
+  } else if (timeDiff < 60000) {
+    return `${Math.round(timeDiff / 1000)} 秒`;
+  }
+};
+
+// function sleep(ms) {
+//   return new Promise((resolve) => setTimeout(resolve, ms));
+// }
+
 async function operator(proxies) {
-const support = (isLoon || isSurge);
-if (!support) { $.error(`No Loon or Surge`);
-    $notify("不支持此设备","本脚本仅支持 Loon or Surge",'')
-    return proxies; 
-}
-// 批处理个数
-var batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
-console.log(`缓存超时时间: ${formatCacheTimeout(CD_KEY)}`);
-console.log(`批处理节点数: ${batch_size} 个`);
-console.log(`设定API超时: ${timeout} 毫秒`)
-with_cache > 0 ? console.log(`有缓API超时: ${with_cache} 毫秒`) : null;
-    const startTime = new Date();
-    const PRS = proxies.length;
-    console.log(`开始处理节点: ${PRS} 个`);
-        const batches = [];
-        let i = 0;
-        while (i < proxies.length) {
-            const batch = proxies.slice(i, i + batch_size);
-            await Promise.all(batch.map(async proxy => {
-                try {
-                    //  去掉国旗
-                    // let proxyName = removeFlag(proxy.name);
-
-                    const inip = await INDNS(proxy);
-                    // names = inip.ip;
-                    // console.log("DNS" + JSON.stringify(inip.ip));
-                
-                    // console.log("in节点ip = " + JSON.stringify(inip.data[1]));
-                    // // query ip-api
-
-                    const outip = await IPAPI(proxy);
-                    // names = outip.country
-
-                    names = inip.data[1].slice(0, 2) +" "+ outip.country 
-                    proxy.name = names; 
-                    // console.log(proxy.name)
-                    proxy.qc = inip.ip + "|" + outip.query;
-
-                } catch (err) {
-                }
-            }));
-            // await sleep(10);
-            i += batch_size;
-        }
-    // console.log("处理前节点信息 = " + JSON.stringify(proxies));
-    proxies = removeDuplicateName(proxies);
-    // 去除去重时添加的qc属性
-    proxies = removeqcName(proxies);
-    // 按节点全名分组加序号
-    proxies = processProxies(proxies);
-    if (keynames !== "") { proxies.forEach(proxy => { 
-    proxy.name = keynames + ' ' + proxy.name;});}
-    // console.log("处理后节点信息 = " + JSON.stringify(proxies));
-    //清理相同地区节点的01
-    numone && (proxies = oneProxies(proxies));
-    const PRSO = proxies.length
-    const endTime = new Date();
-    const timeDiff = endTime.getTime() - startTime.getTime();
-    DELKEY > 0 ? console.log(`清理缓存数量: ${DELKEY} 个`) : null;
-    DNSKEY > 0 ? console.log(`无缓存或过期: ${DNSKEY} 个`) : null;
-    APICACHEKEY > 0 ? console.log(`读取API缓存: ${APICACHEKEY} 个`) : null;
-    APIKEY > 0 ? console.log(`写入API缓存: ${APIKEY} 个`) : null;
-    console.log(`处理完后剩余: ${PRSO} 个`);
-    console.log(`此次方法耗时: ${timeDiff / 1000} 秒`);
-    //CACHEKEY > 0 ? console.log(`DNS缓存数量: ${CACHEKEY}个`) : null;
-    //DNSWRITEKEY > 0 ? console.log(`DNS写入缓存: ${DNSWRITEKEY}个`) : null;
-
+  const support = isLoon || isSurge;
+  if (!support) {
+    $.error(`No Loon or Surge`);
+    $notify("不支持此设备", "本脚本仅支持 Loon or Surge", "");
+    console.log("不支持此设备, 本脚本仅支持 Loon or Surge")
     return proxies;
+  }
+  // 批处理个数
+  var batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
+  const startTime = new Date();
+  const PRS = proxies.length;
+  console.log(`设定API超时: ${timeout} 毫秒`);
+  console.log(`有缓API超时: ${with_cache} 毫秒`);
+  console.log(`批处理节点数: ${batch_size} 个`);
+  console.log(`开始处理节点: ${PRS} 个`);
+  const batches = [];
+  let i = 0;
+  while (i < proxies.length) {
+    const batch = proxies.slice(i, i + batch_size);
+    await Promise.all(
+      batch.map(async (proxy) => {
+        try {
+          const inip = await INDNS(proxy);
+          // names = inip.ip;
+          // console.log("DNS" + JSON.stringify(inip.ip));
+
+          // console.log("in节点ip = " + JSON.stringify(inip.data[1]));
+          const outip = await IPAPI(proxy);
+          // names = outip.country
+
+          names = inip.data[1].slice(0, 2) + " " + outip.country;
+          proxy.name = names;
+          // 去重 入口/落地IP
+          proxy.qc = inip.ip + "|" + outip.query;
+        } catch (err) {}
+      })
+    );
+    // await sleep(10);
+    i += batch_size;
+  }
+  // console.log("处理前节点信息 = " + JSON.stringify(proxies));
+  proxies = removeDuplicateName(proxies);
+  // 去除去重时添加的qc属性
+  proxies = removeqcName(proxies);
+  // 按节点全名分组加序号
+  proxies = processProxies(proxies);
+  if (keynames !== "") {
+    proxies.forEach((proxy) => {
+      proxy.name = keynames + " " + proxy.name;
+    });
+  }
+  // console.log("处理后节点信息 = " + JSON.stringify(proxies));
+  //清理相同地区节点的01
+  numone && (proxies = oneProxies(proxies));
+  // log
+  const PRSO = proxies.length;
+  const endTime = new Date();
+  const timeDiff = endTime.getTime() - startTime.getTime();
+  APIREADKEY > 0 ? console.log(`读取API缓存: ${APIREADKEY} 个`) : null;
+  APIWRITEKEY > 0 ? console.log(`写入API缓存: ${APIWRITEKEY} 个`) : null;
+  console.log(`处理完后剩余: ${PRSO} 个`);
+  console.log(`此方法总耗时: ${mTIme(timeDiff)}`);
+  // Push
+  const readlog = APIREADKEY ? `读取缓存: ${APIREADKEY} 个 ` : '';
+  const writelog = APIWRITEKEY ? `写入缓存: ${APIWRITEKEY} 个 ` : '';
+  const Push = (PRSO == PRS) ? "\n无复用节点，" : "\n去除无效节点后剩" + PRSO + "个, ";
+  $notification.post(`${PRS}个节点处理完成`,'',`${writelog}${readlog}${Push}耗时:${mTIme(timeDiff)}`)
+  return proxies;
 }
 
-let DNSKEY = 0;
-// let CACHEKEY = 0;
-// let DNSWRITEKEY = 0;
+// const resourceCache = new ResourceCache(CACHE_EXPIRATION_TIME_MS);
 // 持久化存储每个代理的查询任务
 const ins = new Map();
 async function INDNS(proxy) {
-  const resourceCache = new ResourceCache(CD_KEY);
-    // console.log("查询的入口为: "+ proxy.server)
-    const id = getinId(proxy);
-    if (ins.has(id)) {
-      return ins.get(id); 
-    };
-    const cacheds = resourceCache.get(id);
-    if (cacheds) {
-      // CACHEKEY++;
-        // console.log("DNS缓存读取成功"+JSON.stringify(cacheds.dnsip.data[1]))
-        return (cacheds.dnsip);
-      }else{
-      DNSKEY++;
-      // console.log("无缓存或过期, DNS请求中....")
-      const resultin = new Promise((resolve, reject) => {
+  const id = getinId(proxy);
+  if (ins.has(id)) {
+    return ins.get(id);
+  }
+  const cacheds = scriptResourceCache.get(id);
+  if (cacheds) {
+    return cacheds.dnsip;
+  } else {
+    const resultin = new Promise((resolve, reject) => {
       const ips = proxy.server;
       const url = `http://www.inte.net/tool/ip/api.ashx?ip=${ips}&datatype=json`;
       $.http
@@ -115,100 +201,71 @@ async function INDNS(proxy) {
         .then((resp) => {
           const dnsip = JSON.parse(resp.body);
           if (dnsip.ip !== "0.0.0.0") {
-              resourceCache.set(id, {dnsip});
-              // console.log("写入缓存DNS: "+ dnsip)
-              // DNSWRITEKEY++;
-              resolve(dnsip);
+            scriptResourceCache.set(id, { dnsip });
+            resolve(dnsip);
           } else {
-              // resourceCache.set(id, dnsip);
-              resolve(ips);
+            resolve(ips);
           }
         })
         .catch((err) => {
           reject(err);
         });
     });
-      ins.set(id, resultin);
-      return resultin;
+    ins.set(id, resultin);
+    return resultin;
   }
-};
+}
 
-let APIKEY = 0;
-let APICACHEKEY = 0;
-const outs = new Map(); 
+let APIREADKEY = 0;
+let APIWRITEKEY = 0;
+const outs = new Map();
 async function IPAPI(proxy) {
-const resourceCache = new ResourceCache(CD_KEY);
-  // console.log("API")
   const id = getId(proxy);
-  // console.log("id是"+id)
   if (outs.has(id)) {
-    // console.log("API有缓存返回")
-    return outs.get(id); 
-  };
-  const cached = resourceCache.get(id);
+    return outs.get(id);
+  }
+  const cached = scriptResourceCache.get(id);
   if (cached) {
+    APIREADKEY++;
     timeout = with_cache;
-    APICACHEKEY++;
-    // console.log("读取IPAPI缓存成功:" + cached.lip.country)
     return cached.lip;
-  }else{
-  const result = new Promise((resolve, reject) => {
-    // console.log("无缓存或过期 IPAPI请求中....")
-    const url = `http://ip-api.com/json?lang=zh-CN&fields=status,message,country,countryCode,city,query`;
-    let node = ProxyUtils.produce([proxy], target);
-    const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => {
-        reject(new Error("timeout"));
-      }, timeout);
-    });
-    const queryPromise = $.http.get({
-      url, node: node,
-      "policy-descriptor": node,
-    }).then(resp => {
-      const lip = JSON.parse(resp.body);
-      if (lip.status === "success") {
-        resourceCache.set(id, {lip});
-        APIKEY++;
-        // console.log("写入IPAPI缓存")
-        resolve(lip);
-      } else {
-        reject(new Error(lip.message));
-      }
-      }).catch(err => {
-        // console.log(err);
+  } else {
+    const result = new Promise((resolve, reject) => {
+      const url = `http://ip-api.com/json?lang=zh-CN&fields=status,message,country,countryCode,city,query`;
+      let node = ProxyUtils.produce([proxy], target);
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => {
+          reject(new Error("timeout"));
+        }, timeout);
+      });
+      const queryPromise = $.http
+        .get({
+          url,
+          node: node,
+          "policy-descriptor": node,
+        })
+        .then((resp) => {
+          const lip = JSON.parse(resp.body);
+          if (lip.status === "success") {
+            scriptResourceCache.set(id, { lip });
+            APIWRITEKEY++;
+            resolve(lip);
+          } else {
+            reject(new Error(lip.message));
+          }
+        })
+        .catch((err) => {
+          // console.log(err);
+          reject(err);
+        });
+      Promise.race([timeoutPromise, queryPromise]).catch((err) => {
         reject(err);
       });
-      Promise.race([timeoutPromise, queryPromise]).catch((err) => { reject(err); });
     });
-
     outs.set(id, result);
     return result;
   }
 }
-
-let DELKEY = 0;class ResourceCache {constructor(expires) {this.expires = expires;if (!$.read(FILE_CACHE_KEY)) {
-$.write('{}', FILE_CACHE_KEY);}this.resourceCache = JSON.parse($.read(FILE_CACHE_KEY));this._cleanup();}_cleanup() {
-let clear = false;Object.entries(this.resourceCache).forEach((entry) => {const [id, updated] = entry;if (!updated.time) {delete this.resourceCache[id];
-$.delete(`#${id}`);clear = true;}if (new Date().getTime() - updated.time > this.expires) {
-delete this.resourceCache[id];clear = true;DELKEY++;}});if (clear) this._persist();};revokeAll() {this.resourceCache = {};
-this._persist();};_persist() {$.write(JSON.stringify(this.resourceCache), FILE_CACHE_KEY);}
-get(id) {const updated = this.resourceCache[id] && this.resourceCache[id].time;
-if (updated && new Date().getTime() - updated <= this.expires) {;return this.resourceCache[id].data;};
-return null;};set(id, value) {this.resourceCache[id] = { time: new Date().getTime(), data: value };this._persist();}}
-function getId(proxy){return MD5(`DATAKEY-${proxy.server}-${proxy.port}`);}
-function getinId(proxy) {return MD5(`INKEY-${proxy.server}`);}
-function sleep(ms) {return new Promise((resolve) => setTimeout(resolve, ms));}
-function getFlagEmoji(countryCode) {const codePoints = countryCode.toUpperCase().split('').map
-(char => 127397 + char.charCodeAt());return String.fromCodePoint(...codePoints).replace(/🇹🇼/g, '🇨🇳');}
-function removeFlag(str) {return str.replace(/[\uD83C][\uDDE6-\uDDFF][\uD83C][\uDDE6-\uDDFF]/g, '').trim();}
-function formatCacheTimeout(timeout) {if (timeout < 60000) {return `${Math.round(timeout/1000)} 秒`;}else if(timeout < 3600000){return `${Math.round(timeout/60000)} 分钟`;}else{return `${(timeout/3600000).toFixed(1)} 小时`;}}
-function removeDuplicateName(arr){const nameSet=new Set;const result=[];for(const e of arr){if(e.qc&&!nameSet.has(e.qc)){nameSet.add(e.qc);result.push(e)}}return result}
-function removeqcName(arr){const nameSet=new Set;const result=[];for(const e of arr){if(!nameSet.has(e.qc)){nameSet.add(e.qc);const modifiedE={...e};delete modifiedE.qc;result.push(modifiedE)}}return result}
-function processProxies(proxies) {const groupedProxies = proxies.reduce((groups, item) => {const existingGroup = groups.find(group => group.name === item.name);
-if (existingGroup) {existingGroup.count++;existingGroup.items.push({ ...item, name: `${item.name} ${existingGroup.count.toString().padStart(2, '0')}` });} else {groups.push({ name: item.name, count: 1,
-items: [{ ...item, name: `${item.name} 01` }] });}return groups;}, []);const sortedProxies = groupedProxies.flatMap(group =>group.items);proxies.splice(0,proxies.length, ...sortedProxies);return proxies;}
-function oneProxies(proxies){const groups = proxies.reduce((groups, proxy) => { const name = proxy.name.replace(/\s\d+$/, ''); if (!groups[name]) { groups[name] = []; } groups[name].push(proxy);
-return groups; }, {});for(const name in groups) {if (groups[name].length === 1 && groups[name][0].name.endsWith(' 01')) {const proxy = groups[name][0];proxy.name = name;}};return proxies;}
 var MD5=function(d){var _=M(V(Y(X(d),8*d.length)));return _.toLowerCase()};function M(d){for(var _,m="0123456789ABCDEF",f="",r=0;r<d.length;
 r++)_=d.charCodeAt(r),f+=m.charAt(_>>>4&15)+m.charAt(15&_);return f}function X(d){for(var _=Array(d.length>>2),m=0;m<_.length;m++)_[m]=0;for(m=0;
 m<8*d.length;m+=8)_[m>>5]|=(255&d.charCodeAt(m/8))<<m%32;return _}function V(d){for(var _="",m=0;m<32*d.length;m+=8)_+=String.fromCharCode(d[m>>5]>>>m%32&255);
