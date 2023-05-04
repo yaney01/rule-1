@@ -1,7 +1,9 @@
+// Update: 2023.05.04 必须安装以下模块才能使用:
 // Surge: https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule
 // Loon: https://github.com/Keywos/rule/raw/main/loon/Sub-Store.plugin
-// @key @小一 @奶茶姐
+// 用法: SubStore ➟ 脚本操作: 作用: 节点去复用 与 批量重命名为真实 「入口 落地 」地区  @key @小一 @奶茶姐
 // 持久化缓存 查询到的节点信息，避免更新订阅超时: 默认48小时 感谢 @小一 修改 SubStore 源码
+// 参数:
 // [name] 节点前面加机场名
 // [one] 清理相同地区节点的01
 // [timeout=] 第一次没有缓存的ping api超时时间
@@ -10,7 +12,7 @@
 const $ = $substore;
 const numone = $arguments["one"];
 const { isLoon, isSurge, isQX } = $substore.env;
-var timeout = $arguments["timeout"] ? $arguments["timeout"] : 3000;
+var timeout = $arguments["timeout"] ? $arguments["timeout"] : 2000;
 var with_cache = $arguments["cd"] ? $arguments["cd"] : 600;
 const keynames = $arguments.name ? decodeURI($arguments.name) : "";
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
