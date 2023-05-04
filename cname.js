@@ -2,7 +2,7 @@
 // Surge: https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule
 // Loon: https://github.com/Keywos/rule/raw/main/loon/sub-store.plugin
 // 用法: SubStore ➟ 脚本操作: 作用: 节点去复用 与 批量重命名为真实 「入口 落地 」地区  @key @小一 @奶茶姐
-// 持久化缓存 查询到的节点信息，避免更新订阅超时: 默认48小时 感谢 @小一 修改 SubStore 源码
+// 持久化缓存 查询到的节点信息，避免更新订阅超时: 默认48小时 感谢 @小一 修改 SubStore 源码 , 文件位置Loon持久化缓存读取:「CNAMEKEY」文件名, Surge: 脚本编辑器:「CNAMEKEY」$persistentStore,
 // 参数:
 // [name] 节点前面加机场名
 // [one] 清理相同地区节点的01
