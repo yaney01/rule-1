@@ -1,5 +1,5 @@
 #!name=Sub-Store
-#!desc=高级订阅管理工具 Nolog  持久化缓存, 感谢 @小一 修改 SubStore 源码 scriptResourceCache 默认持久化缓存超时时间48小时
+#!desc=高级订阅管理工具 Nolog  持久化缓存, 感谢 @小一 修改 SubStore 源码 scriptResourceCache 默认脚本持久化缓存超时时间48小时
 #!openUrl=https://sub.store
 #!author=Peng-YM
 #!homepage=https://github.com/Peng-YM/Sub-Store
