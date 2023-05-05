@@ -13,10 +13,11 @@ const $ = $substore;
 const flag = $arguments["flag"];
 const numone = $arguments["one"];
 const { isLoon, isSurge, isQX } = $substore.env;
-var timeout = $arguments["timeout"] ? $arguments["timeout"] : 2000;
-var with_cache = $arguments["cd"] ? $arguments["cd"] : 600;
+let timeout = $arguments["timeout"] ? $arguments["timeout"] : 2000;
+let with_cache = $arguments["cd"] ? $arguments["cd"] : 600;
 const keynames = $arguments.name ? decodeURI($arguments.name) : "";
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
+let onen = true;
 
 function getId(proxy) {
   return MD5(`DATAKEY-${proxy.server}-${proxy.port}`);
@@ -259,7 +260,10 @@ async function IPAPI(proxy) {
   const cached = scriptResourceCache.get(id);
   if (cached) {
     APIREADKEY++;
-    timeout = with_cache;
+    if (onen) {
+      timeout = with_cache;
+      onen = false;
+    }
     return cached;
   } else {
     const result = new Promise((resolve, reject) => {
@@ -267,7 +271,6 @@ async function IPAPI(proxy) {
       let node = ProxyUtils.produce([proxy], target);
       const timeoutPromise = new Promise((_, reject) => {
         setTimeout(() => {
-            console.log(timeout)
           reject(new Error("timeout"));
         }, timeout);
       });
