@@ -126,7 +126,7 @@ async function operator(proxies) {
   }
   if (typeof scriptResourceCache === 'undefined') {
     console.log("\n不支持此SubStore, 目前官方SubStore还未更新scriptResourceCache\n请查看脚本说明安装对应版本\nhttps://github.com/Keywos/rule/raw/main/cname.js")
-    $notification.post("Sub-Store未更新", "", "请点击查看脚本说明安装对应版本", {url: "https://github.com/Keywos/rule/raw/main/cname.js"})
+    $notification.post("Sub-Store未更新", "", "请点击或查看Log查看脚本说明安装对应版本", {url: "https://github.com/Keywos/rule/raw/main/cname.js"})
     return proxies;
   }
   // 批处理个数
