@@ -14,7 +14,7 @@ const flag = $arguments["flag"];
 const numone = $arguments["one"];
 const { isLoon, isSurge, isQX } = $substore.env;
 var timeout = $arguments["timeout"] ? $arguments["timeout"] : 2000;
-var with_cache = $arguments["cd"] ? $arguments["cd"] : 200;
+var with_cache = $arguments["cd"] ? $arguments["cd"] : 600;
 const keynames = $arguments.name ? decodeURI($arguments.name) : "";
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 
