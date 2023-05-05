@@ -1,13 +1,13 @@
-// Update: 2023.05.04 必须安装以下模块才能使用:
+// Update: 2023.05.04 必须安装以下模块才能使用: 目前SubStore还未更新脚本持久化缓存超时
 // Surge: https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule
-// Loon: https://github.com/Keywos/rule/raw/main/loon/Sub-Store.plugin
+// Loon: https://github.com/Keywos/rule/raw/main/loon/sub-store.plugin
 // 用法: SubStore ➟ 脚本操作: 作用: 节点去复用 与 批量重命名为真实 「入口 落地 」地区  @key @小一 @奶茶姐
-// 持久化缓存 查询到的节点信息，避免更新订阅超时: 默认48小时 感谢 @小一 修改 SubStore 源码
+// 持久化缓存 查询到的节点信息，避免更新订阅超时: 默认48小时 感谢 @小一 修改 SubStore 源码 , 文件位置Loon持久化缓存读取:「CNAMEKEY」文件名, Surge: 脚本编辑器:「CNAMEKEY」$persistentStore,
 // 参数:
 // [name] 节点前面加机场名
 // [one] 清理相同地区节点的01
 // [timeout=] 第一次没有缓存的ping api超时时间
-// [cd=] 有缓存后ping 没有缓存成功的 api超时时间, 设置小点比如 [cd=0] 的情况下可以直接读取缓存，几乎无需等待， 如果设置 [cd=600] 最低等600+ms, 但是可以写入上次没有写入成功的缓存
+// [cd=] 有缓存后ping 没有缓存成功的 api超时时间, 设置小点比如 [cd=0] 的情况下可以直接读取缓存，几乎无需等待， 如果设置 [cd=600] 有Ping不通的或者上次没有缓存的节点的情况下最低等600+ms, 如果全部缓存了的情况,也很快毫秒级,但是可以写入上次没有写入成功的缓存
 
 const $ = $substore;
 const numone = $arguments["one"];
