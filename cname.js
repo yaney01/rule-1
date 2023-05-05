@@ -10,10 +10,11 @@
 // [cd=] 有缓存后ping 没有缓存成功的 api超时时间, 设置小点比如 [cd=0] 的情况下可以直接读取缓存，几乎无需等待， 如果设置 [cd=600] 有Ping不通的或者上次没有缓存的节点的情况下最低等600+ms, 如果全部缓存了的情况,也很快毫秒级,但是可以写入上次没有写入成功的缓存
 
 const $ = $substore;
+const flag = $arguments["flag"];
 const numone = $arguments["one"];
 const { isLoon, isSurge, isQX } = $substore.env;
 var timeout = $arguments["timeout"] ? $arguments["timeout"] : 2000;
-var with_cache = $arguments["cd"] ? $arguments["cd"] : 500;
+var with_cache = $arguments["cd"] ? $arguments["cd"] : 200;
 const keynames = $arguments.name ? decodeURI($arguments.name) : "";
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 
@@ -21,8 +22,8 @@ function getId(proxy) {
   return MD5(`DATAKEY-${proxy.server}-${proxy.port}`);
 }
 
-function getinId(proxy) {
-  return MD5(`INKEY-${proxy.server}`);
+function getinId(server) {
+  return MD5(`INKEY-${server}`);
 }
 
 function getFlagEmoji(countryCode) {
@@ -135,7 +136,7 @@ async function operator(proxies) {
     await Promise.all(
       batch.map(async (proxy) => {
         try {
-          const inip = await INDNS(proxy);
+          const inip = await INDNS(proxy.server);
           // names = inip.ip;
           // console.log("DNS" + JSON.stringify(inip.ip));
           // const cmcc = { 
@@ -156,13 +157,25 @@ async function operator(proxies) {
           const outip = await IPAPI(proxy);
           // names = outip.country
 
+          
+      
+          if (flag) { 
+            const keyemoji = { '电信': '🅳', '联通': '🅻', '移动': '🆈', '移通': '🆈'};
+            const operator = inip.data[inip.data.length - 1];
+            const emojis = keyemoji[operator] || '🅶';
+            if (inip.ip === outip.query) { 
+                proxy.name = "🆉直连→" + getFlagEmoji(outip.countryCode) + outip.country;
+              } else {
+                proxy.name = emojis + (inip.data[0] || inip.data[1].slice(0, 2)) + "→" + getFlagEmoji(outip.countryCode) + outip.country;
+              }
+           } else {
+            const keycity = inip.ip === outip.query ? "直连" : (inip.data[0] || inip.data[1].slice(0, 2));
+            proxy.name = keycity + "→" + outip.country;
+          }
 
-          const keycity = inip.ip === outip.query ? "直连" : inip.data[1].slice(0, 2);
 
-          // names = keycity + "→" + outip.country;
-
-          proxy.name = keycity + "→" + outip.country;
-          // 去重 入口/落地IP
+        // proxy.name = emojis + inip.data[1].slice(0, 2) + "→" + getFlagEmoji(outip.countryCode) + outip.country;
+        //   // 去重 入口/落地IP
           proxy.qc = inip.ip + "|" + outip.query;
         } catch (err) {}
       })
@@ -203,8 +216,8 @@ async function operator(proxies) {
 // const resourceCache = new ResourceCache(CACHE_EXPIRATION_TIME_MS);
 // 持久化存储每个代理的查询任务
 const ins = new Map();
-async function INDNS(proxy) {
-  const id = getinId(proxy);
+async function INDNS(server) {
+  const id = getinId(server);
   if (ins.has(id)) {
     return ins.get(id);
   }
@@ -213,7 +226,7 @@ async function INDNS(proxy) {
     return cacheds;
   } else {
     const resultin = new Promise((resolve, reject) => {
-      const ips = proxy.server;
+      const ips = server;
       const url = `http://www.inte.net/tool/ip/api.ashx?ip=${ips}&datatype=json`;
       $.http
         .get({ url })
@@ -254,6 +267,7 @@ async function IPAPI(proxy) {
       let node = ProxyUtils.produce([proxy], target);
       const timeoutPromise = new Promise((_, reject) => {
         setTimeout(() => {
+            console.log(timeout)
           reject(new Error("timeout"));
         }, timeout);
       });

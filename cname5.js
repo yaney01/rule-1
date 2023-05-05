@@ -14,7 +14,7 @@ const flag = $arguments["flag"];
 const numone = $arguments["one"];
 const { isLoon, isSurge, isQX } = $substore.env;
 var timeout = $arguments["timeout"] ? $arguments["timeout"] : 2000;
-var with_cache = $arguments["cd"] ? $arguments["cd"] : 500;
+var with_cache = $arguments["cd"] ? $arguments["cd"] : 200;
 const keynames = $arguments.name ? decodeURI($arguments.name) : "";
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 
@@ -22,8 +22,8 @@ function getId(proxy) {
   return MD5(`DATAKEY-${proxy.server}-${proxy.port}`);
 }
 
-function getinId(proxy) {
-  return MD5(`INKEY-${proxy.server}`);
+function getinId(server) {
+  return MD5(`INKEY-${server}`);
 }
 
 function getFlagEmoji(countryCode) {
@@ -136,7 +136,7 @@ async function operator(proxies) {
     await Promise.all(
       batch.map(async (proxy) => {
         try {
-          const inip = await INDNS(proxy);
+          const inip = await INDNS(proxy.server);
           // names = inip.ip;
           // console.log("DNS" + JSON.stringify(inip.ip));
           // const cmcc = { 
@@ -216,8 +216,8 @@ async function operator(proxies) {
 // const resourceCache = new ResourceCache(CACHE_EXPIRATION_TIME_MS);
 // 持久化存储每个代理的查询任务
 const ins = new Map();
-async function INDNS(proxy) {
-  const id = getinId(proxy);
+async function INDNS(server) {
+  const id = getinId(server);
   if (ins.has(id)) {
     return ins.get(id);
   }
@@ -226,7 +226,7 @@ async function INDNS(proxy) {
     return cacheds;
   } else {
     const resultin = new Promise((resolve, reject) => {
-      const ips = proxy.server;
+      const ips = server;
       const url = `http://www.inte.net/tool/ip/api.ashx?ip=${ips}&datatype=json`;
       $.http
         .get({ url })
@@ -267,6 +267,7 @@ async function IPAPI(proxy) {
       let node = ProxyUtils.produce([proxy], target);
       const timeoutPromise = new Promise((_, reject) => {
         setTimeout(() => {
+            console.log(timeout)
           reject(new Error("timeout"));
         }, timeout);
       });
