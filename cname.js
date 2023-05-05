@@ -182,7 +182,7 @@ async function operator(proxies) {
   $notification.post(`${PRS}个节点处理完成`,'',`${writelog}${readlog}${Push}耗时:${mTIme(timeDiff)}`)
   return proxies;
 }
-
+// var cachedss = 0;
 // const resourceCache = new ResourceCache(CACHE_EXPIRATION_TIME_MS);
 // 持久化存储每个代理的查询任务
 const ins = new Map();
@@ -193,7 +193,7 @@ async function INDNS(proxy) {
   }
   const cacheds = scriptResourceCache.get(id);
   if (cacheds) {
-    return cacheds.dnsip;
+    return cacheds;
   } else {
     const resultin = new Promise((resolve, reject) => {
       const ips = proxy.server;
@@ -203,7 +203,7 @@ async function INDNS(proxy) {
         .then((resp) => {
           const dnsip = JSON.parse(resp.body);
           if (dnsip.ip !== "0.0.0.0") {
-            scriptResourceCache.set(id, { dnsip });
+            scriptResourceCache.set(id, dnsip);
             resolve(dnsip);
           } else {
             resolve(ips);
@@ -230,7 +230,7 @@ async function IPAPI(proxy) {
   if (cached) {
     APIREADKEY++;
     timeout = with_cache;
-    return cached.lip;
+    return cached;
   } else {
     const result = new Promise((resolve, reject) => {
       const url = `http://ip-api.com/json?lang=zh-CN&fields=status,message,country,countryCode,city,query`;
@@ -249,7 +249,7 @@ async function IPAPI(proxy) {
         .then((resp) => {
           const lip = JSON.parse(resp.body);
           if (lip.status === "success") {
-            scriptResourceCache.set(id, { lip });
+            scriptResourceCache.set(id, lip);
             APIWRITEKEY++;
             resolve(lip);
           } else {
