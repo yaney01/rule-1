@@ -1,4 +1,4 @@
-// Update: 2023.05.04 必须安装以下模块才能使用: 目前SubStore还未更新脚本持久化缓存超时
+// Update: 2023.05.05 必须安装以下模块才能使用: 目前SubStore还未更新脚本持久化缓存超时
 // Surge: https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule
 // Loon: https://github.com/Keywos/rule/raw/main/loon/sub-store.plugin
 // 用法: SubStore ➟ 脚本操作: 作用: 节点去复用 与 批量重命名为真实 「入口 落地 」地区  @key @小一 @奶茶姐
@@ -138,7 +138,16 @@ async function operator(proxies) {
           const inip = await INDNS(proxy);
           // names = inip.ip;
           // console.log("DNS" + JSON.stringify(inip.ip));
-
+          const cmcc = { 
+            '电信': '电信',
+            '联通': '联通', 
+            '移动': '移动',
+            '移通': '移动',
+            '电信ADSL' : '电信'
+          };
+          const cmct = in_info.data[in_info.data.length - 1];
+          const yys = cmcc[cmct] || '';
+    
           // console.log("in节点ip = " + JSON.stringify(inip.data[1]));
           const outip = await IPAPI(proxy);
           // names = outip.country
