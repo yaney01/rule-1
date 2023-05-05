@@ -1,6 +1,5 @@
 /* 
-
-@key 重构本地批量重命名
+@key 本地批量重命名
 用法：Sub-Store脚本操作添加
 例如：https://raw.githubusercontent.com/Keywos/rule/main/rename.js#name=测试&flag
 日期：2023/05/01
@@ -15,7 +14,6 @@ rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数�
 [in=]:    自动判断机场节点名类型(那种类型多就判断为那种) 也可以加参数指定
 [out=]:   输出节点名可选参数: (cn ，us ，quan) 对应：中文，英文缩写 ，英文全称 , 默认中文
 [name=]:  添加机场名前缀在节点最前面
-
 */
 
 const bl = $arguments["bl"];
@@ -42,12 +40,9 @@ const quan = ['Hong Kong', 'Macao', 'Taiwan', 'Japan', 'Korea', 'Singapore', 'Si
 var others = {"[Premium]": "[Premium]", 核心: 'Kern', 边缘: 'Edge', 高级: 'Pro', 标准: 'Std', 实验: 'Exp', 商宽: 'Biz', 家宽: 'Fam', 游戏: 'Game', LB: 'LB', IPLC: 'IPLC', 'IEPL': 'IEPL',};
 //沪日: 'SH-Japan', //沪韩: 'SH-Korea', //沪美: 'SH-United States', //广港: 'GZ-Hong Kong', //广新: 'GZ-Singapore', //深港: 'SZ-Hong Kong', //莞港: 'DG-Hong Kong',
 function operator(proxies) {
-    //判断名字类型
     if (inname !== "") { 
       var inputList = getList(inname); 
     } else {
-      // const startIndex = proxies.length - 1 - 10;
-      // const endIndex = proxies.length; //startIndex, endIndex
       const regionCounts = proxies.slice(0,10).map(proxy => 
       getRegion(proxy.name)).reduce((counts, region) => {
       counts[region] = (counts[region] || 0) + 1; return counts; }, {});
@@ -59,8 +54,6 @@ function operator(proxies) {
   var outputList = getList($arguments["out"]);
   var countries = inputList.reduce((acc, curr, index) => {
   acc[curr] = [outputList[index], 0];return acc;}, {});
-  // console.log(`处理前节点总数 = ${proxies.length}`);
-  // const startTime = new Date();
   if (clear) {
   proxies = proxies.filter((item) => !nameclear.test(item.name));}
   if (nx) { proxies = proxies.filter((res) => res.name.match(namenx) ? false : true);}
@@ -80,7 +73,7 @@ function operator(proxies) {
       } else {
         resultArray.push(countries[elem][0]);
       }
-      if (bl) { // others
+      if (bl) {
         Object.keys(others).forEach((otherElem, index) => {
           if (res.name.indexOf(otherElem) !== -1) {
             resultArray.splice(2, 0, others[otherElem]);
@@ -89,19 +82,12 @@ function operator(proxies) {
       newProxies.push({...res, name: resultArray.join(" ")});
     } else {
       toBeDeleted.push(res);}});
-  // 移除未匹配到的节点
   toBeDeleted.forEach((proxy) => {
     const index = proxies.indexOf(proxy);
     if (index !== -1) {
     proxies.splice(index, 1);}});
   proxies = newProxies;
-  // 分组加序号
-  const processedProxies = processProxies(proxies);  
-  //清理相同地区节点的01
+  proxies = processProxies(proxies);
   numone && (proxies = oneProxies(proxies));
-  // console.log(`处理后节点总数 = ${proxies.length}`);
-  // const endTime = new Date();
-  // const timeDiff = endTime.getTime() - startTime.getTime();
-  // console.log(`批量重命名耗时: ${timeDiff} ms`);
   return proxies;
 }
