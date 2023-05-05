@@ -164,13 +164,17 @@ async function operator(proxies) {
             const keyemoji = { '电信': '🅳', '联通': '🅻', '移动': '🆈', '移通': '🆈'};
             const operator = inip.data[inip.data.length - 1];
             const emojis = keyemoji[operator] || '🅶';
-            if (inip.ip === outip.query) { 
+            if (inip.ip === outip.query  || inip.data[0] === outip.country) { 
                 proxy.name = "🆉直连→" + getFlagEmoji(outip.countryCode) + outip.country;
               } else {
                 proxy.name = emojis + (inip.data[0] || inip.data[1].slice(0, 2)) + "→" + getFlagEmoji(outip.countryCode) + outip.country;
               }
            } else {
-            const keycity = inip.ip === outip.query ? "直连" : (inip.data[0] || inip.data[1].slice(0, 2));
+            const keycity = inip.ip === outip.query || inip.data[0] === outip.country 
+              ? "直连" 
+              : (inip.data[0] ? inip.data[0].slice(0, 2) : inip.data[1].slice(0, 2));
+            
+            // const keycity = inip.ip === outip.query ? "直连" : (inip.data[0] || inip.data[1].slice(0, 2));
             proxy.name = keycity + "→" + outip.country;
           }
 
