@@ -13,11 +13,11 @@ const $ = $substore;
 const flag = $arguments["flag"];
 const numone = $arguments["one"];
 const { isLoon, isSurge, isQX } = $substore.env;
-let timeout = $arguments["timeout"] ? $arguments["timeout"] : 2000;
-let with_cache = $arguments["cd"] ? $arguments["cd"] : 600;
+let timeout = $arguments["timeout"] ? $arguments["timeout"] : 1000;
+let with_cache = $arguments["cd"] ? $arguments["cd"] : 300;
 const keynames = $arguments.name ? decodeURI($arguments.name) : "";
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
-let onen = true;
+let onen = false;
 
 function getId(proxy) {
   return MD5(`DATAKEY-${proxy.server}-${proxy.port}`);
@@ -122,6 +122,7 @@ async function operator(proxies) {
     console.log("不支持此设备, 本脚本仅支持 Loon or Surge")
     return proxies;
   }
+
   // 批处理个数
   var batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
   const startTime = new Date();
@@ -137,6 +138,7 @@ async function operator(proxies) {
     await Promise.all(
       batch.map(async (proxy) => {
         try {
+
           const inip = await INDNS(proxy.server);
           // names = inip.ip;
           // console.log("DNS" + JSON.stringify(inip.ip));
@@ -158,8 +160,6 @@ async function operator(proxies) {
           const outip = await IPAPI(proxy);
           // names = outip.country
 
-          
-      
           if (flag) { 
             const keyemoji = { '电信': '🅳', '联通': '🅻', '移动': '🆈', '移通': '🆈'};
             const operator = inip.data[inip.data.length - 1];
@@ -177,7 +177,6 @@ async function operator(proxies) {
             // const keycity = inip.ip === outip.query ? "直连" : (inip.data[0] || inip.data[1].slice(0, 2));
             proxy.name = keycity + "→" + outip.country;
           }
-
 
         // proxy.name = emojis + inip.data[1].slice(0, 2) + "→" + getFlagEmoji(outip.countryCode) + outip.country;
         //   // 去重 入口/落地IP
@@ -228,14 +227,16 @@ async function INDNS(server) {
   }
   const cacheds = scriptResourceCache.get(id);
   if (cacheds) {
+    if (!onen) {
+      timeout = with_cache;
+      onen = true;
+    }
     return cacheds;
   } else {
     const resultin = new Promise((resolve, reject) => {
       const ips = server;
       const url = `http://www.inte.net/tool/ip/api.ashx?ip=${ips}&datatype=json`;
-      $.http
-        .get({ url })
-        .then((resp) => {
+      $.http.get({ url }).then((resp) => {
           const dnsip = JSON.parse(resp.body);
           if (dnsip.ip !== "0.0.0.0") {
             scriptResourceCache.set(id, dnsip);
@@ -264,10 +265,6 @@ async function IPAPI(proxy) {
   const cached = scriptResourceCache.get(id);
   if (cached) {
     APIREADKEY++;
-    if (onen) {
-      timeout = with_cache;
-      onen = false;
-    }
     return cached;
   } else {
     const result = new Promise((resolve, reject) => {
@@ -278,10 +275,7 @@ async function IPAPI(proxy) {
           reject(new Error("timeout"));
         }, timeout);
       });
-      const queryPromise = $.http
-        .get({
-          url,
-          node: node,
+      const queryPromise = $.http.get({url,node: node,
           "policy-descriptor": node,
         })
         .then((resp) => {
