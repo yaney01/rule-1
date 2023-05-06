@@ -1,5 +1,5 @@
 /*
- * Update: 2023.05.05 必须安装以下模块才能使用: 目前SubStore还未更新脚本持久化缓存超时
+ * Update: 2023.05.05 必须安装以下模块，关闭官方版本才能使用: 目前SubStore还未更新脚本持久化缓存超时
  * Surge: https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule
  * Loon: https://github.com/Keywos/rule/raw/main/loon/sub-store.plugin
  * 用法: SubStore ➟ 脚本操作: 作用: 节点去复用 与 批量重命名为真实 「入口 落地 」地区  @key @小一 @奶茶姐
@@ -137,7 +137,7 @@ async function operator(proxies) {
     if (target=="Surge"){
       $notification.post("Sub-Store\u672a\u66f4\u65b0", "", "\u8bf7\u70b9\u51fb\u6216\u67e5\u770bLog\u67e5\u770b\u811a\u672c\u8bf4\u660e\u5b89\u88c5\u5bf9\u5e94\u7248\u672c", {url: "https://github.com/Keywos/rule/raw/main/cname.js"})
     } else if (target=="Loon")
-      $notification.post("Sub-Store\u672a\u66f4\u65b0", "", "\u8bf7\u70b9\u51fb\u6216\u67e5\u770bLog\u67e5\u770b\u811a\u672c\u8bf4\u660e\u5b89\u88c5\u5bf9\u5e94\u7248\u672c", "https://github.com/Keywos/rule/raw/main/cname.js")
+      $notification.post("Sub-Store\u672a\u66f4\u65b0", "", "\u8bf7\u70b9\u51fb\u5b89\u88c5\u63d2\u4ef6\uff0c\u6216\u67e5\u770b\u004c\u006f\u0067\u5b89\u88c5\u5bf9\u5e94\u7248\u672c", "https://www.nsloon.com/openloon/import?plugin=https://github.com/Keywos/rule/raw/main/cname.js")
     return proxies;
   }
   // 批处理个数
@@ -185,7 +185,7 @@ async function operator(proxies) {
             const operator = inip.data[inip.data.length - 1];
             const emojis = keyemoji[operator] || '🅶';
             if (inip.ip === outip.query  || inip.data[0] === outip.country) { 
-                proxy.name = "🆉\u76f4\u8fde→" + getflag(outip.countryCode) + outip.country;
+                proxy.name = "\u76f4\u8fde→" + getflag(outip.countryCode) + outip.country;
               } else {
                 proxy.name = emojis + (inip.data[0] || inip.data[1].slice(0, 2)) + "→" + getflag(outip.countryCode) + outip.country;
               }
