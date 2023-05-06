@@ -17,10 +17,10 @@
  * [timeout=] 第一次没有缓存的ping api超时时间 
  */
 const $ = $substore;
-const flag = $arguments["flag"];
 const fg = $arguments["fg"];
 const dd = $arguments["dd"];
 const jt = $arguments["jt"];
+const flag = $arguments["flag"];
 const numone = $arguments["one"];
 const { isLoon, isSurge, isQX } = $substore.env;
 let timeout = $arguments["timeout"] ? $arguments["timeout"] : 1000;
