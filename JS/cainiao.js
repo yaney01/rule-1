@@ -37,21 +37,20 @@ switch (true) {
     okk.data.result = [];
     break;
     case /cainiao\.guoguo\.nbnetflow\.ads\.mshow\.cn/.test($request.url):
-    // 底部商品推广
     const item = ["1316", "1332"];
     for (let i of item) {
-      if (obj.data?.[i]) {
-        delete obj.data[i];
+      if (okk.data?.[i]) {
+        delete okk.data[i];
       }
     }
     break;
 		case /guoguo\.nbnetflow\.ads\.show\.cn/.test($request.url):
     // 底部标签页
-  if (obj.data.result) {
-    obj.data.result = obj.data.result.filter(
+  if (okk.data.result) {
+    okk.data.result = okk.data.result.filter(
       (i) =>
         !(
-          i?.materialContentMapper?.group_id?.includes("entertainment") ||
+					i?.materialContentMapper?.group_id?.includes("entertainment") ||
           (i?.materialContentMapper?.bgImg &&
             i?.materialContentMapper?.advRecGmtModifiedTime)
         )
