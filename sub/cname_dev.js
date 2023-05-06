@@ -4,11 +4,11 @@
  * Loon: https://github.com/Keywos/rule/raw/main/loon/sub-store.plugin
  * 用法: SubStore ➟ 脚本操作: 作用: 节点去复用 与 批量重命名为真实 「入口 落地 」地区  @key @小一 @奶茶姐
  * 持久化缓存 查询到的节点信息，避免更新订阅超时: 默认48小时 感谢 @小一 修改 SubStore 源码 , 文件位置Loon持久化缓存读取:「CNAMEKEY」文件名, Surge: 脚本编辑器: 左下角设置, $persistentStore,「CNAMEKEY」
- * 默认不加参节点名: "上海 日本 01" 符号：🅳=电信 🅻=联通 🆈=移动 🆉=直连 🅶=垃圾
+ * 默认不加参节点名: "上海 日本 01" 符号：🅳=电信 🅻=联通 🆈=移动 🆉=\u76f4\u8fde 🅶=垃圾
  * 参数:---------------- 
  * [name] 节点前面加机场名
  * [one]  清理相同地区节点的01
- * [flag] 添加旗帜、运营商符号和直连符号，例如: "🅳上海→🇯🇵日本 01"
+ * [flag] 添加旗帜、运营商符号和\u76f4\u8fde符号，例如: "🅳上海→🇯🇵日本 01"
  * [fg]   分隔符 例如: "上海 | 日本 01"
  * [jt]   箭头 例如: "上海→日本 01"
  * [dd]   单独落地国家 例如: "日本 01"
@@ -26,6 +26,7 @@ let timeout = $arguments["timeout"] ? $arguments["timeout"] : 1000;
 let with_cache = $arguments["cd"] ? $arguments["cd"] : 300;
 const keynames = $arguments.name ? decodeURI($arguments.name) : "";
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
+
 let onen = false;
 
 function getid(proxy) {
@@ -113,9 +114,9 @@ function oneProxies(proxies) {
 
 function mTIme(timeDiff) {
   if (timeDiff < 1000) {
-    return `${Math.round(timeDiff)} 毫秒`;
+    return `${Math.round(timeDiff)}\u0020\u6beb\u79d2`;
   } else if (timeDiff < 60000) {
-    return `${Math.round(timeDiff / 1000)} 秒`;
+    return `${Math.round(timeDiff / 1000)}\u79d2`;
   }
 };
 
@@ -127,23 +128,26 @@ async function operator(proxies) {
   const support = isLoon || isSurge;
   if (!support) {
     $.error(`No Loon or Surge`);
-    $notify("不支持此设备", "本脚本仅支持 Loon or Surge", "");
-    console.log("不支持此设备, 本脚本仅支持 Loon or Surge")
+    $notify("\u4e0d\u652f\u6301\u6b64\u8bbe\u5907", "\u672c\u811a\u672c\u4ec5\u652f\u6301 Loon or Surge", "");
+    console.log("\u4e0d\u652f\u6301\u6b64\u8bbe\u5907, \u672c\u811a\u672c\u4ec5\u652f\u6301 Loon or Surge")
     return proxies;
   }
   if (typeof scriptResourceCache === 'undefined') {
-    console.log("\n不支持此SubStore, 目前官方SubStore还未更新scriptResourceCache\n请查看脚本说明安装对应版本\nhttps://github.com/Keywos/rule/raw/main/cname.js")
-    $notification.post("Sub-Store未更新", "", "请点击或查看Log查看脚本说明安装对应版本", {url: "https://github.com/Keywos/rule/raw/main/cname.js"})
+    console.log("\n\u4e0d\u652f\u6301\u6b64 SubStore, \u76ee\u524d\u5b98\u65b9SubStore\u8fd8\u672a\u66f4\u65b0scriptResourceCache\n\u67e5\u770b\u811a\u672c\u8bf4\u660e\u5b89\u88c5\u5bf9\u5e94\u7248\u672c\nhttps://github.com/Keywos/rule/raw/main/cname.js")
+    if (target=="Surge"){
+      $notification.post("Sub-Store\u672a\u66f4\u65b0", "", "\u8bf7\u70b9\u51fb\u6216\u67e5\u770bLog\u67e5\u770b\u811a\u672c\u8bf4\u660e\u5b89\u88c5\u5bf9\u5e94\u7248\u672c", {url: "https://github.com/Keywos/rule/raw/main/cname.js"})
+    } else if (target=="Loon")
+      $notification.post("Sub-Store\u672a\u66f4\u65b0", "", "\u8bf7\u70b9\u51fb\u6216\u67e5\u770bLog\u67e5\u770b\u811a\u672c\u8bf4\u660e\u5b89\u88c5\u5bf9\u5e94\u7248\u672c", "https://github.com/Keywos/rule/raw/main/cname.js")
     return proxies;
   }
   // 批处理个数
   var batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
   const startTime = new Date();
   const PRS = proxies.length;
-  console.log(`设定API超时: ${timeout} 毫秒`);
-  console.log(`有缓API超时: ${with_cache} 毫秒`);
-  console.log(`批处理节点数: ${batch_size} 个`);
-  console.log(`开始处理节点: ${PRS} 个`);
+  console.log(`\u8bbe\u5b9a\u0041\u0050\u0049\u8d85\u65f6: ${timeout}\u0020\u6beb\u79d2`);
+  console.log(`\u6709\u7f13\u0041\u0050\u0049\u8d85\u65f6: ${with_cache}\u0020\u6beb\u79d2`);
+  console.log(`\u6279\u5904\u7406\u8282\u70b9\u6570: ${batch_size} 个`);
+  console.log(`\u5f00\u59cb\u5904\u7406\u8282\u70b9: ${PRS} 个`);
   const batches = [];
   let i = 0;
   while (i < proxies.length) {
@@ -166,14 +170,14 @@ async function operator(proxies) {
           // const yys = cmcc[cmct] || '';
     
           // if (inip.ip === inip.query) {
-          //   proxy.name = "直连" + "→" + outip.country;
+          //   proxy.name = "\u76f4\u8fde" + "→" + outip.country;
           // }
 
           // console.log("in节点ip = " + JSON.stringify(inip.data[1]));
           const outip = await IPAPI(proxy);
           // names = outip.country
           const keycity = inip.ip === outip.query || inip.data[0] === outip.country 
-          ? "直连" 
+          ? "\u76f4\u8fde" 
           : (inip.data[0] ? inip.data[0].slice(0, 2) : inip.data[1].slice(0, 2));
           
           if (flag) { 
@@ -181,7 +185,7 @@ async function operator(proxies) {
             const operator = inip.data[inip.data.length - 1];
             const emojis = keyemoji[operator] || '🅶';
             if (inip.ip === outip.query  || inip.data[0] === outip.country) { 
-                proxy.name = "🆉直连→" + getflag(outip.countryCode) + outip.country;
+                proxy.name = "🆉\u76f4\u8fde→" + getflag(outip.countryCode) + outip.country;
               } else {
                 proxy.name = emojis + (inip.data[0] || inip.data[1].slice(0, 2)) + "→" + getflag(outip.countryCode) + outip.country;
               }
@@ -222,15 +226,15 @@ async function operator(proxies) {
   const PRSO = proxies.length;
   const endTime = new Date();
   const timeDiff = endTime.getTime() - startTime.getTime();
-  APIREADKEY > 0 ? console.log(`读取API缓存: ${APIREADKEY} 个`) : null;
-  APIWRITEKEY > 0 ? console.log(`写入API缓存: ${APIWRITEKEY} 个`) : null;
-  console.log(`处理完后剩余: ${PRSO} 个`);
-  console.log(`此方法总耗时: ${mTIme(timeDiff)}`);
+  APIREADKEY > 0 ? console.log(`\u8bfb\u53d6\u0041\u0050\u0049\u7f13\u5b58: ${APIREADKEY} 个`) : null;
+  APIWRITEKEY > 0 ? console.log(`\u5199\u5165\u0041\u0050\u0049\u7f13\u5b58: ${APIWRITEKEY} 个`) : null;
+  console.log(`\u5904\u7406\u5b8c\u540e\u5269\u4f59: ${PRSO} 个`);
+  console.log(`\u6b64\u65b9\u6cd5\u603b\u8017\u65f6: ${mTIme(timeDiff)}`);
   // Push
-  const readlog = APIREADKEY ? `读取缓存: ${APIREADKEY} 个 ` : '';
-  const writelog = APIWRITEKEY ? `写入缓存: ${APIWRITEKEY} 个 ` : '';
-  const Push = (PRSO == PRS) ? "\n无复用节点，" : "\n去除无效节点后剩" + PRSO + "个, ";
-  $notification.post(`${PRS}个节点处理完成`,'',`${writelog}${readlog}${Push}耗时:${mTIme(timeDiff)}`)
+  const readlog = APIREADKEY ? `\u8bfb\u53d6\u7f13\u5b58: ${APIREADKEY} 个 ` : '';
+  const writelog = APIWRITEKEY ? `\u5199\u5165\u7f13\u5b58: ${APIWRITEKEY} 个 ` : '';
+  const Push = (PRSO == PRS) ? "\n\u65e0\u590d\u7528\u8282\u70b9\uff0c" : "\n\u53bb\u9664\u65e0\u6548\u8282\u70b9\u540e\u5269" + PRSO + "\u4e2a\u002c ";
+  $notification.post(`${PRS}\u4e2a\u8282\u70b9\u5904\u7406\u5b8c\u6210`,'',`${writelog}${readlog}${Push}\u8017\u65f6:${mTIme(timeDiff)}`)
   return proxies;
 }
 // var cachedss = 0;
