@@ -137,7 +137,7 @@ async function operator(proxies) {
     if (target=="Surge"){
       $notification.post("Sub-Store未更新", "", "请点击或查看Log查看脚本说明安装对应版本", {url: "https://github.com/Keywos/rule/raw/main/cname.js"})
     } else if (target=="Loon")
-      $notification.post("Sub-Store未更新", "", "请点击安装插件, 或查看Log安装对应版本", "https://www.nsloon.com/openloon/import?plugin=https://github.com/Keywos/rule/raw/main/cname.js")
+      $notification.post("Sub-Store未更新", "", "请点击安装插件, 或查看Log安装对应版本, 并关闭原本的Substore", "https://www.nsloon.com/openloon/import?plugin=https://github.com/Keywos/rule/raw/main/cname.js")
     return proxies;
   }
   // 批处理个数
