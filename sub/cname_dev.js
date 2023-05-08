@@ -187,7 +187,7 @@ async function operator(proxies) {
             const emojis = keyemoji[operator] || '🅶';
             if (inip.ip === outip.query  || inip.data[0] === outip.country) { 
               // 直连
-                proxy.name = "🆉=直连→" + getflag(outip.countryCode) + outip.country;
+                proxy.name = "🆉直连→" + getflag(outip.countryCode) + outip.country;
               } else {
                 proxy.name = emojis + (inip.data[0] || inip.data[1].slice(0, 2)) + "→" + getflag(outip.countryCode) + outip.country;
               }
