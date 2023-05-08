@@ -7,7 +7,7 @@
  * 接口：入口查询[inte.net],落地查询[ip-api]；
  * 默认不加参节点名: "北京 美国 01" ，如果：「入口ip或国家」 或 「落地ip或国家」 一样则为 "直连 德国 01" 
  * 符号：🅳=电信 🅻=联通 🆈=移动 🆉=直连 🅶=垃圾 
- * 参数:---------------- 
+ * 参数: 第一个参数用# 后面的用& 连接
  * [name=] 节点前面加机场名
  * [one]  清理相同地区节点的01
  * [flag] 添加旗帜、运营商符号，例如: "🅳北京→🇺🇸美国 01"
@@ -187,7 +187,7 @@ async function operator(proxies) {
             const emojis = keyemoji[operator] || '🅶';
             if (inip.ip === outip.query  || inip.data[0] === outip.country) { 
               // 直连
-                proxy.name = "🆉=直连→" + getflag(outip.countryCode) + outip.country;
+                proxy.name = "🆉直连→" + getflag(outip.countryCode) + outip.country;
               } else {
                 proxy.name = emojis + (inip.data[0] || inip.data[1].slice(0, 2)) + "→" + getflag(outip.countryCode) + outip.country;
               }
