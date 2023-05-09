@@ -91,5 +91,8 @@ http-request ^https?:\/\/ad\.12306\.cn\/ad\/ser\/getAdList script-path=https://c
 [General]
 force-http-engine-hosts = 59.111.*:0
 
+[Host]
+iosapps.itunes.apple.com = 17.253.85.201
+
 [MITM]
 hostname = interface*.music.163.com, sdk.alibaba.com.ailbaba.me, vip7.fzwdyy.cn, vpic.cms.qq.com, client.app.coc.10086.cn,api.songguo7.com, wallet.95516.com, commimg-1.pddpic.com,  list-app-m.i4.cn, rescdn.qqmail.com,api.aliyundrive.com, heic.alicdn.com, m5*.amap.com, sns.amap.com, optimus-ads.amap.com, ad.12306.cn, gw.alicdn.com, httpdns.n.netease.com, *.163jiasu.com, 59.111.*, 112.13.*, 117.147.199.59, boot.biz.weibo.com, sdkapp.uve.weibo.com, i.imgtg.com, static.yximgs.com, run.api.qyfxgd.cn
