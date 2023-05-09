@@ -10,4 +10,4 @@
 hostname=sub.store
 
 [Script]
-http-request https?:\/\/sub\.store script-path=https://github.com/Keywos/rule/raw/main/JS/sub-store.minxy_s_nolog.js, requires-body=true, timeout=120, tag=Sub-Store  
+http-request https?:\/\/sub\.store script-path=https://github.com/Keywos/rule/raw/main/JS/sub-store.script.cache.js, requires-body=true, timeout=120, tag=Sub-Store  
