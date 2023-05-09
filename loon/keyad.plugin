@@ -36,6 +36,7 @@ DOMAIN,h-adashx.ut.taobao.com,REJECT-DROP
 #555横幅
 ^https:\/\/vip7\.fzwdyy\.cn:8083\/api\/(getAdvertInfo|getGOOGAdvert) - reject
 ^https:\/\/vpic\.cms\.qq\.com\/nj_vpic reject
+^https?:\/\/run\.api\.qyfxgd\.cn:\d+\/api\/v\d\/advert\/config reject
 
 #大师兄
 ^https?:\/\/sdk\.alibaba\.com\.ailbaba\.me\/(dsx|xgapp)\.php\/v\d\/(top_notice\?|version|advert\?position=[^2]+) reject
@@ -91,4 +92,4 @@ http-request ^https?:\/\/ad\.12306\.cn\/ad\/ser\/getAdList script-path=https://c
 force-http-engine-hosts = 59.111.*:0
 
 [MITM]
-hostname = interface*.music.163.com, sdk.alibaba.com.ailbaba.me, vip7.fzwdyy.cn, vpic.cms.qq.com, client.app.coc.10086.cn,api.songguo7.com, wallet.95516.com, commimg-1.pddpic.com,  list-app-m.i4.cn, rescdn.qqmail.com,api.aliyundrive.com, heic.alicdn.com, m5*.amap.com, sns.amap.com, optimus-ads.amap.com, ad.12306.cn, gw.alicdn.com, httpdns.n.netease.com, *.163jiasu.com, 59.111.*, 112.13.*, 117.147.199.59, boot.biz.weibo.com, sdkapp.uve.weibo.com, i.imgtg.com, static.yximgs.com
+hostname = interface*.music.163.com, sdk.alibaba.com.ailbaba.me, vip7.fzwdyy.cn, vpic.cms.qq.com, client.app.coc.10086.cn,api.songguo7.com, wallet.95516.com, commimg-1.pddpic.com,  list-app-m.i4.cn, rescdn.qqmail.com,api.aliyundrive.com, heic.alicdn.com, m5*.amap.com, sns.amap.com, optimus-ads.amap.com, ad.12306.cn, gw.alicdn.com, httpdns.n.netease.com, *.163jiasu.com, 59.111.*, 112.13.*, 117.147.199.59, boot.biz.weibo.com, sdkapp.uve.weibo.com, i.imgtg.com, static.yximgs.com, run.api.qyfxgd.cn:9313
