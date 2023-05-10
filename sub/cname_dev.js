@@ -233,10 +233,10 @@ async function operator(proxies) {
   console.log(`处理完后剩余: ${PRSO} 个`);
   console.log(`此方法总耗时: ${mTIme(timeDiff)}\n----For CNAME----`);
   // Push
-  const readlog = APIREADKEY ? `读取缓存: ${APIREADKEY} 个 ` : '';
-  const writelog = APIWRITEKEY ? `写入缓存: ${APIWRITEKEY} 个 ` : '';
-  const Push = (PRSO == PRS) ? "\n无复用节点, " : "\n去除无效节点后剩" + PRSO + "个, ";
-  $notification.post(`CNAME: ${PRS}个节点处理完成`,'',`${writelog}${readlog}${Push}耗时:${mTIme(timeDiff)}`)
+  const readlog = APIREADKEY ? `读取缓存: ${APIREADKEY} 个\n` : '';
+  const writelog = APIWRITEKEY ? `写入缓存: ${APIWRITEKEY} 个\n` : '';
+  const Push = (PRSO == PRS) ? "无复用节点, " : "\n去除无效节点后剩" + PRSO + "个, ";
+  $notification.post(`CNAME: 共${PRS}个节点`,"",`${writelog}${readlog}${Push}耗时:${mTIme(timeDiff)}`)
   return proxies;
 }
 // var cachedss = 0;
