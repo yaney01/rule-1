@@ -239,6 +239,25 @@ async function operator(proxies) {
   $notification.post(`CNAME: 共${PRS}个节点`,"",`${writelog}${readlog}${Push}耗时:${mTIme(timeDiff)}`)
   return proxies;
 }
+
+/*
+function concatLogs(writelog, readlog) {
+  let result;
+
+  if (!writelog && !readlog) {
+    result = '';
+  } else {
+    result = writelog + readlog + '\n';
+  }
+
+  return result;
+}
+
+
+let logs = concatLogs(writelog, readlog);
+console.log(logs); 
+*/
+
 // var cachedss = 0;
 // const resourceCache = new ResourceCache(CACHE_EXPIRATION_TIME_MS);
 // 持久化存储每个代理的查询任务
