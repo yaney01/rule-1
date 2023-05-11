@@ -36,8 +36,10 @@ DOMAIN,h-adashx.ut.taobao.com,REJECT-DROP
 #555横幅
 ^https:\/\/vip7\.fzwdyy\.cn:8083\/api\/(getAdvertInfo|getGOOGAdvert) - reject
 ^https:\/\/vpic\.cms\.qq\.com\/nj_vpic reject
+#tf
 ^https?:\/\/run\.api\.qyfxgd\.cn\/api\/v\d\/advert\/config reject
-
+#Loon 3.0.8
+^https?:\/\/run\.api\.qyfxgd\.cn(:\d+)?\/api\/v\d\/advert\/config reject
 #大师兄
 ^https?:\/\/sdk\.alibaba\.com\.ailbaba\.me\/(dsx|xgapp)\.php\/v\d\/(top_notice\?|version|advert\?position=[^2]+) reject
 

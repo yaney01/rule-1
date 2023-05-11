@@ -231,14 +231,33 @@ async function operator(proxies) {
   APIREADKEY > 0 ? console.log(`读取API缓存: ${APIREADKEY} 个`) : null;
   APIWRITEKEY > 0 ? console.log(`写入API缓存: ${APIWRITEKEY} 个`) : null;
   console.log(`处理完后剩余: ${PRSO} 个`);
-  console.log(`此方法总耗时: ${mTIme(timeDiff)}`);
+  console.log(`此方法总耗时: ${mTIme(timeDiff)}\n----For CNAME----`);
   // Push
   const readlog = APIREADKEY ? `读取缓存: ${APIREADKEY} 个 ` : '';
   const writelog = APIWRITEKEY ? `写入缓存: ${APIWRITEKEY} 个 ` : '';
   const Push = (PRSO == PRS) ? "\n无复用节点, " : "\n去除无效节点后剩" + PRSO + "个, ";
-  $notification.post(`${PRS}个节点处理完成`,'',`${writelog}${readlog}${Push}耗时:${mTIme(timeDiff)}`)
+  $notification.post(`CNAME: 共${PRS}个节点`,"",`${writelog}${readlog}${Push}耗时:${mTIme(timeDiff)}`)
   return proxies;
 }
+
+/*
+function concatLogs(writelog, readlog) {
+  let result;
+
+  if (!writelog && !readlog) {
+    result = '';
+  } else {
+    result = writelog + readlog + '\n';
+  }
+
+  return result;
+}
+
+
+let logs = concatLogs(writelog, readlog);
+console.log(logs); 
+*/
+
 // var cachedss = 0;
 // const resourceCache = new ResourceCache(CACHE_EXPIRATION_TIME_MS);
 // 持久化存储每个代理的查询任务
