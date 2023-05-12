@@ -12,7 +12,7 @@
 ## [cname.js](https://keywos.cf/cname.js) 
 联网:真实 入口查询 [inte.net] 落地查询 [ip-api] 去重并重命名
 
-cname因为增加了缓存机制， 需要安装对应的模块或者插件， 只支持
+* cname因为增加了缓存机制， 需要安装对应的模块或者插件， 只支持
 `Loon`、 `Surge` 默认持久化缓存时间为48小时 必须安装以下模块，关闭官方版本才能使用: 目前SubStore还未更新脚本持久化缓存超时
  * Surge: https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule
  * Loon: https://github.com/Keywos/rule/raw/main/loon/sub-store.plugin
