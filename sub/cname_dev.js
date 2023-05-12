@@ -3,7 +3,7 @@
  * Surge: https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule
  * Loon: https://github.com/Keywos/rule/raw/main/loon/sub-store.plugin
  * 用法: SubStore ➟ 脚本操作: 作用: 节点去复用 与 批量重命名为真实 「入口 落地 」地区  @key @小一 @奶茶姐
- * 持久化缓存 查询到的节点信息，避免更新订阅超时: 默认48小时 感谢 @小一 修改 SubStore 源码 , 文件位置Loon持久化缓存读取:「CNAMEKEY」文件名, Surge: 脚本编辑器: 左下角设置, $persistentStore,「CNAMEKEY」
+ * 持久化缓存 查询到的节点信息，避免更新订阅超时: 默认48小时 感谢 @小一 修改 SubStore 源码 , 如果出现问题,可以删除缓存: 文件位置Loon持久化缓存读取:「CNAMEKEY」文件名, Surge: 脚本编辑器: 左下角设置, $persistentStore,「CNAMEKEY」
  * 接口：入口查询[inte.net],落地查询[ip-api]；
  * 默认不加参节点名: "北京 美国 01" ，如果：「入口ip或国家」 或 「落地ip或国家」 一样则为 "直连 德国 01" 
  * 符号：🅳=电信 🅻=联通 🆈=移动 🆉=直连 🅶=垃圾 

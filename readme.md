@@ -88,7 +88,7 @@ https://keywos.cf/cname.js#flag&timeout=1000
 感谢 [@小一大佬](https://github.com/xream/Sub-Store)修改SubStore源码修复持久化缓存，`scriptResourceCache` ,极大的减少了额外的请求，避免更新订阅时超时
 默认超时时间48小时，
 #### 持久化缓存位置:
-可以删除来清理缓存或者等48小时过期
+如果出现问题,可以删除来清理缓存或者等48小时过期
 * Loon `CNAMEKEY` 文件名
 * Surge: 脚本编辑器: 左下角设置, `$persistentStore` , `CNAMEKEY`
 
