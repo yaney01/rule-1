@@ -34,7 +34,6 @@ https://github.com/Keywos/rule/raw/main/loon/sub-store.plugin
 ```
 https://keywos.cf/rename.js#bl
 ```
-
 ```
 
 https://keywos.cf/rename.js#out=us&one
@@ -66,7 +65,6 @@ https://keywos.cf/rename.js#out=us&one
 ```
 https://keywos.cf/cname.js#flag
 ``` 
-
 ```
 https://keywos.cf/cname.js#flag&timeout=1000
 ```
