@@ -14,8 +14,14 @@
 
 * cname因为增加了缓存机制， 需要安装对应的模块或者插件， 只支持
 `Loon`、 `Surge` 默认持久化缓存时间为48小时 必须安装以下模块，关闭官方版本才能使用: 目前SubStore还未更新脚本持久化缓存超时
- * Surge: https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule
- * Loon: https://github.com/Keywos/rule/raw/main/loon/sub-store.plugin
+ * Surge: 
+``` 
+https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule
+```
+ * Loon: 
+```
+https://github.com/Keywos/rule/raw/main/loon/sub-store.plugin
+```
 * SubStore内选择"脚本操作"，填写脚本地址
 
 
@@ -27,6 +33,9 @@
 必须以 `#` 为开头, 多个参数使用 `&` 连接
 ```
 https://keywos.cf/rename.js#bl
+```
+
+```
 
 https://keywos.cf/rename.js#out=us&one
  ```
@@ -56,7 +65,9 @@ https://keywos.cf/rename.js#out=us&one
 第一个参数用 `#` 后面的用 `&` 连接
 ```
 https://keywos.cf/cname.js#flag
+``` 
 
+```
 https://keywos.cf/cname.js#flag&timeout=1000
 ```
 * 默认不加参数 & `flag` 参数
