@@ -95,11 +95,7 @@ https://keywos.cf/cname.js#flag&timeout=1000
 
  
 
-# 
 
-
-# 
-# 
 ## rule
 
 | Rule | raw | io |
