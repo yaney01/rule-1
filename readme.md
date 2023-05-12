@@ -1,100 +1,82 @@
-# Surge Key
-* 自用规则备份  仅供参考不作他用
+# Key
+* 自用规则备份 仅供参考不作他用
 
 * 未经允许禁用转载与传播,此库仅为个人备份
 
-## Rename 分为两个版本
-* [rename.js](https://keywos.cf/rename.js) : 本地: 按原节点, 批量重命名, 速度最快
-* [name.js](https://keywos.cf/name.js) : 联网: 入口ip->落地真实ip 去重并重命名
+### 重命名脚本分为两个版本
+* [`rename.js`](https://keywos.cf/rename.js) : 本地: 按原节点, 批量重命名, 速度最快
+* rename理论上支持所有支持SubStore的设备
+### 
+* [`cname.js`](https://keywos.cf/cname.js) : 联网:真实 「入口ip 落地ip」去重并重命名
+* SubStore内选择"脚本操作"，填写脚本地址,
+* cname因为增加了缓存机制， 需要安装对应的模块或者插件， 只支持
+`Loon`、 `Surge` 
+默认持久化缓存时间为48小时
 
+# 示例: cname.js 
+ 默认不加参节点名: `北京 美国 01`
 
-# name.js 示例: 
+ 入口ip或国家与: 落地ip或国家一样则为 `直连 德国 01`
 
-* name不支持q
-  
+## 参数 :   
+
+第一个参数用 `#` 后面的用 `&` 连接
 ```
-https://keywos.cf/name.js#flag
+https://keywos.cf/cname.js#flag
 
-https://keywos.cf/name.js#flag&timeout=1000
-
-https://github.com/Keywos/rule/raw/main/name.js
+https://keywos.cf/cname.js#flag&timeout=1000
 ```
+* `name=`节点前面加机场名 
+* `one`  清理相同地区节点的01
+* `flag` 添加旗帜、运营商符号，例如: `🅳北京→🇺🇸美国 01`
 
-##flag :
-* 每个节点添加: 国旗和 直连or中转
-* 例如 `flag` 国旗 中转->香港 01 ...
+*       🅳=电信 🅻=联通 🆈=移动 🆉=直连 🅶=其他
+* `fg`   分隔符 例如: `上海 | 新加坡 01`
+* `jt`   箭头 例如: `上海→韩国 01`
+* `dd`   单独落地国家 例如: `香港 01`
+* `timeout=` 第一次没有缓存的ping api超时时间 默认`1600ms`
+* `cd=`  有缓存后ping 没有缓存成功的 api超时时间,默认`400ms`
+#### 关于cd与缓存 :
+比如 `cd=0` 的情况下可以直接读取缓存，几乎无需等待， 
 
-## timeout= : 
-* 传入每次测试节点的延迟,默认1000ms
-* 例如 `timeout=1000` 为一秒
+如果设置 `cd=600` 有Ping不通的
 
-## name：
-* 每个节点前面添加自义定机场名
+或者上次没有缓存的节点的情况下最低等600+ms
+    
+但是可以写入上次没有写入成功的缓存,
+如果全部缓存了的情况,也是毫秒级
 
-## sim:
-* 简称 
-
-## one 
-* 清理只有一个地区的节点后面的01 
  
-# rename.js 示例: 
-* rename支持: q s l
+# 示例: rename.js 
 
+
+
+## 参数:
+必须以 `# `为开头, 多个参数使用 `&` 连接
 ```
-https://keywos.cf/rename.js#clear
+https://keywos.cf/rename.js#bl
 
-https://keywos.cf/rename.js#in=cn&out=us&clear
-
-https://github.com/Keywos/rule/raw/main/rename.js#in=cn&out=us&clear&nx
+https://keywos.cf/rename.js#out=us&one
  ```
 
-- [`修改自`](https://github.com/qwerzl/rename.js) https://github.com/qwerzl/rename.js
-* 在SubStore内对节点重命名为：地区 01 ...
-* 过滤掉不规范命名的节点 例如 剩余,过期...
-* SubStore内选择"脚本操作"，填写脚本地址
-* 可配合argument一同使用。现支持参数：
-* 节点批量重命名 全部为本地操作
-   
-## in：
-* 机场原节点名, 现在无需配置, 自动选择类型最多的哪个
-* 也可以手动指定, 例如 `in=cn` 香港 01 香港 02 ...
+* `bl`:     保留: 家宽 ，IPLC 几倍之类的标识 ,并分组排序
 
-## out：
-* 修改后节点名, 默认cn
-* 例如 `out=us` HK 01 HK 02 ...
-* #### in&out 可选  `us, cn, quan`
-* cn 中文地区名称 例如 香港
-* us 英文地区名称 例如 HK
-* quan 英文全地名 例如 Hong Kong
+* `nx`:     保留1倍率与不显示倍率的
 
-## name：
-* 每个节点前面添加自义定机场名
-* 例如 `name=KKK` KKK 香港 01 ...
+* `blnx`:   只保留高倍率
 
-## bl:
-* 保留家宽, iplc 之类的节点后缀 
-
-## one 
-* 清理只有一个地区的节点后面的01  
-
-## clear: 
-* 过滤掉关键词里正则匹配的「无用」节点
+* `one`:    清理只有一个节点的地区的01 
+* `flag`:   给节点前面加国旗
+* `clear`:  清理乱七八糟的名字
+* `in=`:    自动判断机场节点名类型(那种类型多就判断为那种) 也可以加参数指定
+* `out=`:   输出节点名可选参数: (cn ，us ，quan) 对应：中文，英文缩写 ，英文全称 , 默认中文
+* `name=`:  添加机场名前缀在节点最前面
 
 
-```
-(套餐|到期|有效|剩余|版本|已用|过期|失联|测试|官方|网址|备用|群|TEST|客服|网站|获取|订阅|流量|机场|下次|官址|联系|邮箱|工单|USE|USED|TOTAL|EXPIRE|EMAIL)
-```
 
-## nx:
-* 过滤掉高倍率 或者0.n倍 
-* 可选: 加nx为过滤 不加为不过滤
- 
-  
-```
-(高倍|((?!.*(1|0\.\d))\d+倍|x|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰)) 
-```
-
-## 测试 
+# 
+# 
+## rule
 
 | Rule | raw | io |
 | :-----| :-----| :-----|
