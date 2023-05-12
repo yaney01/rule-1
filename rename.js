@@ -65,12 +65,12 @@ function operator(proxies) {
   acc[curr] = [outputList[index], 0];return acc;}, {});
   if (clear) {
   proxies = proxies.filter((item) => !nameclear.test(item.name));}
-  if (nx) { proxies = proxies.filter((res) => res.name.match(namenx) ? false : true);}
+  if (nx) {proxies = proxies.filter((res) => res.name.match(namenx) ? false : true);}
   if (blnx) {proxies = proxies.filter((res) => res.name.match(nameblnx) ? true : false);}
   const toBeDeleted = [];
   const newProxies = [];
   proxies.forEach((res) => {
-let isMatched = false;
+  let isMatched = false;
   const resultArray = [jcname];
   for (const elem of Object.keys(countries)) {
     if (res.name.indexOf(elem) !== -1) {
@@ -87,7 +87,8 @@ let isMatched = false;
           if (regex.test(res.name)) {
             //resultArray.unshift(valueArray[index]);
             resultArray.splice(2, 0, valueArray[index]);
-          }});}}}}
+          }});}
+        }}}
     if (isMatched) {
       newProxies.push({...res, name: resultArray.join(" ")});
     } else {
@@ -99,7 +100,7 @@ let isMatched = false;
     proxies.splice(index, 1);}}); 
   proxies = newProxies;
   proxies = jxh(proxies);
-  bl && (proxies = fampx(proxies));
   numone && (proxies = oneProxies(proxies));
+  bl && (proxies = fampx(proxies));
   return proxies;
 }
