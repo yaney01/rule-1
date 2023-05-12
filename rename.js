@@ -1,4 +1,4 @@
-/* 
+/*  说明: https://github.com/Keywos/rule/blob/main/readme.md
 @key 本地批量重命名
 用法：Sub-Store脚本操作添加
 例如：https://raw.githubusercontent.com/Keywos/rule/main/rename.js#name=测试&flag

@@ -1,4 +1,4 @@
-/* cname - cache name 
+/* cname - cache name 说明： https://github.com/Keywos/rule/blob/main/readme.md
  * Update: 2023.05.05 必须安装以下模块，关闭官方版本才能使用: 目前SubStore还未更新脚本持久化缓存超时
  * Surge: https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule
  * Loon: https://github.com/Keywos/rule/raw/main/loon/sub-store.plugin
