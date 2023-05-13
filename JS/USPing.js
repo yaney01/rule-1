@@ -87,7 +87,7 @@ let $ = {
 
   /////////////////////////////////////////////
   $done({
-    title: "CNPing",
+    title: "USPing",
     content: outping + "\n" + outgit,
   });
 })();
