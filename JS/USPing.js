@@ -34,8 +34,12 @@ let $ = {
           normalizedValue = 1;
         }
         const charCode = Math.floor(normalizedValue * 6) + 0x2581;
+				
         if (charCode > 0x2587) {
-          return "\u2587";
+          return "\u2589";
+        }
+				if (charCode < 0x2581) {
+          return "\u2581";
         }
         return String.fromCharCode(charCode);
       })
