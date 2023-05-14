@@ -91,7 +91,7 @@ let $ = {
 
   /////////////////////////////////////////////
   $done({
-    title: "Cf-Ping",
+    title: "CF-Ping",
     content: outping + "\n" + outgit,
   });
 })();
