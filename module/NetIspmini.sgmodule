@@ -1,0 +1,9 @@
+#!name=NetISP 面板
+#!desc=IPAPI
+#!system=ios
+
+[Script]
+NetISP = type=generic,timeout=3,script-path=https://github.com/Keywos/rule/raw/main/JS/Netisp.js
+
+[Panel]
+NetISP = script-name=NetISP,update-interval=-1
