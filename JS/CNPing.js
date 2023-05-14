@@ -1,6 +1,6 @@
 // CN Ping最小值和最大值
 const minValue = 10;
-const maxValue = 90;
+const maxValue = 120;
 let $ = {
   Ping: "http://connectivitycheck.platform.hicloud.com/generate_204",
   //H: 'http://www.baidu.com',
