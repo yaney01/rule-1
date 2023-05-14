@@ -2,7 +2,7 @@
 const minValue = 10;
 const maxValue = 400;
 let $ = {
-  Y: "http://cp.cloudflare.com/generate_204",
+  Ping: "http://cp.cloudflare.com/generate_204",
   // Y: 'http://youtube.com',
   // Y: 'http://www.github.com',
 };

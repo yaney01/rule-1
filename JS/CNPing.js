@@ -2,7 +2,7 @@
 const minValue = 10;
 const maxValue = 90;
 let $ = {
-  H: "http://connectivitycheck.platform.hicloud.com/generate_204",
+  Ping: "http://connectivitycheck.platform.hicloud.com/generate_204",
   //H: 'http://www.baidu.com',
   //H: 'http://www.163.com',
   //H: "http://pvp.qq.com",
