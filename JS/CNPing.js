@@ -23,7 +23,7 @@ let $ = {
     );
     let resultText = `Avg: ${avgTime
       .toString()
-      .padEnd(4, " ")}ms\t➟   ${key}: ${pingTimes} ms `;
+      .padEnd(4, " ")}ms\t➟     ${key}: ${pingTimes} ms `;
 
     // 最小值和最大值
     //const minValue = Math.min(...pingTimes);

@@ -22,7 +22,7 @@ let $ = {
     );
     let resultText = `Avg: ${avgTime
       .toString()
-      .padEnd(4, " ")}ms\t➟   ${key}: ${pingTimes} ms `;
+      .padEnd(4, " ")}ms\t➟    ${key}: ${pingTimes} ms `;
 
    
     // console.log("最大值为: " + maxValue);
