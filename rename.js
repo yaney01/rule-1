@@ -90,8 +90,9 @@ function operator(proxies) {
 			const match = res.name.match(/(倍率\D?((\d\.)?\d+)\D?)|((\d\.)?\d+)(倍|X|x|×)/);
 			if (match) {
 			const matchedValue = match[0].match(/(\d[\d.]*)/)[0];
+			if (matchedValue !== '1') {
 			const newValue = matchedValue + "×";
-			resultArray.splice(2, 0, newValue);}
+			resultArray.splice(2, 0, newValue);}}
 		}}}}
     if (isMatched) {
       newProxies.push({...res, name: resultArray.join(" ")});
