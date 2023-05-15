@@ -1,4 +1,4 @@
-/*  说明: https://github.com/Keywos/rule/blob/main/readme.md
+/*说明: https://github.com/Keywos/rule/blob/main/readme.md
 用法：Sub-Store脚本操作添加
 例如：https://raw.githubusercontent.com/Keywos/rule/main/rename.js#name=测试&flag
 日期：2023/05/15
