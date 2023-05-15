@@ -92,7 +92,7 @@ function operator(proxies) {
 			const matchedValue = match[0].match(/(\d[\d.]*)/)[0];
 			if (matchedValue !== '1') {
 			const newValue = matchedValue + "×";
-			resultArray.splice(2, 0, newValue);}}
+			resultArray.push(newValue);}}
 		}}}}
     if (isMatched) {
       newProxies.push({...res, name: resultArray.join(" ")});
