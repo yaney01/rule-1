@@ -89,7 +89,7 @@ function operator(proxies) {
 			//正则匹配对应数字加×
 			const match = res.name.match(/(倍率\D?((\d\.)?\d+)\D?)|((\d\.)?\d+)(倍|X|x|×)/);
 			if (match) {
-			const matchedValue = match[2] || match[3] || match[4];
+			const matchedValue = match[0].match(/(\d[\d.]*)/)[0];
 			const newValue = matchedValue + "×";
 			resultArray.splice(2, 0, newValue);}
 		}}}}
