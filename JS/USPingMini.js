@@ -12,7 +12,7 @@ function http(req) {
 
 function saveGif(gifArr) {
   const timekey = new Date().getTime();
-  const sdgif = $persistentStore.read("KEY-US-Ping");
+  const sdgif = $persistentStore.read("KEY-US-PingMini");
   const sdd = sdgif ? JSON.parse(sdgif) : {};
   sdd[timekey] = gifArr.join("");
   const sdkey = Object.keys(sdd);
@@ -20,8 +20,8 @@ function saveGif(gifArr) {
     const oldkey = sdkey.sort()[0];
     delete sdd[oldkey];
   }
-  const sddata = $persistentStore.write(JSON.stringify(sdd), "KEY-US-Ping");
-  const readd = $persistentStore.read("KEY-US-Ping");
+  const sddata = $persistentStore.write(JSON.stringify(sdd), "KEY-US-PingMini");
+  const readd = $persistentStore.read("KEY-US-PingMini");
   const readData = readd ? JSON.parse(readd) : {};
   const outgit = Object.values(sdd).join("");
   
