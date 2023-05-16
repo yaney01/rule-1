@@ -57,7 +57,7 @@ function PingToGif(pingTimes) {
         pingTimes.push(time);
       }
     let avgTime = Math.round(pingTimes.reduce((a, b) => a + b, 0) / pingTimes.length);
-    let fhzText = `CN: ${avgTime.toString().padEnd(5, " ")}ms\t➟     ${key}: ${pingTimes}ms`;
+    let fhzText = `CF: ${avgTime.toString().padEnd(5, " ")}ms\t➟     ${key}: ${pingTimes}ms`;
     const gif = PingToGif(pingTimes)
     gifArr.push(gif);
     fhz[key] = fhzText;
