@@ -31,7 +31,7 @@ function PingToGif(pingTimes) {
   const maxValue = 300;
   const gif = pingTimes
     .map((x) => {
-      let ptogif = (x - minValue) / (maxValue - minValue);
+      let ptogif = Math.floor((x - minValue) / (maxValue - minValue));
       if (ptogif > 1) {
         ptogif = 1;
       }
