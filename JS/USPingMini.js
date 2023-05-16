@@ -5,8 +5,7 @@ function http(req) {
     $httpClient.post($[req], () => {
       let endTime = Date.now();
       resolve(`${req}: ${endTime - startTime}`);
-    });
-  });
+    });});
 }
 
 function saveGif(gifArr) {
