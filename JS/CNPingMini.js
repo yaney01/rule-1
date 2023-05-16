@@ -1,110 +1,77 @@
-// CN Ping最小值和最大值
-const minValue = 10;
-const maxValue = 120;
-let $ = {
-  Ping: "http://connectivitycheck.platform.hicloud.com/generate_204",
-  //H: 'http://www.baidu.com',
-  //H: 'http://www.163.com',
-  //H: "http://pvp.qq.com",
-};
+let $ = { Ping: "http://connectivitycheck.platform.hicloud.com/generate_204" };
+
+function http(req) {
+  return new Promise((resolve) => {
+    let startTime = Date.now();
+    $httpClient.post($[req], () => {
+      let endTime = Date.now();
+      resolve(`${req}: ${endTime - startTime}`);
+    });
+  });
+}
+
+function saveGif(gifArr) {
+  const timekey = new Date().getTime();
+  const sdgif = $persistentStore.read("KEY-CN-PingMini");
+  const sdd = sdgif ? JSON.parse(sdgif) : {};
+  sdd[timekey] = gifArr.join("");
+  const sdkey = Object.keys(sdd);
+  if (sdkey.length > 7) {
+    const oldkey = sdkey.sort()[0];
+    delete sdd[oldkey];
+  }
+  const sddata = $persistentStore.write(JSON.stringify(sdd), "KEY-CN-PingMini");
+  const readd = $persistentStore.read("KEY-CN-PingMini");
+  const readData = readd ? JSON.parse(readd) : {};
+  const outgit = Object.values(sdd).join("");
+  
+  return outgit;
+}
+
+function PingToGif(pingTimes) {
+  const minValue = 10;
+  const maxValue = 120;
+  const gif = pingTimes
+    .map((x) => {
+      let ptogif = (x - minValue) / (maxValue - minValue);
+      if (ptogif > 1) {
+        ptogif = 1;
+      }
+      const gifCode = Math.floor(ptogif * 6) + 0x2581;
+      if (gifCode > 0x2587) {
+        return "\u2587";
+      } else if (gifCode < 0x2581) {
+        return "\u2581";
+      } else {
+        return String.fromCharCode(gifCode);
+      }
+    }).join("");
+  return gif;
+}
 
 (async () => {
-  let results = {};
-  let resultArr = [];
+  let fhz = {};
+  let gifArr = [];
   for (let key in $) {
     let pingTimes = [];
-    for (let i = 0; i < 2; i++) {
-      let responseTime = await http(key);
-      let time = parseFloat(responseTime.split(": ")[1]);
-      pingTimes.push(time);
-    }
-    let avgTime = Math.round(
-      pingTimes.reduce((a, b) => a + b, 0) / pingTimes.length
-    );
-    let resultText = `CN: ${avgTime
-      .toString()
-      .padEnd(4, " ")}ms\t➟     ${key}: ${pingTimes}`;
-
-    // 最小值和最大值
-    //const minValue = Math.min(...pingTimes);
-    //const maxValue = Math.max(...pingTimes);
-    // console.log("最大值为: " + maxValue);
-    // 归一化并转换为字符表示形式
-    const result = pingTimes
-      .map((x) => {
-        let normalizedValue = (x - minValue) / (maxValue - minValue);
-        if (normalizedValue > 1) {
-          normalizedValue = 1;
-        }
-        const charCode = Math.floor(normalizedValue * 6) + 0x2581;
-				
-         if (charCode > 0x2587) {
-    return "\u2587";
-  } else if (charCode < 0x2581) {
-    return "\u2581";
-  } else {
-    return String.fromCharCode(charCode);
+      for (let i = 0; i < 2; i++) {
+        let responseTime = await http(key);
+        let time = parseFloat(responseTime.split(": ")[1]);
+        pingTimes.push(time);
+      }
+    let avgTime = Math.round(pingTimes.reduce((a, b) => a + b, 0) / pingTimes.length);
+    let fhzText = `CN: ${avgTime.toString().padEnd(4, " ")}ms\t➟     ${key}: ${pingTimes}`;
+    const gif = PingToGif(pingTimes)
+    gifArr.push(gif);
+    fhz[key] = fhzText;
   }
-      })
-      .join("");
-    resultArr.push(result); // 将结果 push 到数组中
-    results[key] = resultText;
-  }
+  const outgit = saveGif(gifArr);
   let outping = "";
-  for (let key in results) {
-    let resultText = results[key];
-    outping += resultText;
+  for (const [key, fhzText] of Object.entries(fhz)) {
+    outping += fhzText;
   }
-  // 数组拼接成字符串
-  let result = resultArr.join("");
-  // console.log(result);
-  const timestamp = new Date().getTime();
-  // 从持久化缓存中读取保存的数据
-  const savedDataStr = $persistentStore.read("KEY-CN-Ping");
-  const savedData = savedDataStr ? JSON.parse(savedDataStr) : {};
-  // 将时间戳和延迟保存到对象中
-  savedData[timestamp] = result;
-  // 量超过9 删除最早的
-  const maxItems = 7;
-  const savedDataKeys = Object.keys(savedData);
-  if (savedDataKeys.length > maxItems) {
-    const oldestTimestamp = savedDataKeys.sort()[0];
-    delete savedData[oldestTimestamp];
-  }
-  // 对象序列化成字符串、 保存
-  const resultss = $persistentStore.write(
-    JSON.stringify(savedData),
-    "KEY-CN-Ping"
-  );
-  // if (resultss) {
-  //   console.log("保存数据成功", savedData);
-  // } else {
-  //   console.log("保存数据失败");
-  // }
-  // 从持久化缓存中读取保存的数据
-  const readDataStr = $persistentStore.read("KEY-CN-Ping");
-  const readData = readDataStr ? JSON.parse(readDataStr) : {};
-  // console.log("读取数据成功", readData);
-  for (const timestamp in savedData) {
-    const result = savedData[timestamp];
-    // console.log(`时间戳 ${timestamp} -- ${result}`);
-  }
-  const outgit = Object.values(savedData).join("");
-  // console.log("输出为"+outgi t);
-
-  /////////////////////////////////////////////
   $done({
     title: outping,
     content: outgit,
   });
 })();
-
-function http(req) {
-  return new Promise((resolve) => {
-    let startTime = Date.now();
-    $httpClient.post($[req], (/*error, response, data*/) => {
-      let endTime = Date.now();
-      resolve(`${req}: ${endTime - startTime}ms`);
-    });
-  });
-}
