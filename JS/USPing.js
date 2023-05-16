@@ -20,7 +20,7 @@ let $ = {
     let avgTime = Math.round(
       pingTimes.reduce((a, b) => a + b, 0) / pingTimes.length
     );
-    let resultText = `CF AVG: ${avgTime
+    let resultText = `CF: ${avgTime
       .toString()
       .padEnd(5, " ")}ms\t➟    ${key}: ${pingTimes}ms`;
 
