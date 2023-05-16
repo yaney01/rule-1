@@ -20,9 +20,9 @@ let $ = {
     let avgTime = Math.round(
       pingTimes.reduce((a, b) => a + b, 0) / pingTimes.length
     );
-    let resultText = `CF Avg: ${avgTime
+    let resultText = `CF AVG: ${avgTime
       .toString()
-      .padEnd(5, " ")}ms\t➟    ${key}: ${pingTimes}ms`;
+      .padEnd(4, " ")}ms\t➟    ${key}: ${pingTimes}`;
 
    
     // console.log("最大值为: " + maxValue);
