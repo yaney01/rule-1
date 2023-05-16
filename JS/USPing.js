@@ -1,5 +1,4 @@
 let $ = { Ping: "http://cp.cloudflare.com/generate_204" };
-
 function http(req) {
   return new Promise((resolve) => {
     let startTime = Date.now();
@@ -24,7 +23,6 @@ function saveGif(gifArr) {
   const readd = $persistentStore.read("KEY-US-Ping");
   const readData = readd ? JSON.parse(readd) : {};
   const outgit = Object.values(sdd).join("");
-  
   return outgit;
 }
 
