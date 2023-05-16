@@ -22,7 +22,7 @@ let $ = {
     );
     let resultText = `CF Avg: ${avgTime
       .toString()
-      .padEnd(5, " ")}ms\t➟    ${key}: ${pingTimes} ms `;
+      .padEnd(5, " ")}ms\t➟    ${key}: ${pingTimes}ms`;
 
    
     // console.log("最大值为: " + maxValue);
