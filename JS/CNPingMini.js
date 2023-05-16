@@ -21,9 +21,9 @@ let $ = {
     let avgTime = Math.round(
       pingTimes.reduce((a, b) => a + b, 0) / pingTimes.length
     );
-    let resultText = `Avg: ${avgTime
+    let resultText = `CN Avg: ${avgTime
       .toString()
-      .padEnd(4, " ")}ms\t➟     ${key}: ${pingTimes} ms `;
+      .padEnd(5, " ")}ms\t➟     ${key}: ${pingTimes} ms `;
 
     // 最小值和最大值
     //const minValue = Math.min(...pingTimes);
@@ -60,7 +60,7 @@ let $ = {
   // console.log(result);
   const timestamp = new Date().getTime();
   // 从持久化缓存中读取保存的数据
-  const savedDataStr = $persistentStore.read("KEY-CN-PingMini");
+  const savedDataStr = $persistentStore.read("KEY-CN-Ping");
   const savedData = savedDataStr ? JSON.parse(savedDataStr) : {};
   // 将时间戳和延迟保存到对象中
   savedData[timestamp] = result;
@@ -74,7 +74,7 @@ let $ = {
   // 对象序列化成字符串、 保存
   const resultss = $persistentStore.write(
     JSON.stringify(savedData),
-    "KEY-CN-PingMini"
+    "KEY-CN-Ping"
   );
   // if (resultss) {
   //   console.log("保存数据成功", savedData);
@@ -82,7 +82,7 @@ let $ = {
   //   console.log("保存数据失败");
   // }
   // 从持久化缓存中读取保存的数据
-  const readDataStr = $persistentStore.read("KEY-CN-PingMini");
+  const readDataStr = $persistentStore.read("KEY-CN-Ping");
   const readData = readDataStr ? JSON.parse(readDataStr) : {};
   // console.log("读取数据成功", readData);
   for (const timestamp in savedData) {
@@ -94,8 +94,8 @@ let $ = {
 
   /////////////////////////////////////////////
   $done({
-    title: "CN-Ping",
-    content: outping + "\n" + outgit,
+    title: outping,
+    content: outgit,
   });
 })();
 

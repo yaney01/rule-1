@@ -21,9 +21,9 @@ let $ = {
     let avgTime = Math.round(
       pingTimes.reduce((a, b) => a + b, 0) / pingTimes.length
     );
-    let resultText = `Avg: ${avgTime
+    let resultText = `CN Avg: ${avgTime
       .toString()
-      .padEnd(4, " ")}ms\t➟     ${key}: ${pingTimes} ms `;
+      .padEnd(5, " ")}ms\t➟     ${key}: ${pingTimes} ms `;
 
     // 最小值和最大值
     //const minValue = Math.min(...pingTimes);
@@ -94,8 +94,8 @@ let $ = {
 
   /////////////////////////////////////////////
   $done({
-    title: "CN-Ping",
-    content: outping + "\n" + outgit,
+    title: outping,
+    content: outgit,
   });
 })();
 

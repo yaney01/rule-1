@@ -1,6 +1,6 @@
 // US Ping最小值和最大值
-const minValue = 10;
-const maxValue = 400;
+const minValue = 60;
+const maxValue = 300;
 let $ = {
   Ping: "http://cp.cloudflare.com/generate_204",
   // Y: 'http://youtube.com',
@@ -20,9 +20,9 @@ let $ = {
     let avgTime = Math.round(
       pingTimes.reduce((a, b) => a + b, 0) / pingTimes.length
     );
-    let resultText = `Avg: ${avgTime
+    let resultText = `CF Avg: ${avgTime
       .toString()
-      .padEnd(4, " ")}ms\t➟    ${key}: ${pingTimes} ms `;
+      .padEnd(5, " ")}ms\t➟    ${key}: ${pingTimes} ms `;
 
    
     // console.log("最大值为: " + maxValue);
@@ -91,8 +91,8 @@ let $ = {
 
   /////////////////////////////////////////////
   $done({
-    title: "CF-Ping",
-    content: outping + "\n" + outgit,
+    title: outping,
+    content: outgit,
   });
 })();
 
