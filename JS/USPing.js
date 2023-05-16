@@ -36,7 +36,7 @@ let $ = {
         const charCode = Math.floor(normalizedValue * 6) + 0x2581;
 				
          if (charCode > 0x2587) {
-    return "\u2589";
+    return "\u2587";
   } else if (charCode < 0x2581) {
     return "\u2581";
   } else {
