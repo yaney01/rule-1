@@ -70,7 +70,7 @@ const rurekey = {
   '春川': '韩国 春川',
   'Seoul': 'Korea Seoul',
   'Tokyo': 'Japan',
-  'Osaka': '日本',
+  'Osaka': 'Japan',
   '东京': '日本 东京',
   '大坂': '日本 大坂',
   'London': 'United Kingdom London',
@@ -106,6 +106,7 @@ function operator(proxies) {
   });
   proxies.length = 0;
   Array.prototype.push.apply(proxies, newProxiess);
+  console.log(proxies)
   if (inname !== "") { 
     var inputList = getList(inname); 
   } else {
