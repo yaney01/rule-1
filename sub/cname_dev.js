@@ -71,29 +71,26 @@ function removeqc(arr) {
   return result;
 }
 
-function jxh(proxies) {
-  const groupedProxies = proxies.reduce((groups, item) => {
-    const existingGroup = groups.find((group) => group.name === item.name);
-    if (existingGroup) {
-      existingGroup.count++;
-      existingGroup.items.push({
-        ...item,
-        name: `${item.name} ${existingGroup.count.toString().padStart(2, "0")}`,
-      });
+function jxh(e) {
+  const n = e.reduce((e, n) => {
+    const t = e.find((e) => e.name === n.name);
+    if (t) {
+        t.count++;
+        t.items.push({ ...n, name: `${n.name} ${t.count.toString().padStart(2, "0")}` });
     } else {
-      groups.push({
-        name: item.name,
-        count: 1,
-        items: [{ ...item, name: `${item.name} 01` }],
-      });
+      if (!numone) {
+        e.push({ name: n.name, count: 1, items: [{ ...n, name: `${n.name} 01` }] });
+      } else {
+      e.push({ name: n.name, count: 1, items: [{ ...n, name: `${n.name}` }] });
+      }
     }
-    return groups;
+    return e;
   }, []);
-  const sortedProxies = groupedProxies.flatMap((group) => group.items);
-  proxies.splice(0, proxies.length, ...sortedProxies);
-  return proxies;
+  const t = n.flatMap((e) => e.items);
+  e.splice(0, e.length, ...t);
+  return e;
 }
-
+/*
 function oneProxies(proxies) {
   const groups = proxies.reduce((groups, proxy) => {
     const name = proxy.name.replace(/\s\d+$/, "");
@@ -111,7 +108,7 @@ function oneProxies(proxies) {
   }
   return proxies;
 }
-
+*/
 function mTIme(timeDiff) {
   if (timeDiff < 1000) {
     return `${Math.round(timeDiff)}毫秒`;
@@ -223,7 +220,7 @@ async function operator(proxies) {
   }
   // console.log("处理后节点信息 = " + JSON.stringify(proxies));
   //清理相同地区节点的01
-  numone && (proxies = oneProxies(proxies));
+  //numone && (proxies = oneProxies(proxies));
   // log
   const PRSO = proxies.length;
   const endTime = new Date();
