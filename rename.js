@@ -133,7 +133,7 @@ function operator(proxies) {
         resultArray.push(countries[elem][0]);
       }
       if (bl) {
-		//替换对应的
+		  //替换对应的
          regexArray.forEach((regex, index) => {
           if (regex.test(res.name)) {
           resultArray.splice(2, 0, valueArray[index]);}});
