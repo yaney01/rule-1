@@ -6,6 +6,7 @@
 rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数使用"&"连接，参考上述地址为例使用参数。
 [bl]:     保留: 家宽 ，IPLC 几倍之类的标识
 [blpx]:   如果用了上面的bl参数,对保留标识后的名称分组排序,如果没用上面的bl参数单独使用blpx则不起任何作用
+[fgf]:    自义定分隔符,默认是空格
 [one]:    清理只有一个节点的地区的01 
 [flag]:   给节点前面加国旗
 [name=]:  添加机场名前缀在节点最前面
@@ -26,9 +27,7 @@ const numone = $arguments["one"];
 const clear = $arguments["clear"];
 const addflag = $arguments["flag"];
 const jcname = $arguments.name == undefined ? "" : decodeURI($arguments.name);
-
 const FGF = $arguments.fgf == undefined ? " " : decodeURI($arguments.fgf);
-
 const inname = $arguments["in"] === "cn" ? "cn" : $arguments["in"] === "us" ? "us" : $arguments["in"] === "quan" ? "quan" : "";
 function getList(arg) { switch (arg) { case "us": return us; case "quan": return quan; default: return cn;}}
 
