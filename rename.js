@@ -39,7 +39,7 @@ const regexArray=[/²/, /³/, /⁴/, /⁵/, /⁶/, /⁷/, /⁸/, /⁹/, /¹⁰/,
 
 const valueArray= [ "2×","3×","4×","5×","6×","7×","8×","9×","10×","20×","30×","40×","50×","IPLC","IEPL","Kern","Edge","Pro","Std","Exp","Biz","Fam","Game","Buy","Zx","LB","CF","UDP"];
 
-const rekey = [
+const rurekey = [
   { ikey: 'UK', rekey: 'GB' },
   { ikey: '狮城', rekey: '新加坡' },
   { ikey: 'USA', rekey: 'United States' },
@@ -92,7 +92,7 @@ const namenx = /(高倍|(?!1)(0\.|\d)+(x|倍)|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰)/i;
 function operator(proxies) {
   const newProxiess = [];
   proxies.forEach((proxy) => {
-    rekey.forEach((rule) => {
+    rurekey.forEach((rule) => {
       if (proxy.name.includes(rule.ikey)) {
         proxy = { ...proxy, name: proxy.name.replace(rule.ikey, rule.rekey) };
       }});
