@@ -98,7 +98,7 @@ function jxh(e) {
 
 function oneProxies(proxies) {
   const groups = proxies.reduce((groups, proxy) => {
-    const name = proxy.name.replace(/[^A-Za-z0-9\u00C0-\u017F\u4E00-\u9FFF].*?\d+$/, "");
+    const name = proxy.name.replace(/[^A-Za-z0-9\u00C0-\u017F\u4E00-\u9FFF]+\d+$/, "");
     if (!groups[name]) {
       groups[name] = [];
     }
@@ -106,7 +106,7 @@ function oneProxies(proxies) {
     return groups;
   }, {});
   for (const name in groups) {
-    if (groups[name].length === 1 && groups[name][0].name.endsWith(" 01")) {
+    if (groups[name].length === 1 && groups[name][0].name.endsWith("01")) {
       const proxy = groups[name][0];
       proxy.name = name;
     }
