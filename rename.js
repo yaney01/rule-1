@@ -106,7 +106,7 @@ function operator(proxies) {
   });
   proxies.length = 0;
   Array.prototype.push.apply(proxies, newProxiess);
-  if (!inname) { 
+  if (inname !== "") { 
     var inputList = getList(inname); 
   } else {
     const regionCounts = proxies.slice(0,10).map(proxy => 
