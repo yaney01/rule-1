@@ -108,7 +108,9 @@ function operator(proxies) {
 			resultArray.push(newValue);}}
 		}}}}
     if (isMatched) {
-      newProxies.push({...res, name: resultArray.join(" ")});
+      // resultArray 空字符串
+      const filteredResultArray = resultArray.filter(item => item.trim() !== '');
+      newProxies.push({...res, name: filteredResultArray.join(" ")});
     } else {
       toBeDeleted.push(res);}
     });
