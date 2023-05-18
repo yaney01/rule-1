@@ -19,11 +19,12 @@ rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数�
 */
 const FGF = "|"
 const bl = 1;
+const numone = true
 //const bl = $arguments["bl"];
 const blpx = $arguments["blpx"];
 const nx = $arguments["nx"];
 const blnx = $arguments["blnx"];
-const numone = $arguments["one"];
+//const numone = $arguments["one"];
 console.log(numone)
 const clear = $arguments["clear"];
 const addflag = $arguments["flag"];
@@ -35,11 +36,13 @@ function jxh(e) {
   const n = e.reduce((e, n) => {
     const t = e.find((e) => e.name === n.name);
     if (t) {
-      t.count++;
-      t.items.push({ ...n, name: `${n.name} ${t.count.toString().padStart(2, "0")}` });
+        t.count++;
+        t.items.push({ ...n, name: `${n.name} ${t.count.toString().padStart(2, "0")}` });
     } else {
-      if (numone) { // 添加条件判断
+      if (!numone) {
         e.push({ name: n.name, count: 1, items: [{ ...n, name: `${n.name} 01` }] });
+      } else {
+      e.push({ name: n.name, count: 1, items: [{ ...n, name: `${n.name}` }] });
       }
     }
     return e;
@@ -48,6 +51,9 @@ function jxh(e) {
   e.splice(0, e.length, ...t);
   return e;
 }
+
+
+
 
 
 function getflag(e){const n=e.toUpperCase().split("").map((e=>127397+e.charCodeAt()));return String.fromCodePoint(...n).replace(/🇹🇼/g,"🇨🇳")}
