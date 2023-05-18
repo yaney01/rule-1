@@ -29,6 +29,7 @@ const addflag = $arguments["flag"];
 const jcname = $arguments.name == undefined ? "" : decodeURI($arguments.name);
 const FGF = $arguments.fgf == undefined ? " " : decodeURI($arguments.fgf);
 const inname = $arguments["in"] === "cn" ? "cn" : $arguments["in"] === "us" ? "us" : $arguments["in"] === "quan" ? "quan" : "";
+
 function getList(arg) { switch (arg) { case "us": return us; case "quan": return quan; default: return cn;}}
 function jxh(e) {const n = e.reduce((e, n) => { const t = e.find((e) => e.name === n.name); if (t) {t.count++;t.items.push({ ...n, name:`${n.name}${FGF}${t.count.toString().padStart(2, "0")}` }); } else {if (!numone) {e.push({ name: n.name, count: 1, items: [{ ...n, name: `${n.name}${FGF}01` }] });} else {e.push({ name: n.name, count: 1, items: [{ ...n, name: `${n.name}` }] });} } return e;}, []);const t = n.flatMap((e) => e.items);e.splice(0, e.length, ...t);return e;}
 function getflag(e){const n=e.toUpperCase().split("").map((e=>127397+e.charCodeAt()));return String.fromCodePoint(...n).replace(/🇹🇼/g,"🇨🇳")}
@@ -87,7 +88,6 @@ const nameclear =/(套餐|到期|有效|剩余|版本|已用|过期|失联|测�
 
 const nameblnx = /(高倍|(?!1)2+(x|倍)|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰)/i;
 const namenx = /(高倍|(?!1)(0\.|\d)+(x|倍)|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰)/i;
-
 
 function operator(proxies) {
   const newProxiess = [];
