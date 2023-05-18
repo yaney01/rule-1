@@ -31,7 +31,13 @@ const FGF = $arguments.fgf == undefined ? " " : decodeURI($arguments.fgf);
 const inname = $arguments["in"] === "cn" ? "cn" : $arguments["in"] === "us" ? "us" : $arguments["in"] === "quan" ? "quan" : "";
 
 function getList(arg) { switch (arg) { case "us": return us; case "quan": return quan; default: return cn;}}
-function jxh(e) {const n = e.reduce((e, n) => { const t = e.find((e) => e.name === n.name); if (t) {t.count++;t.items.push({ ...n, name:`${n.name}${FGF}${t.count.toString().padStart(2, "0")}` }); } else {if (!numone) {e.push({ name: n.name, count: 1, items: [{ ...n, name: `${n.name}${FGF}01` }] });} else {e.push({ name: n.name, count: 1, items: [{ ...n, name: `${n.name}` }] });} } return e;}, []);const t = n.flatMap((e) => e.items);e.splice(0, e.length, ...t);return e;}
+
+function jxh(e){const n=e.reduce(((e,n)=>{const t=e.find((e=>e.name===n.name));if(t){t.count++;t.items.push({...n,name:`${n.name} ${t.count.toString().padStart(2,"0")}`})}
+else{e.push({name:n.name,count:1,items:[{...n,name:`${n.name} 01`}]})}return e}),[]);const t=n.flatMap((e=>e.items));e.splice(0,e.length,...t);return e}
+
+function oneProxies(proxies){const groups = proxies.reduce((groups, proxy) => { const name = proxy.name.replace(/\s\d+$/, ''); if (!groups[name]) { groups[name] = []; } groups[name].push(proxy);
+return groups; }, {});for(const name in groups) {if (groups[name].length === 1 && groups[name][0].name.endsWith(' 01')) {const proxy = groups[name][0];proxy.name = name;}};return proxies;}
+
 function getflag(e){const n=e.toUpperCase().split("").map((e=>127397+e.charCodeAt()));return String.fromCodePoint(...n).replace(/🇹🇼/g,"🇨🇳")}
 function getRegion(proxyName) {if (cn.some((name) => proxyName.includes(name))) {return "cn";} else if (us.some((name) => proxyName.includes(name))) {return "us";} else if (quan.some((name) => proxyName.includes(name))) {return "quan";} else {return null;}}
 function fampx(proxies) {const wis = [];const wnout = [];for (const proxy of proxies) {const fan = specialRegex.some(regex => regex.test(proxy.name));if (fan) {wis.push(proxy);} else {wnout.push(proxy);}}const sps = wis.map(proxy => specialRegex.findIndex(regex => regex.test(proxy.name)));wis.sort((a, b) => sps[wis.indexOf(a)] - sps[wis.indexOf(b)] || a.name.localeCompare(b.name));wnout.sort((a, b) => proxies.indexOf(a) - proxies.indexOf(b));return wnout.concat(wis);}
@@ -158,6 +164,7 @@ function operator(proxies) {
     proxies.splice(index, 1);}}); 
   proxies = newProxies;
   proxies = jxh(proxies);
+  numone && (proxies = oneProxies(proxies));
   blpx && (proxies = fampx(proxies));
   return proxies;
 }
