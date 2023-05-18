@@ -170,7 +170,7 @@ async function operator(proxies) {
     // await sleep(10);
     i += batch_size;
   }
-  console.log("处理前节点信息 = " + JSON.stringify(proxies));
+  // console.log("处理前节点信息 = " + JSON.stringify(proxies));
   proxies = removels(proxies);
   proxies = removeqc(proxies);
   proxies = jxh(proxies);
