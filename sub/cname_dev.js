@@ -10,23 +10,27 @@
  * 参数: 第一个参数用# 后面的用& 连接
  * [name=] 节点前面加机场名
  * [one]  清理相同地区节点的01
+ * [fgf]  自义定分隔符,默认是空格
+ * 
  * [flag] 添加旗帜、运营商符号，例如: "🅳北京→🇺🇸美国 01"
  * [fg]   分隔符 例如: "上海 | 新加坡 01"
  * [jt]   箭头 例如: "上海→韩国 01"
+ * 
  * [dd]   单独落地国家 例如: "香港 01"
  * [cd=]  有缓存后ping 没有缓存成功的 api超时时间, 设置小点比如 [cd=0] 的情况下可以直接读取缓存，几乎无需等待， 如果设置 [cd=600] 有Ping不通的或者上次没有缓存的节点的情况下最低等600+ms,,但是可以写入上次没有写入成功的缓存,,如果全部缓存了的情况,也很快毫秒级,但是可以写入上次没有写入成功的缓存
  * [timeout=] 第一次没有缓存的ping api超时时间 
  */
 const $ = $substore;
-const fg = $arguments["fg"];
-const dd = $arguments["dd"];
-const jt = $arguments["jt"];
+// const fg = $arguments["fg"];
+// const dd = $arguments["dd"];
+// const jt = $arguments["jt"];
 const flag = $arguments["flag"];
 const numone = $arguments["one"];
 const { isLoon, isSurge, isQX } = $substore.env;
 let timeout = $arguments["timeout"] ? $arguments["timeout"] : 1600;
 let with_cache = $arguments["cd"] ? $arguments["cd"] : 400;
 const keynames = $arguments.name ? decodeURI($arguments.name) : "";
+const FGF = $arguments.fgf == undefined ? " " : decodeURI($arguments.fgf);
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 let onen = false;
 function getid(proxy) {
@@ -97,13 +101,13 @@ function jxh(e) {
       t.count++;
       t.items.push({
         ...n,
-        name: `${n.name} ${t.count.toString().padStart(2, "0")}`,
+        name: `${n.name}${FGF}${t.count.toString().padStart(2, "0")}`,
       });
     } else {
       e.push({
         name: n.name,
         count: 1,
-        items: [{ ...n, name: `${n.name} 01` }],
+        items: [{ ...n, name: `${n.name}${FGF}01` }],
       });
     }
     return e;
@@ -116,7 +120,7 @@ function jxh(e) {
 
 function oneProxies(proxies) {
   const groups = proxies.reduce((groups, proxy) => {
-    const name = proxy.name.replace(/\s\d+$/, "");
+    const name = proxy.name.replace(/[^A-Za-z0-9\u00C0-\u017F\u4E00-\u9FFF]+\d+$/, "");
     if (!groups[name]) {
       groups[name] = [];
     }
@@ -124,7 +128,7 @@ function oneProxies(proxies) {
     return groups;
   }, {});
   for (const name in groups) {
-    if (groups[name].length === 1 && groups[name][0].name.endsWith(" 01")) {
+    if (groups[name].length === 1 && groups[name][0].name.endsWith("01")) {
       const proxy = groups[name][0];
       proxy.name = name;
     }
