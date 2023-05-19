@@ -25,6 +25,7 @@ let timeout = $arguments["timeout"] ? $arguments["timeout"] : 1600;
 let with_cache = $arguments["cd"] ? $arguments["cd"] : 400;
 const keynames = $arguments.name ? decodeURI($arguments.name) : "";
 const FGF = $arguments.fgf == undefined ? " " : decodeURI($arguments.fgf);
+const XHFGF = $arguments.xhfgf == undefined ? " " : decodeURI($arguments.xhfgf);
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 let onen = false;
 function getid(proxy) {
@@ -78,13 +79,13 @@ function jxh(e) {
       t.count++;
       t.items.push({
         ...n,
-        name: `${n.name}${FGF}${t.count.toString().padStart(2, "0")}`,
+        name: `${n.name}${XHFGF}${t.count.toString().padStart(2, "0")}`,
       });
     } else {
       e.push({
         name: n.name,
         count: 1,
-        items: [{ ...n, name: `${n.name}${FGF}01` }],
+        items: [{ ...n, name: `${n.name}${XHFGF}01` }],
       });
     }
     return e;
