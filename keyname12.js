@@ -73,25 +73,6 @@ function removeqc(arr) {
   return result;
 }
 
-// function jxh(e) {
-//   const n = e.reduce((e, n) => {
-//     const t = e.find((e) => e.name === n.name);
-//     if (t) {
-//         t.count++;
-//         t.items.push({ ...n, name: `${n.name} ${t.count.toString().padStart(2, "0")}` });
-//     } else {
-//       if (!numone) {
-//         e.push({ name: n.name, count: 1, items: [{ ...n, name: `${n.name} 01` }] });
-//       } else {
-//       e.push({ name: n.name, count: 1, items: [{ ...n, name: `${n.name}` }] });
-//       }
-//     }
-//     return e;
-//   }, []);
-//   const t = n.flatMap((e) => e.items);
-//   e.splice(0, e.length, ...t);
-//   return e;
-// }
 function jxh(e) {
   const n = e.reduce((e, n) => {
     const t = e.find((e) => e.name === n.name);
@@ -179,9 +160,7 @@ async function operator(proxies) {
         try {
           const inip = await INDNS(proxy.server);
             // names = inip.ip;
-            // console.log("DNS--------------" + JSON.stringify(inip.as));
-
-            // "country": "中国",
+            // console.log("in" + JSON.stringify(inip.as));
             const outip = await IPAPI(proxy);
 
             let ass = "";
@@ -236,7 +215,6 @@ async function operator(proxies) {
     });
   }
   // console.log("处理后节点信息 = " + JSON.stringify(proxies));
-  //清理相同地区节点的01
   numone && (proxies = oneProxies(proxies));
   // log
   const PRSO = proxies.length;
