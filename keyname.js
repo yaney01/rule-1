@@ -210,7 +210,7 @@ async function operator(proxies) {
    
           const outip = await IPAPI(proxy);
         //inip.regionName +""+
-          proxy.name = inip.city.slice(0, 2)+" "+ass+" "+ outip.country;
+          proxy.name = inip.city.replace("市", "");+FGF+ass+FGF+ outip.country;
         //   // 去重 入口/落地IP
           proxy.qc = inip.query + "|" + outip.query;
         } catch (err) {}
