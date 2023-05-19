@@ -24,6 +24,8 @@ const $ = $substore;
 // const fg = $arguments["fg"];
 // const dd = $arguments["dd"];
 // const jt = $arguments["jt"];
+const nocmcc = $arguments["nocmcc"];
+
 const flag = $arguments["flag"];
 const numone = $arguments["one"];
 const { isLoon, isSurge, isQX } = $substore.env;
@@ -182,37 +184,46 @@ async function operator(proxies) {
     await Promise.all(
       batch.map(async (proxy) => {
         try {
-
           const inip = await INDNS(proxy.server);
-          // names = inip.ip;
-          console.log("DNS--------------" + JSON.stringify(inip.as));
-            var recmcc = {
-              "AS9808":"移动", "AS24311":"移动", "AS24400":"移动", "AS24444":"移动", "AS24445":"移动", "AS24547":"移动", "AS38019":"移动", "AS56040":"移动", "AS56041":"移动", "AS56042":"移动", "AS56044":"移动", "AS56046":"移动", "AS56047":"移动", "AS56048":"移动", "AS59067":"移动", "AS132510":"移动", "AS132525":"移动", "AS134810":"移动", "AS138407":"移动",
-              "AS4134":"电信", "AS4809":"电信", "AS4811":"电信", "AS4812":"电信", "AS4813":"电信", "AS4816":"电信", "AS4835":"电信", "AS4847":"电信", "AS9395":"电信", "AS17633":"电信", "AS17638":"电信", "AS17739":"电信", "AS17785":"电信", "AS17799":"电信", "AS17897":"电信", "AS17964":"电信", "AS17968":"电信", "AS23650":"电信", "AS23724":"电信", "AS23910":"电信", "AS23911":"电信", "AS24138":"电信", "AS38283":"电信", "AS58517":"电信", "AS58518":"电信", "AS59265":"电信", "AS63582":"电信", "AS63583":"电信", "AS134420":"电信",
-              "AS4808":"联通", "AS4837":"联通", "AS9800":"联通", "AS9929":"联通", "AS10206":"联通", "AS17621":"联通", "AS17622":"联通", "AS17623":"联通", "AS17816":"联通", "AS24134":"联通", "AS133118":"联通", "AS133119":"联通", "AS134542":"联通", "AS134543":"联通", "AS135061":"联通", "AS136958":"联通", "AS136959":"联通", "AS137539":"联通", "AS138421":"联通",
-            };
-            var asValue = inip.as;
+            // names = inip.ip;
+            // console.log("DNS--------------" + JSON.stringify(inip.as));
+
+            // "country": "中国",
+            const outip = await IPAPI(proxy);
+
             let ass = "";
-            var matched = false;
-            Object.entries(recmcc).forEach(function([key, value]) {
-              if (asValue.includes(key)) {
-                // inip.as = value;
-                ass = value;
-                matched = true;
-                return;
-              }
-            });
-            if (!matched) {
-              // inip.as = "其他";
-              ass = "其他";
+            if(!nocmcc){
+                if (inip.country == "中国") {
+                    const recmcc = {
+                    "AS9808":"移动", "AS24311":"移动", "AS24400":"移动", "AS24444":"移动", "AS24445":"移动", "AS24547":"移动", "AS38019":"移动", "AS56040":"移动", "AS56041":"移动", "AS56042":"移动", "AS56044":"移动", "AS56046":"移动", "AS56047":"移动", "AS56048":"移动", "AS59067":"移动", "AS132510":"移动", "AS132525":"移动", "AS134810":"移动", "AS138407":"移动",
+                    "AS4134":"电信", "AS4809":"电信", "AS4811":"电信", "AS4812":"电信", "AS4813":"电信", "AS4816":"电信", "AS4835":"电信", "AS4847":"电信", "AS9395":"电信", "AS17633":"电信", "AS17638":"电信", "AS17739":"电信", "AS17785":"电信", "AS17799":"电信", "AS17897":"电信", "AS17964":"电信", "AS17968":"电信", "AS23650":"电信", "AS23724":"电信", "AS23910":"电信", "AS23911":"电信", "AS24138":"电信", "AS38283":"电信", "AS58517":"电信", "AS58518":"电信", "AS59265":"电信", "AS63582":"电信", "AS63583":"电信", "AS134420":"电信",
+                    "AS4808":"联通", "AS4837":"联通", "AS9800":"联通", "AS9929":"联通", "AS10206":"联通", "AS17621":"联通", "AS17622":"联通", "AS17623":"联通", "AS17816":"联通", "AS24134":"联通", "AS133118":"联通", "AS133119":"联通", "AS134542":"联通", "AS134543":"联通", "AS135061":"联通", "AS136958":"联通", "AS136959":"联通", "AS137539":"联通", "AS138421":"联通",
+                    };
+                    const asValue = inip.as;
+                    let matched = false;
+                    Object.entries(recmcc).forEach(function([key, value]) {
+                    if (asValue.includes(key)) {
+                        ass = value;
+                        matched = true;
+                        return;
+                        }
+                    });
+                    if (!matched) {ass = "其他";}
+                }else{ass = "";}
+            } else {
+                ass = "";
             }
-            console.log(ass);
-   
-          const outip = await IPAPI(proxy);
+            let incity;
+            if (inip.country == outip.country) {
+                incity = "直连";
+            } else {
+                incity = inip.city.replace(/特别市|联邦|市/g, "");
+            }
+
         //inip.regionName +""+
-          proxy.name = inip.city.replace(/特别市|市/g, "")+FGF+ass+FGF+ outip.country;
-        //   // 去重 入口/落地IP
-          proxy.qc = inip.query + "|" + outip.query;
+        proxy.name = incity +FGF+ass+FGF+ outip.country;
+        // 去重 入口/落地IP
+        proxy.qc = inip.query + "|" + outip.query;
         } catch (err) {}
       })
     );
