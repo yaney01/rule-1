@@ -287,7 +287,12 @@ async function INDNS(server) {
     const resultin = new Promise((resolve, reject) => {
       const ips = server;
       const url = `http://ip-api.com/json/${ips}?lang=zh-CN&fields=status,message,country,countryCode,city,query,regionName,asname,as`;
-      $.http.get({ url }).then((resp) => {
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => {
+          reject(new Error("timeout"));
+        }, timeout);
+      });
+      const queryPromise = $.http.get({ url }).then((resp) => {
           const inipapi = JSON.parse(resp.body);
           if (inipapi.status === "success") {
             resolve(inipapi);
@@ -298,6 +303,9 @@ async function INDNS(server) {
         })
         .catch((err) => {
           reject(err);
+        });
+        Promise.race([timeoutPromise, queryPromise]).catch((err) => {
+            reject(err);
         });
     });
     ins.set(id, resultin);
