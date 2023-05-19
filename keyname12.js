@@ -18,7 +18,6 @@
  */
 const $ = $substore;
 const nocmcc = $arguments["nocmcc"];
-
 const flag = $arguments["flag"];
 const numone = $arguments["one"];
 const { isLoon, isSurge, isQX } = $substore.env;
@@ -32,7 +31,6 @@ function getid(proxy) {
   let dataKey = 'as';;
   return MD5(`${dataKey}-${proxy.server}-${proxy.port}`);
 }
-
 
 function getinid(server) {
   let dataKeys = 'ias';;
@@ -192,9 +190,25 @@ async function operator(proxies) {
             } else {
                 incity = inip.city.replace(/特别市|联邦|市/g, "");
             }
+            
+            let adflag;
+            let adcm;
+            if(flag){
+                adflag = getflag(outip.countryCode)
+                if (!nocmcc){
+                    const keycm = { '电信': '🅳', '联通': '🅻', '移动': '🆈'};
+                    const recme = ass;
+                    adcm = keycm[recme] || '🅶';
+                    incity = adcm + incity
+                }
+            } else {
+                adflag = "";
+                adcm = ass;
+                incity = incity + ass;
+            }
 
-        //inip.regionName +""+
-        proxy.name = incity +FGF+ass+FGF+ outip.country;
+        //inip.regionName
+        proxy.name = incity +FGF+ adflag + outip.country;
         // 去重 入口/落地IP
         proxy.qc = inip.query + "|" + outip.query;
         } catch (err) {}
