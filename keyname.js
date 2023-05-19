@@ -142,9 +142,9 @@ function mTIme(timeDiff) {
   }
 };
 
-// function sleep(ms) {
-//   return new Promise((resolve) => setTimeout(resolve, ms));
-// }
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 async function operator(proxies) {
   const support = isLoon || isSurge;
@@ -206,6 +206,7 @@ async function operator(proxies) {
             } else {
                 ass = "";
             }
+
             let incity;
             if (inip.country == outip.country) {
                 incity = "直连";
@@ -220,7 +221,7 @@ async function operator(proxies) {
         } catch (err) {}
       })
     );
-    // await sleep(10);
+    if(!onen){await sleep(300);}
     i += batch_size;
   }
   // console.log("处理前节点信息 = " + JSON.stringify(proxies));
@@ -253,27 +254,6 @@ async function operator(proxies) {
   return proxies;
 }
 
-/*
-function concatLogs(writelog, readlog) {
-  let result;
-
-  if (!writelog && !readlog) {
-    result = '';
-  } else {
-    result = writelog + readlog + '\n';
-  }
-
-  return result;
-}
-
-
-let logs = concatLogs(writelog, readlog);
-console.log(logs); 
-*/
-
-// var cachedss = 0;
-// const resourceCache = new ResourceCache(CACHE_EXPIRATION_TIME_MS);
-// 持久化存储每个代理的查询任务
 const ins = new Map();
 async function INDNS(server) {
   const id = getinid(server);
