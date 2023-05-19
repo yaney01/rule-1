@@ -209,8 +209,8 @@ async function operator(proxies) {
             console.log(ass);
    
           const outip = await IPAPI(proxy);
-
-          proxy.name = inip.regionName +""+inip.city.slice(0, 2)+" "+ass+" "+ outip.country;
+        //inip.regionName +""+
+          proxy.name = inip.city.slice(0, 2)+" "+ass+" "+ outip.country;
         //   // 去重 入口/落地IP
           proxy.qc = inip.query + "|" + outip.query;
         } catch (err) {}
