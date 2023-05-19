@@ -1,6 +1,7 @@
 #!name=网易云音乐 
 #!desc=version:8.9.20
 #Thank RuCu6, kokoryh 
+
 [General]
 force-http-engine-hosts = %APPEND% 59.111.*:0, iadmusicmatvideo.music.126.net
 
@@ -17,9 +18,7 @@ DOMAIN,gdt.qq.com,REJECT-NO-DROP
 DOMAIN-SUFFIX,163jiasu.com,REJECT-NO-DROP
 
 [Map Local]
-
 ^http:\/\/iadmusicmatvideo\.music\.126\.net data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank.mp4"
-
 ^https?:\/\/interface3?\.music\.163\.com\/eapi\/(community\/friends\/fans-group\/artist\/group\/get|user\/sub\/artist|music\/songshare\/text\/recommend\/get|mine\/applet\/redpoint|resniche\/position\/play\/new\/get) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
 
 # (评论区｜评论右上角热评馆｜播放页评论)｜回复
