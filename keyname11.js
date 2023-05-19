@@ -36,7 +36,7 @@ function getid(proxy) {
 
 
 function getinid(server) {
-  let dataKeys = 'as';;
+  let dataKeys = 'ias';;
   return MD5(`${dataKeys}-${server}`);
 }
 
