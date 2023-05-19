@@ -185,7 +185,7 @@ async function operator(proxies) {
 
           const inip = await INDNS(proxy.server);
           // names = inip.ip;
-          console.log("DNS--------------" + JSON.stringify(inip.as));
+        //   console.log("DNS--------------" + JSON.stringify(inip.as));
             var recmcc = {
               "AS9808":"移动", "AS24311":"移动", "AS24400":"移动", "AS24444":"移动", "AS24445":"移动", "AS24547":"移动", "AS38019":"移动", "AS56040":"移动", "AS56041":"移动", "AS56042":"移动", "AS56044":"移动", "AS56046":"移动", "AS56047":"移动", "AS56048":"移动", "AS59067":"移动", "AS132510":"移动", "AS132525":"移动", "AS134810":"移动", "AS138407":"移动",
               "AS4134":"电信", "AS4809":"电信", "AS4811":"电信", "AS4812":"电信", "AS4813":"电信", "AS4816":"电信", "AS4835":"电信", "AS4847":"电信", "AS9395":"电信", "AS17633":"电信", "AS17638":"电信", "AS17739":"电信", "AS17785":"电信", "AS17799":"电信", "AS17897":"电信", "AS17964":"电信", "AS17968":"电信", "AS23650":"电信", "AS23724":"电信", "AS23910":"电信", "AS23911":"电信", "AS24138":"电信", "AS38283":"电信", "AS58517":"电信", "AS58518":"电信", "AS59265":"电信", "AS63582":"电信", "AS63583":"电信", "AS134420":"电信",
@@ -206,11 +206,11 @@ async function operator(proxies) {
               // inip.as = "其他";
               ass = "其他";
             }
-            console.log(ass);
-   
-          const outip = await IPAPI(proxy);
+            // console.log(ass);
+        const incity = inip.city.replace(/特别市|联邦|市/g, "")
+        const outip = await IPAPI(proxy);
         //inip.regionName +""+
-          proxy.name = inip.city.replace(/特别市|市/g, "")+FGF+ass+FGF+ outip.country;
+          proxy.name = incity +FGF+ass+FGF+ outip.country;
         //   // 去重 入口/落地IP
           proxy.qc = inip.query + "|" + outip.query;
         } catch (err) {}
