@@ -5,6 +5,7 @@
 force-http-engine-hosts = %APPEND% 59.111.*:0, iadmusicmatvideo.music.126.net
 
 [URL Rewrite]
+# surge-host
 ^https?:\/\/httpdns.n.netease.com\/ - reject
 
 [Rule]
