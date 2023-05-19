@@ -178,7 +178,7 @@ async function operator(proxies) {
                         return;
                         }
                     });
-                    if (!matched) {ass = "其他";}
+                    if (!matched) {ass = "";} //没有匹配的国内运营商
                 }else{ass = "";}
             } else {
                 ass = "";
