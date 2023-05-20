@@ -38,9 +38,10 @@ DOMAIN-SUFFIX,163jiasu.com,REJECT-NO-DROP
 
 [Header Rewrite]
 #摸鱼你偷呀(
-^https?:\/\/interface3?\.music\.163\.com\/eapi\/(batch|ad) header-replace-regex cookie os=iPhone\sOS os=osx
+#^https?:\/\/interface3?\.music\.163\.com\/eapi\/(batch|ad) header-replace-regex cookie os=iPhone\sOS os=osx
 
-^https?:\/\/interface3?\.music\.163\.com\/eapi\/(batch|ad) header-replace user-agent "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) NeteaseMusicDesktop/2.3.14.999"
+#^https?:\/\/interface3?\.music\.163\.com\/eapi\/(batch|ad) header-replace user-agent "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) NeteaseMusicDesktop/2.3.14.999"
 
+^https?:\/\/interface3?\.music\.163\.com\/eapi\/batch header-replace-regex cookie appver=.+$ appver=2333
 [MITM]
 hostname = %APPEND% 59.111.*, 112.13.119.52, 117.147.199.59, interface*.music.163.com:0, httpdns.n.netease.com, *.163jiasu.com
