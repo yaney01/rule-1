@@ -42,9 +42,9 @@ function getflag(e){const n=e.toUpperCase().split("").map((e=>127397+e.charCodeA
 function getRegion(proxyName) {if (cn.some((name) => proxyName.includes(name))) {return "cn";} else if (us.some((name) => proxyName.includes(name))) {return "us";} else if (quan.some((name) => proxyName.includes(name))) {return "quan";} else {return null;}}
 function fampx(proxies) {const wis = [];const wnout = [];for (const proxy of proxies) {const fan = specialRegex.some(regex => regex.test(proxy.name));if (fan) {wis.push(proxy);} else {wnout.push(proxy);}}const sps = wis.map(proxy => specialRegex.findIndex(regex => regex.test(proxy.name)));wis.sort((a, b) => sps[wis.indexOf(a)] - sps[wis.indexOf(b)] || a.name.localeCompare(b.name));wnout.sort((a, b) => proxies.indexOf(a) - proxies.indexOf(b));return wnout.concat(wis);}
 
-const regexArray=[/²/, /³/, /⁴/, /⁵/, /⁶/, /⁷/, /⁸/, /⁹/, /¹⁰/, /²⁰/, /³⁰/, /⁴⁰/, /⁵⁰/, /IPLC/, /IEPL/, /核心/, /边缘/, /高级/, /标准/, /实验/, /商宽/, /家宽/, /游戏/, /购物/, /专线/, /LB/, /cloudflare/i, /udp/i];
+const regexArray=[/ˣ²/, /ˣ³/, /ˣ⁴/, /ˣ⁵/, /ˣ⁶/, /ˣ⁷/, /ˣ⁸/, /ˣ⁹/, /ˣ¹⁰/, /ˣ²⁰/, /ˣ³⁰/, /ˣ⁴⁰/, /ˣ⁵⁰/, /IPLC/, /IEPL/, /核心/, /边缘/, /高级/, /标准/, /实验/, /商宽/, /家宽/, /游戏/, /购物/, /专线/, /LB/, /cloudflare/i, /udp/i, /gpt/i,];
 
-const valueArray= [ "2×","3×","4×","5×","6×","7×","8×","9×","10×","20×","30×","40×","50×","IPLC","IEPL","Kern","Edge","Pro","Std","Exp","Biz","Fam","Game","Buy","Zx","LB","CF","UDP"];
+const valueArray= [ "2×","3×","4×","5×","6×","7×","8×","9×","10×","20×","30×","40×","50×","IPLC","IEPL","Kern","Edge","Pro","Std","Exp","Biz","Fam","Game","Buy","Zx","LB","CF","UDP","GPT"];
 
 const rurekey = {
   'UK': 'GB',
