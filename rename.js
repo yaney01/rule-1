@@ -106,7 +106,7 @@ function operator(proxies) {
   });
   proxies.length = 0;
   Array.prototype.push.apply(proxies, newProxiess);
-  console.log(proxies)
+  //console.log(proxies)
   if (inname !== "") { 
     var inputList = getList(inname); 
   } else {
