@@ -174,21 +174,21 @@ async function operator(proxies) {
             // console.log("in" + JSON.stringify(inip.as));
             const outip = await IPAPI(proxy);
 
-            let ass = "";
+            let asns = "";
             if(!nocmcc){
                 if (inip.country == "中国") {
                     const asValue = inip.as;
                     let matched = false;
                     Object.entries(recmcc).forEach(function([key, value]) {
                     if (asValue.includes(key)) {
-                        ass = value;
+                        asns = value;
                         matched = true;
                         return;
                         }
                     });
-                    if (!matched) {ass = "";} //没有匹配的国内运营商
-                }else{ass = "";}
-            } else {ass = "";}
+                    if (!matched) {asns = "";} //没有匹配的国内运营商
+                }else{asns = "";}
+            } else {asns = "";}
 
             let incity;
             if (inip.country == outip.country) {
@@ -207,14 +207,14 @@ async function operator(proxies) {
                 adflag = getflag(outip.countryCode)
                 if (!nocmcc){
                     const keycm = { '电信': '🅳', '联通': '🅻', '移动': '🆈',  '广电': '🅶'};
-                    const recme = ass;
+                    const recme = asns;
                     adcm = keycm[recme] || '🅲';
                     incity = adcm + incity
                 }
             } else {
                 adflag = "";
-                adcm = ass;
-                incity = incity + ass;
+                adcm = asns;
+                incity = incity + asns;
             }
 
         //inip.regionName
