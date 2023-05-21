@@ -1,7 +1,7 @@
 /*说明: https://github.com/Keywos/rule/blob/main/readme.md
 用法：Sub-Store脚本操作添加
 例如：https://raw.githubusercontent.com/Keywos/rule/main/rename.js#name=测试&flag
-日期：2023/05/15.2
+日期：2023/05/21
 -------------------------------- 
 rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数使用"&"连接，参考上述地址为例使用参数。
 [bl]:     保留: 家宽 ，IPLC 几倍之类的标识
@@ -10,10 +10,10 @@ rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数�
 [one]:    清理只有一个节点的地区的01 
 [flag]:   给节点前面加国旗
 [name=]:  添加机场名前缀在节点最前面
-[out=]:   输出节点名可选参数: (cn ，us ，quan) 对应：中文，英文缩写 ，英文全称 , 默认中文
+[out=]:   输出节点名可选参数: (cn ，us ，gq ，quan) 对应：中文，英文缩写 ，国旗 ，英文全称 , 默认中文
 --------------------------------
 以下为不常用参数:
-[in=]:    自动判断机场节点名类型(那种类型多就判断为那种) 也可以加参数指定 (cn ，us ，quan)
+[in=]:    自动判断机场节点名类型(那种类型多就判断为那种)(新增匹配原节点国旗) 也可以加参数指定 (cn ，us ，gq ，quan)
 [nx]:     保留1倍率与不显示倍率的
 [blnx]:   只保留高倍率
 [clear]:  清理乱七八糟的名字
@@ -28,76 +28,11 @@ const clear = $arguments["clear"];
 const addflag = $arguments["flag"];
 const jcname = $arguments.name == undefined ? "" : decodeURI($arguments.name);
 const FGF = $arguments.fgf == undefined ? " " : decodeURI($arguments.fgf);
-const inname = $arguments["in"] === "cn" ? "cn" : $arguments["in"] === "us" ? "us" : $arguments["in"] === "quan" ? "quan" : "";
+const inname = $arguments["in"] === "cn" ? "cn" : $arguments["in"] === "us" ? "us" : $arguments["in"] === "quan" ? "quan" : $arguments["gq"] === "gq" ? "gq" : "";
 
-function getList(arg) { switch (arg) { case "us": return us; case "quan": return quan; default: return cn;}}
-//function jxh(e) {const n = e.reduce((e, n) => { const t = e.find((e) => e.name === n.name); if (t) {t.count++;t.items.push({ ...n, name:`${n.name}${FGF}${t.count.toString().padStart(2, "0")}` }); } else {if (!numone) {e.push({ name: n.name, count: 1, items: [{ ...n, name: `${n.name}${FGF}01` }] });} else {e.push({ name: n.name, count: 1, items: [{ ...n, name: `${n.name}` }] });} } return e;}, []);const t = n.flatMap((e) => e.items);e.splice(0, e.length, ...t);return e;}
-function jxh(e){const n=e.reduce(((e,n)=>{const t=e.find((e=>e.name===n.name));if(t){t.count++;t.items.push({...n,name:`${n.name}${FGF}${t.count.toString().padStart(2,"0")}`})}
-else{e.push({name:n.name,count:1,items:[{...n,name:`${n.name}${FGF}01`}]})}return e}),[]);const t=n.flatMap((e=>e.items));e.splice(0,e.length,...t);return e}
+const rurekey = {'UK': 'GB', '狮城': '新加坡', 'USA': 'United States', 'Los Angeles': 'United States Los Angeles', 'San Jose': 'United States San Jose', 'Silicon Valley': 'United States Silicon Valley', 'Michigan': 'United States Michigan', '圣何塞': '美国 圣何塞', '洛杉矶': '美国 洛杉矶', '澳洲': '澳大利亚', '波黑共和国': '波斯尼亚和黑塞哥维那', '印尼': '印度尼西亚', '阿联酋': '迪拜', '阿拉伯联合酋长国': '迪拜', 'United Arab Emirates': 'Dubai United Arab Emirates', '孟加拉': '孟加拉国', '捷克共和国': '捷克', '新台': '台北', 'Taipei': 'Taiwan', 'Chuncheon': 'Korea Chuncheon', '春川': '韩国 春川', 'Seoul': 'Korea Seoul', 'Tokyo': 'Japan', 'Osaka': 'Japan', '东京': '日本 东京', '大坂': '日本 大坂', 'London': 'United Kingdom London', '伦敦': '英国 伦敦', 'Mumbai': 'India', 'Frankfurt': 'Germany', 'Zurich': 'Switzerland', 'Moscow': 'Russia Moscow', '莫斯科': '俄罗斯 莫斯科',};
 
-// function oneProxies(proxies){const groups = proxies.reduce((groups, proxy) => { const name = proxy.name.replace(/\s\d+$/, ''); if (!groups[name]) { groups[name] = []; } groups[name].push(proxy);
-// return groups; }, {});for(const name in groups) {if (groups[name].length === 1 && groups[name][0].name.endsWith(' 01')) {const proxy = groups[name][0];proxy.name = name;}};return proxies;}
-function oneProxies(proxies) {
-  const groups = proxies.reduce((groups, proxy) => {
-    const name = proxy.name.replace(/\D*?\s*?\d+$/, "");
-    if (!groups[name]) {
-      groups[name] = [];
-    }
-    groups[name].push(proxy);
-    return groups;
-  }, {});
-  for (const name in groups) {
-    if (groups[name].length === 1 && groups[name][0].name.endsWith(" 01")) {
-      const proxy = groups[name][0];
-      proxy.name = name;
-    }
-  }
-  return proxies;
-}
-
-function getflag(e){const n=e.toUpperCase().split("").map((e=>127397+e.charCodeAt()));return String.fromCodePoint(...n).replace(/🇹🇼/g,"🇨🇳")}
-function getRegion(proxyName) {if (cn.some((name) => proxyName.includes(name))) {return "cn";} else if (us.some((name) => proxyName.includes(name))) {return "us";} else if (quan.some((name) => proxyName.includes(name))) {return "quan";} else {return null;}}
-function fampx(proxies) {const wis = [];const wnout = [];for (const proxy of proxies) {const fan = specialRegex.some(regex => regex.test(proxy.name));if (fan) {wis.push(proxy);} else {wnout.push(proxy);}}const sps = wis.map(proxy => specialRegex.findIndex(regex => regex.test(proxy.name)));wis.sort((a, b) => sps[wis.indexOf(a)] - sps[wis.indexOf(b)] || a.name.localeCompare(b.name));wnout.sort((a, b) => proxies.indexOf(a) - proxies.indexOf(b));return wnout.concat(wis);}
-
-const regexArray=[/²/, /³/, /⁴/, /⁵/, /⁶/, /⁷/, /⁸/, /⁹/, /¹⁰/, /²⁰/, /³⁰/, /⁴⁰/, /⁵⁰/, /IPLC/, /IEPL/, /核心/, /边缘/, /高级/, /标准/, /实验/, /商宽/, /家宽/, /游戏/, /购物/, /专线/, /LB/, /cloudflare/i, /udp/i];
-
-const valueArray= [ "2×","3×","4×","5×","6×","7×","8×","9×","10×","20×","30×","40×","50×","IPLC","IEPL","Kern","Edge","Pro","Std","Exp","Biz","Fam","Game","Buy","Zx","LB","CF","UDP"];
-
-const rurekey = [
-  { ikey: 'UK', rekey: 'GB' },
-  { ikey: '狮城', rekey: '新加坡' },
-  { ikey: 'USA', rekey: 'United States' },
-  { ikey: 'Los Angeles', rekey: 'United States Los Angeles' },
-  { ikey: 'San Jose', rekey: 'United States San Jose' },
-  { ikey: 'Silicon Valley', rekey: 'United States Silicon Valley' },
-  { ikey: 'Michigan', rekey: 'United States Michigan' },
-  { ikey: '圣何塞', rekey: '美国 圣何塞' },
-  { ikey: '洛杉矶', rekey: '美国 洛杉矶' },
-  { ikey: '澳洲', rekey: '澳大利亚' },
-  { ikey: '波黑共和国', rekey: '波斯尼亚和黑塞哥维那' },
-  { ikey: '印尼', rekey: '印度尼西亚' },
-  { ikey: '阿联酋', rekey: '迪拜' },
-  { ikey: '阿拉伯联合酋长国', rekey: '迪拜' },
-  { ikey: 'United Arab Emirates', rekey: 'Dubai United Arab Emirates' },
-  { ikey: '孟加拉', rekey: '孟加拉国' },
-  { ikey: '捷克共和国', rekey: '捷克' },
-  { ikey: '新台', rekey: '台北' },
-  { ikey: 'Taipei', rekey: 'Taiwan' },
-  { ikey: 'Chuncheon', rekey: 'Korea Chuncheon' },
-  { ikey: '春川', rekey: '韩国 春川' },
-  { ikey: 'Seoul', rekey: 'Korea Seoul' },
-  { ikey: 'Tokyo', rekey: 'Japan' },
-  { ikey: 'Osaka', rekey: '日本' },
-  { ikey: '东京', rekey: '日本 东京' },
-  { ikey: '大坂', rekey: '日本 大坂' },
-  { ikey: 'London', rekey: 'United Kingdom London' },
-  { ikey: '伦敦', rekey: '英国 伦敦' },
-  { ikey: 'Mumbai', rekey: 'India' },
-  { ikey: 'Frankfurt', rekey: 'Germany' },
-  { ikey: 'Zurich', rekey: 'Switzerland' },
-  { ikey: 'Moscow', rekey: 'Russia Moscow' },
-  { ikey: '莫斯科', rekey: '俄罗斯 莫斯科' },
-];
+const gq = ["🇭🇰","🇲🇴","🇹🇼","🇯🇵","🇰🇷","🇸🇬","🇺🇸","🇬🇧","🇫🇷","🇩🇪","🇦🇺","🇦🇪","🇦🇫","🇦🇱","🇩🇿","🇦🇴","🇦🇷","🇦🇲","🇦🇹","🇦🇿","🇧🇭","🇧🇩","🇧🇾","🇧🇪","🇧🇿","🇧🇯","🇧🇹","🇧🇴","🇧🇦","🇧🇼","🇧🇷","🇻🇬","🇧🇳","🇧🇬","🇧🇫","🇧🇮","🇰🇭","🇨🇲","🇨🇦","🇨🇻","🇰🇾","🇨🇫","🇹🇩","🇨🇱","🇨🇴","🇰🇲","🇨🇬","🇨🇩","🇨🇷","🇭🇷","🇨🇾","🇨🇿","🇩🇰","🇩🇯","🇩🇴","🇪🇨","🇪🇬","🇸🇻","🇬🇶","🇪🇷","🇪🇪","🇪🇹","🇫🇯","🇫🇮","🇬🇦","🇬🇲","🇬🇪","🇬🇭","🇬🇷","🇬🇱","🇬🇹","🇬🇳","🇬🇾","🇭🇹","🇭🇳","🇭🇺","🇮🇸","🇮🇳","🇮🇩","🇮🇷","🇮🇶","🇮🇪","🇮🇲","🇮🇱","🇮🇹","🇨🇮","🇯🇲","🇯🇴","🇰🇿","🇰🇪","🇰🇼","🇰🇬","🇱🇦","🇱🇻","🇱🇧","🇱🇸","🇱🇷","🇱🇾","🇱🇹","🇱🇺","🇲🇰","🇲🇬","🇲🇼","🇲🇾","🇲🇻","🇲🇱","🇲🇹","🇲🇷","🇲🇺","🇲🇽","🇲🇩","🇲🇨","🇲🇳","🇲🇪","🇲🇦","🇲🇿","🇲🇲","🇳🇦","🇳🇵","🇳🇱","🇳🇿","🇳🇮","🇳🇪","🇳🇬","🇰🇵","🇳🇴","🇴🇲","🇵🇰","🇵🇦","🇵🇾","🇵🇪","🇵🇭","🇵🇹","🇵🇷","🇶🇦","🇷🇴","🇷🇺","🇷🇼","🇸🇲","🇸🇦","🇸🇳","🇷🇸","🇸🇱","🇸🇰","🇸🇮","🇸🇴","🇿🇦","🇪🇸","🇱🇰","🇸🇩","🇸🇷","🇸🇿","🇸🇪","🇨🇭","🇸🇾","🇹🇯","🇹🇿","🇹🇭","🇹🇬","🇹🇴","🇹🇹","🇹🇳","🇹🇷","🇹🇲","🇻🇮","🇺🇬","🇺🇦","🇺🇾","🇺🇿","🇻🇪","🇻🇳","🇾🇪","🇾🇺","🇿🇷","🇿🇲","🇿🇼","🇦🇩","🇷🇪","🇵🇱","🇬🇺","🇻🇦","🇱🇮","🇨🇼","🇸🇨","🇦🇶","🇨🇳",]
 
 const us = ["HK","MO","TW","JP","KR","SG","US","GB","FR","DE","AU","AE","AF","AL","DZ","AO","AR","AM","AT","AZ","BH","BD","BY","BE","BZ","BJ","BT","BO","BA","BW","BR","VG","BN","BG","BF","BI","KH","CM","CA","CV","KY","CF","TD","CL","CO","KM","CG","CD","CR","HR","CY","CZ","DK","DJ","DO","EC","EG","SV","GQ","ER","EE","ET","FJ","FI","GA","GM","GE","GH","GR","GL","GT","GN","GY","HT","HN","HU","IS","IN","ID","IR","IQ","IE","IM","IL","IT","CI","JM","JO","KZ","KE","KW","KG","LA","LV","LB","LS","LR","LY","LT","LU","MK","MG","MW","MY","MV","ML","MT","MR","MU","MX","MD","MC","MN","ME","MA","MZ","MM","NA","NP","NL","NZ","NI","NE","NG","KP","NO","OM","PK","PA","PY","PE","PH","PT","PR","QA","RO","RU","RW","SM","SA","SN","RS","SL","SK","SI","SO","ZA","ES","LK","SD","SR","SZ","SE","CH","SY","TJ","TZ","TH","TG","TO","TT","TN","TR","TM","VI","UG","UA","UY","UZ","VE","VN","YE","YU","ZR","ZM","ZW","AD","RE","PL","GU","VA","LI","CW","SC","AQ","CN",];
 
@@ -112,76 +47,94 @@ const nameclear =/(套餐|到期|有效|剩余|版本|已用|过期|失联|测�
 const nameblnx = /(高倍|(?!1)2+(x|倍)|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰)/i;
 const namenx = /(高倍|(?!1)(0\.|\d)+(x|倍)|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰)/i;
 
+const regexArray=[/ˣ²/, /ˣ³/, /ˣ⁴/, /ˣ⁵/, /ˣ⁶/, /ˣ⁷/, /ˣ⁸/, /ˣ⁹/, /ˣ¹⁰/, /ˣ²⁰/, /ˣ³⁰/, /ˣ⁴⁰/, /ˣ⁵⁰/, /IPLC/, /IEPL/, /核心/, /边缘/, /高级/, /标准/, /实验/, /商宽/, /家宽/, /游戏/, /购物/, /专线/, /LB/, /cloudflare/i, /udp/i, /gpt/i,];
+
+const valueArray= [ "2×","3×","4×","5×","6×","7×","8×","9×","10×","20×","30×","40×","50×","IPLC","IEPL","Kern","Edge","Pro","Std","Exp","Biz","Fam","Game","Buy","Zx","LB","CF","UDP","GPT"];
+
 function operator(proxies) {
   const newProxiess = [];
   proxies.forEach((proxy) => {
-    rurekey.forEach((rule) => {
-      if (proxy.name.includes(rule.ikey)) {
-        proxy = { ...proxy, name: proxy.name.replace(rule.ikey, rule.rekey) };
-      }});
+    Object.keys(rurekey).forEach((ikey) => {
+      if (proxy.name.includes(ikey)) {
+        proxy = { ...proxy, name: proxy.name.replace(ikey, rurekey[ikey]) };
+      }
+    });
     newProxiess.push(proxy);
   });
-  proxies = newProxiess;
+  proxies.length = 0;
+  Array.prototype.push.apply(proxies, newProxiess);
+  //console.log(proxies)
   if (inname !== "") { 
     var inputList = getList(inname); 
   } else {
-    const regionCounts = proxies.slice(0,10).map(proxy => 
-    getRegion(proxy.name)).reduce((counts, region) => {
-    counts[region] = (counts[region] || 0) + 1; return counts; }, {});
-    const regionEntries = Object.entries(regionCounts);
-    regionEntries.sort((a, b) => b[1] - a[1]);
-    const regionConst = regionEntries[0][0];
-    var inputList = getList(regionConst);
+      const inn = proxies.slice(0, 10).map((proxy) => getRegion(proxy.name)).reduce((counts, region) => {
+          counts[region] = (counts[region] || 0) + 1;
+          return counts;
+      }, {});
+    const rein = Object.entries(inn);
+    rein.sort((a, b) => b[1] - a[1]);
+    const regss = rein[0][0];
+    var inputList = getList(regss);
   }
   var outputList = getList($arguments["out"]);
   var countries = inputList.reduce((acc, curr, index) => {
-  acc[curr] = [outputList[index], 0];return acc;}, {});
-  if (clear) {
-  proxies = proxies.filter((item) => !nameclear.test(item.name));}
+    acc[curr] = [outputList[index], 0];return acc;
+  }, {});
+  if (clear) {proxies = proxies.filter((item) => !nameclear.test(item.name));}
   if (nx) {proxies = proxies.filter((res) => res.name.match(namenx) ? false : true);}
   if (blnx) {proxies = proxies.filter((res) => res.name.match(nameblnx) ? true : false);}
+
   const toBeDeleted = [];
   const newProxies = [];
   proxies.forEach((res) => {
-  let isMatched = false;
-  const resultArray = [jcname];
-  for (const elem of Object.keys(countries)) {
-    if (res.name.indexOf(elem) !== -1) {
-      if (!isMatched) {
-      isMatched = true;
-      countries[elem][1] += 1;
-      if (addflag) {
-        resultArray.push(getflag(us[Object.keys(countries).indexOf(elem)]) + FGF + countries[elem][0]);
-      } else {
-        resultArray.push(countries[elem][0]);
+    let isMatched = false;
+    const resultArray = [jcname];
+    for (const elem of Object.keys(countries)) {
+      if (res.name.indexOf(elem) !== -1) {
+        if (!isMatched) {
+          isMatched = true;
+          countries[elem][1] += 1;
+          if (addflag) {
+            resultArray.push(getflag(us[Object.keys(countries).indexOf(elem)]) + FGF + countries[elem][0]);
+          } else {resultArray.push(countries[elem][0]);}
+            if (bl) {//替换对应的
+              regexArray.forEach((regex, index) => {
+                if (regex.test(res.name)) {
+                resultArray.splice(2, 0, valueArray[index]);}});
+            const match = res.name.match(/(倍率\D?((\d\.)?\d+)\D?)|((\d\.)?\d+)(倍|X|x|×)/);
+            if (match) {//正则匹配对应数字加×
+            const matchedValue = match[0].match(/(\d[\d.]*)/)[0];
+            if (matchedValue !== '1') {
+            const newValue = matchedValue + "×";
+            resultArray.push(newValue);}}}
+        }
       }
-      if (bl) {
-		  //替换对应的
-         regexArray.forEach((regex, index) => {
-          if (regex.test(res.name)) {
-          resultArray.splice(2, 0, valueArray[index]);}});
-			//正则匹配对应数字加×
-			const match = res.name.match(/(倍率\D?((\d\.)?\d+)\D?)|((\d\.)?\d+)(倍|X|x|×)/);
-			if (match) {
-			const matchedValue = match[0].match(/(\d[\d.]*)/)[0];
-			if (matchedValue !== '1') {
-			const newValue = matchedValue + "×";
-			resultArray.push(newValue);}}
-		}}}}
-    if (isMatched) {
-      // resultArray 空字符串
+    }
+    if (isMatched) {// resultArray 空字符串
       const filteredResultArray = resultArray.filter(item => item.trim() !== '');
       newProxies.push({...res, name: filteredResultArray.join(FGF)});
-    } else {
-      toBeDeleted.push(res);}
-    });
+    } else {toBeDeleted.push(res);}
+  });
   toBeDeleted.forEach((proxy) => {
     const index = proxies.indexOf(proxy);
     if (index !== -1) {
-    proxies.splice(index, 1);}}); 
+    proxies.splice(index, 1);}
+  }); 
   proxies = newProxies;
   proxies = jxh(proxies);
   numone && (proxies = oneProxies(proxies));
   blpx && (proxies = fampx(proxies));
   return proxies;
 }
+
+function getList(arg) { switch (arg) { case "gq": return gq; case "us": return us; case "quan": return quan; default: return cn; }}
+
+function jxh(e){const n=e.reduce(((e,n)=>{const t=e.find((e=>e.name===n.name));if(t){t.count++;t.items.push({...n,name:`${n.name}${FGF}${t.count.toString().padStart(2,"0")}`})}else{e.push({name:n.name,count:1,items:[{...n,name:`${n.name}${FGF}01`}]})}return e}),[]);const t=n.flatMap((e=>e.items));e.splice(0,e.length,...t);return e}
+
+function oneProxies(proxies){const groups = proxies.reduce((groups, proxy) => { const name = proxy.name.replace(/[^A-Za-z0-9\u00C0-\u017F\u4E00-\u9FFF]+\d+$/, ''); if (!groups[name]) { groups[name] = []; } groups[name].push(proxy);return groups; }, {});for(const name in groups) {if (groups[name].length === 1 && groups[name][0].name.endsWith('01')) {const proxy = groups[name][0];proxy.name = name;}};return proxies;}
+
+function getflag(e){const n=e.toUpperCase().split("").map((e=>127397+e.charCodeAt()));return String.fromCodePoint(...n).replace(/🇹🇼/g,"🇨🇳")}
+
+function getRegion( pn) { if (gq.some((name) => pn.includes(name))) { return "gq"; } else if (us.some((name) => pn.includes(name))) { return "us"; } else if (quan.some((name) => pn.includes(name))) { return "quan"; } else if (cn.some((name) => pn.includes(name))) { return "cn"; } else { return null; }}
+
+function fampx(proxies) {const wis = [];const wnout = [];for (const proxy of proxies) {const fan = specialRegex.some(regex => regex.test(proxy.name));if (fan) {wis.push(proxy);} else {wnout.push(proxy);}}const sps = wis.map(proxy => specialRegex.findIndex(regex => regex.test(proxy.name)));wis.sort((a, b) => sps[wis.indexOf(a)] - sps[wis.indexOf(b)] || a.name.localeCompare(b.name));wnout.sort((a, b) => proxies.indexOf(a) - proxies.indexOf(b));return wnout.concat(wis);}
