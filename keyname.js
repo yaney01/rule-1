@@ -6,7 +6,6 @@
  * 持久化缓存 查询到的节点信息，避免更新订阅超时: 默认48小时 感谢 @小一 修改 SubStore 源码 , 如果出现问题,可以删除缓存: 文件位置Loon持久化缓存读取:「CNAMEKEY」文件名, Surge: 脚本编辑器: 左下角设置, $persistentStore,「CNAMEKEY」
  * 接口：入口查询[ip-api],落地查询[ip-api]；
  * 默认不加参节点名: "北京 美国 01" ，如果：「入口ip或国家」 或 「落地ip或国家」 一样则为 "直连 德国 01" 
- * 符号：🅳=电信 🅻=联通 🆈=移动 🆉=直连 🅶=垃圾 
  * 参数: 第一个参数用# 后面的用& 连接
  * [nocmcc] 不添加运营商
  * [name=]  节点前面加机场名
@@ -206,9 +205,9 @@ async function operator(proxies) {
             if(flag){
                 adflag = getflag(outip.countryCode)
                 if (!nocmcc){
-                    const keycm = { '电信': '🅳', '联通': '🅻', '移动': '🆈'};
+                    const keycm = { '电信': '🅳', '联通': '🅻', '移动': '🆈',  '广电': '🅶'};
                     const recme = ass;
-                    adcm = keycm[recme] || '🅶';
+                    adcm = keycm[recme] || '🅲';
                     incity = adcm + incity
                 }
             } else {
