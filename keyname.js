@@ -7,31 +7,32 @@
  * 接口：入口查询[ip-api],落地查询[ip-api]；
  * 默认不加参节点名: "北京 美国 01" ，如果：「入口ip或国家」 或 「落地ip或国家」 一样则为 "直连 德国 01" 
  * 参数: 第一个参数用# 后面的用& 连接
- * [one]      清理相同地区节点的01
+ * [snone]    清理相同地区节点的01
  * [flag]     添加旗帜、运营商符号
- * [nocmcc]   不添加运营商
  * [timeout=] 没有缓存的Ping超时时间 
  * [name=]    节点前面加机场名
  * [fgf=]     自义定分隔符,默认是空格 
  * [cd=]      有缓存后ping 没有缓存成功的 api超时时间, 设置小点比如 [cd=0] 的情况下可以直接读取缓存，几乎无需等待， 如果设置 [cd=600] 有Ping不通的或者上次没有缓存的节点的情况下最低等600+ms,,但是可以写入上次没有写入成功的缓存,,如果全部缓存了的情况,也很快毫秒级,但是可以写入上次没有写入成功的缓存
- * [xhfgf=]     序号之间的分隔符
-🅳电信
-🅻联通
-🆈移动
-🅶广电
-🅲公司
-🆉直连
+ * [sn=]      序号之间的分隔符
+  🅳电信
+  🅻联通
+  🆈移动
+  🅶广电
+  🅲公司
+  🆉直连
+  🎮游戏
  */
 const $ = $substore;
-const nocmcc = $arguments["nocmcc"];
+const bl = $arguments["bl"];
+const isp = $arguments["isp"];
 const flag = $arguments["flag"];
-const numone = $arguments["one"];
+const numone = $arguments["snone"];
 const { isLoon, isSurge, isQX } = $substore.env;
 let timeout = $arguments["timeout"] ? $arguments["timeout"] : 1600;
 let with_cache = $arguments["cd"] ? $arguments["cd"] : 400;
 const keynames = $arguments.name ? decodeURI($arguments.name) : "";
 const FGF = $arguments.fgf == undefined ? " " : decodeURI($arguments.fgf);
-const XHFGF = $arguments.xhfgf == undefined ? " " : decodeURI($arguments.xhfgf);
+const XHFGF = $arguments.sn == undefined ? " " : decodeURI($arguments.sn);
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 let onen = false;
 function getid(proxy) {
@@ -139,6 +140,11 @@ const recmcc = {
     "AS63711": "移动", "AS9394": "移动", "AS24138": "移动", "AS45057": "移动", "AS45069": "移动",
     
     };
+
+const regexArray=[/ˣ²/, /ˣ³/, /ˣ⁴/, /ˣ⁵/, /ˣ⁶/, /ˣ⁷/, /ˣ⁸/, /ˣ⁹/, /ˣ¹⁰/, /ˣ²⁰/, /ˣ³⁰/, /ˣ⁴⁰/, /ˣ⁵⁰/, /IPLC/i, /IEPL/i, /核心/, /边缘/, /高级/, /标准/, /实验/, /商宽/, /家宽/, /游戏|game/i, /购物/, /专线/, /LB/, /cloudflare/i, /\budp\b/i, /\bgpt\b/i,/udpn\b/];
+
+const valueArray= [ "2×","3×","4×","5×","6×","7×","8×","9×","10×","20×","30×","40×","50×","IPLC","IEPL","Kern","Edge","Pro","Std","Exp","Biz","Fam","Game","Buy","Zx","LB","CF","UDP","GPT","UDPN"];
+
 async function operator(proxies) {
   const support = isLoon || isSurge;
   if (!support) {
@@ -163,20 +169,56 @@ async function operator(proxies) {
   console.log(`有缓API超时: ${with_cache}毫秒`);
   console.log(`批处理节点数: ${batch_size} 个`);
   console.log(`开始处理节点: ${PRS} 个`);
-  const batches = [];
   let i = 0;
+  let o = 0; //判断有无缓存
+  while (o < proxies.length) {
+    const batchs = proxies.slice(o, o + 20);
+    await Promise.all(
+      batchs.map(async (proxy) => {
+        try {
+            const inss = new Map();
+            const id = getinid(proxy.server);
+            if (inss.has(id)) {
+                return inss.get(id);
+            }
+            const cacheds = scriptResourceCache.get(id);
+            if (cacheds) {
+                if (!onen) {
+                timeout = with_cache;
+                onen = true;
+                }
+            }
+        } catch (err) {}
+    })
+  );
+  o += 20;
+ }
+
   while (i < proxies.length) {
     const batch = proxies.slice(i, i + batch_size);
     await Promise.all(
       batch.map(async (proxy) => {
         try {
-          const inip = await INDNS(proxy.server);
+
+            const inip = await INDNS(proxy.server);
             // names = inip.ip;
             // console.log("in" + JSON.stringify(inip.as));
             const outip = await IPAPI(proxy);
+            let outnames = outip.country;
+            let reoutnames = "";
 
+            //替换
+            let rename = "";
+            regexArray.forEach((regex, index) => {
+              if (regex.test(proxy.name)) {
+                rename = valueArray[index];
+              }
+            });
+            // if (bl) {//替换对应的
+            // // }
+           
             let asns = "";
-            if(!nocmcc){
+            if(isp || flag){
                 if (inip.country == "中国") {
                     const asValue = inip.as;
                     let matched = false;
@@ -192,8 +234,8 @@ async function operator(proxies) {
             } else {asns = "";}
 
             let incity;
-            if (inip.country == outip.country) {
-                incity = "直连" 
+            if (inip.country == outnames) {
+                incity = "直连"
             } else {
                 if (inip.country == "中国") {
                     incity = inip.city.replace(/特别市|联邦|市/g, "");
@@ -204,14 +246,18 @@ async function operator(proxies) {
 
             let adflag;
             let adcm;
+            let otu;
             if(flag){
                 adflag = getflag(outip.countryCode)
-                if (!nocmcc){
+                if (isp || flag){
                     const keycm = { '电信': '🅳', '联通': '🅻', '移动': '🆈', '广电': '🅶'};
-                    const recme = asns;
-                    // adcm = keycm[recme] || '🅲';
-                    if (keycm.hasOwnProperty(recme)) {
-                      adcm = keycm[recme];
+                    // const recme = asns;
+                    if (keycm.hasOwnProperty(asns)) {
+                      adcm = keycm[asns];
+                    //   if (keycm.hasOwnProperty(asns)) {
+                    //     adcm = keycm[asns];
+                    //   }
+                      
                     } else {
                       if (incity == "直连" ){
                         adcm = '🆉';
@@ -219,6 +265,7 @@ async function operator(proxies) {
                         adcm = '🅲';
                       }
                     }
+                    
                     incity = adcm + incity
                 }
             } else {
@@ -227,11 +274,40 @@ async function operator(proxies) {
                 incity = incity + asns;
             }
 
-        //inip.regionName
-        console.log(proxy.name)
-        proxy.name = incity +FGF+ adflag + outip.country;
-
-        // 去重 入口/落地IP
+            let nxx = "";
+            if(bl){
+                // 其他图标
+                if (rename === "") { 
+                    otu = ""; 
+                } else {
+                    //'UDP': '🆄',
+                    const keyotu = { 'Game': '🎮', };
+                    // const reout = rename;
+                    if (keyotu.hasOwnProperty(rename)) {
+                        otu = keyotu[rename];
+                    } else {
+                        otu = "";
+                    }
+                }
+                // 倍率
+                const match = proxy.name.match(/(倍率\D?((\d\.)?\d+)\D?)|((\d\.)?\d+)(倍|X|x|×)/);
+                if (match) {
+                const matchedValue = match[0].match(/(\d[\d.]*)/)[0];
+                if (matchedValue !== "1") {
+                    const newValue = matchedValue + "×";
+                    nxx = newValue
+                    }
+                }
+                if(otu !== ""){
+                    reoutnames = outnames + otu + nxx;
+                } else {
+                    reoutnames = outnames + otu +FGF+ nxx;
+                }
+            } else {
+                reoutnames = outnames
+            }
+        proxy.name = incity +FGF+ adflag + reoutnames;
+        // 去重 入口ip/落地IP
         proxy.qc = inip.query + "|" + outip.query;
         } catch (err) {}
       })
@@ -239,6 +315,8 @@ async function operator(proxies) {
     if(!onen){await sleep(300);}
     i += batch_size;
   }
+
+
   // console.log("处理前节点信息 = " + JSON.stringify(proxies));
   proxies = removels(proxies);
   // 去除去重时添加的qc属性
@@ -276,13 +354,13 @@ async function INDNS(server) {
   }
   const cacheds = scriptResourceCache.get(id);
   if (cacheds) {
-    if (!onen) {
-      timeout = with_cache;
-      onen = true;
-    }
     return cacheds;
+
   } else {
     const resultin = new Promise((resolve, reject) => {
+        if(with_cache < 51 && onen){
+            return resultin;
+        }else{
       const ips = server;
       const url = `http://ip-api.com/json/${ips}?lang=zh-CN&fields=status,message,country,countryCode,city,query,regionName,asname,as`;
       const timeoutPromise = new Promise((_, reject) => {
@@ -305,6 +383,7 @@ async function INDNS(server) {
         Promise.race([timeoutPromise, queryPromise]).catch((err) => {
             reject(err);
         });
+    }
     });
     ins.set(id, resultin);
     return resultin;
@@ -323,8 +402,11 @@ async function IPAPI(proxy) {
   if (cached) {
     APIREADKEY++;
     return cached;
-  } else {
+    } else {
     const result = new Promise((resolve, reject) => {
+        if(with_cache < 51 && onen){
+            return result;
+        }else{
       const url = `http://ip-api.com/json?lang=zh-CN&fields=status,message,country,countryCode,city,query`;
       let node = ProxyUtils.produce([proxy], target);
       const timeoutPromise = new Promise((_, reject) => {
@@ -352,7 +434,9 @@ async function IPAPI(proxy) {
       Promise.race([timeoutPromise, queryPromise]).catch((err) => {
         reject(err);
       });
+        }
     });
+        
     outs.set(id, result);
     return result;
   }
