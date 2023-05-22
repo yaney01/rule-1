@@ -101,6 +101,7 @@ function operator(proxies) {
               regexArray.forEach((regex, index) => {
                 if (regex.test(res.name)) {
                 resultArray.splice(2, 0, valueArray[index]);}});
+                
             const match = res.name.match(/(倍率\D?((\d\.)?\d+)\D?)|((\d\.)?\d+)(倍|X|x|×)/);
             if (match) {//正则匹配对应数字加×
             const matchedValue = match[0].match(/(\d[\d.]*)/)[0];
