@@ -20,6 +20,7 @@
 🆈移动
 🅶广电
 🅲公司
+🆉直连
  */
 const $ = $substore;
 const nocmcc = $arguments["nocmcc"];
@@ -192,7 +193,7 @@ async function operator(proxies) {
 
             let incity;
             if (inip.country == outip.country) {
-                incity = "直连";
+                incity = "直连" 
             } else {
                 if (inip.country == "中国") {
                     incity = inip.city.replace(/特别市|联邦|市/g, "");
@@ -200,15 +201,24 @@ async function operator(proxies) {
                     incity = inip.country.replace(/中華民國/g, "台湾");
                 }
             }
-            
+
             let adflag;
             let adcm;
             if(flag){
                 adflag = getflag(outip.countryCode)
                 if (!nocmcc){
-                    const keycm = { '电信': '🅳', '联通': '🅻', '移动': '🆈',  '广电': '🅶'};
+                    const keycm = { '电信': '🅳', '联通': '🅻', '移动': '🆈', '广电': '🅶'};
                     const recme = asns;
-                    adcm = keycm[recme] || '🅲';
+                    // adcm = keycm[recme] || '🅲';
+                    if (keycm.hasOwnProperty(recme)) {
+                      adcm = keycm[recme];
+                    } else {
+                      if (incity == "直连" ){
+                        adcm = '🆉';
+                      } else {
+                        adcm = '🅲';
+                      }
+                    }
                     incity = adcm + incity
                 }
             } else {
@@ -218,7 +228,9 @@ async function operator(proxies) {
             }
 
         //inip.regionName
+        console.log(proxy.name)
         proxy.name = incity +FGF+ adflag + outip.country;
+
         // 去重 入口/落地IP
         proxy.qc = inip.query + "|" + outip.query;
         } catch (err) {}
