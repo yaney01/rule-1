@@ -20,6 +20,8 @@
 🅶广电
 🅲公司
 🆉直连
+
+
  */
 const $ = $substore;
 const bl = $arguments["bl"];
@@ -218,7 +220,7 @@ async function operator(proxies) {
             // // }
            
             let asns = "";
-            if(isp){
+            if(isp || flag){
                 if (inip.country == "中国") {
                     const asValue = inip.as;
                     let matched = false;
@@ -249,7 +251,7 @@ async function operator(proxies) {
             let otu;
             if(flag){
                 adflag = getflag(outip.countryCode)
-                if (isp){
+                if (isp || flag){
                     const keycm = { '电信': '🅳', '联通': '🅻', '移动': '🆈', '广电': '🅶'};
                     // const recme = asns;
                     if (keycm.hasOwnProperty(asns)) {
