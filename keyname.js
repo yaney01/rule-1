@@ -1,5 +1,5 @@
 /* keyname - cache name 
- * Update: 2023.05.05 必须安装以下模块，关闭官方版本才能使用: 目前SubStore还未更新脚本持久化缓存超时
+ * Update: 2023.05.22 必须安装以下模块，关闭官方版本才能使用: 目前SubStore还未更新脚本持久化缓存超时
  * Surge: https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule
  * Loon: https://github.com/Keywos/rule/raw/main/loon/sub-store.plugin
  * 用法: SubStore ➟ 脚本操作: 作用: 节点去复用 与 批量重命名为真实 「入口 落地 」地区  @key @小一 @奶茶姐
@@ -12,7 +12,6 @@
 [isp]     加运营商符号或直连符号
 [flag]    添加旗帜，默认无此参数
 [snone]   清理个别地区只有一个节点的序号
-
 [fgf=]    入口和落地之间的分隔符，默认为空格
 [sn=]     国家与序号之间的分隔符，默认为空格
 [name=]   添加机场名称前缀
