@@ -199,10 +199,9 @@ async function operator(proxies) {
     await Promise.all(
       batch.map(async (proxy) => {
         try {
-
             const inip = await INDNS(proxy.server);
             // names = inip.ip;
-            // console.log("in" + JSON.stringify(inip.as));
+            // console.log(JSON.stringify(inip.as));
             const outip = await IPAPI(proxy);
             let outnames = outip.country;
             let reoutnames = "";
@@ -214,8 +213,6 @@ async function operator(proxies) {
                 rename = valueArray[index];
               }
             });
-            // if (bl) {//替换对应的
-            // // }
            
             let asns = "";
             if(isp || flag){
@@ -243,7 +240,6 @@ async function operator(proxies) {
                     incity = inip.country.replace(/中華民國/g, "台湾");
                 }
             }
-
             let adflag;
             let adcm;
             let otu;
@@ -251,13 +247,8 @@ async function operator(proxies) {
                 adflag = getflag(outip.countryCode)
                 if (isp || flag){
                     const keycm = { '电信': '🅳', '联通': '🅻', '移动': '🆈', '广电': '🅶'};
-                    // const recme = asns;
                     if (keycm.hasOwnProperty(asns)) {
-                      adcm = keycm[asns];
-                    //   if (keycm.hasOwnProperty(asns)) {
-                    //     adcm = keycm[asns];
-                    //   }
-                      
+                      adcm = keycm[asns];                      
                     } else {
                       if (incity == "直连" ){
                         adcm = '🆉';
@@ -265,7 +256,6 @@ async function operator(proxies) {
                         adcm = '🅲';
                       }
                     }
-                    
                     incity = adcm + incity
                 }
             } else {
@@ -282,7 +272,6 @@ async function operator(proxies) {
                 } else {
                     //'UDP': '🆄',
                     const keyotu = { 'Game': '🎮', };
-                    // const reout = rename;
                     if (keyotu.hasOwnProperty(rename)) {
                         otu = keyotu[rename];
                     } else {
@@ -316,8 +305,7 @@ async function operator(proxies) {
     i += batch_size;
   }
 
-
-  // console.log("处理前节点信息 = " + JSON.stringify(proxies));
+  // console.log(JSON.stringify(proxies));
   proxies = removels(proxies);
   // 去除去重时添加的qc属性
   proxies = removeqc(proxies);
@@ -328,7 +316,7 @@ async function operator(proxies) {
       proxy.name = keynames + " " + proxy.name;
     });
   }
-  // console.log("处理后节点信息 = " + JSON.stringify(proxies));
+  // console.log(JSON.stringify(proxies));
   numone && (proxies = oneProxies(proxies));
   // log
   const PRSO = proxies.length;
@@ -428,7 +416,6 @@ async function IPAPI(proxy) {
           }
         })
         .catch((err) => {
-          // console.log(err);
           reject(err);
         });
       Promise.race([timeoutPromise, queryPromise]).catch((err) => {
