@@ -1,5 +1,5 @@
 
-  /*
+/*
 版本：48H缓存版
 日期：2023-05-23 14:34:07
 注意：此脚本仅支持Surge和Loon
@@ -255,7 +255,7 @@ async function operator(proxies) {
                   if (keycm.hasOwnProperty(asns)) {
                     adcm = keycm[asns];                      
                   } else {
-                      adcm = '🅲';
+                      adcm = "";
                   }
                   // inkey = adcm
               }
