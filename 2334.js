@@ -246,17 +246,19 @@ async function operator(proxies) {
 
             let incity = "";
             if (inip.country == outnames) {
-                incity = "直连"
+              incity = "直连"
             } else {
-                if (inip.country == "中国") {
-                    incity = inip.city.replace(/特别市|联邦|市/g, "");
-                } else if(inip.country == "中華民國" ){
-                    incity = inip.country.replace(/中華民國/g, "台湾");
-                } else if(/^[a-zA-Z]+$/.test(inip.city)){
-                    incity = inip.regionName.replace(/省/g, "");
-                } else {
-                  incity = "";
-                }
+              if (inip.country == "中国") {
+                if (/[a-zA-Z]+/.test(inip.city)) {
+                  incity = inip.regionName.replace(/省/g, "");
+                }else { 
+                  incity = inip.city.replace(/特别市|联邦|市/g, "");
+                  }
+  
+              } else if(inip.country == "中華民國") {
+                console.log(inip.country)
+                incity = inip.country.replace(/中華民國/g, "台湾");
+              } 
             }
 
             let adflag = "";
