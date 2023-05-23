@@ -202,7 +202,7 @@ async function operator(proxies) {
       batchs.map(async (proxy) => {
         try {
             const inss = new Map();
-            const id = getinid(proxy.server);
+            const id = getaliid(proxy.server);
             if (inss.has(id)) {
                 return inss.get(id);
             }
@@ -230,6 +230,8 @@ async function operator(proxies) {
           // SPAPI
           const spkey = await SPECNAPI(proxy.server, alikey);
           console.log(JSON.stringify(spkey));
+          let qcip = "";
+          qcip = spkey.ip
 // {"country":"中国","regionName":"广东","city":"广州","district":"越秀区","isp":"中国移动","operator":"中国移动"}
 // {"country":"中国","regionName":"广东","city":"深圳","district":"福田区","isp":"中国联通","operator":"中国联通"}
 
@@ -276,7 +278,7 @@ async function operator(proxies) {
                     incity = inip.country
                     asns = ""
                   adcm = "";
-
+                  qcip = inip.ip
                   
           }// ipapi/////////////////////////
          
@@ -353,10 +355,17 @@ async function operator(proxies) {
                 adflag = "";
             }
 
+
+
+            console.log("域名解析前"+proxy.server)
+            proxy.server = qcip
+            console.log("域名解析后"+proxy.server)
+            
+
             console.log(incity+asns)
             proxy.name = inkey + adflag + reoutnames;
         // 去重 入口ip/落地IP
-        proxy.qc = alikey + outip.query;
+        proxy.qc = qcip + outip.query;
         } catch (err) {}
       })
     );
@@ -419,17 +428,21 @@ async function AliDNS(server) {
       if(with_cache < 51 && onen){
         return resultali;
       } else {
+        
       const url = `http://223.5.5.5/resolve?name=${server}&type=A&short=1`;
       const timeoutPromise = new Promise((_, reject) => {
         setTimeout(() => {
           reject(new Error("timeout"));
         }, timeout);
       });
+      console.log("dnsssssssss")
       const queryPromise = $.http.get({ url }).then((resp) => {
         const alid = JSON.parse(resp.body);
         if (alid.length > 0) {
           resolve(alid[0]);
           scriptResourceCache.set(id, alid[0]);
+        }else {
+          reject(new Error());
         }
       })
       .catch((err) => {
@@ -470,13 +483,13 @@ async function SPECNAPI(server, alikey) {
           const spcnapi = JSON.parse(resp.body);
 
           if(spcnapi.data){
-            const { country, province: regionName, city, district, isp, operator } = spcnapi.data;
-            const newspcn = { country, regionName, city, district, isp, operator };
+            const { country, province: regionName, city, district, isp, ip,  operator } = spcnapi.data;
+            const newspcn = { country, regionName, city, district, isp, ip, operator };
 
               resolve(newspcn);
               scriptResourceCache.set(id, newspcn);
           }else {
-            reject(new Error(lip.message));
+            reject(new Error());
           }
 
         })
