@@ -30,10 +30,12 @@ const $ = $substore;
 const bl = $arguments["bl"];
 const isp = $arguments["isp"];
 const flag = $arguments["flag"];
+const offtz = $arguments["offtz"];
 const numone = $arguments["snone"];
 const { isLoon, isSurge, isQX } = $substore.env;
-let timeout = $arguments["timeout"] ? $arguments["timeout"] : 1600;
 let with_cache = $arguments["cd"] ? $arguments["cd"] : 400;
+let timeout = $arguments["timeout"] ? $arguments["timeout"] : 1600;
+const tzname = $arguments.tz ? decodeURI($arguments.tz) : "";
 const keynames = $arguments.name ? decodeURI($arguments.name) : "";
 const FGF = $arguments.fgf == undefined ? " " : decodeURI($arguments.fgf);
 const XHFGF = $arguments.sn == undefined ? " " : decodeURI($arguments.sn);
@@ -333,7 +335,11 @@ async function operator(proxies) {
   const readlog = APIREADKEY ? `读取缓存: ${APIREADKEY} 个 ` : '';
   const writelog = APIWRITEKEY ? `写入缓存: ${APIWRITEKEY} 个 ` : '';
   const Push = (PRSO == PRS) ? "\n无复用节点, " : "\n去除无效节点后剩余" + PRSO + "个, ";
-  $notification.post(`处理结果：共${PRS}个节点`,""，`${writelog}${readlog}${Push}用时：${mTIme(timeDiff)}`)
+  if(!offtz){
+    $notification.post(`处理结果: ${tzname}共${PRS}个节点`,
+    "",
+    `${writelog}${readlog}${Push}用时:${mTIme(timeDiff)}`)
+  }  
   return proxies;
 }
 

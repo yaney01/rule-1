@@ -20,10 +20,12 @@
 [bl]      保留倍率和🎮标识
 [isp]     加运营商符号或直连符号
 [flag]    添加旗帜，默认无此参数
+[offtz]   关闭脚本通知
 [snone]   清理个别地区只有一个节点的序号
 [fgf=]    入口和落地之间的分隔符，默认为空格
 [sn=]     国家与序号之间的分隔符，默认为空格
 [name=]   添加机场名称前缀
+[tz=]     通知的时候的机场名
 [timeout=]测试节点延时允许的最大超时参数，超出允许范围则判定为无效节点，默认1600ms
 [cd=] 当有缓存时，会先读取缓存，且对节点进行延时测试，直接输出结果。
       当无缓存时，会对节点直接进行延时测试，节点延时超过所设定的值则判定为无效节点，默认400ms，并将结果写入缓存。
@@ -33,10 +35,12 @@ const $ = $substore;
 const bl = $arguments["bl"];
 const isp = $arguments["isp"];
 const flag = $arguments["flag"];
+const offtz = $arguments["offtz"];
 const numone = $arguments["snone"];
 const { isLoon, isSurge, isQX } = $substore.env;
-let timeout = $arguments["timeout"] ? $arguments["timeout"] : 1600;
 let with_cache = $arguments["cd"] ? $arguments["cd"] : 400;
+let timeout = $arguments["timeout"] ? $arguments["timeout"] : 1600;
+const tzname = $arguments.tz ? decodeURI($arguments.tz) : "";
 const keynames = $arguments.name ? decodeURI($arguments.name) : "";
 const FGF = $arguments.fgf == undefined ? " " : decodeURI($arguments.fgf);
 const XHFGF = $arguments.sn == undefined ? " " : decodeURI($arguments.sn);
@@ -336,8 +340,12 @@ async function operator(proxies) {
   const readlog = APIREADKEY ? `读取缓存: ${APIREADKEY} 个 ` : '';
   const writelog = APIWRITEKEY ? `写入缓存: ${APIWRITEKEY} 个 ` : '';
   const Push = (PRSO == PRS) ? "\n无复用节点, " : "\n去除无效节点后有" + PRSO + "个, ";
-  $notification.post(`NCNAME: 共${PRS}个节点`,"",`${writelog}${readlog}${Push}耗时:${mTIme(timeDiff)}`)
-  return proxies;
+  if(!offtz){
+    $notification.post(`NC: ${tzname}共${PRS}个节点`,
+    "",
+    `${writelog}${readlog}${Push}用时:${mTIme(timeDiff)}`)
+  }
+   return proxies;
 }
 
 const ins = new Map();
