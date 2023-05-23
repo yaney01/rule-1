@@ -281,7 +281,7 @@ async function operator(proxies) {
 
             let inkey;
             if(isp && city){
-              inkey = incity + adcm +FGF;
+              inkey = adcm + incity +FGF;
             }else if(flag){
               inkey = adcm+FGF;
             }else if(isp){
