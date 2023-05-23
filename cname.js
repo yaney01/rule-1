@@ -30,11 +30,14 @@
 [cd=] 当有缓存时，会先读取缓存，且对节点进行延时测试，直接输出结果。
       当无缓存时，会对节点直接进行延时测试，节点延时超过所设定的值则判定为无效节点，默认400ms，并将结果写入缓存。
       当设置[cd=]的值小于50时，则直接读取缓存。
+https://github.com/Keywos/rule/raw/main/cname.js
  */
 const $ = $substore;
 const bl = $arguments["bl"];
+const dd = $arguments["dd"];
 const isp = $arguments["isp"];
 const flag = $arguments["flag"];
+const game = $arguments["game"];
 const offtz = $arguments["offtz"];
 const numone = $arguments["snone"];
 const { isLoon, isSurge, isQX } = $substore.env;
@@ -216,7 +219,7 @@ async function operator(proxies) {
             let outnames = outip.country;
             let reoutnames = "";
 
-            //替换
+            //替换game
             let rename = "";
             regexArray.forEach((regex, index) => {
               if (regex.test(proxy.name)) {
@@ -255,7 +258,7 @@ async function operator(proxies) {
             let otu;
             if(flag){
                 adflag = getflag(outip.countryCode)
-                if (isp || flag){
+                if (isp){
                     const keycm = { '电信': '🅳', '联通': '🅻', '移动': '🆈', '广电': '🅶'};
                     if (keycm.hasOwnProperty(asns)) {
                       adcm = keycm[asns];                      
@@ -275,19 +278,23 @@ async function operator(proxies) {
             }
 
             let nxx = "";
-            if(bl){
-                // 其他图标
-                if (rename === "") { 
-                    otu = ""; 
+            if (game) {
+              //game
+              if (rename === "") {
+                otu = "";
+              } else {
+                //'UDP': '🆄',
+                const keyotu = { Game: "🎮" };
+                if (keyotu.hasOwnProperty(rename)) {
+                  otu = keyotu[rename];
                 } else {
-                    //'UDP': '🆄',
-                    const keyotu = { 'Game': '🎮', };
-                    if (keyotu.hasOwnProperty(rename)) {
-                        otu = keyotu[rename];
-                    } else {
-                        otu = "";
-                    }
+                  otu = "";
                 }
+              }
+            } else {
+              otu = "";
+            }           
+            if(bl){                     
                 // 倍率
                 const match = proxy.name.match(/(倍率\D?((\d\.)?\d+)\D?)|((\d\.)?\d+)(倍|X|x|×)/);
                 if (match) {
@@ -303,9 +310,13 @@ async function operator(proxies) {
                     reoutnames = outnames + otu +FGF+ nxx;
                 }
             } else {
-                reoutnames = outnames
+                reoutnames = outnames + otu
             }
-        proxy.name = incity +FGF+ adflag + reoutnames;
+            if(dd){
+              proxy.name = adflag + reoutnames;
+            }else{
+              proxy.name = incity +FGF+ adflag + reoutnames;
+            }
         // 去重 入口ip/落地IP
         proxy.qc = inip.query + "|" + outip.query;
         } catch (err) {}

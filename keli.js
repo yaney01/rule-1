@@ -28,8 +28,10 @@
 */
 const $ = $substore;
 const bl = $arguments["bl"];
+const dd = $arguments["dd"];
 const isp = $arguments["isp"];
 const flag = $arguments["flag"];
+const game = $arguments["game"];
 const offtz = $arguments["offtz"];
 const numone = $arguments["snone"];
 const { isLoon, isSurge, isQX } = $substore.env;
@@ -211,7 +213,7 @@ async function operator(proxies) {
             let outnames = outip.country;
             let reoutnames = "";
 
-            //替换
+            //替换game
             let rename = "";
             regexArray.forEach((regex, index) => {
               if (regex.test(proxy.name)) {
@@ -250,7 +252,7 @@ async function operator(proxies) {
             let otu;
             if(flag){
                 adflag = getflag(outip.countryCode)
-                if (isp || flag){
+                if (isp){
                     const keycm = { '电信': '🅳', '联通': '🅻', '移动': '🆈', '广电': '🅶'};
                     if (keycm.hasOwnProperty(asns)) {
                       adcm = keycm[asns];                      
@@ -270,37 +272,45 @@ async function operator(proxies) {
             }
 
             let nxx = "";
-            if(bl){
-                // 其他图标
-                if (rename === "") { 
-                    otu = ""; 
+            if (game) {
+                //game
+                if (rename === "") {
+                  otu = "";
                 } else {
-                    //'UDP': '🆄',
-                    const keyotu = { 'Game': '🎮', };
-                    if (keyotu.hasOwnProperty(rename)) {
-                        otu = keyotu[rename];
-                    } else {
-                        otu = "";
-                    }
+                  //'UDP': '🆄',
+                  const keyotu = { Game: "🎮" };
+                  if (keyotu.hasOwnProperty(rename)) {
+                    otu = keyotu[rename];
+                  } else {
+                    otu = "";
+                  }
                 }
-                // 倍率
-                const match = proxy.name.match(/(倍率\D?((\d\.)?\d+)\D?)|((\d\.)?\d+)(倍|X|x|×)/);
-                if (match) {
-                const matchedValue = match[0].match(/(\d[\d.]*)/)[0];
-                if (matchedValue !== "1") {
-                    const newValue = matchedValue + "×";
-                    nxx = newValue
-                    }
-                }
-                if(otu !== ""){
-                    reoutnames = outnames + otu + nxx;
-                } else {
-                    reoutnames = outnames + otu +FGF+ nxx;
-                }
-            } else {
-                reoutnames = outnames
-            }
-        proxy.name = incity +FGF+ adflag + reoutnames;
+              } else {
+                otu = "";
+              }           
+              if(bl){                     
+                  // 倍率
+                  const match = proxy.name.match(/(倍率\D?((\d\.)?\d+)\D?)|((\d\.)?\d+)(倍|X|x|×)/);
+                  if (match) {
+                  const matchedValue = match[0].match(/(\d[\d.]*)/)[0];
+                  if (matchedValue !== "1") {
+                      const newValue = matchedValue + "×";
+                      nxx = newValue
+                      }
+                  }
+                  if(otu !== ""){
+                      reoutnames = outnames + otu + nxx;
+                  } else {
+                      reoutnames = outnames + otu +FGF+ nxx;
+                  }
+              } else {
+                  reoutnames = outnames + otu
+              }
+              if(dd){
+                proxy.name = adflag + reoutnames;
+              }else{
+                proxy.name = incity +FGF+ adflag + reoutnames;
+              }
         // 去重 入口ip/落地IP
         proxy.qc = inip.query + "|" + outip.query;
         } catch (err) {}
