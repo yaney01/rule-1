@@ -11,7 +11,7 @@
 示例：https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Resource/Script/Sub-Store/NodeRename.js#timeout=2000&cd=2000&flag&isp&fgf=→&name=[方括号内填写你的机场名]
 ----------------
 以下是此脚本支持的参数，必须以"#"开头，多个参数使用"&"连接，参考上述地址为例使用参数。
-无参数时的节点命名格式: "北京 美国 01"，如果[入口IP或国家]或[落地IP或国家]一样则为 "直连 德国 01" 
+无参数时的节点命名格式: "美国 01"，加city后如果[入口IP或国家]或[落地IP或国家]一样则为 "直连 德国 01" 
 [bl]      保留倍率
 [isp]     加运营商或者直连
 [city]    加入口城市
