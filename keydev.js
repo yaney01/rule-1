@@ -20,7 +20,9 @@
 [bl]      保留倍率
 [isp]     加运营商或者直连
 [dns]     DNS域名解析
+[sheng]   加入口省份
 [city]    加入口城市
+[yun]     加入口云服务商
 [game]    保留🎮标识
 [flag]    添加旗帜，默认无此参数
 [offtz]   关闭脚本通知
@@ -39,10 +41,12 @@ const $ = $substore;
 const bl = $arguments["bl"];
 const isp = $arguments["isp"];
 const dns = $arguments["dns"];
+const yun = $arguments["yun"];
 const city = $arguments["city"];
 const flag = $arguments["flag"];
 const game = $arguments["game"];
 const offtz = $arguments["offtz"];
+const sheng = $arguments["sheng"];
 const numone = $arguments["snone"];
 const { isLoon, isSurge, isQX } = $substore.env;
 let with_cache = $arguments["cd"] ? $arguments["cd"] : 400;
@@ -55,22 +59,22 @@ const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 let onen = false;
 
 function getid(proxy) {
-  let dataKey = 'as';;
+  let dataKey = 'ld';;
   return MD5(`${dataKey}-${proxy.server}-${proxy.port}`);
 }
 
 function getinid(server) {
-  let dataKeys = 'ias';;
+  let dataKeys = 'ia';;
   return MD5(`${dataKeys}-${server}`);
 }
 
 function getaliid(server) {
-  let aliKeys = 'ali';;
+  let aliKeys = 'al';;
   return MD5(`${aliKeys}-${server}`);
 }
 
 function getspcn(server) {
-  let spcnKeys = 'spcn';;
+  let spcnKeys = 'sc';;
   return MD5(`${spcnKeys}-${server}`);
 }
 
@@ -165,7 +169,7 @@ const regexArray=[ /游戏|game/i, ];
 
 const valueArray= [ "Game" ];
 
-const nameclear =/官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|到期|过期|已用|联系|邮箱|工单|群|贩卖|倒卖|防止|(\b(GAME|USE|USED|TOTAL|EXPIRE|EMAIL)\b)|\dG|\d\s?g/i;
+const nameclear =/邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|到期|过期|已用|联系|邮箱|工单|群|贩卖|倒卖|防止|(\b(GAME|USE|USED|TOTAL|EXPIRE|EMAIL)\b)|\dG|\d\s?g/i;
 
 async function operator(proxies) {
   const support = isLoon || isSurge;
@@ -191,9 +195,9 @@ async function operator(proxies) {
   console.log(`有缓API超时: ${with_cache}毫秒`);
   console.log(`批处理节点数: ${batch_size} 个`);
   console.log(`开始处理节点: ${PRS} 个`);
+  // console.log("域名解析前"+proxy.server)
   let i = 0;
-
-proxies = proxies.filter((item) => !nameclear.test(item.name));
+  proxies = proxies.filter((item) => !nameclear.test(item.name));
     let o = 0;
     let stops = false;
     while (o < proxies.length && !stops) {
@@ -244,13 +248,25 @@ proxies = proxies.filter((item) => !nameclear.test(item.name));
           let otu = ""; // 🎮
           let incity = ""; //入口
           // console.log("spapi======="+ JSON.stringify(spkey))
-          //   console.log(spkey.country)
+          // console.log(spkey.country)
           if (spkey.country == "中国" && spkey.city !== "" ){
-            incity = spkey.city
+            if (city && sheng){
+              if(spkey.city == spkey.regionName){
+                incity = spkey.city
+              }else{
+                incity = spkey.regionName +FGF+ spkey.city
+              }
+            }else if(city){
+              incity = spkey.city
+            }else if(sheng){
+              incity = spkey.regionName
+            }
             if (/电信|联通|移动|广电/.test(spkey.isp)) {
             asns = spkey.isp.replace(/中国/g, "");
-            } else {
-            asns = "企业"
+            } else if(yun){
+              asns = spkey.isp;
+            }else{
+              asns = "企业";
             }
             // console.log(incity+asns)
             if(flag){
@@ -270,11 +286,8 @@ proxies = proxies.filter((item) => !nameclear.test(item.name));
                     incity = inip.country
                     asns = inip.country
                     if(incity == outnames ){
-                        // console.log(incity)
                         incity = "直连";
                         asns = ""; //防火墙
-                        // console.log(incity)
-
                     }
                      if (flag) {
                             adcm = "🆉"
@@ -288,25 +301,23 @@ proxies = proxies.filter((item) => !nameclear.test(item.name));
                 rename = valueArray[index];
               }
             });
-
           let inkey = "";
-            if(isp && city){
-                if(flag){
+            if((isp && city) || (sheng && isp && city) || yun){
+                if(flag || yun){
                     inkey = adcm + incity +FGF;
                 }else{
                     inkey = incity + asns +FGF;
                 }
             }else if(flag){
               inkey = adcm+FGF;
-            }else if(isp){
+            }else if(isp || yun){
               inkey = asns+FGF;
-            } else if(city){
+            } else if(city || sheng || yun){
               inkey = incity+FGF;
             } else {
               inkey = "";
             }
 
-            
             if (game) {
               //game
               if (rename === "") {
@@ -351,14 +362,10 @@ proxies = proxies.filter((item) => !nameclear.test(item.name));
             } else {
                 adflag = "";
             }
-
-            if(dns){
-                // console.log("域名解析前"+proxy.server)
-                proxy.server = qcip
-                // console.log("域名解析后"+proxy.server)
-            }
-            // console.log(incity+asns)
-            proxy.name = inkey + adflag + reoutnames;
+            
+        if(dns){proxy.server = qcip}
+        // console.log("域名解析后"+proxy.server)
+        proxy.name = inkey + adflag + reoutnames;
         // 去重 入口ip/落地IP
         proxy.qc = qcip + outip.query;
         } catch (err) {}
@@ -367,7 +374,6 @@ proxies = proxies.filter((item) => !nameclear.test(item.name));
     if(!onen){await sleep(300);}
     i += batch_size;
   }
-
   // console.log(JSON.stringify(proxies));
   proxies = removels(proxies);
   // 去除去重时添加的qc属性
@@ -385,6 +391,7 @@ proxies = proxies.filter((item) => !nameclear.test(item.name));
   const PRSO = proxies.length;
   const endTime = new Date();
   const timeDiff = endTime.getTime() - startTime.getTime();
+  if(dns){console.log(`DNS解析后共: ${PRSO} 个`)}
   APIREADKEY > 0 ? console.log(`读取API缓存: ${APIREADKEY} 个`) : null;
   APIWRITEKEY > 0 ? console.log(`写入API缓存: ${APIWRITEKEY} 个`) : null;
   console.log(`处理完后剩余: ${PRSO} 个`);
@@ -398,7 +405,6 @@ proxies = proxies.filter((item) => !nameclear.test(item.name));
     "",
     `${writelog}${readlog}${Push}用时:${mTIme(timeDiff)}`)
   }
-  console.log("-------------------------\n\n\n")
    return proxies;
 }
 
@@ -408,17 +414,14 @@ async function AliDNS(server) {
   if (isIP) {
     return server;
   }else{
-
   const id = getaliid(server);
   if (ali.has(id)) {
     return ali.get(id);
   }
-
   const cacheds = scriptResourceCache.get(id);
   if (cacheds) {
     return cacheds;
   } else {
-
     const resultali = new Promise((resolve, reject) => {
       if(with_cache < 51 && onen){
         return resultali;
@@ -476,17 +479,14 @@ async function SPECNAPI(server, alikey) {
       });
       const queryPromise = $.http.get({ url }).then((resp) => {
           const spcnapi = JSON.parse(resp.body);
-
           if(spcnapi.data){
             const { country, province: regionName, city, district, isp, ip,  operator } = spcnapi.data;
             const newspcn = { country, regionName, city, district, isp, ip, operator };
-
               resolve(newspcn);
               scriptResourceCache.set(id, newspcn);
           }else {
             reject(new Error());
           }
-
         })
         .catch((err) => {
           reject(err);
