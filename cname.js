@@ -277,6 +277,10 @@ async function operator(proxies) {
                 adcm = asns;
                 incity = incity + asns;
             }
+            if(isp){
+              adflag = "";
+              incity = adcm;
+            }
 
             let nxx = "";
             if (game) {
