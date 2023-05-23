@@ -1,7 +1,7 @@
 
 /*
 版本：48H缓存版
-日期：2023-05-23 16:45:23
+日期：2023-05-23 16:54:51
 注意：此脚本仅支持Surge和Loon
 符号：🅳电信 🅻联通 🆈移动 🅶广电 🅲公司 🆉直连 🎮游戏
 接口：入口查询[ip-api] 落地查询[ip-api]
@@ -333,7 +333,11 @@ async function operator(proxies) {
 
           let inkey = "";
             if(isp && city){
-              inkey = adcm + incity +FGF;
+                if(flag){
+                    inkey = adcm + incity +FGF;
+                }else{
+                    inkey = incity + adcm +FGF;
+                }
             }else if(flag){
               inkey = adcm+FGF;
             }else if(isp){
