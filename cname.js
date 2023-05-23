@@ -1,6 +1,6 @@
 /*
 版本：48H缓存版
-日期：2023-05-23 10:38
+日期：2023-05-23 10:44
 注意：此脚本仅支持Surge和Loon
 符号：🅳电信 🅻联通 🆈移动 🅶广电 🅲公司 🆉直连 🎮游戏
 接口：入口查询[ip-api] 落地查询[ip-api]
@@ -308,7 +308,7 @@ async function operator(proxies) {
                 if(otu !== ""){
                     reoutnames = outnames + otu + nxx;
                 } else {
-                    reoutnames = outnames + otu +FGF+ nxx;
+                    reoutnames = outnames + otu +XHFGF+ nxx;
                 }
             } else {
                 reoutnames = outnames + otu

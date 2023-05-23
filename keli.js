@@ -7,7 +7,7 @@
 异常：如遇问题，Loon可以进入[配置]→[持久化缓存]→[删除指定数据]→输入Key[sub-store-cached-script-resource]并删除缓存。Surge需要进入[脚本编辑器]→左下角[设置]→[$persistentStore]→[sub-store-cached-script-resource]删除缓存数据。
 作者：@Key @奶茶姐 @小一
 用法：Sub-Store脚本操作里添加
-日期：2023-05-22 15:13:45
+日期：2023-05-23 10.44
 示例：https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Resource/Script/Sub-Store/NodeRename.js#timeout=2000&cd=2000&flag&isp&fgf=→&name=[方括号内填写你的机场名]
 ----------------
 以下是此脚本支持的参数，必须以"#"开头，多个参数使用"&"连接，参考上述地址为例使用参数。
@@ -301,7 +301,7 @@ async function operator(proxies) {
                   if(otu !== ""){
                       reoutnames = outnames + otu + nxx;
                   } else {
-                      reoutnames = outnames + otu +FGF+ nxx;
+                      reoutnames = outnames + otu +XHFGF+ nxx;
                   }
               } else {
                   reoutnames = outnames + otu
