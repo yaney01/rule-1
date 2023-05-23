@@ -1,7 +1,7 @@
 /*说明: https://github.com/Keywos/rule/blob/main/readme.md
 用法：Sub-Store脚本操作添加
 例如：https://raw.githubusercontent.com/Keywos/rule/main/rename.js#name=测试&flag
-日期：2023-05-22 11:42
+日期：2023-05-23 
 -------------------------------- 
 rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数使用"&"连接，参考上述地址为例使用参数。
 [bl]:     保留: 家宽 ，IPLC 几倍之类的标识
@@ -136,6 +136,6 @@ function oneProxies(proxies){const groups = proxies.reduce((groups, proxy) => { 
 
 function getflag(e){const n=e.toUpperCase().split("").map((e=>127397+e.charCodeAt()));return String.fromCodePoint(...n).replace(/🇹🇼/g,"🇨🇳")}
 
-function getRegion( pn) { if (gq.some((name) => pn.includes(name))) { return "gq"; } else if (us.some((name) => pn.includes(name))) { return "us"; } else if (quan.some((name) => pn.includes(name))) { return "quan"; } else if (cn.some((name) => pn.includes(name))) { return "cn"; } else { return null; }}
+function getRegion(pn) { if (gq.some((name) => pn.includes(name))) { return "gq"; } else if (cn.some((name) => pn.includes(name))) { return "cn"; } else if (quan.some((name) => pn.includes(name))) { return "quan"; } else if (us.some((name) => pn.includes(name))) { return "us"; } else { return null; } } 
 
 function fampx(proxies) {const wis = [];const wnout = [];for (const proxy of proxies) {const fan = specialRegex.some(regex => regex.test(proxy.name));if (fan) {wis.push(proxy);} else {wnout.push(proxy);}}const sps = wis.map(proxy => specialRegex.findIndex(regex => regex.test(proxy.name)));wis.sort((a, b) => sps[wis.indexOf(a)] - sps[wis.indexOf(b)] || a.name.localeCompare(b.name));wnout.sort((a, b) => proxies.indexOf(a) - proxies.indexOf(b));return wnout.concat(wis);}
