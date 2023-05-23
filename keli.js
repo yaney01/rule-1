@@ -13,8 +13,8 @@
 以下是此脚本支持的参数，必须以"#"开头，多个参数使用"&"连接，参考上述地址为例使用参数。
 无参数时的节点命名格式: "北京 美国 01"，如果[入口IP或国家]或[落地IP或国家]一样则为 "直连 德国 01" 
 [bl]      保留倍率
-[dd]      单独只显示落地国家
 [isp]     加运营商或者直连
+[city]    加入口城市
 [game]    保留🎮标识
 [flag]    添加旗帜，默认无此参数
 [offtz]   关闭脚本通知
@@ -30,8 +30,8 @@
 */
 const $ = $substore;
 const bl = $arguments["bl"];
-const dd = $arguments["dd"];
 const isp = $arguments["isp"];
+const city = $arguments["city"];
 const flag = $arguments["flag"];
 const game = $arguments["game"];
 const offtz = $arguments["offtz"];
@@ -249,6 +249,7 @@ async function operator(proxies) {
                     incity = inip.country.replace(/中華民國/g, "台湾");
                 }
             }
+
             let adflag;
             let adcm;
             let otu;
@@ -265,17 +266,26 @@ async function operator(proxies) {
                         adcm = '🅲';
                       }
                     }
-                    incity = adcm + incity
+                // inkey = adcm
                 }
             } else {
                 adflag = "";
                 adcm = asns;
-                incity = incity + asns;
+                // inkey = adcm
             }
-            if(isp){
-                adflag = "";
-                incity = adcm;
-              }
+   
+                let inkey;
+                if(isp && city){
+                  inkey = incity + adcm +FGF;
+                }else if(flag){
+                  inkey = adcm+FGF;
+                }else if(isp){
+                  inkey = asns+FGF;
+                } else if(city){
+                  inkey = incity+FGF;
+                } else {
+                  inkey = "";
+                }
 
             let nxx = "";
             if (game) {
@@ -312,12 +322,8 @@ async function operator(proxies) {
               } else {
                   reoutnames = outnames + otu
               }
-              if(dd){
-                proxy.name = adflag + reoutnames;
-              }else{
-                proxy.name = incity +FGF+ adflag + reoutnames;
-              }
-        // 去重 入口ip/落地IP
+              proxy.name = inkey +FGF+ adflag + reoutnames;
+              // 去重 入口ip/落地IP
         proxy.qc = inip.query + "|" + outip.query;
         } catch (err) {}
       })
