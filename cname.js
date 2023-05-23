@@ -1,5 +1,6 @@
 /*
 版本：48H缓存版
+日期：2023-05-23 10:38:45
 注意：此脚本仅支持Surge和Loon
 符号：🅳电信 🅻联通 🆈移动 🅶广电 🅲公司 🆉直连 🎮游戏
 接口：入口查询[ip-api] 落地查询[ip-api]
@@ -8,8 +9,6 @@
      Surge需要进入[脚本编辑器]→左下角[设置]→[$persistentStore]→key无log版脚本位置：[CNAMEKEY] 或 小一有log版本 [sub-store-cached-script-resource]删除缓存数据。
 作者：@Key @奶茶姐 @小一 @可莉
 用法：Sub-Store脚本操作里添加
-日期：2023-05-23 10:38:45
-
 注意：必须安装以下模块，关闭官方版本才能使用: 目前SubStore还未更新脚本持久化缓存超时
  * Surge: https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule
  * Loon: https://github.com/Keywos/rule/raw/main/loon/sub-store.plugin
