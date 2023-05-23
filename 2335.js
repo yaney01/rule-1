@@ -249,7 +249,7 @@ async function operator(proxies) {
               incity = "直连"
             } else {
               if (inip.country == "中国") {
-                if (/[a-zA-Z]+/.test(inip.city)) {
+                if (/小楼|[a-zA-Z]+/.test(inip.city)) {
                   incity = inip.regionName.replace(/省/g, "");
                 }else { 
                   incity = inip.city.replace(/特别市|联邦|市/g, "");
@@ -298,7 +298,7 @@ async function operator(proxies) {
               inkey = "";
             }
 
-            let nxx = "";
+            
             if (game) {
               //game
               if (rename === "") {
@@ -314,7 +314,9 @@ async function operator(proxies) {
               }
             } else {
               otu = "";
-            }           
+            };
+
+            let nxx = "";      
             if(bl){                     
                 // 倍率
                 const match = proxy.name.match(/(倍率\D?((\d\.)?\d+)\D?)|((\d\.)?\d+)(倍|X|x|×)/);
@@ -327,9 +329,11 @@ async function operator(proxies) {
                 }
                 if(otu !== ""){
                     reoutnames = outnames + otu + nxx;
-                } else {
+                } else if(nxx !== ""){
                     reoutnames = outnames + otu +XHFGF+ nxx;
-                }
+                } else {
+                    reoutnames = outnames;
+                };
             } else {
                 reoutnames = outnames + otu
             }
