@@ -285,7 +285,7 @@ async function operator(proxies) {
 
             let inkey = "";
             if(isp && city){
-              inkey = incity + adcm +FGF;
+              inkey = adcm + incity +FGF;
             }else if(flag){
               inkey = adcm+FGF;
             }else if(isp){
@@ -331,7 +331,7 @@ async function operator(proxies) {
             } else {
                 reoutnames = outnames + otu
             }
-              proxy.name = inkey +FGF+ adflag + reoutnames;
+              proxy.name = inkey + adflag + reoutnames;
         // 去重 入口ip/落地IP
         proxy.qc = inip.query + "|" + outip.query;
         } catch (err) {}
