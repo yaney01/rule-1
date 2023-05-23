@@ -1,7 +1,7 @@
 
 /*
 版本：48H缓存版
-日期：2023-05-23 21:16:41
+日期：2023-05-23 21:26:25
 注意：此脚本仅支持Surge和Loon
 符号：🅳电信 🅻联通 🆈移动 🅶广电 🅲公司 🆉直连 🎮游戏
 接口：入口查询[ip-api] 落地查询[ip-api]
@@ -19,6 +19,7 @@
 无参数时的节点命名格式: "美国 01"，加city后如果[入口IP或国家]或[落地IP或国家]一样则为 "直连 德国 01" 
 [bl]      保留倍率
 [isp]     加运营商或者直连
+[dns]     DNS域名解析
 [city]    加入口城市
 [game]    保留🎮标识
 [flag]    添加旗帜，默认无此参数
@@ -37,6 +38,7 @@ https://github.com/Keywos/rule/raw/main/cname.js
 const $ = $substore;
 const bl = $arguments["bl"];
 const isp = $arguments["isp"];
+const dns = $arguments["dns"];
 const city = $arguments["city"];
 const flag = $arguments["flag"];
 const game = $arguments["game"];
@@ -191,7 +193,7 @@ async function operator(proxies) {
     let o = 0;
     let stops = false;
     while (o < proxies.length && !stops) {
-    const batchs = proxies.slice(o, o + 20);
+    const batchs = proxies.slice(o, o + 10);
     await Promise.all(
         batchs.map(async (proxy) => {
         try {
@@ -212,9 +214,8 @@ async function operator(proxies) {
         }
         })
     );
-    o += 20;
+    o += 10;
     }
-
 
   while (i < proxies.length) {
     const batch = proxies.slice(i, i + batch_size);
@@ -226,7 +227,7 @@ async function operator(proxies) {
           // console.log(JSON.stringify(alikey));
           // SPAPI
           const spkey = await SPECNAPI(proxy.server, alikey);
-          console.log(JSON.stringify(spkey));
+          //   console.log(JSON.stringify(spkey));
           let qcip = "";
           qcip = spkey.ip
           // {"country":"中国","regionName":"广东","city":"广州","district":"越秀区","isp":"中国移动","operator":"中国移动"}
@@ -239,7 +240,7 @@ async function operator(proxies) {
           let otu = ""; // 🎮
           let incity = ""; //入口
           // console.log("spapi======="+ JSON.stringify(spkey))
-          console.log(spkey.country)
+          //   console.log(spkey.country)
           if (spkey.country == "中国" && spkey.city !== "" ){
             incity = spkey.city
             if (/电信|联通|移动|广电/.test(spkey.isp)) {
@@ -247,7 +248,7 @@ async function operator(proxies) {
             } else {
             asns = "企业"
             }
-            console.log(incity+asns)
+            // console.log(incity+asns)
             if(flag){
               if (isp){
                   const keycm = { '电信': '🅳', '联通': '🅻', '移动': '🆈', '广电': '🅶'};
@@ -265,17 +266,16 @@ async function operator(proxies) {
                     incity = inip.country
                     asns = inip.country
                     if(incity == outnames ){
-                        console.log(incity)
+                        // console.log(incity)
                         incity = "直连";
-                        asns = "防火墙"
-                        console.log(incity)
+                        asns = ""; //防火墙
+                        // console.log(incity)
 
                     }
                      if (flag) {
                             adcm = "🆉"
                         }
-                    qcip = inip.ip
-                  
+                    qcip = inip.ip        
           }
           //替换game
           let rename = "";
@@ -348,14 +348,12 @@ async function operator(proxies) {
                 adflag = "";
             }
 
-
-
-            console.log("域名解析前"+proxy.server)
-            proxy.server = qcip
-            console.log("域名解析后"+proxy.server)
-            
-
-            console.log(incity+asns)
+            if(dns){
+                // console.log("域名解析前"+proxy.server)
+                proxy.server = qcip
+                // console.log("域名解析后"+proxy.server)
+            }
+            // console.log(incity+asns)
             proxy.name = inkey + adflag + reoutnames;
         // 去重 入口ip/落地IP
         proxy.qc = qcip + outip.query;

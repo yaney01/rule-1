@@ -1,7 +1,7 @@
 
 /*
 版本：48H缓存版
-日期：2023-05-23 16:54:44
+日期：2023-05-23 21:26:25
 注意：此脚本仅支持Surge和Loon
 符号：🅳电信 🅻联通 🆈移动 🅶广电 🅲公司 🆉直连 🎮游戏
 接口：入口查询[ip-api] 落地查询[ip-api]
@@ -19,6 +19,7 @@
 无参数时的节点命名格式: "美国 01"，加city后如果[入口IP或国家]或[落地IP或国家]一样则为 "直连 德国 01" 
 [bl]      保留倍率
 [isp]     加运营商或者直连
+[dns]     DNS域名解析
 [city]    加入口城市
 [game]    保留🎮标识
 [flag]    添加旗帜，默认无此参数
@@ -37,6 +38,7 @@ https://github.com/Keywos/rule/raw/main/cname.js
 const $ = $substore;
 const bl = $arguments["bl"];
 const isp = $arguments["isp"];
+const dns = $arguments["dns"];
 const city = $arguments["city"];
 const flag = $arguments["flag"];
 const game = $arguments["game"];
@@ -157,14 +159,6 @@ function mTIme(timeDiff) {
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
-const recmcc = {
-    "AS9808":"移动", "AS24311":"移动", "AS24400":"移动", "AS24444":"移动", "AS24445":"移动", "AS24547":"移动", "AS38019":"移动", "AS56040":"移动", "AS56041":"移动", "AS56042":"移动", "AS56044":"移动", "AS56046":"移动", "AS56047":"移动", "AS56048":"移动", "AS59067":"移动", "AS132510":"移动", "AS132525":"移动", "AS134810":"移动", "AS138407":"移动",
-    "AS4134":"电信", "AS4809":"电信", "AS4811":"电信", "AS4812":"电信", "AS4813":"电信", "AS4816":"电信", "AS4835":"电信", "AS4847":"电信", "AS9395":"电信", "AS17633":"电信", "AS17638":"电信", "AS17739":"电信", "AS17785":"电信", "AS17799":"电信", "AS17897":"电信", "AS17964":"电信", "AS17968":"电信", "AS23650":"电信", "AS23724":"电信", "AS23910":"电信", "AS23911":"电信", "AS24138":"电信", "AS38283":"电信", "AS58517":"电信", "AS58518":"电信", "AS59265":"电信", "AS63582":"电信", "AS63583":"电信", "AS134420":"电信",
-    "AS4808":"联通", "AS4837":"联通", "AS9800":"联通", "AS9929":"联通", "AS10206":"联通", "AS17621":"联通", "AS17622":"联通", "AS17623":"联通", "AS17816":"联通", "AS24134":"联通", "AS133118":"联通", "AS133119":"联通", "AS134542":"联通", "AS134543":"联通", "AS135061":"联通", "AS136958":"联通", "AS136959":"联通", "AS137539":"联通", "AS138421":"联通",
-    "AS24423": "广电", "AS24423": "广电",
-    "AS63711": "移动", "AS9394": "移动", "AS24138": "移动", "AS45057": "移动", "AS45069": "移动",
-    
-    };
 
 const regexArray=[ /游戏|game/i, ];
 
@@ -195,29 +189,33 @@ async function operator(proxies) {
   console.log(`批处理节点数: ${batch_size} 个`);
   console.log(`开始处理节点: ${PRS} 个`);
   let i = 0;
-  let o = 0; //判断有无缓存
-  while (o < proxies.length) {
-    const batchs = proxies.slice(o, o + 20);
+
+    let o = 0;
+    let stops = false;
+    while (o < proxies.length && !stops) {
+    const batchs = proxies.slice(o, o + 10);
     await Promise.all(
-      batchs.map(async (proxy) => {
+        batchs.map(async (proxy) => {
         try {
             const inss = new Map();
-            const id = getinid(proxy.server);
+            const id = getid(proxy);
             if (inss.has(id)) {
-                return inss.get(id);
+            return inss.get(id);
             }
             const cacheds = scriptResourceCache.get(id);
             if (cacheds) {
-                if (!onen) {
+            if (!onen) {
                 timeout = with_cache;
                 onen = true;
-                }
+                stops = true;
             }
-        } catch (err) {}
-    })
-  );
-  o += 20;
- }
+            }
+        } catch (err) {
+        }
+        })
+    );
+    o += 10;
+    }
 
   while (i < proxies.length) {
     const batch = proxies.slice(i, i + batch_size);
@@ -229,100 +227,56 @@ async function operator(proxies) {
           // console.log(JSON.stringify(alikey));
           // SPAPI
           const spkey = await SPECNAPI(proxy.server, alikey);
-          console.log(JSON.stringify(spkey));
-// {"country":"中国","regionName":"广东","city":"广州","district":"越秀区","isp":"中国移动","operator":"中国移动"}
-// {"country":"中国","regionName":"广东","city":"深圳","district":"福田区","isp":"中国联通","operator":"中国联通"}
-
+          //   console.log(JSON.stringify(spkey));
+          let qcip = "";
+          qcip = spkey.ip
+          // {"country":"中国","regionName":"广东","city":"广州","district":"越秀区","isp":"中国移动","operator":"中国移动"}
           // 落地
           const outip = await IPAPI(proxy);
           let outnames = outip.country;
           let reoutnames = ""; // 落地
-
           let asns = ""; //运营商
           let adcm = ""; // 运营商符号
           let otu = ""; // 🎮
-
           let incity = ""; //入口
           // console.log("spapi======="+ JSON.stringify(spkey))
-          console.log(spkey.country)
-          if (spkey.country == "中国" ){
+          //   console.log(spkey.country)
+          if (spkey.country == "中国" && spkey.city !== "" ){
             incity = spkey.city
+            if (/电信|联通|移动|广电/.test(spkey.isp)) {
             asns = spkey.isp.replace(/中国/g, "");
-            console.log(incity+asns)
+            } else {
+            asns = "企业"
+            }
+            // console.log(incity+asns)
             if(flag){
               if (isp){
                   const keycm = { '电信': '🅳', '联通': '🅻', '移动': '🆈', '广电': '🅶'};
                   if (keycm.hasOwnProperty(asns)) {
                     adcm = keycm[asns];                      
                   } else {
-                      adcm = "";
-                  }
-                  // inkey = adcm
+                      adcm = "🅲";
+                  } 
               }
             } else {
                 adcm = asns;
             }
-
-
           } else {
-              // ipapi/////////////////////////
               const inip = await INDNS(proxy.server);
-              // console.log(JSON.stringify(inip.as));
-                if (inip.country == outnames) {
-                  incity = "直连"
-                } else {
-                  if (inip.country == "中国") {
-                    if (/小楼|[a-zA-Z]+/.test(inip.city)) {
-                      incity = inip.regionName.replace(/省/g, "");
-                    }else { 
-                      incity = inip.city.replace(/特别市|联邦|市/g, "");
-                      }
+                    incity = inip.country
+                    asns = inip.country
+                    if(incity == outnames ){
+                        // console.log(incity)
+                        incity = "直连";
+                        asns = ""; //防火墙
+                        // console.log(incity)
 
-                  } else if(inip.country == "中華民國") {
-                    console.log(inip.country)
-                    incity = inip.country.replace(/中華民國/g, "台湾");
-                  } 
-
-                  if(isp || flag){
-                      if (inip.country == "中国") {
-                          const asValue = inip.as;
-                          let matched = false;
-                          Object.entries(recmcc).forEach(function([key, value]) {
-                          if (asValue.includes(key)) {
-                              asns = value;
-                              matched = true;
-                              return;
-                              }
-                          });
-                          if (!matched) {asns = "";} //没有匹配的国内运营商
-                      }else{asns = "";}
-                  } else {asns = "";}
-
-                }
-
-
-                if(flag){
-                    if (isp){
-                        const keycm = { '电信': '🅳', '联通': '🅻', '移动': '🆈', '广电': '🅶'};
-                        if (keycm.hasOwnProperty(asns)) {
-                          adcm = keycm[asns];                      
-                        } else {
-                          if (incity == "直连" ){
-                            adcm = '🆉';
-                          } else {
-                            adcm = '🅲';
-                          }
-                        }
-                        // inkey = adcm
                     }
-                } else {
-                    adcm = asns;
-                }
-
-          }// ipapi/////////////////////////
-         
-
-
+                     if (flag) {
+                            adcm = "🆉"
+                        }
+                    qcip = inip.ip        
+          }
           //替换game
           let rename = "";
             regexArray.forEach((regex, index) => {
@@ -336,7 +290,7 @@ async function operator(proxies) {
                 if(flag){
                     inkey = adcm + incity +FGF;
                 }else{
-                    inkey = incity + adcm +FGF;
+                    inkey = incity + asns +FGF;
                 }
             }else if(flag){
               inkey = adcm+FGF;
@@ -394,10 +348,15 @@ async function operator(proxies) {
                 adflag = "";
             }
 
-            console.log(incity+asns)
+            if(dns){
+                // console.log("域名解析前"+proxy.server)
+                proxy.server = qcip
+                // console.log("域名解析后"+proxy.server)
+            }
+            // console.log(incity+asns)
             proxy.name = inkey + adflag + reoutnames;
         // 去重 入口ip/落地IP
-        proxy.qc = alikey + outip.query;
+        proxy.qc = qcip + outip.query;
         } catch (err) {}
       })
     );
@@ -460,17 +419,21 @@ async function AliDNS(server) {
       if(with_cache < 51 && onen){
         return resultali;
       } else {
+        
       const url = `http://223.5.5.5/resolve?name=${server}&type=A&short=1`;
       const timeoutPromise = new Promise((_, reject) => {
         setTimeout(() => {
           reject(new Error("timeout"));
         }, timeout);
       });
+      console.log("dnsssssssss")
       const queryPromise = $.http.get({ url }).then((resp) => {
         const alid = JSON.parse(resp.body);
         if (alid.length > 0) {
           resolve(alid[0]);
           scriptResourceCache.set(id, alid[0]);
+        }else {
+          reject(new Error());
         }
       })
       .catch((err) => {
@@ -511,13 +474,13 @@ async function SPECNAPI(server, alikey) {
           const spcnapi = JSON.parse(resp.body);
 
           if(spcnapi.data){
-            const { country, province: regionName, city, district, isp, operator } = spcnapi.data;
-            const newspcn = { country, regionName, city, district, isp, operator };
+            const { country, province: regionName, city, district, isp, ip,  operator } = spcnapi.data;
+            const newspcn = { country, regionName, city, district, isp, ip, operator };
 
               resolve(newspcn);
               scriptResourceCache.set(id, newspcn);
           }else {
-            reject(new Error(lip.message));
+            reject(new Error());
           }
 
         })

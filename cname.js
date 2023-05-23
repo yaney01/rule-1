@@ -1,6 +1,6 @@
 /*
 版本：48H缓存版
-日期：2023-05-23 14:34:07
+日期：2023-05-23 21:26:15
 注意：此脚本仅支持Surge和Loon
 符号：🅳电信 🅻联通 🆈移动 🅶广电 🅲公司 🆉直连 🎮游戏
 接口：入口查询[ip-api] 落地查询[ip-api]
@@ -184,29 +184,32 @@ async function operator(proxies) {
   console.log(`批处理节点数: ${batch_size} 个`);
   console.log(`开始处理节点: ${PRS} 个`);
   let i = 0;
-  let o = 0; //判断有无缓存
-  while (o < proxies.length) {
-    const batchs = proxies.slice(o, o + 20);
-    await Promise.all(
+  let o = 0;
+  let stops = false;
+  while (o < proxies.length && !stops) {
+  const batchs = proxies.slice(o, o + 10);
+  await Promise.all(
       batchs.map(async (proxy) => {
-        try {
-            const inss = new Map();
-            const id = getinid(proxy.server);
-            if (inss.has(id)) {
-                return inss.get(id);
-            }
-            const cacheds = scriptResourceCache.get(id);
-            if (cacheds) {
-                if (!onen) {
-                timeout = with_cache;
-                onen = true;
-                }
-            }
-        } catch (err) {}
-    })
+      try {
+          const inss = new Map();
+          const id = getid(proxy);
+          if (inss.has(id)) {
+          return inss.get(id);
+          }
+          const cacheds = scriptResourceCache.get(id);
+          if (cacheds) {
+          if (!onen) {
+              timeout = with_cache;
+              onen = true;
+              stops = true;
+          }
+          }
+      } catch (err) {
+      }
+      })
   );
-  o += 20;
- }
+  o += 10;
+  }
 
   while (i < proxies.length) {
     const batch = proxies.slice(i, i + batch_size);
@@ -287,7 +290,11 @@ async function operator(proxies) {
 
             let inkey = "";
             if(isp && city){
-              inkey = incity + adcm +FGF;
+              if(flag){
+                inkey = adcm + incity +FGF;
+              }else{
+                inkey = incity + asns +FGF;
+              }
             }else if(flag){
               inkey = adcm+FGF;
             }else if(isp){
