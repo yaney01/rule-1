@@ -1,34 +1,31 @@
 /*
-版本：48H缓存版
+版本：48小时缓存版
 注意：此脚本仅支持Surge和Loon
 符号：🅳电信 🅻联通 🆈移动 🅶广电 🅲公司 🆉直连 🎮游戏
 接口：入口查询[ip-api] 落地查询[ip-api]
 功能：根据接口返回的真实结果，重新对节点命名。添加入口城市、落地国家或地区、国内运营商信息，并对这些数据做持久化缓存（48小时有效期），减少API请求次数，提高运行效率。
-异常：如遇问题，Loon可以进入[配置]→[持久化缓存]→[删除指定数据]→输入Key key无log版脚本位置：[CNAMEKEY] 或 小一有log版本 [sub-store-cached-script-resource]并删除缓存。
-     Surge需要进入[脚本编辑器]→左下角[设置]→[$persistentStore]→key无log版脚本位置：[CNAMEKEY] 或 小一有log版本 [sub-store-cached-script-resource]删除缓存数据。
-作者：@Key @奶茶姐 @小一 @可莉
+异常：如遇问题，Loon可以进入[配置]→[持久化缓存]→[删除指定数据]→输入Key[sub-store-cached-script-resource]并删除缓存。Surge需要进入[脚本编辑器]→左下角[设置]→[$persistentStore]→[sub-store-cached-script-resource]删除缓存数据。
+作者：@Key @奶茶姐 @小一
 用法：Sub-Store脚本操作里添加
 日期：2023-05-22 15:13:45
-
-注意：必须安装以下模块，关闭官方版本才能使用: 目前SubStore还未更新脚本持久化缓存超时
- * Surge: https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule
- * Loon: https://github.com/Keywos/rule/raw/main/loon/sub-store.plugin
- * 可莉版本 Loon: https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Tool/Loon/Plugin/Sub-Store.plugin
+示例：https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Resource/Script/Sub-Store/NodeRename.js#timeout=2000&cd=2000&flag&isp&fgf=→&name=[方括号内填写你的机场名]
 ----------------
 以下是此脚本支持的参数，必须以"#"开头，多个参数使用"&"连接，参考上述地址为例使用参数。
 无参数时的节点命名格式: "北京 美国 01"，如果[入口IP或国家]或[落地IP或国家]一样则为 "直连 德国 01" 
-[bl]      保留倍率和🎮标识
-[isp]     加运营商符号或直连符号
-[flag]    添加旗帜，默认无此参数
-[snone]   清理个别地区只有一个节点的序号
-[fgf=]    入口和落地之间的分隔符，默认为空格
-[sn=]     国家与序号之间的分隔符，默认为空格
-[name=]   添加机场名称前缀
+[bl]保留倍率和🎮标识
+[isp]添加运营商标识或直连标识
+[flag]添加旗帜标识，默认无此参数
+[snone]清理个别地区只有一个节点的序号
+[bl]添加节点倍率标识
+[game]添加游戏标识
+[name=]添加机场名称
 [timeout=]测试节点延时允许的最大超时参数，超出允许范围则判定为无效节点，默认1600ms
-[cd=] 当有缓存时，会先读取缓存，且对节点进行延时测试，直接输出结果。
-      当无缓存时，会对节点直接进行延时测试，节点延时超过所设定的值则判定为无效节点，默认400ms，并将结果写入缓存。
-      当设置[cd=]的值小于50时，则直接读取缓存。
- */
+[fgf=]入口和落地之间的自义定分隔符，默认为空格
+[sn=]国家与序号之间的分隔符，默认为空格
+[cd=]当有缓存时，会先读取缓存，且对节点进行延时测试，直接输出结果。
+     当无缓存时，会对节点直接进行延时测试，节点延时超过所设定的值则判定为无效节点，默认400ms，并将结果写入缓存。
+     当设置[cd=]的值小于50时，则直接读取缓存。
+*/
 const $ = $substore;
 const bl = $arguments["bl"];
 const isp = $arguments["isp"];
@@ -160,11 +157,11 @@ async function operator(proxies) {
     return proxies;
   }
   if (typeof scriptResourceCache === 'undefined') {
-    console.log("\nNCNAME: 不支持此 SubStore, 目前官方SubStore还未更新scriptResourceCache\n查看脚本说明安装对应版本\nhttps://github.com/Keywos/rule/raw/main/cname.js")
+    console.log("\n当前使用的Sub-Store插件无法运行此脚本\n请查看此脚本说明安装对应版本\nhttps://gitlab.com/lodepuly/vpn_tool/-/raw/main/Resource/Script/Sub-Store/NodeRename.js")
     if (target=="Surge"){
-      $notification.post("NCNAME Sub-Store未更新", "", "请点击或查看Log查看脚本说明安装对应版本", {url: "https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule"})
+      $notification.post("当前使用的Sub-Store模块无法运行此脚本", "", "请点击此通知安装符合运行要求的模块", {url: "https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule"})
     } else if (target=="Loon")
-      $notification.post("NCNAME Sub-Store未更新", "", "请点击安装插件, 或查看Log安装对应版本, 并关闭原本的Substore", "loon://import?plugin=https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Tool/Loon/Plugin/Sub-Store.plugin")
+      $notification.post("当前使用的Sub-Store插件无法运行此脚本", "", "请点击此通知安装符合运行要求的插件", "loon://import?plugin=https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Tool/Loon/Plugin/Sub-Store.plugin")
     return proxies;
   }
   // 批处理个数
@@ -335,8 +332,8 @@ async function operator(proxies) {
   // Push
   const readlog = APIREADKEY ? `读取缓存: ${APIREADKEY} 个 ` : '';
   const writelog = APIWRITEKEY ? `写入缓存: ${APIWRITEKEY} 个 ` : '';
-  const Push = (PRSO == PRS) ? "\n无复用节点, " : "\n去除无效节点后有" + PRSO + "个, ";
-  $notification.post(`NCNAME: 共${PRS}个节点`,"",`${writelog}${readlog}${Push}耗时:${mTIme(timeDiff)}`)
+  const Push = (PRSO == PRS) ? "\n无复用节点, " : "\n去除无效节点后剩余" + PRSO + "个, ";
+  $notification.post(`处理结果：共${PRS}个节点`,""，`${writelog}${readlog}${Push}用时：${mTIme(timeDiff)}`)
   return proxies;
 }
 
