@@ -327,7 +327,7 @@ async function operator(proxies) {
             } else {
                 reoutnames = outnames + otu
             }
-              proxy.name = inkey +FGF+ adflag + reoutnames;
+              proxy.name = inkey + adflag + reoutnames;
         // 去重 入口ip/落地IP
         proxy.qc = inip.query + "|" + outip.query;
         } catch (err) {}
