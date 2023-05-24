@@ -2,16 +2,24 @@
 
 
 
-let intimed = $persistentStore.read("缓存过期时间")
-let TIMEDKEY = "";
-if (intimed == "1分钟"){
-    TIMEDKEY = "60000";
-}else if(intimed == "3分钟"){
-    TIMEDKEY = "180000";
-} else {
-    TIMEDKEY = "1728e5";
-}
-console.log(TIMEDKEY)
+const cacheExpirationTimes = {
+  "1分钟": "60000",
+  "5分钟": "300000",
+  "10分钟": "600000",
+  "30分钟": "1800000",
+  "1小时": "3600000",
+  "2小时": "7200000",
+  "3小时": "10800000",
+  "6小时": "21600000",
+  "12小时": "43200000",
+  "48小时": "172800000",
+  "72小时": "259200000",
+};
+
+let intimed = $persistentStore.read("缓存过期时间");
+let TIMEDKEY = cacheExpirationTimes[intimed] || "1728e5";
+
+console.log("缓存过期时间"+TIMEDKEY)
 
 !(function () {
   var createModuleFactory = function (t) {
@@ -30995,4 +31003,5 @@ console.log(TIMEDKEY)
     return t && t.__esModule ? t : { default: t };
   }
   (0, ___migration_89.default)(), (0, _restful.default)();
+
 })();
