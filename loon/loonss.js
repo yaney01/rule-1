@@ -301,7 +301,7 @@ async function operator(proxies) {
   if(debug){ console.log(JSON.stringify(proxies))};
   numone && (proxies = oneProxies(proxies));
   // log
-  console.log(JSON.stringify(TIMEDKEY))
+  // console.log(JSON.stringify(TIMEDKEY))
   const PRSO = proxies.length;
   const endTime = new Date();
   const timeDiff = endTime.getTime() - startTime.getTime();
