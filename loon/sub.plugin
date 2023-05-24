@@ -1,14 +1,23 @@
-#!name= Loon example plugin4
-#!desc= 这是一个带有配置项的插件，input代表输入，select代表选择（select的第一项为名称，后面为可选值），用户所填或者选择的值都可以在脚本中用$persistentStore.read进行读取，如$persistentStore.read(appName)
-#!author = Loon0x00
+#!name=Sub-Store
+#!desc=高级订阅管理工具 Nolog  持久化缓存, 感谢 @小一 修改 SubStore 源码 默认脚本持久化缓存超时时间48小时
+#!openUrl=https://sub.store
+#!author=Peng-YM
+#!homepage=https://github.com/Peng-YM/Sub-Store
+#!icon=https://raw.githubusercontent.com/58xinian/icon/master/Sub-Store1.png
+#https://github.com/xream/Sub-Store/tree/feature/scriptResourceCache
+
+#!select = 缓存过期时间,n小时,12小时,3,4,5,6
+
+#!select = 测试,0.99,22
+#SCRIPT_CACHE_EXPIRATION_TIME_MS  1728e5
+
+[MITM]
+hostname=sub.store
+
+[Script]
+http-request https?:\/\/sub\.store script-path=https://github.com/Keywos/rule/raw/main/JS/sub-store.script.cache.js, requires-body=true, timeout=120, tag=Sub-Store  
+
 #!input = appName
 #!input = author
 #!select = appType,tool,social,health,sport
 #!select = price,0.99,1.99,4.99,测试,test
-
-#!select = test,0.99,ddd,中文
-
-#!select = 测试,0.99,22
-
-[Script]
-cron "0/24 * * * *" script-path=https://github.com/Keywos/rule/raw/main/loon/subs.js,tag = pluginExample, enable=true
