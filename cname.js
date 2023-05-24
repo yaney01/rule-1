@@ -78,11 +78,31 @@ async function operator(proxies) {
     console.log("\nNCNAME: 不支持此 SubStore, 目前官方SubStore还未更新scriptResourceCache\n查看脚本说明安装对应版本\nhttps://github.com/Keywos/rule/raw/main/cname.js")
     if (target=="Surge"){
       $notification.post("NCNAME Sub-Store未更新", "", "请点击或查看Log查看脚本说明安装对应版本", {url: "https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule"})
-    } else if (target=="Loon")
+    } else if (target=="Loon"){
       $notification.post("NCNAME Sub-Store未更新", "", "请点击安装插件, 或查看Log安装对应版本, 并关闭原本的Substore", "loon://import?plugin=https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Tool/Loon/Plugin/Sub-Store.plugin")
-    return proxies;
+    }
+        return proxies;
   }
   
+  // if (target=="Loon"){
+  //   let TIMEDKEY = "";
+  //   const cacheExpirationTimes = {
+  //   "1分钟": "60000",
+  //   "5分钟": "300000",
+  //   "10分钟": "600000",
+  //   "30分钟": "1800000",
+  //   "1小时": "3600000",
+  //   "2小时": "7200000",
+  //   "3小时": "10800000",
+  //   "6小时": "21600000",
+  //   "12小时": "43200000",
+  //   "48小时": "172800000",
+  //   "72小时": "259200000",
+  // };
+  // let intimed = $persistentStore.read("缓存过期时间");
+  // TIMEDKEY = cacheExpirationTimes[intimed] || "172800000";
+  // // console.log(JSON.stringify(TIMEDKEY))
+  // }
   // 批处理个数
   var batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
   const startTime = new Date();
@@ -97,6 +117,7 @@ async function operator(proxies) {
   proxies = proxies.filter((item) => !nameclear.test(item.name));
   let o = 0;
   let Pushtd = "";
+  let intimed = "";
   let stops = false;
   while (o < proxies.length && !stops) {
     const batchs = proxies.slice(o, o + 1);
@@ -117,9 +138,34 @@ async function operator(proxies) {
             }
             const timepushs = scriptResourceCache.gettime(id);
             let TimeStarts = new Date().getTime();
-            let timedPush = mTIme(
-              parseInt(timepushs, 10) - TimeStarts + parseInt(TIMEDKEY, 10)
-            ).replace(/-/g, "");
+            let timedPush = "";
+                if (target=="Loon"){
+                  let TIMEDKEYS = "";
+                  const cacheExpirationTimes = {
+                  "1分钟": "60000",
+                  "5分钟": "300000",
+                  "10分钟": "600000",
+                  "30分钟": "1800000",
+                  "1小时": "3600000",
+                  "2小时": "7200000",
+                  "3小时": "10800000",
+                  "6小时": "21600000",
+                  "12小时": "43200000",
+                  "48小时": "172800000",
+                  "72小时": "259200000",
+                };
+                intimed = $persistentStore.read("缓存过期时间");
+                TIMEDKEYS = cacheExpirationTimes[intimed] || "172800000";
+                if(debug){console.log("loon缓存"+JSON.stringify(TIMEDKEYS))}
+                timedPush = mTIme(
+                  parseInt(timepushs, 10) - TimeStarts + parseInt(TIMEDKEYS, 10)
+                ).replace(/-/g, "");
+                } else {
+              timedPush = mTIme(
+                parseInt(timepushs, 10) - TimeStarts + parseInt(TIMEDKEY, 10)
+              ).replace(/-/g, "");
+            }
+
             if (timepushs < 0) {
               Pushtd = `缓存已经过期: ${timedPush}, `;
             } else {
@@ -308,7 +354,13 @@ async function operator(proxies) {
   APIREADKEY > 0 ? console.log(`读取API缓存: ${APIREADKEY} 个`) : null;
   APIWRITEKEY > 0 ? console.log(`写入API缓存: ${APIWRITEKEY} 个`) : null;
   console.log(`处理完后剩余: ${PRSO} 个`);
-  console.log("缓存过期时间: " + mTIme(TIMEDKEY)+ "还剩" + Pushtd.replace(/,/g, ""));
+  if (target=="Loon"){
+    console.log("缓存过期时间: " + intimed + ", 还剩" + Pushtd.replace(/,/g, ""));
+  } else {
+    console.log("缓存过期时间: " + mTIme(TIMEDKEY)+ ", 还剩" + Pushtd.replace(/,/g, ""));
+  }
+
+  
   console.log(`此方法总用时: ${mTIme(timeDiff)}\n----For New CNAME----`);
   // Push
   const readlog = APIREADKEY ? `读取缓存: ${APIREADKEY} 个 ` : '';
