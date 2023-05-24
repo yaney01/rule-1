@@ -60,113 +60,6 @@ const XHFGF = $arguments.sn == undefined ? " " : decodeURI($arguments.sn);
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 let onen = false;
 
-function getid(proxy) {
-  let dataKey = 'ld';;
-  return MD5(`${dataKey}-${proxy.server}-${proxy.port}`);
-}
-
-function getinid(server) {
-  let dataKeys = 'ia';;
-  return MD5(`${dataKeys}-${server}`);
-}
-
-function getaliid(server) {
-  let aliKeys = 'al';;
-  return MD5(`${aliKeys}-${server}`);
-}
-
-function getspcn(server) {
-  let spcnKeys = 'sc';;
-  return MD5(`${spcnKeys}-${server}`);
-}
-
-function getflag(countryCode) {
-  const codePoints = countryCode
-    .toUpperCase()
-    .split("")
-    .map((char) => 127397 + char.charCodeAt());
-  return String.fromCodePoint(...codePoints).replace(/🇹🇼/g, "🇨🇳");
-}
-
-function removels(arr) {
-  const nameSet = new Set();
-  const result = [];
-  for (const e of arr) {
-    if (e.qc && !nameSet.has(e.qc)) {
-      nameSet.add(e.qc);
-      result.push(e);
-    }
-  }
-  return result;
-}
-
-function removeqc(arr) {
-  const nameSet = new Set();
-  const result = [];
-  for (const e of arr) {
-    if (!nameSet.has(e.qc)) {
-      nameSet.add(e.qc);
-      const modifiedE = { ...e };
-      delete modifiedE.qc;
-      result.push(modifiedE);
-    }
-  }
-  return result;
-}
-
-function jxh(e) {
-  const n = e.reduce((e, n) => {
-    const t = e.find((e) => e.name === n.name);
-    if (t) {
-      t.count++;
-      t.items.push({
-        ...n,
-        name: `${n.name}${XHFGF}${t.count.toString().padStart(2, "0")}`,
-      });
-    } else {
-      e.push({
-        name: n.name,
-        count: 1,
-        items: [{ ...n, name: `${n.name}${XHFGF}01` }],
-      });
-    }
-    return e;
-  }, []);
-  const t = n.flatMap((e) => e.items);
-  e.splice(0, e.length, ...t);
-  return e;
-}
-
-function oneProxies(proxies) {
-  const groups = proxies.reduce((groups, proxy) => {
-    const name = proxy.name.replace(/[^A-Za-z0-9\u00C0-\u017F\u4E00-\u9FFF]+\d+$/, "");
-    if (!groups[name]) {
-      groups[name] = [];
-    }
-    groups[name].push(proxy);
-    return groups;
-  }, {});
-  for (const name in groups) {
-    if (groups[name].length === 1 && groups[name][0].name.endsWith("01")) {
-      const proxy = groups[name][0];
-      proxy.name = name;
-    }
-  }
-  return proxies;
-}
-
-function mTIme(timeDiff) {
-  if (timeDiff < 1000) {
-    return `${Math.round(timeDiff)}毫秒`;
-  } else if (timeDiff < 60000) {
-    return `${Math.round(timeDiff / 1000)}秒`;
-  }
-};
-
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 const regexArray=[ /游戏|game/i, ];
 
 const valueArray= [ "Game" ];
@@ -189,6 +82,7 @@ async function operator(proxies) {
       $notification.post("NCNAME Sub-Store未更新", "", "请点击安装插件, 或查看Log安装对应版本, 并关闭原本的Substore", "loon://import?plugin=https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Tool/Loon/Plugin/Sub-Store.plugin")
     return proxies;
   }
+  
   // 批处理个数
   var batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
   const startTime = new Date();
@@ -201,32 +95,42 @@ async function operator(proxies) {
   let i = 0;
   if(debug){console.log("处理前"+JSON.stringify(proxies))}
   proxies = proxies.filter((item) => !nameclear.test(item.name));
-    let o = 0;
-    let stops = false;
-    while (o < proxies.length && !stops) {
-    const batchs = proxies.slice(o, o + 10);
+  let o = 0;
+  let Pushtd = "";
+  let stops = false;
+  while (o < proxies.length && !stops) {
+    const batchs = proxies.slice(o, o + 1);
     await Promise.all(
-        batchs.map(async (proxy) => {
+      batchs.map(async (proxy) => {
         try {
-            const inss = new Map();
-            const id = getid(proxy);
-            if (inss.has(id)) {
+          const inss = new Map();
+          const id = getid(proxy);
+          if (inss.has(id)) {
             return inss.get(id);
-            }
-            const cacheds = scriptResourceCache.get(id);
-            if (cacheds) {
+          }
+          const cacheds = scriptResourceCache.get(id);
+          if (cacheds) {
             if (!onen) {
-                timeout = with_cache;
-                onen = true;
-                stops = true;
+              timeout = with_cache;
+              onen  = true;
+              stops = true;
             }
-            }
-        } catch (err) {
-        }
-        })
+            const timepushs = scriptResourceCache.gettime(id);
+            let TimeStarts = new Date().getTime();
+            let timedPush = mTIme(
+              parseInt(timepushs, 10) - TimeStarts + parseInt(TIMEDKEY, 10)
+            ).replace(/-/g, "");
+            if (timepushs < 0) {
+              Pushtd = `缓存已经过期: ${timedPush}, `;
+            } else {
+              Pushtd = `${timedPush}后过期, `;
+            }   
+          }
+        } catch (err) {}
+      })
     );
-    o += 10;
-    }
+    o += 1;
+  }
 
   while (i < proxies.length) {
     const batch = proxies.slice(i, i + batch_size);
@@ -235,10 +139,10 @@ async function operator(proxies) {
         try {
           //阿里dns
           const alikey = await AliDNS(proxy.server);
-          if(debug){console.log("----------------------------阿里dns"+JSON.stringify(alikey))}
+          if(debug){console.log("--阿里dns"+JSON.stringify(alikey))}
           // SPAPI
           const spkey = await SPECNAPI(proxy.server, alikey);
-                if(debug){console.log("----------------------------国内入口SPAPI"+JSON.stringify(spkey))}
+          if(debug){console.log("--国内入口SPAPI🌸"+JSON.stringify(spkey))}
           let qcip = "";
           qcip = spkey.ip
           // {"country":"中国","regionName":"广东","city":"广州","district":"越秀区","isp":"中国移动","operator":"中国移动"}
@@ -250,7 +154,7 @@ async function operator(proxies) {
           let adcm = ""; // 运营商符号
           let otu = ""; // 🎮
           let incity = ""; //入口
-                if(debug){console.log("----------------------------落地"+JSON.stringify(outip))}
+          if(debug){console.log("=====落地信息🍓"+JSON.stringify(outip))}
           if (spkey.country == "中国" && spkey.city !== "" ){
             if (city && sheng){
               if(spkey.city == spkey.regionName){
@@ -285,7 +189,7 @@ async function operator(proxies) {
             }
           } else {
               const inip = await INDNS(proxy.server);
-                    if(debug){console.log("----------------------------国外入口"+JSON.stringify(inip))}
+                    if(debug){console.log("--国外入口"+JSON.stringify(inip))}
                     incity = inip.country
                     asns = inip.country
                     if(incity == outnames ){
@@ -365,13 +269,16 @@ async function operator(proxies) {
             } else {
                 adflag = "";
             }
-            
-            if(debug){console.log("----------------------------处理前节点名🍉"+JSON.stringify(proxy.name))}
+            if(debug){console.log("--处理前节点名🍉"+JSON.stringify(proxy.name))
+            console.log("server为"+JSON.stringify(proxy.server))
+            }
         if(dns){proxy.server = qcip}
- 
         // console.log("域名解析后"+proxy.server)
         proxy.name = inkey + adflag + reoutnames;
-              if(debug){console.log("----------------------------处理后节点名🍉🍉"+JSON.stringify(proxy.name))}
+        if(debug){
+          console.log("--处理后节点名🍉🍉"+JSON.stringify(proxy.name))
+          console.log("server为"+JSON.stringify(proxy.server))
+          console.log("\n\n\n")}
         // 去重 入口ip/落地IP
         proxy.qc = qcip + outip.query;
         } catch (err) {}
@@ -380,7 +287,7 @@ async function operator(proxies) {
     if(!onen){await sleep(300);}
     i += batch_size;
   }
-  // console.log(JSON.stringify(proxies));
+  if(debug){console.log(JSON.stringify(proxies))};
   proxies = removels(proxies);
   // 去除去重时添加的qc属性
   proxies = removeqc(proxies);
@@ -391,7 +298,7 @@ async function operator(proxies) {
       proxy.name = keynames + " " + proxy.name;
     });
   }
-  // console.log(JSON.stringify(proxies));
+  if(debug){ console.log(JSON.stringify(proxies))};
   numone && (proxies = oneProxies(proxies));
   // log
   const PRSO = proxies.length;
@@ -401,6 +308,7 @@ async function operator(proxies) {
   APIREADKEY > 0 ? console.log(`读取API缓存: ${APIREADKEY} 个`) : null;
   APIWRITEKEY > 0 ? console.log(`写入API缓存: ${APIWRITEKEY} 个`) : null;
   console.log(`处理完后剩余: ${PRSO} 个`);
+  console.log("缓存过期时间: " + mTIme(TIMEDKEY)+ "还剩" + Pushtd.replace(/,/g, ""));
   console.log(`此方法总用时: ${mTIme(timeDiff)}\n----For New CNAME----`);
   // Push
   const readlog = APIREADKEY ? `读取缓存: ${APIREADKEY} 个 ` : '';
@@ -409,7 +317,7 @@ async function operator(proxies) {
   if(!offtz){
     $notification.post(`NC: ${tzname}共${PRS}个节点`,
     "",
-    `${writelog}${readlog}${Push}用时:${mTIme(timeDiff)}`)
+    `${Pushtd}${writelog}${readlog}${Push}用时:${mTIme(timeDiff)}`)
   }
    return proxies;
 }
@@ -439,7 +347,6 @@ async function AliDNS(server) {
           reject(new Error("timeout"));
         }, timeout);
       });
-      console.log("dnsssssssss")
       const queryPromise = $.http.get({ url }).then((resp) => {
         const alid = JSON.parse(resp.body);
         if (alid.length > 0) {
@@ -594,12 +501,24 @@ async function IPAPI(proxy) {
         reject(err);
       });
         }
-    });
-        
+    });   
     outs.set(id, result);
     return result;
   }
 }
+
+function getid(proxy) { let dataKey = 'ld';; return MD5(`${dataKey}-${proxy.server}-${proxy.port}`); }  
+function getinid(server) { let dataKeys = 'ia';; return MD5(`${dataKeys}-${server}`); }  
+function getaliid(server) { let aliKeys = 'al';; return MD5(`${aliKeys}-${server}`); }  
+function getspcn(server) { let spcnKeys = 'sc';; return MD5(`${spcnKeys}-${server}`); }  
+function getflag(countryCode) { const codePoints = countryCode .toUpperCase() .split("") .map((char) => 127397 + char.charCodeAt()); return String.fromCodePoint(...codePoints).replace(/🇹🇼/g, "🇨🇳"); }  
+function removels(arr) { const nameSet = new Set(); const result = []; for (const e of arr) { if (e.qc && !nameSet.has(e.qc)) { nameSet.add(e.qc); result.push(e); } } return result; }  
+function removeqc(arr) { const nameSet = new Set(); const result = []; for (const e of arr) { if (!nameSet.has(e.qc)) { nameSet.add(e.qc); const modifiedE = { ...e }; delete modifiedE.qc; result.push(modifiedE); } } return result; }  
+function jxh(e) { const n = e.reduce((e, n) => { const t = e.find((e) => e.name === n.name); if (t) { t.count++; t.items.push({ ...n, name: `${n.name}${XHFGF}${t.count.toString().padStart(2, "0")}`, }); } else { e.push({ name: n.name, count: 1, items: [{ ...n, name: `${n.name}${XHFGF}01` }], }); } return e; }, []); const t = n.flatMap((e) => e.items); e.splice(0, e.length, ...t); return e; }  
+function oneProxies(proxies) { const groups = proxies.reduce((groups, proxy) => { const name = proxy.name.replace(/[^A-Za-z0-9\u00C0-\u017F\u4E00-\u9FFF]+\d+$/, ""); if (!groups[name]) { groups[name] = []; } groups[name].push(proxy); return groups; }, {}); for (const name in groups) { if (groups[name].length === 1 && groups[name][0].name.endsWith("01")) { const proxy = groups[name][0]; proxy.name = name; } } return proxies; }  
+function mTIme(t) { if (t < 1000) { return `${Math.round(t)}毫秒`; } else if (t < 60000) { return `${Math.round(t / 1000)}秒`; } else if (t < 3600000) { return `${Math.round(t / 60000)}分钟`; } else if (t >= 3600000) { return `${Math.round(t / 3600000)}小时`; } };  
+function sleep(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
+
 var MD5=function(d){var _=M(V(Y(X(d),8*d.length)));return _.toLowerCase()};function M(d){for(var _,m="0123456789ABCDEF",f="",r=0;r<d.length;
 r++)_=d.charCodeAt(r),f+=m.charAt(_>>>4&15)+m.charAt(15&_);return f}function X(d){for(var _=Array(d.length>>2),m=0;m<_.length;m++)_[m]=0;for(m=0;
 m<8*d.length;m+=8)_[m>>5]|=(255&d.charCodeAt(m/8))<<m%32;return _}function V(d){for(var _="",m=0;m<32*d.length;m+=8)_+=String.fromCharCode(d[m>>5]>>>m%32&255);
