@@ -366,12 +366,15 @@ async function operator(proxies) {
                 adflag = "";
             }
             
-            if(debug){console.log("----------------------------处理前节点名🍉"+JSON.stringify(proxy.name))}
+            if(debug){console.log("----------------------------处理前节点名🍉"+JSON.stringify(proxy.name))
+            console.log("server为"+JSON.stringify(proxy.server))
+            }
         if(dns){proxy.server = qcip}
  
         // console.log("域名解析后"+proxy.server)
         proxy.name = inkey + adflag + reoutnames;
-              if(debug){console.log("----------------------------处理后节点名🍉🍉"+JSON.stringify(proxy.name))}
+              if(debug){console.log("----------------------------处理后节点名🍉🍉"+JSON.stringify(proxy.name))
+              console.log("server为"+JSON.stringify(proxy.server))}
         // 去重 入口ip/落地IP
         proxy.qc = qcip + outip.query;
         } catch (err) {}
