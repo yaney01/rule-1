@@ -60,6 +60,10 @@ const XHFGF = $arguments.sn == undefined ? " " : decodeURI($arguments.sn);
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 let onen = false;
 
+// let intimed = $persistentStore.read("缓存过期时间");
+
+
+
 const regexArray=[ /游戏|game/i, ];
 
 const valueArray= [ "Game" ];
@@ -78,11 +82,14 @@ async function operator(proxies) {
     console.log("\nNCNAME: 不支持此 SubStore, 目前官方SubStore还未更新scriptResourceCache\n查看脚本说明安装对应版本\nhttps://github.com/Keywos/rule/raw/main/cname.js")
     if (target=="Surge"){
       $notification.post("NCNAME Sub-Store未更新", "", "请点击或查看Log查看脚本说明安装对应版本", {url: "https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule"})
-    } else if (target=="Loon")
+    } else if (target=="Loon"){
       $notification.post("NCNAME Sub-Store未更新", "", "请点击安装插件, 或查看Log安装对应版本, 并关闭原本的Substore", "loon://import?plugin=https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Tool/Loon/Plugin/Sub-Store.plugin")
-    return proxies;
+    }
+        return proxies;
   }
   
+ 
+  // console.log(JSON.stringify(intimed))
   // 批处理个数
   var batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
   const startTime = new Date();
@@ -108,23 +115,54 @@ async function operator(proxies) {
           if (inss.has(id)) {
             return inss.get(id);
           }
+          console.log("111")
           const cacheds = scriptResourceCache.get(id);
           if (cacheds) {
             if (!onen) {
+              console.log("222")
               timeout = with_cache;
               onen  = true;
               stops = true;
             }
             const timepushs = scriptResourceCache.gettime(id);
+            console.log("333--"+JSON.stringify(timepushs))
             let TimeStarts = new Date().getTime();
-            let timedPush = mTIme(
+
+            let timedPush = "";
+            if (target=="Loon"){
+              let TIMEDKEY = "";
+              const cacheExpirationTimes = {
+              "1分钟": "60000",
+              "5分钟": "300000",
+              "10分钟": "600000",
+              "30分钟": "1800000",
+              "1小时": "3600000",
+              "2小时": "7200000",
+              "3小时": "10800000",
+              "6小时": "21600000",
+              "12小时": "43200000",
+              "48小时": "172800000",
+              "72小时": "259200000",
+            };
+            let intimed = $persistentStore.read("缓存过期时间");
+            TIMEDKEY = cacheExpirationTimes[intimed] || "172800000";
+            console.log(JSON.stringify(TIMEDKEY))
+            timedPush = mTIme(
               parseInt(timepushs, 10) - TimeStarts + parseInt(TIMEDKEY, 10)
             ).replace(/-/g, "");
+            } else {
+              timedPush = mTIme(
+                parseInt(timepushs, 10) - TimeStarts + parseInt(TIMEDKEY, 10)
+              ).replace(/-/g, "");
+            }
+            
+            console.log("444--"+JSON.stringify(timedPush))
             if (timepushs < 0) {
               Pushtd = `缓存已经过期: ${timedPush}, `;
             } else {
               Pushtd = `${timedPush}后过期, `;
             }   
+            console.log(Pushtd)
           }
         } catch (err) {}
       })
@@ -301,7 +339,7 @@ async function operator(proxies) {
   if(debug){ console.log(JSON.stringify(proxies))};
   numone && (proxies = oneProxies(proxies));
   // log
-  // console.log(JSON.stringify(TIMEDKEY))
+
   const PRSO = proxies.length;
   const endTime = new Date();
   const timeDiff = endTime.getTime() - startTime.getTime();
@@ -309,6 +347,11 @@ async function operator(proxies) {
   APIREADKEY > 0 ? console.log(`读取API缓存: ${APIREADKEY} 个`) : null;
   APIWRITEKEY > 0 ? console.log(`写入API缓存: ${APIWRITEKEY} 个`) : null;
   console.log(`处理完后剩余: ${PRSO} 个`);
+  if (target=="Loon"){
+    console.log("缓存过期时间: " + intimed + ", 还剩" + Pushtd.replace(/,/g, ""));
+  } else {
+    console.log("缓存过期时间: " + mTIme(TIMEDKEY)+ ", 还剩" + Pushtd.replace(/,/g, ""));
+  }
   // console.log("缓存过期时间: " + mTIme(TIMEDKEY)+ "还剩" + Pushtd.replace(/,/g, ""));
   console.log(`此方法总用时: ${mTIme(timeDiff)}\n----For New CNAME----`);
   // Push
