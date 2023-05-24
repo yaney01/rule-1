@@ -6,7 +6,7 @@
 #!icon=https://raw.githubusercontent.com/58xinian/icon/master/Sub-Store1.png
 #https://github.com/xream/Sub-Store/tree/feature/scriptResourceCache
 
-#!select = 缓存过期时间,n小时,12小时,3,4,5,6
+#!select = 缓存过期时间,1分钟,3分钟
 
 [MITM]
 hostname=sub.store

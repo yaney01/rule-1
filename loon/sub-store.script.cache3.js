@@ -4,17 +4,14 @@
 
 let intimed = $persistentStore.read("缓存过期时间")
 let TIMEDKEY = "";
-if (intimed == "n小时"){
-    TIMEDKEY = "nhhhh";
-}else if(intimed == "12小时"){
-    TIMEDKEY = "12hhhh";
+if (intimed == "1分钟"){
+    TIMEDKEY = "60000";
+}else if(intimed == "3分钟"){
+    TIMEDKEY = "180000";
 } else {
-    TIMEDKEY = "默认时间";
+    TIMEDKEY = "1728e5";
 }
 console.log(TIMEDKEY)
-
-console.log("1111"+SCRIPT_CACHE_EXPIRATION_TIME_MS)
-console.log("2222"+ _$constants_67.SCRIPT_CACHE_EXPIRATION_TIME_MS)
 
 !(function () {
   var createModuleFactory = function (t) {
@@ -30999,6 +30996,3 @@ console.log("2222"+ _$constants_67.SCRIPT_CACHE_EXPIRATION_TIME_MS)
   }
   (0, ___migration_89.default)(), (0, _restful.default)();
 })();
-
-console.log("11"+SCRIPT_CACHE_EXPIRATION_TIME_MS)
-console.log("22"+ _$constants_67.SCRIPT_CACHE_EXPIRATION_TIME_MS)
