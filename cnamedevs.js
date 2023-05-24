@@ -238,7 +238,7 @@ async function operator(proxies) {
           if(debug){console.log("----------------------------阿里dns"+JSON.stringify(alikey))}
           // SPAPI
           const spkey = await SPECNAPI(proxy.server, alikey);
-                if(debug){console.log("----------------------------国内入口SPAPI"+JSON.stringify(spkey))}
+                if(debug){console.log("----------------------------国内入口SPAPI🌸"+JSON.stringify(spkey))}
           let qcip = "";
           qcip = spkey.ip
           // {"country":"中国","regionName":"广东","city":"广州","district":"越秀区","isp":"中国移动","operator":"中国移动"}
@@ -250,7 +250,7 @@ async function operator(proxies) {
           let adcm = ""; // 运营商符号
           let otu = ""; // 🎮
           let incity = ""; //入口
-                if(debug){console.log("----------------------------落地"+JSON.stringify(outip))}
+                if(debug){console.log("==========================落地信息🍓"+JSON.stringify(outip))}
           if (spkey.country == "中国" && spkey.city !== "" ){
             if (city && sheng){
               if(spkey.city == spkey.regionName){
