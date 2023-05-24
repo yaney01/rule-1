@@ -142,18 +142,8 @@ async function operator(proxies) {
                 if (target=="Loon"){
                   let TIMEDKEYS = "";
                   const cacheExpirationTimes = {
-                  "1分钟": "60000",
-                  "5分钟": "300000",
-                  "10分钟": "600000",
-                  "30分钟": "1800000",
-                  "1小时": "3600000",
-                  "2小时": "7200000",
-                  "3小时": "10800000",
-                  "6小时": "21600000",
-                  "12小时": "43200000",
-                  "48小时": "172800000",
-                  "72小时": "259200000",
-                };
+                    "1分钟":"60000","5分钟":"300000","10分钟":"600000","30分钟":"1800000","1小时":"3600000","2小时":"7200000","3小时":"10800000","6小时":"21600000","12小时":"43200000","48小时":"172800000","72小时":"259200000",
+                  };
                 intimed = $persistentStore.read("缓存过期时间");
                 TIMEDKEYS = cacheExpirationTimes[intimed] || "172800000";
                 if(debug){console.log("loon缓存"+JSON.stringify(TIMEDKEYS))}
@@ -161,15 +151,14 @@ async function operator(proxies) {
                   parseInt(timepushs, 10) - TimeStarts + parseInt(TIMEDKEYS, 10)
                 ).replace(/-/g, "");
                 } else {
-              timedPush = mTIme(
-                parseInt(timepushs, 10) - TimeStarts + parseInt(TIMEDKEY, 10)
-              ).replace(/-/g, "");
-            }
-
+                  timedPush = mTIme(
+                    parseInt(timepushs, 10) - TimeStarts + parseInt(TIMEDKEY, 10)
+                  ).replace(/-/g, "");
+                }
             if (timepushs < 0) {
               Pushtd = `缓存已经过期: ${timedPush}, `;
             } else {
-              Pushtd = `${timedPush}后过期, `;
+              Pushtd = `, ${timedPush}后过期 \n`;
             }   
           }
         } catch (err) {}
@@ -359,17 +348,15 @@ async function operator(proxies) {
   } else {
     console.log("缓存过期时间: " + mTIme(TIMEDKEY)+ ", 还剩" + Pushtd.replace(/,/g, ""));
   }
-
-  
   console.log(`此方法总用时: ${mTIme(timeDiff)}\n----For New CNAME----`);
   // Push
   const readlog = APIREADKEY ? `读取缓存: ${APIREADKEY} 个 ` : '';
   const writelog = APIWRITEKEY ? `写入缓存: ${APIWRITEKEY} 个 ` : '';
-  const Push = (PRSO == PRS) ? "\n无复用节点, " : "\n去除无效节点后有" + PRSO + "个, ";
+  const Push = (PRSO == PRS) ? "无复用节点, " : "去除无效节点后有" + PRSO + "个, ";
   if(!offtz){
     $notification.post(`NC: ${tzname}共${PRS}个节点`,
     "",
-    `${Pushtd}${writelog}${readlog}${Push}用时:${mTIme(timeDiff)}`)
+    `${writelog}${readlog}${Pushtd}${Push}用时:${mTIme(timeDiff)}`)
   }
    return proxies;
 }
