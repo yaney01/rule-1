@@ -12,4 +12,4 @@
 hostname=sub.store
 
 [Script]
-http-request https?:\/\/sub\.store script-path=https://github.com/Keywos/rule/raw/main/loon/sub-store.script.cache.js, requires-body=true, timeout=120, tag=Sub-Store  
+http-request https?:\/\/sub\.store script-path=https://github.com/Keywos/rule/raw/main/loon/sub-store.script.cache3.js, requires-body=true, timeout=120, tag=Sub-Store  
