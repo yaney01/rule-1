@@ -302,7 +302,7 @@ async function operator(proxies) {
               }
             });
           let inkey = "";
-            if((isp && city) || (sheng && isp && city) || yun){
+            if((isp && city) || (isp && sheng) || (sheng && isp && city) || yun){
                 if(flag || yun){
                     inkey = adcm + incity +FGF;
                 }else{
@@ -310,7 +310,7 @@ async function operator(proxies) {
                 }
             }else if(flag){
               inkey = adcm+FGF;
-            }else if(isp || yun){
+            }else if(isp || yun || sheng){
               inkey = asns+FGF;
             } else if(city || sheng || yun){
               inkey = incity+FGF;
