@@ -61,16 +61,21 @@ const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 
 const min = $arguments.min ? decodeURI($arguments.min) : "";
 const h = $arguments.h ? decodeURI($arguments.h) : "";
-
+let writet = "";
 let innum = "172800000";
+let loontrue = false;
 if(min !== ""){
-  innum = min * 60000
+  // loontrue = true;
+  innum = parseInt(min, 10) * 60000
+  writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");
 } else if (h !== ""){
-  innum = h * 3600000
+  // loontrue = true;
+  innum = parseInt(h, 10) * 3600000
+  writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");
 } 
 
 
-console.log(innum)
+console.log("innum-- "+innum)
 
 
 let onen = false;
@@ -130,9 +135,14 @@ async function operator(proxies) {
             let timedPush = "";
                 if (target=="Loon"){
                   let TIMEDKEYS = "";
-                  const cacheExpirationTimes={"1分钟":"60000","5分钟":"300000","10分钟":"600000","30分钟":"1800000","1小时":"3600000","2小时":"7200000","3小时":"10800000","6小时":"21600000","12小时":"43200000","24小时":"86400000","48小时":"172800000","72小时":"259200000"};
+                  const cacheExpirationTimes={"1分钟":"60000","5分钟":"300000","10分钟":"600000","30分钟":"1800000","1小时":"3600000","2小时":"7200000","3小时":"10800000","6小时":"21600000","12小时":"43200000","24小时":"86400000","48小时":"172800000","72小时":"259200000","SUB参数传入":"innums"};
                 intimed = $persistentStore.read("缓存过期时间");
                 TIMEDKEYS = cacheExpirationTimes[intimed] || "172800000";
+                if(TIMEDKEYS == "innums"){
+                  TIMEDKEYS = innums
+                }
+                console.log("loon缓存intimed --- "+JSON.stringify(intimed))
+                console.log("loon缓存 --- "+JSON.stringify(TIMEDKEYS))
                 if(debug){console.log("loon缓存"+JSON.stringify(TIMEDKEYS))}
                 timedPush = mTIme(
                   parseInt(timepushs, 10) - TimeStarts + parseInt(TIMEDKEYS, 10)
