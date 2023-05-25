@@ -1,4 +1,3 @@
-
 /*
 版本：48H缓存版 
 日期：2023-05-26 01:19:58
@@ -60,60 +59,34 @@ const keynames = $arguments.name ? decodeURI($arguments.name) : "";
 const FGF = $arguments.fgf == undefined ? " " : decodeURI($arguments.fgf);
 const XHFGF = $arguments.sn == undefined ? " " : decodeURI($arguments.sn);
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
-const min = $arguments.min ? decodeURI($arguments.min) : "1";
+const min = $arguments.min ? decodeURI($arguments.min) : "";
 const h = $arguments.h ? decodeURI($arguments.h) : "";
-let writet = "";
-let innum = 172800000;
-let loontrue = false;
-let onen = false;
-let Sue = false;
-if (min !== "") {
-  Sue=true;
-  innum = parseInt(min, 10) * 60000
-  writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");
-} else if (h !== "") {
-  Sue=true;
-  innum = parseInt(h, 10) * 3600000
-  writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");
-} else {
-  writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");
-}
-const regexArray = [/游戏|game/i,];
-const valueArray = ["Game"];
+let writet = "";let innum = 172800000;let loontrue = false;let onen = false;let Sue = false;
+if(min !== "") {Sue=true;innum = parseInt(min, 10) * 60000;writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");} 
+else if(h !== "") {Sue=true;innum = parseInt(h, 10) * 3600000;writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");} 
+else{writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");}
+const regexArray = [/游戏|game/i,];const valueArray = ["Game"];
 const nameclear = /邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|到期|过期|已用|联系|邮箱|工单|群|贩卖|倒卖|防止|(\b(USE|USED|TOTAL|EXPIRE|EMAIL)\b)|\d\s?g/i;
-async function operator(proxies) {
-  const support = isLoon || isSurge;
-  if (!support) {
-    $.error(`No Loon or Surge`);
-    $notify("当前代理工具不支持此脚本", "请使用Loon或Surge运行此脚本", "");
-    console.log("当前代理工具不支持此脚本, 使用Loon或Surge运行此脚本");
-    return proxies;
-  }
-  if (typeof scriptResourceCache === 'undefined') {
-    console.log("\nNCNAME: 不支持此 SubStore, 目前官方SubStore还未更新scriptResourceCache\n查看脚本说明安装对应版本\nhttps://github.com/Keywos/rule/raw/main/cname.js")
-    if (target == "Surge") {
-      $notification.post("NCNAME Sub-Store未更新", "", "请点击或查看Log查看脚本说明安装对应版本", { url: "https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule" })
-    } else if (target == "Loon") {
-      $notification.post("NCNAME Sub-Store未更新", "", "请点击安装插件, 或查看Log安装对应版本, 并关闭原本的Substore", "loon://import?plugin=https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Tool/Loon/Plugin/Sub-Store.plugin")
-    }
-    return proxies;
-  }
-  var batch_size = $arguments["batch"] ? $arguments["batch"] : 10;
-  const startTime = new Date();
-  const PRS = proxies.length;
-  console.log(`设定API超时: ${timeout}毫秒`);
-  console.log(`有缓API超时: ${with_cache}毫秒`);
-  console.log(`批处理节点数: ${batch_size} 个`);
-  console.log(`开始处理节点: ${PRS} 个`);
-  let i = 0;
-  if (debug) { console.log("处理前" + JSON.stringify(proxies)) }
-  proxies = proxies.filter((item) => !nameclear.test(item.name));
-  let o = 0;
-  let Pushtd = "";
-  let intimed = "";
-  let stops = false;
-  while (o < proxies.length && !stops) {
-    const batchs = proxies.slice(o, o + 1);
+async function operator(e) {const support = isLoon || isSurge;if (!support) {$.error(`No Loon or Surge`);$notify("仅仅支持Loon或Surge", "", "");console.log("仅仅支持Loon或Surge");return e;}
+if (typeof scriptResourceCache === 'undefined') {console.log("\nNCNAME: 不支持此 SubStore,\n查看脚本说明\nhttps://github.com/Keywos/rule/raw/main/cname.js");
+if (target == "Surge") {$notification.post("NCNAME Sub-Store未更新", "", "请点击或查看Log查看脚本说明安装对应版本", { url: "https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule" })} 
+else if (target == "Loon") {$notification.post("NCNAME Sub-Store未更新", "", "请点击安装插件, 或查看Log安装对应版本, 并关闭原本的Substore", "loon://import?plugin=https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Tool/Loon/Plugin/Sub-Store.plugin")}return e;}
+var batch_size = $arguments["batch"] ? $arguments["batch"] : 10;
+const startTime = new Date();
+const PRS = e.length;
+console.log(`设定API超时: ${timeout}毫秒`);
+console.log(`有缓API超时: ${with_cache}毫秒`);
+console.log(`批处理节点数: ${batch_size} 个`);
+console.log(`开始处理节点: ${PRS} 个`);
+let i = 0;
+if (debug) { console.log("处理前" + JSON.stringify(e)) }
+e = e.filter((item) => !nameclear.test(item.name));
+let o = 0;
+let Pushtd = "";
+let intimed = "";
+let stops = false;
+  while (o < e.length && !stops) {
+    const batchs = e.slice(o, o + 1);
     await Promise.all(
       batchs.map(async (proxy) => {
         try {
@@ -153,8 +126,8 @@ async function operator(proxies) {
     );
     o += 1;
   };
-  while (i < proxies.length) {
-    const batch = proxies.slice(i, i + batch_size);
+  while (i < e.length) {
+    const batch = e.slice(i, i + batch_size);
     await Promise.all(
       batch.map(async (proxy) => {
         try {
@@ -166,7 +139,6 @@ async function operator(proxies) {
           if (debug) { console.log("--国内入口SPAPI🌸" + JSON.stringify(spkey)) }
           let qcip = "";
           qcip = spkey.ip
-          // {"country":"中国","regionName":"广东","city":"广州","district":"越秀区","isp":"中国移动","operator":"中国移动"}
           // 落地
           const outip = await IPAPI(proxy);
           let outnames = outip.country;
@@ -309,20 +281,20 @@ async function operator(proxies) {
     if (!onen) { await sleep(300); }
     i += batch_size;
   }
-  if (debug) { console.log(JSON.stringify(proxies)) };
-  proxies = removels(proxies);
+  if (debug) { console.log(JSON.stringify(e)) };
+  e = removels(e);
   // 去除去重时添加的qc属性
-  proxies = removeqc(proxies);
+  e = removeqc(e);
   // 按节点全名分组加序号
-  proxies = jxh(proxies);
+  e = jxh(e);
   if (keynames !== "") {
-    proxies.forEach((proxy) => {
+    e.forEach((proxy) => {
       proxy.name = keynames + " " + proxy.name;
     });
   }
-  if (debug) { console.log(JSON.stringify(proxies)) };
-  numone && (proxies = oneProxies(proxies));
-  const PRSO = proxies.length;
+  if (debug) { console.log(JSON.stringify(e)) };
+  numone && (e = onee(e));
+  const PRSO = e.length;
   const endTime = new Date();
   const timeDiff = endTime.getTime() - startTime.getTime();
   if (dns) { console.log(`DNS解析后共: ${PRSO} 个`) }
@@ -344,229 +316,22 @@ async function operator(proxies) {
       "",
       `${writelog}${readlog}${Pushtd}${Push}用时:${mTIme(timeDiff)}`)
   }
-  return proxies;
+  return e;
 }
 
-const ali = new Map();
-async function AliDNS(server) {
-  const isIP = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(server);
-  if (isIP) {
-    return server;
-  } else {
-    const id = getaliid(server);
-    if (ali.has(id)) {
-      return ali.get(id);
-    }
-    const cacheds = scriptResourceCache.get(id);
-    if (cacheds) {
-      return cacheds;
-    } else {
-      const resultali = new Promise((resolve, reject) => {
-        if (with_cache < 51 && onen) {
-          return resultali;
-        } else {
-
-          const url = `http://223.5.5.5/resolve?name=${server}&type=A&short=1`;
-          const timeoutPromise = new Promise((_, reject) => {
-            setTimeout(() => {
-              reject(new Error("timeout"));
-            }, timeout);
-          });
-          const queryPromise = $.http.get({ url }).then((resp) => {
-            const alid = JSON.parse(resp.body);
-            if (alid.length > 0) {
-              scriptResourceCache.set(id, alid[0]);
-              resolve(alid[0]);
-            } else {
-              reject(new Error());
-            }
-          })
-            .catch((err) => {
-              reject(err);
-            });
-          Promise.race([timeoutPromise, queryPromise]).catch((err) => {
-            reject(err);
-          });
-        }
-      });
-      ali.set(id, resultali);
-      return resultali;
-    }
-  }
-}
-
-const spapi = new Map();
-async function SPECNAPI(server, alikey) {
-  const id = getspcn(server);
-  if (spapi.has(id)) {
-    return spapi.get(id);
-  }
-  const cacheds = scriptResourceCache.get(id);
-  if (cacheds) {
-    return cacheds;
-  } else {
-    const resultin = new Promise((resolve, reject) => {
-      if (with_cache < 51 && onen) {
-        return resultin;
-      } else {
-        const ipcn = alikey;
-        const url = `https://api-v3.speedtest.cn/ip?ip=${ipcn}`;
-        const timeoutPromise = new Promise((_, reject) => {
-          setTimeout(() => {
-            reject(new Error("timeout"));
-          }, timeout);
-        });
-        const queryPromise = $.http.get({ url }).then((resp) => {
-          const spcnapi = JSON.parse(resp.body);
-          if (spcnapi.data) {
-            const { country, province: regionName, city, isp, ip} = spcnapi.data;
-            const newspcn = { country, regionName, city, isp, ip};
-            resolve(newspcn);
-            scriptResourceCache.set(id, newspcn);
-          } else {
-            reject(new Error());
-          }
-        })
-          .catch((err) => {
-            reject(err);
-          });
-        Promise.race([timeoutPromise, queryPromise]).catch((err) => {
-          reject(err);
-        });
-      }
-    });
-    ins.set(id, resultin);
-    return resultin;
-  }
-}
-
-const ins = new Map();
-async function INDNS(server) {
-  const id = getinid(server);
-  if (ins.has(id)) {
-    return ins.get(id);
-  }
-  const cacheds = scriptResourceCache.get(id);
-  if (cacheds) {
-    return cacheds;
-  } else {
-    const resultin = new Promise((resolve, reject) => {
-      if (with_cache < 51 && onen) {
-        return resultin;
-      } else {
-        const ips = server;
-        // const url = `http://ip-api.com/json/${ips}?lang=zh-CN&fields=status,message,country,countryCode,city,query,regionName,asname,as`;
-        const url = `http://ip-api.com/json/${ips}?lang=zh-CN&fields=status,message,country,query,regionName`;
-        const timeoutPromise = new Promise((_, reject) => {
-          setTimeout(() => {
-            reject(new Error("timeout"));
-          }, timeout);
-        });
-        const queryPromise = $.http.get({ url }).then((resp) => {
-          const inipapi = JSON.parse(resp.body);
-          if (inipapi.status === "success") {
-            scriptResourceCache.set(id, inipapi);
-            resolve(inipapi);
-          } else {
-            resolve(ips);
-          }
-        })
-          .catch((err) => {
-            reject(err);
-          });
-        Promise.race([timeoutPromise, queryPromise]).catch((err) => {
-          reject(err);
-        });
-      }
-    });
-    ins.set(id, resultin);
-    return resultin;
-  }
-}
-
-let APIREADKEY = 0;
-let APIWRITEKEY = 0;
-const outs = new Map();
-async function IPAPI(proxy) {
-  const id = getid(proxy);
-  if (outs.has(id)) {
-    return outs.get(id);
-  }
-  const cached = scriptResourceCache.get(id);
-  if (cached) {
-    APIREADKEY++;
-    return cached;
-  } else {
-    const result = new Promise((resolve, reject) => {
-      if (with_cache < 51 && onen) {
-        return result;
-      } else {
-        const url = `http://ip-api.com/json?lang=zh-CN&fields=status,message,country,countryCode,city,query`;
-        let node = ProxyUtils.produce([proxy], target);
-        const timeoutPromise = new Promise((_, reject) => {
-          setTimeout(() => {
-            reject(new Error("timeout"));
-          }, timeout);
-        });
-        const queryPromise = $.http.get({
-          url, node: node,
-          "policy-descriptor": node,
-        })
-          .then((resp) => {
-            const lip = JSON.parse(resp.body);
-            if (lip.status === "success") {
-              scriptResourceCache.set(id, lip);
-              APIWRITEKEY++;
-              resolve(lip);
-            } else {
-              reject(new Error(lip.message));
-            }
-          })
-          .catch((err) => {
-            reject(err);
-          });
-        Promise.race([timeoutPromise, queryPromise]).catch((err) => {
-          reject(err);
-        });
-      }
-    });
-    outs.set(id, result);
-    return result;
-  }
-}
-
-function getid(proxy) { let dataKey = 'ld';; return MD5(`${dataKey}-${proxy.server}-${proxy.port}`); }
-function getinid(server) { let dataKeys = 'ia';; return MD5(`${dataKeys}-${server}`); }
-function getaliid(server) { let aliKeys = 'al';; return MD5(`${aliKeys}-${server}`); }
-function getspcn(server) { let spcnKeys = 'sc';; return MD5(`${spcnKeys}-${server}`); }
-function getflag(countryCode) { const codePoints = countryCode.toUpperCase().split("").map((char) => 127397 + char.charCodeAt()); return String.fromCodePoint(...codePoints).replace(/🇹🇼/g, "🇨🇳"); }
-function removels(arr) { const nameSet = new Set(); const result = []; for (const e of arr) { if (e.qc && !nameSet.has(e.qc)) { nameSet.add(e.qc); result.push(e); } } return result; }
-function removeqc(arr) { const nameSet = new Set(); const result = []; for (const e of arr) { if (!nameSet.has(e.qc)) { nameSet.add(e.qc); const modifiedE = { ...e }; delete modifiedE.qc; result.push(modifiedE); } } return result; }
-function jxh(e) { const n = e.reduce((e, n) => { const t = e.find((e) => e.name === n.name); if (t) { t.count++; t.items.push({ ...n, name: `${n.name}${XHFGF}${t.count.toString().padStart(2, "0")}`, }); } else { e.push({ name: n.name, count: 1, items: [{ ...n, name: `${n.name}${XHFGF}01` }], }); } return e; }, []); const t = n.flatMap((e) => e.items); e.splice(0, e.length, ...t); return e; }
-function oneProxies(proxies) { const groups = proxies.reduce((groups, proxy) => { const name = proxy.name.replace(/[^A-Za-z0-9\u00C0-\u017F\u4E00-\u9FFF]+\d+$/, ""); if (!groups[name]) { groups[name] = []; } groups[name].push(proxy); return groups; }, {}); for (const name in groups) { if (groups[name].length === 1 && groups[name][0].name.endsWith("01")) { const proxy = groups[name][0]; proxy.name = name; } } return proxies; }
-function mTIme(t) { if (t < 1000) { return `${Math.round(t)}毫秒`; } else if (t < 60000) { return `${Math.round(t / 1000)}秒`; } else if (t < 3600000) { return `${Math.round(t / 60000)}分钟`; } else if (t >= 3600000) { return `${Math.round(t / 3600000)}小时`; } };
-function sleep(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
-var MD5 = function (d) { var _ = M(V(Y(X(d), 8 * d.length))); return _.toLowerCase() }; function M(d) {for (var _, m = "0123456789ABCDEF", f = "", r = 0; r < d.length;r++)_ = d.charCodeAt(r), f += m.charAt(_ >>> 4 & 15) + m.charAt(15 & _); return f} 
-function X(d) {for (var _ = Array(d.length >> 2), m = 0; m < _.length; m++)_[m] = 0; for (m = 0; m < 8 * d.length; m += 8)_[m >> 5] |= (255 & d.charCodeAt(m / 8)) << m % 32; return _} function V(d) {for (var _ = "", m = 0; m < 32 * d.length; m += 8)_ += String.fromCharCode(d[m >> 5] >>> m % 32 & 255);return _} function Y(d, _) {
-d[_ >> 5] |= 128 << _ % 32, d[14 + (_ + 64 >>> 9 << 4)] = _; for (var m = 1732584193, f = -271733879, r = -1732584194, i = 271733878, n = 0; n < d.length; n += 16) {
-var h = m, g = f, t = r, a = i; f = md5_ii(f = md5_ii(f = md5_ii(f = md5_ii(f = md5_hh(f = md5_hh(f = md5_hh(f = md5_hh(f = md5_gg(f = md5_gg(f = md5_gg(f = md5_gg(f = md5_ff(f = md5_ff(f = md5_ff(f = md5_ff(f,
-r = md5_ff(r, i = md5_ff(i, m = md5_ff(m, f, r, i, d[n + 0], 7, -680876936), f, r, d[n + 1], 12, -389564586), m, f, d[n + 2], 17, 606105819), i, m, d[n + 3], 22, -1044525330),
-r = md5_ff(r, i = md5_ff(i, m = md5_ff(m, f, r, i, d[n + 4], 7, -176418897), f, r, d[n + 5], 12, 1200080426), m, f, d[n + 6], 17, -1473231341), i, m, d[n + 7], 22, -45705983),
-r = md5_ff(r, i = md5_ff(i, m = md5_ff(m, f, r, i, d[n + 8], 7, 1770035416), f, r, d[n + 9], 12, -1958414417), m, f, d[n + 10], 17, -42063), i, m, d[n + 11], 22, -1990404162),
-r = md5_ff(r, i = md5_ff(i, m = md5_ff(m, f, r, i, d[n + 12], 7, 1804603682), f, r, d[n + 13], 12, -40341101), m, f, d[n + 14], 17, -1502002290), i, m, d[n + 15], 22, 1236535329),
-r = md5_gg(r, i = md5_gg(i, m = md5_gg(m, f, r, i, d[n + 1], 5, -165796510), f, r, d[n + 6], 9, -1069501632), m, f, d[n + 11], 14, 643717713), i, m, d[n + 0], 20, -373897302),
-r = md5_gg(r, i = md5_gg(i, m = md5_gg(m, f, r, i, d[n + 5], 5, -701558691), f, r, d[n + 10], 9, 38016083), m, f, d[n + 15], 14, -660478335), i, m, d[n + 4], 20, -405537848),
-r = md5_gg(r, i = md5_gg(i, m = md5_gg(m, f, r, i, d[n + 9], 5, 568446438), f, r, d[n + 14], 9, -1019803690), m, f, d[n + 3], 14, -187363961), i, m, d[n + 8], 20, 1163531501),
-r = md5_gg(r, i = md5_gg(i, m = md5_gg(m, f, r, i, d[n + 13], 5, -1444681467), f, r, d[n + 2], 9, -51403784), m, f, d[n + 7], 14, 1735328473), i, m, d[n + 12], 20, -1926607734),
-r = md5_hh(r, i = md5_hh(i, m = md5_hh(m, f, r, i, d[n + 5], 4, -378558), f, r, d[n + 8], 11, -2022574463), m, f, d[n + 11], 16, 1839030562), i, m, d[n + 14], 23, -35309556),
-r = md5_hh(r, i = md5_hh(i, m = md5_hh(m, f, r, i, d[n + 1], 4, -1530992060), f, r, d[n + 4], 11, 1272893353), m, f, d[n + 7], 16, -155497632), i, m, d[n + 10], 23, -1094730640),
-r = md5_hh(r, i = md5_hh(i, m = md5_hh(m, f, r, i, d[n + 13], 4, 681279174), f, r, d[n + 0], 11, -358537222), m, f, d[n + 3], 16, -722521979), i, m, d[n + 6], 23, 76029189),
-r = md5_hh(r, i = md5_hh(i, m = md5_hh(m, f, r, i, d[n + 9], 4, -640364487), f, r, d[n + 12], 11, -421815835), m, f, d[n + 15], 16, 530742520), i, m, d[n + 2], 23, -995338651),
-r = md5_ii(r, i = md5_ii(i, m = md5_ii(m, f, r, i, d[n + 0], 6, -198630844), f, r, d[n + 7], 10, 1126891415), m, f, d[n + 14], 15, -1416354905), i, m, d[n + 5], 21, -57434055),
-r = md5_ii(r, i = md5_ii(i, m = md5_ii(m, f, r, i, d[n + 12], 6, 1700485571), f, r, d[n + 3], 10, -1894986606), m, f, d[n + 10], 15, -1051523), i, m, d[n + 1], 21, -2054922799),
-r = md5_ii(r, i = md5_ii(i, m = md5_ii(m, f, r, i, d[n + 8], 6, 1873313359), f, r, d[n + 15], 10, -30611744), m, f, d[n + 6], 15, -1560198380), i, m, d[n + 13], 21, 1309151649),
-r = md5_ii(r, i = md5_ii(i, m = md5_ii(m, f, r, i, d[n + 4], 6, -145523070), f, r, d[n + 11], 10, -1120210379), m, f, d[n + 2], 15, 718787259), i, m, d[n + 9], 21, -343485551),
-m = safe_add(m, h), f = safe_add(f, g), r = safe_add(r, t), i = safe_add(i, a)} return Array(m, f, r, i)} 
-function md5_cmn(d, _, m, f, r, i) {return safe_add(bit_rol(safe_add(safe_add(_, d), safe_add(f, i)), r), m)} 
-function md5_ff(d, _, m, f, r, i, n) { return md5_cmn(_ & m | ~_ & f, d, _, r, i, n) } function md5_gg(d, _, m, f, r, i, n) { return md5_cmn(_ & f | m & ~f, d, _, r, i, n) } function md5_hh(d, _, m, f, r, i, n) { return md5_cmn(_ ^ m ^ f, d, _, r, i, n) } function md5_ii(d, _, m, f, r, i, n) { return md5_cmn(m ^ (_ | ~f), d, _, r, i, n) } function safe_add(d, _) { var m = (65535 & d) + (65535 & _); return (d >> 16) + (_ >> 16) + (m >> 16) << 16 | 65535 & m }
-function bit_rol(d, _) { return d << _ | d >>> 32 - _ }
+const ali = new Map();async function AliDNS(e){const t=/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(e);if(t){return e}else{const t=getaliid(e);if(ali.has(t)){return ali.get(t)}const n=scriptResourceCache.get(t);if(n){return n}else{const n=new Promise(((s,o)=>{if(with_cache<51&&onen){return n}else{const n=`http://223.5.5.5/resolve?name=${e}&type=A&short=1`;const r=new Promise(((e,t)=>{setTimeout((()=>{t(new Error("timeout"))}),timeout)}));const i=$.http.get({url:n}).then((e=>{const n=JSON.parse(e.body);if(n.length>0){scriptResourceCache.set(t,n[0]);s(n[0])}else{o(new Error)}})).catch((e=>{o(e)}));Promise.race([r,i]).catch((e=>{o(e)}))}}));ali.set(t,n);return n}}}
+const spapi=new Map;async function SPECNAPI(e,t){const n=getspcn(e);if(spapi.has(n)){return spapi.get(n)}const s=scriptResourceCache.get(n);if(s){return s}else{const e=new Promise(((s,o)=>{if(with_cache<51&&onen){return e}else{const e=t;const r=`https://api-v3.speedtest.cn/ip?ip=${e}`;const i=new Promise(((e,t)=>{setTimeout((()=>{t(new Error("timeout"))}),timeout)}));const c=$.http.get({url:r}).then((e=>{const t=JSON.parse(e.body);if(t.data){const{country:e,province:o,city:r,isp:i,ip:c}=t.data;const a={country:e,regionName:o,city:r,isp:i,ip:c};s(a);scriptResourceCache.set(n,a)}else{o(new Error)}})).catch((e=>{o(e)}));Promise.race([i,c]).catch((e=>{o(e)}))}}));ins.set(n,e);return e}}
+const ins=new Map;async function INDNS(e){const t=getinid(e);if(ins.has(t)){return ins.get(t)}const n=scriptResourceCache.get(t);if(n){return n}else{const n=new Promise(((s,o)=>{if(with_cache<51&&onen){return n}else{const n=e;const r=`http://ip-api.com/json/${n}?lang=zh-CN&fields=status,message,country,query,regionName`;const i=new Promise(((e,t)=>{setTimeout((()=>{t(new Error("timeout"))}),timeout)}));const c=$.http.get({url:r}).then((e=>{const o=JSON.parse(e.body);if(o.status==="success"){scriptResourceCache.set(t,o);s(o)}else{s(n)}})).catch((e=>{o(e)}));Promise.race([i,c]).catch((e=>{o(e)}))}}));ins.set(t,n);return n}}
+let APIREADKEY=0;let APIWRITEKEY=0;const outs=new Map;async function IPAPI(e){const t=getid(e);if(outs.has(t)){return outs.get(t)}const n=scriptResourceCache.get(t);if(n){APIREADKEY++;return n}else{const n=new Promise(((s,o)=>{if(with_cache<51&&onen){return n}else{const n=`http://ip-api.com/json?lang=zh-CN&fields=status,message,country,countryCode,city,query`;let r=ProxyUtils.produce([e],target);const i=new Promise(((e,t)=>{setTimeout((()=>{t(new Error("timeout"))}),timeout)}));const c=$.http.get({url:n,node:r,"policy-descriptor":r}).then((e=>{const n=JSON.parse(e.body);if(n.status==="success"){scriptResourceCache.set(t,n);APIWRITEKEY++;s(n)}else{o(new Error(n.message))}})).catch((e=>{o(e)}));Promise.race([i,c]).catch((e=>{o(e)}))}}));outs.set(t,n);return n}}
+function getid(e){let t="ld";return MD5(`${t}-${e.server}-${e.port}`)}
+function getinid(e){let t="ia";return MD5(`${t}-${e}`)}
+function getaliid(e){let t="al";return MD5(`${t}-${e}`)}
+function getspcn(e){let t="sc";return MD5(`${t}-${e}`)}
+var MD5=function(e){var t=M(V(Y(X(e),8*e.length)));return t.toLowerCase()};function M(e){for(var t,n="0123456789ABCDEF",s="",o=0;o<e.length;o++)t=e.charCodeAt(o),s+=n.charAt(t>>>4&15)+n.charAt(15&t);return s}function X(e){for(var t=Array(e.length>>2),n=0;n<t.length;n++)t[n]=0;for(n=0;n<8*e.length;n+=8)t[n>>5]|=(255&e.charCodeAt(n/8))<<n%32;return t}function V(e){for(var t="",n=0;n<32*e.length;n+=8)t+=String.fromCharCode(e[n>>5]>>>n%32&255);return t}function Y(e,t){e[t>>5]|=128<<t%32,e[14+(t+64>>>9<<4)]=t;for(var n=1732584193,s=-271733879,o=-1732584194,r=271733878,i=0;i<e.length;i+=16){var c=n,a=s,u=o,m=r;s=md5_ii(s=md5_ii(s=md5_ii(s=md5_ii(s=md5_hh(s=md5_hh(s=md5_hh(s=md5_hh(s=md5_gg(s=md5_gg(s=md5_gg(s=md5_gg(s=md5_ff(s=md5_ff(s=md5_ff(s=md5_ff(s,o=md5_ff(o,r=md5_ff(r,n=md5_ff(n,s,o,r,e[i+0],7,-680876936),s,o,e[i+1],12,-389564586),n,s,e[i+2],17,606105819),r,n,e[i+3],22,-1044525330),o=md5_ff(o,r=md5_ff(r,n=md5_ff(n,s,o,r,e[i+4],7,-176418897),s,o,e[i+5],12,1200080426),n,s,e[i+6],17,-1473231341),r,n,e[i+7],22,-45705983),o=md5_ff(o,r=md5_ff(r,n=md5_ff(n,s,o,r,e[i+8],7,1770035416),s,o,e[i+9],12,-1958414417),n,s,e[i+10],17,-42063),r,n,e[i+11],22,-1990404162),o=md5_ff(o,r=md5_ff(r,n=md5_ff(n,s,o,r,e[i+12],7,1804603682),s,o,e[i+13],12,-40341101),n,s,e[i+14],17,-1502002290),r,n,e[i+15],22,1236535329),o=md5_gg(o,r=md5_gg(r,n=md5_gg(n,s,o,r,e[i+1],5,-165796510),s,o,e[i+6],9,-1069501632),n,s,e[i+11],14,643717713),r,n,e[i+0],20,-373897302),o=md5_gg(o,r=md5_gg(r,n=md5_gg(n,s,o,r,e[i+5],5,-701558691),s,o,e[i+10],9,38016083),n,s,e[i+15],14,-660478335),r,n,e[i+4],20,-405537848),o=md5_gg(o,r=md5_gg(r,n=md5_gg(n,s,o,r,e[i+9],5,568446438),s,o,e[i+14],9,-1019803690),n,s,e[i+3],14,-187363961),r,n,e[i+8],20,1163531501),o=md5_gg(o,r=md5_gg(r,n=md5_gg(n,s,o,r,e[i+13],5,-1444681467),s,o,e[i+2],9,-51403784),n,s,e[i+7],14,1735328473),r,n,e[i+12],20,-1926607734),o=md5_hh(o,r=md5_hh(r,n=md5_hh(n,s,o,r,e[i+5],4,-378558),s,o,e[i+8],11,-2022574463),n,s,e[i+11],16,1839030562),r,n,e[i+14],23,-35309556),o=md5_hh(o,r=md5_hh(r,n=md5_hh(n,s,o,r,e[i+1],4,-1530992060),s,o,e[i+4],11,1272893353),n,s,e[i+7],16,-155497632),r,n,e[i+10],23,-1094730640),o=md5_hh(o,r=md5_hh(r,n=md5_hh(n,s,o,r,e[i+13],4,681279174),s,o,e[i+0],11,-358537222),n,s,e[i+3],16,-722521979),r,n,e[i+6],23,76029189),o=md5_hh(o,r=md5_hh(r,n=md5_hh(n,s,o,r,e[i+9],4,-640364487),s,o,e[i+12],11,-421815835),n,s,e[i+15],16,530742520),r,n,e[i+2],23,-995338651),o=md5_ii(o,r=md5_ii(r,n=md5_ii(n,s,o,r,e[i+0],6,-198630844),s,o,e[i+7],10,1126891415),n,s,e[i+14],15,-1416354905),r,n,e[i+5],21,-57434055),o=md5_ii(o,r=md5_ii(r,n=md5_ii(n,s,o,r,e[i+12],6,1700485571),s,o,e[i+3],10,-1894986606),n,s,e[i+10],15,-1051523),r,n,e[i+1],21,-2054922799),o=md5_ii(o,r=md5_ii(r,n=md5_ii(n,s,o,r,e[i+8],6,1873313359),s,o,e[i+15],10,-30611744),n,s,e[i+6],15,-1560198380),r,n,e[i+13],21,1309151649),o=md5_ii(o,r=md5_ii(r,n=md5_ii(n,s,o,r,e[i+4],6,-145523070),s,o,e[i+11],10,-1120210379),n,s,e[i+2],15,718787259),r,n,e[i+9],21,-343485551),n=safe_add(n,c),s=safe_add(s,a),o=safe_add(o,u),r=safe_add(r,m)}return Array(n,s,o,r)}function md5_cmn(e,t,n,s,o,r){return safe_add(bit_rol(safe_add(safe_add(t,e),safe_add(s,r)),o),n)}function md5_ff(e,t,n,s,o,r,i){return md5_cmn(t&n|~t&s,e,t,o,r,i)}function md5_gg(e,t,n,s,o,r,i){return md5_cmn(t&s|n&~s,e,t,o,r,i)}function md5_hh(e,t,n,s,o,r,i){return md5_cmn(t^n^s,e,t,o,r,i)}function md5_ii(e,t,n,s,o,r,i){return md5_cmn(n^(t|~s),e,t,o,r,i)}function safe_add(e,t){var n=(65535&e)+(65535&t);return(e>>16)+(t>>16)+(n>>16)<<16|65535&n}function bit_rol(e,t){return e<<t|e>>>32-t}
+function getflag(e){const t=e.toUpperCase().split("").map((e=>127397+e.charCodeAt()));return String.fromCodePoint(...t).replace(/🇹🇼/g,"🇨🇳")}
+function removels(e){const t=new Set;const n=[];for(const s of e){if(s.qc&&!t.has(s.qc)){t.add(s.qc);n.push(s)}}return n}
+function removeqc(e){const t=new Set;const n=[];for(const s of e){if(!t.has(s.qc)){t.add(s.qc);const e={...s};delete e.qc;n.push(e)}}return n}
+function jxh(e){const t=e.reduce(((e,t)=>{const n=e.find((e=>e.name===t.name));if(n){n.count++;n.items.push({...t,name:`${t.name}${XHFGF}${n.count.toString().padStart(2,"0")}`})}else{e.push({name:t.name,count:1,items:[{...t,name:`${t.name}${XHFGF}01`}]})}return e}),[]);const n=t.flatMap((e=>e.items));e.splice(0,e.length,...n);return e}
+function onee(e){const t=e.reduce(((e,t)=>{const n=t.name.replace(/[^A-Za-z0-9\u00C0-\u017F\u4E00-\u9FFF]+\d+$/,"");if(!e[n]){e[n]=[]}e[n].push(t);return e}),{});for(const e in t){if(t[e].length===1&&t[e][0].name.endsWith("01")){const n=t[e][0];n.name=e}}return e}
+function mTIme(e){if(e<1e3){return`${Math.round(e)}毫秒`}else if(e<6e4){return`${Math.round(e/1e3)}秒`}else if(e<36e5){return`${Math.round(e/6e4)}分钟`}else if(e>=36e5){return`${Math.round(e/36e5)}小时`}}
+function sleep(e){return new Promise((t=>setTimeout(t,e)))}
