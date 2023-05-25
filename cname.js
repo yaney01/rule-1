@@ -51,22 +51,32 @@ const sheng = $arguments["sheng"];
 const debug = $arguments["debug"];
 const numone = $arguments["snone"];
 const { isLoon, isSurge, isQX } = $substore.env;
-let with_cache = $arguments["cd"] ? $arguments["cd"] : 400;
-let timeout = $arguments["timeout"] ? $arguments["timeout"] : 1600;
+let with_cache = $arguments["cd"] ? $arguments["cd"] : 500;
+let timeout = $arguments["timeout"] ? $arguments["timeout"] : 1500;
 const tzname = $arguments.tz ? decodeURI($arguments.tz) : "";
 const keynames = $arguments.name ? decodeURI($arguments.name) : "";
 const FGF = $arguments.fgf == undefined ? " " : decodeURI($arguments.fgf);
 const XHFGF = $arguments.sn == undefined ? " " : decodeURI($arguments.sn);
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
+
+const min = $arguments.min ? decodeURI($arguments.min) : "";
+const h = $arguments.h ? decodeURI($arguments.h) : "";
+
+let innum = "172800000";
+if(min !== ""){
+  innum = min * 60000
+} else if (h !== ""){
+  innum = h * 3600000
+} 
+
+
+console.log(innum)
+
+
 let onen = false;
-
-
 const regexArray=[ /游戏|game/i, ];
-
 const valueArray= [ "Game" ];
-
-const nameclear =/邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|到期|过期|已用|联系|邮箱|工单|群|贩卖|倒卖|防止|(\b(GAME|USE|USED|TOTAL|EXPIRE|EMAIL)\b)|\dG|\d\s?g/i;
-
+const nameclear =/邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|到期|过期|已用|联系|邮箱|工单|群|贩卖|倒卖|防止|(\b(USE|USED|TOTAL|EXPIRE|EMAIL)\b)|\d\s?g/i;
 async function operator(proxies) {
   const support = isLoon || isSurge;
   if (!support) {
@@ -84,27 +94,6 @@ async function operator(proxies) {
     }
         return proxies;
   }
-  
-  // if (target=="Loon"){
-  //   let TIMEDKEY = "";
-  //   const cacheExpirationTimes = {
-  //   "1分钟": "60000",
-  //   "5分钟": "300000",
-  //   "10分钟": "600000",
-  //   "30分钟": "1800000",
-  //   "1小时": "3600000",
-  //   "2小时": "7200000",
-  //   "3小时": "10800000",
-  //   "6小时": "21600000",
-  //   "12小时": "43200000",
-  //   "48小时": "172800000",
-  //   "72小时": "259200000",
-  // };
-  // let intimed = $persistentStore.read("缓存过期时间");
-  // TIMEDKEY = cacheExpirationTimes[intimed] || "172800000";
-  // // console.log(JSON.stringify(TIMEDKEY))
-  // }
-  // 批处理个数
   var batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
   const startTime = new Date();
   const PRS = proxies.length;
@@ -112,7 +101,6 @@ async function operator(proxies) {
   console.log(`有缓API超时: ${with_cache}毫秒`);
   console.log(`批处理节点数: ${batch_size} 个`);
   console.log(`开始处理节点: ${PRS} 个`);
-  // console.log("域名解析前"+proxy.server)
   let i = 0;
   if(debug){console.log("处理前"+JSON.stringify(proxies))}
   proxies = proxies.filter((item) => !nameclear.test(item.name));
@@ -208,7 +196,6 @@ async function operator(proxies) {
             }else{
               asns = "企业";
             }
-            // console.log(incity+asns)
             if(flag){
               if (isp){
                   const keycm = { '电信': '🅳', '联通': '🅻', '移动': '🆈', '广电': '🅶'};
@@ -243,17 +230,17 @@ async function operator(proxies) {
               }
             });
           let inkey = "";
-            if((isp && city) || (isp && sheng) || (sheng && isp && city) || yun){
-                if(flag || yun){
+            if((isp && city) || (sheng && city) || (isp && sheng) || (sheng && isp && city) || yun){
+                if(flag || yun || sheng || city){
                     inkey = adcm + incity +FGF;
                 }else{
                     inkey = incity + asns +FGF;
                 }
             }else if(flag){
               inkey = adcm+FGF;
-            }else if(isp || yun || sheng){
+            }else if(isp || yun ){
               inkey = asns+FGF;
-            } else if(city || sheng || yun){
+            } else if(city || sheng){
               inkey = incity+FGF;
             } else {
               inkey = "";
@@ -307,7 +294,7 @@ async function operator(proxies) {
             console.log("server为"+JSON.stringify(proxy.server))
             }
         if(dns){proxy.server = qcip}
-        // console.log("域名解析后"+proxy.server)
+        if(debug){console.log("域名解析后"+proxy.server)}
         proxy.name = inkey + adflag + reoutnames;
         if(debug){
           console.log("--处理后节点名🍉🍉"+JSON.stringify(proxy.name))
@@ -334,7 +321,6 @@ async function operator(proxies) {
   }
   if(debug){ console.log(JSON.stringify(proxies))};
   numone && (proxies = oneProxies(proxies));
-  // log
   const PRSO = proxies.length;
   const endTime = new Date();
   const timeDiff = endTime.getTime() - startTime.getTime();
