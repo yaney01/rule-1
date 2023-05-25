@@ -242,17 +242,17 @@ async function operator(proxies) {
               }
             });
           let inkey = "";
-            if((isp && city) || (isp && sheng) || (sheng && isp && city) || yun){
-                if(flag || yun){
+            if((isp && city) || (sheng && city) || (isp && sheng) || (sheng && isp && city) || yun){
+                if(flag || yun || sheng || city){
                     inkey = adcm + incity +FGF;
                 }else{
                     inkey = incity + asns +FGF;
                 }
             }else if(flag){
               inkey = adcm+FGF;
-            }else if(isp || yun || sheng){
+            }else if(isp || yun ){
               inkey = asns+FGF;
-            } else if(city || sheng || yun){
+            } else if(city || sheng){
               inkey = incity+FGF;
             } else {
               inkey = "";
