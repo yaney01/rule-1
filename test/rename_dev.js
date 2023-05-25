@@ -51,7 +51,7 @@ const regexArray=[/ˣ²/, /ˣ³/, /ˣ⁴/, /ˣ⁵/, /ˣ⁶/, /ˣ⁷/, /ˣ⁸/, /
 
 const valueArray= [ "2×","3×","4×","5×","6×","7×","8×","9×","10×","20×","30×","40×","50×","IPLC","IEPL","Kern","Edge","Pro","Std","Exp","Biz","Fam","Game","Buy","Zx","LB","CF","UDP","GPT"];
 
-function operator(proxies) {
+function operatorss(proxies) {
   const newProxiess = [];
   proxies.forEach((proxy) => {
     Object.keys(rurekey).forEach((ikey) => {

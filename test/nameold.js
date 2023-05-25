@@ -29,7 +29,7 @@ const batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
 const keynames = $arguments.name ? decodeURI($arguments.name) : "";
 const timeout = $arguments["timeout"] ? $arguments["timeout"] : 1000;
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
-async function operator(proxies) {
+async function operatorss(proxies) {
 const support = (isLoon || isSurge);
 if (!support) { $.error(`No Loon or Surge`);
 $notify("不支持此设备","本脚本仅支持 Loon or Surge",'')

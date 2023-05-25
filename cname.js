@@ -31,6 +31,8 @@
 [sn=]     国家与序号之间的分隔符，默认为空格
 [name=]   添加机场名称前缀
 [tz=]     通知的时候的机场名
+[h=]      缓存过期时间小时
+[min=]    缓存过期时间,分钟  h和min只能二选一
 [timeout=]测试节点延时允许的最大超时参数，超出允许范围则判定为无效节点，默认1600ms
 [cd=] 当有缓存时，会先读取缓存，且对节点进行延时测试，直接输出结果。
       当无缓存时，会对节点直接进行延时测试，节点延时超过所设定的值则判定为无效节点，默认400ms，并将结果写入缓存。
@@ -64,10 +66,13 @@ let writet = "";
 let innum = 172800000;
 let loontrue = false;
 let onen = false;
+let Sue = false;
 if (min !== "") {
+  Sue=true;
   innum = parseInt(min, 10) * 60000
   writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");
 } else if (h !== "") {
+  Sue=true;
   innum = parseInt(h, 10) * 3600000
   writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");
 } else {
@@ -134,13 +139,12 @@ async function operator(proxies) {
               TIMEDKEYS = cacheExpirationTimes[intimed] || "172800000";
               if (TIMEDKEYS == "innums") {
                 TIMEDKEYS = innum
-              }
-              //.toString().replace(/-/g, "")
-              timedPush = mTIme(
-                parseInt(timepushs, 10) - TimeStarts + parseInt(TIMEDKEYS, 10))
-            } else {
-              timedPush = mTIme(
-                parseInt(timepushs, 10) - TimeStarts + parseInt(TIMEDKEY, 10));
+              }//.toString().replace(/-/g, "")
+              timedPush = mTIme(parseInt(timepushs, 10) - TimeStarts + parseInt(TIMEDKEYS, 10))
+              } else if(target == "Surge" && Sue){
+              timedPush = mTIme(parseInt(timepushs, 10) - TimeStarts + parseInt(innum, 10));
+              } else {
+              timedPush = mTIme(parseInt(timepushs, 10) - TimeStarts + parseInt(TIMEDKEY, 10));
             }
             Pushtd = `, ${timedPush}后过期 \n`;
           }
@@ -578,3 +582,4 @@ var MD5 = function (d) { var _ = M(V(Y(X(d), 8 * d.length))); return _.toLowerCa
     (safe_add(safe_add(_, d), safe_add(f, i)), r), m)
 } function md5_ff(d, _, m, f, r, i, n) { return md5_cmn(_ & m | ~_ & f, d, _, r, i, n) } function md5_gg(d, _, m, f, r, i, n) { return md5_cmn(_ & f | m & ~f, d, _, r, i, n) } function md5_hh(d, _, m, f, r, i, n) { return md5_cmn(_ ^ m ^ f, d, _, r, i, n) } function md5_ii(d, _, m, f, r, i, n) { return md5_cmn(m ^ (_ | ~f), d, _, r, i, n) } function safe_add(d, _) { var m = (65535 & d) + (65535 & _); return (d >> 16) + (_ >> 16) + (m >> 16) << 16 | 65535 & m }
 function bit_rol(d, _) { return d << _ | d >>> 32 - _ }
+
