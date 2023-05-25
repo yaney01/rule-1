@@ -66,10 +66,13 @@ let writet = "";
 let innum = 172800000;
 let loontrue = false;
 let onen = false;
+let Sue = false;
 if (min !== "") {
+  Sue=true;
   innum = parseInt(min, 10) * 60000
   writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");
 } else if (h !== "") {
+  Sue=true;
   innum = parseInt(h, 10) * 3600000
   writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");
 } else {
@@ -136,13 +139,12 @@ async function operator(proxies) {
               TIMEDKEYS = cacheExpirationTimes[intimed] || "172800000";
               if (TIMEDKEYS == "innums") {
                 TIMEDKEYS = innum
-              }
-              //.toString().replace(/-/g, "")
-              timedPush = mTIme(
-                parseInt(timepushs, 10) - TimeStarts + parseInt(TIMEDKEYS, 10))
-            } else {
-              timedPush = mTIme(
-                parseInt(timepushs, 10) - TimeStarts + parseInt(TIMEDKEY, 10));
+              }//.toString().replace(/-/g, "")
+              timedPush = mTIme(parseInt(timepushs, 10) - TimeStarts + parseInt(TIMEDKEYS, 10))
+              } else if(target == "Surge" && Sue){
+              timedPush = mTIme(parseInt(timepushs, 10) - TimeStarts + parseInt(innum, 10));
+              } else {
+              timedPush = mTIme(parseInt(timepushs, 10) - TimeStarts + parseInt(TIMEDKEY, 10));
             }
             Pushtd = `, ${timedPush}后过期 \n`;
           }
@@ -580,3 +582,4 @@ var MD5 = function (d) { var _ = M(V(Y(X(d), 8 * d.length))); return _.toLowerCa
     (safe_add(safe_add(_, d), safe_add(f, i)), r), m)
 } function md5_ff(d, _, m, f, r, i, n) { return md5_cmn(_ & m | ~_ & f, d, _, r, i, n) } function md5_gg(d, _, m, f, r, i, n) { return md5_cmn(_ & f | m & ~f, d, _, r, i, n) } function md5_hh(d, _, m, f, r, i, n) { return md5_cmn(_ ^ m ^ f, d, _, r, i, n) } function md5_ii(d, _, m, f, r, i, n) { return md5_cmn(m ^ (_ | ~f), d, _, r, i, n) } function safe_add(d, _) { var m = (65535 & d) + (65535 & _); return (d >> 16) + (_ >> 16) + (m >> 16) << 16 | 65535 & m }
 function bit_rol(d, _) { return d << _ | d >>> 32 - _ }
+
