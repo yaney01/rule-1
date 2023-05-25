@@ -60,6 +60,7 @@ const XHFGF = $arguments.sn == undefined ? " " : decodeURI($arguments.sn);
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 let onen = false;
 
+
 const regexArray=[ /游戏|game/i, ];
 
 const valueArray= [ "Game" ];
