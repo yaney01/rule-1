@@ -139,24 +139,22 @@ async function operator(proxies) {
                 intimed = $persistentStore.read("缓存过期时间");
                 TIMEDKEYS = cacheExpirationTimes[intimed] || "172800000";
                 if(TIMEDKEYS == "innums"){
-                  TIMEDKEYS = innums
+                  TIMEDKEYS = innum
                 }
-                console.log("loon缓存intimed --- "+JSON.stringify(intimed))
-                console.log("loon缓存 --- "+JSON.stringify(TIMEDKEYS))
-                if(debug){console.log("loon缓存"+JSON.stringify(TIMEDKEYS))}
-                timedPush = mTIme(
-                  parseInt(timepushs, 10) - TimeStarts + parseInt(TIMEDKEYS, 10)
-                ).replace(/-/g, "");
+
+                //.toString().replace(/-/g, "")
+                  timedPush = mTIme(
+                  parseInt(timepushs, 10) - TimeStarts + parseInt(TIMEDKEYS, 10))
                 } else {
                   timedPush = mTIme(
-                    parseInt(timepushs, 10) - TimeStarts + parseInt(TIMEDKEY, 10)
-                  ).replace(/-/g, "");
+                  parseInt(timepushs, 10) - TimeStarts + parseInt(TIMEDKEY, 10));
                 }
-            if (timepushs < 0) {
-              Pushtd = `缓存已经过期: ${timedPush}, `;
-            } else {
+
+            // if (timedPush < 0) {
+            //   Pushtd = `缓存已经过期: ${timedPush}, `;
+            // } else {
               Pushtd = `, ${timedPush}后过期 \n`;
-            }   
+            // }   
           }
         } catch (err) {}
       })
