@@ -159,7 +159,7 @@ const regexArray=[ /游戏|game/i, ];
 
 const valueArray= [ "Game" ];
 
-async function operator(proxies) {
+async function operatorss(proxies) {
   const support = isLoon || isSurge;
   if (!support) {
     $.error(`No Loon or Surge`);

@@ -126,7 +126,7 @@ function mTIme(timeDiff) {
 //   return new Promise((resolve) => setTimeout(resolve, ms));
 // }
 
-async function operator(proxies) {
+async function operatorss(proxies) {
   const support = isLoon || isSurge;
   if (!support) {
     $.error(`No Loon or Surge`);

@@ -5,7 +5,7 @@ const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 const timeout = $arguments["timeout"] ? $arguments["timeout"] : 1000;
 const flag = $arguments["flag"];
 const batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
-async function operator(proxies) {
+async function operatorss(proxies) {
   const support = (isLoon || isSurge);
   if (!support) {
     $.error(`Only supports Loon and Surge!`);

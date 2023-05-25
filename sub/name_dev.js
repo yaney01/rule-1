@@ -8,7 +8,7 @@
 // 使用方法：SubStore内选择"脚本操作"，然后填写上面的脚本地址
 // 支持平台：目前只支持Loon，Surge ,不支持qx 因为qx目前不能指定节点更新时间：2023.04.26
 
-const $ = $substore;
+const = $substore;
 const { isLoon, isSurge, isQX } = $substore.env;
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 
@@ -21,7 +21,7 @@ const flag = $arguments["flag"];
 // 每一次处理的节点个数
 const batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
 
-async function operator(proxies) {
+async function operatorss(proxies) {
   const support = (isLoon || isSurge);
   if (!support) {
     $.error(`Only supports Loon and Surge!`);

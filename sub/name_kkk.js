@@ -11,7 +11,7 @@ const batch_size = $arguments["batch"] ? $arguments["batch"] : 16;
 const $ = $substore
 const { isLoon, isSurge, isQX } = $substore.env;
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
-async function operator(proxies) {
+async function operatorss(proxies) {
   const support = (isLoon || isSurge);
   if (!support) {
     $.error(`Only supports Loon and Surge!`);
