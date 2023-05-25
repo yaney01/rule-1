@@ -34,11 +34,10 @@ https://github.com/Keywos/rule/raw/main/cname.js#city&isp
 [min=]    缓存过期时间,h和min只能二选一
 [timeout=]测试延时最大超时参数，默认1600ms
 [cd=]     
-# 当有缓存，部分节点没有缓存的情况下
+ * 当有缓存，部分节点没有缓存的情况下
 对节点直接进行测试写入缓存的超时时间，默认450ms
-# 当节点缓存接近全部的情况下, 才建议设置[cd=]的值小于50，这样会直接读取缓存。不发送请求, 减少不必要的请求,和时间
-
- */
+ * 当节点缓存接近全部的情况下, 才建议设置[cd=]的值小于50，这样会直接读取缓存。不发送请求, 减少不必要的请求,和时间
+*/
 const $ = $substore;
 const bl = $arguments["bl"];
 const isp = $arguments["isp"];
