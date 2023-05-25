@@ -58,27 +58,19 @@ const keynames = $arguments.name ? decodeURI($arguments.name) : "";
 const FGF = $arguments.fgf == undefined ? " " : decodeURI($arguments.fgf);
 const XHFGF = $arguments.sn == undefined ? " " : decodeURI($arguments.sn);
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
-
 const min = $arguments.min ? decodeURI($arguments.min) : "";
 const h = $arguments.h ? decodeURI($arguments.h) : "";
 let writet = "";
 let innum = "172800000";
 let loontrue = false;
+let onen = false;
 if(min !== ""){
-  // loontrue = true;
   innum = parseInt(min, 10) * 60000
   writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");
 } else if (h !== ""){
-  // loontrue = true;
   innum = parseInt(h, 10) * 3600000
   writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");
 } 
-
-
-console.log("innum-- "+innum)
-
-
-let onen = false;
 const regexArray=[ /游戏|game/i, ];
 const valueArray= [ "Game" ];
 const nameclear =/邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|到期|过期|已用|联系|邮箱|工单|群|贩卖|倒卖|防止|(\b(USE|USED|TOTAL|EXPIRE|EMAIL)\b)|\d\s?g/i;
@@ -141,7 +133,6 @@ async function operator(proxies) {
                 if(TIMEDKEYS == "innums"){
                   TIMEDKEYS = innum
                 }
-
                 //.toString().replace(/-/g, "")
                   timedPush = mTIme(
                   parseInt(timepushs, 10) - TimeStarts + parseInt(TIMEDKEYS, 10))
@@ -149,12 +140,11 @@ async function operator(proxies) {
                   timedPush = mTIme(
                   parseInt(timepushs, 10) - TimeStarts + parseInt(TIMEDKEY, 10));
                 }
-
-            // if (timedPush < 0) {
-            //   Pushtd = `缓存已经过期: ${timedPush}, `;
-            // } else {
-              Pushtd = `, ${timedPush}后过期 \n`;
-            // }   
+                if(Pushtd < 0 ){
+                  Pushtd = `, ${timedPush}后过期 \n`; 
+                } else {
+                  Pushtd = `, 已过期 \n`; 
+                }   
           }
         } catch (err) {}
       })
