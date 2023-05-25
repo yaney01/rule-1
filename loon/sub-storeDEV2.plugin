@@ -14,4 +14,4 @@ DOMAIN, sub-store.vercel.app, PROXY
 hostname=sub.store
 
 [Script]
-http-request https?:\/\/sub\.store script-path=https://github.com/Keywos/rule/raw/main/loon/sub-store.cache.js, requires-body=true, timeout=120, tag=Sub-Store-Cache  
+http-request https?:\/\/sub\.store script-path=https://github.com/Keywos/rule/raw/main/loon/sub-store.cache3.js, requires-body=true, timeout=120, tag=Sub-Store-Cache  
