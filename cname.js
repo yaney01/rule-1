@@ -67,7 +67,7 @@ if(min !== "") {Sue=true;innum = parseInt(min, 10) * 60000;writet = $persistentS
 else if(h !== "") {Sue=true;innum = parseInt(h, 10) * 3600000;writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");} 
 else{writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");}
 const regexArray = [/游戏|game/i,];const valueArray = ["Game"];
-const nameclear = /邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|下次|版本|官址|备用|到期|过期|已用|国内|国外|联系|邮箱|工单|贩卖|倒卖|防止|(\b(USE|USED|TOTAL|EXPIRE|EMAIL)\b)|\d\s?g/i;
+const nameclear = /邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|下次|版本|官址|备用|到期|过期|已用|国内|国际|国外|联系|邮箱|工单|贩卖|倒卖|防止|(\b(USE|USED|TOTAL|EXPIRE|EMAIL)\b)|\d\s?g/i;
 async function operator(e) {let cs = 0;const startTime = new Date();
 const support = isLoon || isSurge;if (!support) {$.error(`No Loon or Surge`);return e;}
 if (typeof scriptResourceCache === 'undefined') {console.log("\nNCNAME: 不支持此 SubStore,\n查看脚本说明\nhttps://github.com/Keywos/rule/raw/main/cname.js");
