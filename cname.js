@@ -1,7 +1,7 @@
 /*
 版本：48H缓存版 
 日期：2023-05-26 02:42:48
-注意：此脚本仅支持Surge和Loon 出问题时建议更新全部外部资源
+注意：此脚本仅支持Surge和Loon 出问题时建议更新全部外部资源 清理持久化缓存
 符号：🅳电信 🅻联通 🆈移动 🅶广电 🅲公司 🆉直连 🎮游戏
 接口：入口查询[国内spapi 识别到国外为ip-api] 落地查询[ip-api]
 功能：根据接口返回的真实结果，重新对节点命名。添加入口城市、落地国家或地区、国内运营商信息，并对这些数据做持久化缓存（48小时有效期），减少API请求次数，提高运行效率。
@@ -14,30 +14,30 @@
  * Loon: https://github.com/Keywos/rule/raw/main/loon/sub-store.plugin
  * 可莉版本 Loon: https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Tool/Loon/Plugin/Sub-Store.plugin
 ----------------
-以下是此脚本支持的参数，必须以"#"开头，多个参数使用"&"连接，参考上述地址为例使用参数。
-无参数时的节点命名格式: "美国 01"，加city后如果[入口IP或国家]或[落地IP或国家]一样则为 "直连 德国 01" 
+以下是此脚本支持的参数，必须以"#"开头，多个参数使用"&"连接
+https://github.com/Keywos/rule/raw/main/cname.js#city&isp
 [bl]      保留倍率
-[isp]     加运营商或者直连
+[isp]     运营商/直连
 [dns]     DNS域名解析
-[sheng]   加入口省份
+[yun]     入口服务商
 [city]    加入口城市
-[yun]     加入口云服务商
-[game]    保留🎮标识
-[flag]    添加旗帜，默认无此参数
+[game]    保留游戏标识
+[flag]    添加落地旗帜
+[sheng]   加入口省份
 [offtz]   关闭脚本通知
-[snone]   清理个别地区只有一个节点的序号
-[fgf=]    入口和落地之间的分隔符，默认为空格
-[sn=]     国家与序号之间的分隔符，默认为空格
-[name=]   添加机场名称前缀
-[tz=]     通知的时候的机场名
+[snone]   清理地区只有一个节点的01
 [h=]      缓存过期时间小时
-[min=]    缓存过期时间,分钟  h和min只能二选一
-[timeout=]测试节点延时允许的最大超时参数，超出允许范围则判定为无效节点，默认1600ms
-[cd=] 当有缓存时，会先读取缓存，且对节点进行延时测试，直接输出结果。
-      当无缓存时，会对节点直接进行延时测试，节点延时超过所设定的值则判定为无效节点，默认400ms，并将结果写入缓存。
-      当设置[cd=]的值小于50时，则直接读取缓存。
-https://github.com/Keywos/rule/raw/main/cname.js
- */
+[tz=]     通知显示的机场名
+[sn=]     国家与序号之间的分隔符，默认为空格
+[min=]    缓存过期时间分钟,h和min只能二选一
+[fgf=]    入口和落地之间的分隔符，默认为空格
+[name=]   添加机场名称前缀
+[timeout=]HTTP请求返回结果的超时时间，默认1510ms
+[cd=]     
+ * 当部分有缓存，部分节点没有缓存的情况下
+对节点直接进行测试写入缓存的超时时间，默认460ms
+ * 当节点缓存接近全部的情况下, 才建议设置[cd=]的值小于50，这样会直接读取缓存。不发送请求, 减少不必要的请求,和时间 
+*/
 const $ = $substore;
 const bl = $arguments["bl"];
 const isp = $arguments["isp"];
@@ -51,8 +51,8 @@ const sheng = $arguments["sheng"];
 const debug = $arguments["debug"];
 const numone = $arguments["snone"];
 const { isLoon, isSurge, isQX } = $substore.env;
-let with_cache = $arguments["cd"] ? $arguments["cd"] : 450;
-let timeout = $arguments["timeout"] ? $arguments["timeout"] : 1920;
+let with_cache = $arguments["cd"] ? $arguments["cd"] : 460;
+let timeout = $arguments["timeout"] ? $arguments["timeout"] : 1510;
 const tzname = $arguments.tz ? decodeURI($arguments.tz) : "";
 const keynames = $arguments.name ? decodeURI($arguments.name) : "";
 const FGF = $arguments.fgf == undefined ? " " : decodeURI($arguments.fgf);
@@ -66,18 +66,22 @@ else if(h !== "") {Sue=true;innum = parseInt(h, 10) * 3600000;writet = $persiste
 else{writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");}
 const regexArray = [/游戏|game/i,];const valueArray = ["Game"];
 const nameclear = /邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|到期|过期|已用|联系|邮箱|工单|群|贩卖|倒卖|防止|(\b(USE|USED|TOTAL|EXPIRE|EMAIL)\b)|\d\s?g/i;
-async function operator(e) {const support = isLoon || isSurge;if (!support) {$.error(`No Loon or Surge`);$notify("仅仅支持Loon或Surge", "", "");console.log("仅仅支持Loon或Surge");return e;}
+async function operator(e) {
+  let loopCount = 0;
+  const startTime = new Date();
+
+  const support = isLoon || isSurge;if (!support) {$.error(`No Loon or Surge`);$notify("仅仅支持Loon或Surge", "", "");console.log("仅仅支持Loon或Surge");return e;}
 if (typeof scriptResourceCache === 'undefined') {console.log("\nNCNAME: 不支持此 SubStore,\n查看脚本说明\nhttps://github.com/Keywos/rule/raw/main/cname.js");
 if (target == "Surge") {$notification.post("NCNAME Sub-Store未更新", "", "请点击或查看Log查看脚本说明安装对应版本", { url: "https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule" })} 
 else if (target == "Loon") {$notification.post("NCNAME Sub-Store未更新", "", "请点击安装插件, 或查看Log安装对应版本, 并关闭原本的Substore", "loon://import?plugin=https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Tool/Loon/Plugin/Sub-Store.plugin")}return e;}
 var bs = $arguments["batch"] ? $arguments["batch"] : 10;
-const startTime = new Date();
+
 const PRS = e.length;
 console.log(`设定API超时: ${timeout}毫秒`);
 console.log(`有缓API超时: ${with_cache}毫秒`);
 console.log(`批处理节点数: ${bs} 个`);
 console.log(`开始处理节点: ${PRS} 个`);
-let i = 0;
+
 e = e.filter((item) => !nameclear.test(item.name));
 let o = 0;
 let Pushtd = "";
@@ -124,6 +128,8 @@ let stops = false;
     );
     o += 1;
   };
+  do{ 
+  let i = 0;
   while (i < e.length) {
     const batch = e.slice(i, i + bs);
     await Promise.all(
@@ -217,15 +223,38 @@ let stops = false;
     );
     if (!onen) { await sleep(300); }
     i += bs;
+  } loopCount++;
+  console.log(loopCount)
+
+  e = removels(e);
+  
+} while (e.length < 1 && loopCount === 1);
+//PRSO < 1 &&   && loopCount === 1
+if (loopCount < 2) {
+  console.log("测试loopCount")
+  console.log("e.length is less than 1");
+}
+console.log("测试PRSOe.length"+e.length)
+
+  if (e.length < 2) {
+    console.log("测试PRSOe.length")
+   
   }
-  e = removels(e);e = removeqc(e);e = jxh(e);
+  
+  e = removeqc(e);e = jxh(e);
   if (keynames !== "") {
     e.forEach((proxy) => {
       proxy.name = keynames + " " + proxy.name;
     });
   }
+
   numone && (e = onee(e));
-  const PRSO = e.length;
+  let PRSO = e.length;
+  console.log("测试1")
+  console.log(PRSO)
+
+  
+  
   const endTime = new Date();
   const timeDiff = endTime.getTime() - startTime.getTime();
   if (dns) { console.log(`DNS解析后共: ${PRSO} 个`) }
@@ -260,5 +289,5 @@ function removels(e){const t=new Set;const n=[];for(const s of e){if(s.qc&&!t.ha
 function removeqc(e){const t=new Set;const n=[];for(const s of e){if(!t.has(s.qc)){t.add(s.qc);const e={...s};delete e.qc;n.push(e)}}return n}
 function jxh(e){const t=e.reduce(((e,t)=>{const n=e.find((e=>e.name===t.name));if(n){n.count++;n.items.push({...t,name:`${t.name}${XHFGF}${n.count.toString().padStart(2,"0")}`})}else{e.push({name:t.name,count:1,items:[{...t,name:`${t.name}${XHFGF}01`}]})}return e}),[]);const n=t.flatMap((e=>e.items));e.splice(0,e.length,...n);return e}
 function onee(e){const t=e.reduce(((e,t)=>{const n=t.name.replace(/[^A-Za-z0-9\u00C0-\u017F\u4E00-\u9FFF]+\d+$/,"");if(!e[n]){e[n]=[]}e[n].push(t);return e}),{});for(const e in t){if(t[e].length===1&&t[e][0].name.endsWith("01")){const n=t[e][0];n.name=e}}return e}
-function mTIme(e){if(e<1e3){return`${Math.round(e)}毫秒`}else if(e<6e4){return`${Math.round(e/1e3)}秒`}else if(e<36e5){return`${Math.round(e/6e4)}分钟`}else if(e>=36e5){return`${Math.round(e/36e5)}小时`}}
+function mTIme(e){e=e.toString().replace(/-/g, "");if(e<1e3){return`${Math.round(e)}毫秒`}else if(e<6e4){return`${Math.round(e/1e3)}秒`}else if(e<36e5){return`${Math.round(e/6e4)}分钟`}else if(e>=36e5){return`${Math.round(e/36e5)}小时`}}
 function sleep(e){return new Promise((t=>setTimeout(t,e)))}
