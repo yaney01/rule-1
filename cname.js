@@ -38,6 +38,7 @@ https://github.com/Keywos/rule/raw/main/cname.js#city&isp
 [cd=]    * 当部分有缓存，部分节点没有缓存的情况下， 对节点直接进行测试写入缓存的超时时间，默认460ms
 * 仅当节点缓存接近完全的情况下, 《才建议》设置[cd=]的值小于50，这样会直接读取缓存。不发送请求, 减少不必要的请求,和时间 
 * 影响输出预览速度的有 [bs=] [cd=] [timeout=] 节点质量
+----------------
 */
 const $ = $substore;
 const bl = $arguments["bl"];
@@ -212,8 +213,8 @@ batch.map(async (proxy) => {
   } else {console.log("缓存过期时间: " + mTIme(TIMEDKEY) + ", 还剩" + Pushtd.replace(/,|\n/g, ""));}
   console.log(`此方法总用时: ${mTIme(timeDiff)}\n----For New CNAME----`);
   // Push
-  const readlog = apiRead ? `读取缓存: ${apiRead} 个 ` : '';
-  const writelog = apiw ? `写入缓存: ${apiw}, ` : '';
+  const readlog = apiRead ? `读取缓存:${apiRead} ` : '';
+  const writelog = apiw ? `写入缓存:${apiw}, ` : '';
   const Push = (eout == ein) ? "全部通过测试, " : "去除无效节点后有" + eout + "个, ";
   if (!offtz) {$notification.post(
     `${tzname}共${ein}个节点`,"",
