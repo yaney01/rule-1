@@ -1,6 +1,6 @@
 /*
 版本：默认48H缓存版
-日期：2023-05-26 17
+日期：2023-05-26 21:01
 注意：此脚本仅支持Surge和Loon 出问题时建议更新全部外部资源 清理持久化缓存
 符号：🅳电信 🅻联通 🆈移动 🅶广电 🅲公司 🆉直连 🎮游戏
 接口：入口查询[国内spapi 识别到国外为ip-api] 落地查询[ip-api]
@@ -18,7 +18,6 @@
 https://github.com/Keywos/rule/raw/main/cname.js#city&isp
 [bl]      保留倍率
 [isp]     运营商/直连
-[dns]     DNS域名解析
 [yun]     入口服务商
 [city]    加入口城市
 [game]    保留游戏标识
@@ -43,7 +42,6 @@ https://github.com/Keywos/rule/raw/main/cname.js#city&isp
 const $ = $substore;
 const bl = $arguments["bl"];
 const isp = $arguments["isp"];
-const dns = $arguments["dns"];
 const yun = $arguments["yun"];
 const city = $arguments["city"];
 const flag = $arguments["flag"];
@@ -59,6 +57,7 @@ const tzname = $arguments.tz ? decodeURI($arguments.tz) : "";
 const keynames = $arguments.name ? decodeURI($arguments.name) : "";
 const FGF = $arguments.fgf == undefined ? " " : decodeURI($arguments.fgf);
 const XHFGF = $arguments.sn == undefined ? " " : decodeURI($arguments.sn);
+const dns = $arguments["dnsjx"];
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 const min = $arguments.min ? decodeURI($arguments.min) : "";
 const h = $arguments.h ? decodeURI($arguments.h) : "";
@@ -67,7 +66,7 @@ if(min !== "") {Sue=true;innum = parseInt(min, 10) * 60000;writet = $persistentS
 else if(h !== "") {Sue=true;innum = parseInt(h, 10) * 3600000;writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");} 
 else{writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");}
 const regexArray = [/游戏|game/i,];const valueArray = ["Game"];
-const nameclear = /邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|到期|过期|已用|联系|邮箱|工单|群|贩卖|倒卖|防止|(\b(USE|USED|TOTAL|EXPIRE|EMAIL)\b)|\d\s?g/i;
+const nameclear = /邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|下次|版本|官址|备用|到期|过期|已用|联系|邮箱|工单|贩卖|倒卖|防止|(\b(USE|USED|TOTAL|EXPIRE|EMAIL)\b)|\d\s?g/i;
 async function operator(e) {let cs = 0;const startTime = new Date();
 const support = isLoon || isSurge;if (!support) {$.error(`No Loon or Surge`);$notify("仅仅支持Loon或Surge", "", "");console.log("仅仅支持Loon或Surge");return e;}
 if (typeof scriptResourceCache === 'undefined') {console.log("\nNCNAME: 不支持此 SubStore,\n查看脚本说明\nhttps://github.com/Keywos/rule/raw/main/cname.js");
