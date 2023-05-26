@@ -18,7 +18,6 @@
 https://github.com/Keywos/rule/raw/main/cname.js#city&isp
 [bl]      保留倍率
 [isp]     运营商/直连
-[dns]     DNS域名解析
 [yun]     入口服务商
 [city]    加入口城市
 [game]    保留游戏标识
