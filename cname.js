@@ -103,102 +103,99 @@ let stops = false;
             } else {timedPush = mTIme(parseInt(readt, 10) - nt + parseInt(TIMEDKEY, 10));
             }Pushtd = `, ${timedPush}后过期 \n`;
           }}catch(err){}}));o += 1;};
-    do{let i=0;while (i < e.length) {
-    const batch = e.slice(i, i + bs);
-    await Promise.all(
-      batch.map(async (proxy) => {
-        try {const alikey = await AliD(proxy.server);
-          const spkey = await SPEC(proxy.server, alikey);
-          if (debug) { console.log("国内入口🌸 " + JSON.stringify(spkey)) }
-          let qcip = "";
-          qcip = spkey.ip
-          // 落地
-          const outip = await OUTIA(proxy);
-          let luodi = outip.country;
-          let reld = ""; // 落地
-          let cmcc = ""; //运营
-          let cmfg = ""; // 符号
-          let outg = ""; // 🎮
-          let incity = ""; //入口
-          if (debug) { console.log("落地信息🍓 " + JSON.stringify(outip)) }
-          if (spkey.country == "中国" && spkey.city !== "") {
-            if (city && sheng) {
-              if (spkey.city == spkey.regionName) {incity = spkey.city
-              } else {incity = spkey.regionName + FGF + spkey.city}
-            } else if (city) {incity = spkey.city
-            } else if (sheng) {incity = spkey.regionName}
-            if (/电信|联通|移动|广电/.test(spkey.isp)) {cmcc = spkey.isp.replace(/中国/g, "");
-            } else if (yun) {cmcc = spkey.isp;
-            } else {cmcc = "企业";}
-            if (flag) {
-              if (isp) {
-                const keycm = { '电信': '🅳', '联通': '🅻', '移动': '🆈', '广电': '🅶' };
-                if (keycm.hasOwnProperty(cmcc)) {
-                  cmfg = keycm[cmcc];
-                } else {cmfg = "🅲";}
-              }
-            } else {cmfg = cmcc;}
+do{let i=0;while (i < e.length) {
+const batch = e.slice(i, i + bs);
+await Promise.all(
+batch.map(async (proxy) => {
+  try {   
+    const alikey = await AliD(proxy.server); console.log("alikey " + JSON.stringify(alikey));
+    const spkey = await SPEC(proxy.server, alikey);  console.log("国内入口🌸 " + JSON.stringify(spkey.ip));
+    if (debug) { console.log("国内入口🌸 " + JSON.stringify(spkey)) }
+    let qcip = "";
+    qcip = spkey.ip
+    // 落地
+    const outip = await OUTIA(proxy);console.log("落地 " + JSON.stringify(outip.country));
+    
+    let luodi = outip.country;
+    let reld = ""; // 落地
+    let cmcc = ""; //运营
+    let cmfg = ""; // 符号
+    let outg = ""; // 🎮
+    let incity = ""; //入口
+      if (debug) { console.log("落地信息🍓 " + JSON.stringify(outip)) }
+      if (spkey.country == "中国" && spkey.city !== "") {
+        if (city && sheng) {
+          if (spkey.city == spkey.regionName) {incity = spkey.city
+          } else {incity = spkey.regionName + FGF + spkey.city}
+        } else if (city) {incity = spkey.city
+        } else if (sheng) {incity = spkey.regionName}
+        if (/电信|联通|移动|广电/.test(spkey.isp)) {cmcc = spkey.isp.replace(/中国/g, "");
+        } else if (yun) {cmcc = spkey.isp;
+        } else {cmcc = "企业";}
+        if (flag) {
+          if (isp) {
+            const keycm = { '电信': '🅳', '联通': '🅻', '移动': '🆈', '广电': '🅶' };
+            if (keycm.hasOwnProperty(cmcc)) {
+              cmfg = keycm[cmcc];
+            } else {cmfg = "🅲";}
+          }
+        } else {cmfg = cmcc;}
+      } else {
+        const inip = await INIA(proxy.server);console.log("国外入口🌸 " + JSON.stringify(inip.ip));
+        if (debug) { console.log("国外入口 " + JSON.stringify(inip)) }
+        incity = inip.country
+        cmcc = inip.country
+        if (incity == luodi) {
+          incity = "直连";
+          cmcc = ""; //防火墙
+        }if (flag) {cmfg = "🆉"}
+        qcip = inip.ip}
+      let rename = "";//替换game
+      regexArray.forEach((regex, index) => {
+        if (regex.test(proxy.name)) {rename = valueArray[index];}});
+      let inkey = "";
+      if ((isp && city) || (sheng && city) || (isp && sheng) || (sheng && isp && city) || yun) {
+        if (flag || yun || sheng || city) {inkey = cmfg + incity + FGF;}
+          else {inkey = incity + cmcc + FGF;}
+      } else if (flag) {
+        inkey = cmfg + FGF;
+      } else if (isp || yun) {
+        inkey = cmcc + FGF;
+      } else if (city || sheng) {
+        inkey = incity + FGF;
+      } else {inkey = "";}
+        if (game) {
+          //game
+          if (rename === "") {outg = "";} else {//'UDP': '🆄',
+          const keyoutg = { Game: "🎮" };
+          if (keyoutg.hasOwnProperty(rename)) {outg = keyoutg[rename];} 
+          else {outg = "";}}} 
+        else {outg = "";};
+        let nxx = "";
+        if (bl) {
+          const match = proxy.name.match(/(倍率\D?((\d\.)?\d+)\D?)|((\d\.)?\d+)(倍|X|x|×)/);
+          if (match) {
+            const matchedValue = match[0].match(/(\d[\d.]*)/)[0];
+            if (matchedValue !== "1") {
+              const newValue = matchedValue + "×";
+              nxx = newValue
+            }}
+          if (outg !== "") {
+            reld = luodi + outg + nxx;
+          } else if (nxx !== "") {
+            reld = luodi + outg + XHFGF + nxx;
           } else {
-            const inip = await INIA(proxy.server);
-            if (debug) { console.log("国外入口 " + JSON.stringify(inip)) }
-            incity = inip.country
-            cmcc = inip.country
-            if (incity == luodi) {
-              incity = "直连";
-              cmcc = ""; //防火墙
-            }if (flag) {cmfg = "🆉"}
-            qcip = inip.ip}
-          let rename = "";//替换game
-          regexArray.forEach((regex, index) => {
-            if (regex.test(proxy.name)) {rename = valueArray[index];}});
-          let inkey = "";
-          if ((isp && city) || (sheng && city) || (isp && sheng) || (sheng && isp && city) || yun) {
-            if (flag || yun || sheng || city) {inkey = cmfg + incity + FGF;}
-              else {inkey = incity + cmcc + FGF;}
-          } else if (flag) {
-            inkey = cmfg + FGF;
-          } else if (isp || yun) {
-            inkey = cmcc + FGF;
-          } else if (city || sheng) {
-            inkey = incity + FGF;
-          } else {inkey = "";}
-          if (game) {
-            //game
-            if (rename === "") {outg = "";} else {//'UDP': '🆄',
-            const keyoutg = { Game: "🎮" };
-            if (keyoutg.hasOwnProperty(rename)) {outg = keyoutg[rename];} 
-            else {outg = "";}}} 
-          else {outg = "";};
-          let nxx = "";
-          if (bl) {
-            const match = proxy.name.match(/(倍率\D?((\d\.)?\d+)\D?)|((\d\.)?\d+)(倍|X|x|×)/);
-            if (match) {
-              const matchedValue = match[0].match(/(\d[\d.]*)/)[0];
-              if (matchedValue !== "1") {
-                const newValue = matchedValue + "×";
-                nxx = newValue
-              }}
-            if (outg !== "") {
-              reld = luodi + outg + nxx;
-            } else if (nxx !== "") {
-              reld = luodi + outg + XHFGF + nxx;
-            } else {
-              reld = luodi;
-            };} 
-            else {reld = luodi + outg}
-          let adflag = "";
-          if (flag) {adflag = getflag(outip.countryCode)} else {adflag = "";}
-          if (dns) { proxy.server = qcip }
-          proxy.name = inkey + adflag + reld;
-          proxy.qc = qcip + outip.query;
-        }catch(err){}}));if(!onen){await sleep(600)};i+=bs}cs++;e=removels(e);
-      if (e.length < e.length * 0.1 && cs === 1) {
-      $notification.post(
-      `${tzname}未获取到节点`,
-      "努力再次执行任务中...",
-      ""
-    )
-    await sleep(600);}} while (e.length < 1 && cs < 2);
+            reld = luodi;
+          };} 
+          else {reld = luodi + outg}
+        let adflag = "";
+        if (flag) {adflag = getflag(outip.countryCode)} else {adflag = "";}
+        if (dns) { proxy.server = qcip }
+        proxy.name = inkey + adflag + reld;
+        proxy.qc = qcip + outip.query;
+        }catch(err){}}));if(!onen){await sleep(650)};i+=bs}cs++;e=removels(e);
+      if (e.length < ein*0.2 && cs === 1) {
+    await sleep(500);}} while (e.length < ein*0.2 && cs < 2);
   if (cs < 3) {console.log("任务执行次数: "+cs)}
   e = removeqc(e);e = jxh(e);
   if(keynames !== ""){e.forEach((proxy)=>{proxy.name=keynames+" "+proxy.name;});}
@@ -231,10 +228,66 @@ function getflag(e){const t=e.toUpperCase().split("").map((e=>127397+e.charCodeA
 const ali = new Map();async function AliD(e){const t=/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(e);if(t){return e}else{const t=getaliid(e);if(ali.has(t)){return ali.get(t)}const n=scriptResourceCache.get(t);if(n){return n}else{const n=new Promise(((s,o)=>{if(cd<51&&onen){return n}else{const n=`http://223.5.5.5/resolve?name=${e}&type=A&short=1`;const r=new Promise(((e,t)=>{setTimeout((()=>{t(new Error("timeout"))}),timeout)}));const i=$.http.get({url:n}).then((e=>{const n=JSON.parse(e.body);if(n.length>0){scriptResourceCache.set(t,n[0]);s(n[0])}else{o(new Error)}})).catch((e=>{o(e)}));Promise.race([r,i]).catch((e=>{o(e)}))}}));ali.set(t,n);return n}}}
 const spapi=new Map;async function SPEC(e,t){const n=getspcn(e);if(spapi.has(n)){return spapi.get(n)}const s=scriptResourceCache.get(n);if(s){return s}else{const e=new Promise(((s,o)=>{if(cd<51&&onen){return e}else{const e=t;const r=`https://api-v3.speedtest.cn/ip?ip=${e}`;const i=new Promise(((e,t)=>{setTimeout((()=>{t(new Error("timeout"))}),timeout)}));const c=$.http.get({url:r}).then((e=>{const t=JSON.parse(e.body);if(t.data){const{country:e,province:o,city:r,isp:i,ip:c}=t.data;const a={country:e,regionName:o,city:r,isp:i,ip:c};s(a);scriptResourceCache.set(n,a)}else{o(new Error)}})).catch((e=>{o(e)}));Promise.race([i,c]).catch((e=>{o(e)}))}}));ins.set(n,e);return e}}
 const ins=new Map;async function INIA(e){const t=getinid(e);if(ins.has(t)){return ins.get(t)}const n=scriptResourceCache.get(t);if(n){return n}else{const n=new Promise(((s,o)=>{if(cd<51&&onen){return n}else{const n=e;const r=`http://ip-api.com/json/${n}?lang=zh-CN&fields=status,message,country,query,regionName`;const i=new Promise(((e,t)=>{setTimeout((()=>{t(new Error("timeout"))}),timeout)}));const c=$.http.get({url:r}).then((e=>{const o=JSON.parse(e.body);if(o.status==="success"){scriptResourceCache.set(t,o);s(o)}else{s(n)}})).catch((e=>{o(e)}));Promise.race([i,c]).catch((e=>{o(e)}))}}));ins.set(t,n);return n}}
-let apiRead=0;let apiw=0;const outs=new Map;async function OUTIA(e){const t=getid(e);if(outs.has(t)){return outs.get(t)}const n=scriptResourceCache.get(t);if(n){apiRead++;return n}else{const n=new Promise(((s,o)=>{if(cd<51&&onen){return n}else{const n=`http://ip-api.com/json?lang=zh-CN&fields=status,message,country,countryCode,city,query`;let r=ProxyUtils.produce([e],target);const i=new Promise(((e,t)=>{setTimeout((()=>{t(new Error("timeout"))}),timeout)}));const c=$.http.get({url:n,node:r,"policy-descriptor":r}).then((e=>{const n=JSON.parse(e.body);if(n.status==="success"){scriptResourceCache.set(t,n);apiw++;s(n)}else{o(new Error(n.message))}})).catch((e=>{o(e)}));Promise.race([i,c]).catch((e=>{o(e)}))}}));outs.set(t,n);return n}}
+// let apiRead=0;let apiw=0;const outs=new Map;async function OUTIA(e){const t=getid(e);if(outs.has(t)){return outs.get(t)}const n=scriptResourceCache.get(t);if(n){apiRead++;return n}else{const n=new Promise(((s,o)=>{if(cd<51&&onen){return n}else{const n=`http://ip-api.com/json?lang=zh-CN&fields=status,message,country,countryCode,city,query`;let r=ProxyUtils.produce([e],target);const i=new Promise(((e,t)=>{setTimeout((()=>{t(new Error("timeout"))}),timeout)}));const c=$.http.get({url:n,node:r,"policy-descriptor":r}).then((e=>{const n=JSON.parse(e.body);if(n.status==="success"){scriptResourceCache.set(t,n);apiw++;s(n)}else{o(new Error(n.message))}})).catch((e=>{o(e)}));Promise.race([i,c]).catch((e=>{o(e)}))}}));outs.set(t,n);return n}}
 function removels(e){const t=new Set;const n=[];for(const s of e){if(s.qc&&!t.has(s.qc)){t.add(s.qc);n.push(s)}}return n}
 function removeqc(e){const t=new Set;const n=[];for(const s of e){if(!t.has(s.qc)){t.add(s.qc);const e={...s};delete e.qc;n.push(e)}}return n}
 function jxh(e){const t=e.reduce(((e,t)=>{const n=e.find((e=>e.name===t.name));if(n){n.count++;n.items.push({...t,name:`${t.name}${XHFGF}${n.count.toString().padStart(2,"0")}`})}else{e.push({name:t.name,count:1,items:[{...t,name:`${t.name}${XHFGF}01`}]})}return e}),[]);const n=t.flatMap((e=>e.items));e.splice(0,e.length,...n);return e}
 function onee(e){const t=e.reduce(((e,t)=>{const n=t.name.replace(/[^A-Za-z0-9\u00C0-\u017F\u4E00-\u9FFF]+\d+$/,"");if(!e[n]){e[n]=[]}e[n].push(t);return e}),{});for(const e in t){if(t[e].length===1&&t[e][0].name.endsWith("01")){const n=t[e][0];n.name=e}}return e}
 function mTIme(e){e=e.toString().replace(/-/g, "");if(e<1e3){return`${Math.round(e)}毫秒`}else if(e<6e4){return`${Math.round(e/1e3)}秒`}else if(e<36e5){return`${Math.round(e/6e4)}分钟`}else if(e>=36e5){return`${Math.round(e/36e5)}小时`}}
 function sleep(e){return new Promise((t=>setTimeout(t,e)))}
+
+
+
+let apiRead = 0;
+let apiw = 0;
+const outs = new Map();
+async function OUTIA(e) {
+  const t = getid(e);
+  if (outs.has(t)) {
+    return outs.get(t);
+  }
+  const n = scriptResourceCache.get(t);
+  if (n) {
+    apiRead++;console.log(n)
+    return n;
+  } else {
+    const maxRE = 2;
+    const n = new Promise((resolve, reject) => {
+      if (cd < 51 && onen) {
+        return n;
+      } else {
+        const retry = async (retryCount) => {
+          const url = `http://ip-api.com/json?lang=zh-CN&fields=status,message,country,countryCode,city,query`;
+          let r = ProxyUtils.produce([e], target);
+
+          try {
+            const response = await Promise.race([
+              $.http.get({ url, node: r, "policy-descriptor": r }),
+              new Promise((_, reject) =>
+                setTimeout(() => reject(new Error("timeout")), timeout)
+              ),
+            ]);
+
+            const data = JSON.parse(response.body);
+            if (data.status === "success") {
+              scriptResourceCache.set(t, data);
+              apiw++;
+              resolve(data);
+            } else {
+              reject(new Error(data.message));
+            }
+          } catch (error) {
+            if (retryCount < maxRE) {
+              retry(retryCount + 1);
+            } else {
+              reject(error);
+            }
+          }
+        };
+        retry(0);
+      }
+    });
+    outs.set(t, n);
+    return n;
+  }
+}
