@@ -26,7 +26,6 @@ https://github.com/Keywos/rule/raw/main/cname.js#city&isp
 [offtz]   关闭脚本通知
 [snone]   清理地区只有一个节点的01
 [h=]      缓存过期时间小时
-[tz=]     通知显示的机场名
 [sn=]     国家与序号之间的分隔符，默认为空格
 [min=]    缓存过期时间分钟,h和min只能二选一
 [fgf=]    入口和落地之间的分隔符，默认为空格
@@ -53,7 +52,6 @@ const numone = $arguments["snone"];
 const { isLoon, isSurge, isQX } = $substore.env;
 let cd = $arguments["cd"] ? $arguments["cd"] : 460;
 let timeout = $arguments["timeout"] ? $arguments["timeout"] : 1520;
-const tzname = $arguments.tz ? decodeURI($arguments.tz) : "";
 const keynames = $arguments.name ? decodeURI($arguments.name) : "";
 const FGF = $arguments.fgf == undefined ? " " : decodeURI($arguments.fgf);
 const XHFGF = $arguments.sn == undefined ? " " : decodeURI($arguments.sn);
@@ -61,6 +59,8 @@ const dns = $arguments["dnsjx"];
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 const min = $arguments.min ? decodeURI($arguments.min) : "";
 const h = $arguments.h ? decodeURI($arguments.h) : "";
+const subs = JSON.parse($request["body"]);
+const subname =subs.name;
 let writet = "";let innum = 172800000;let loontrue = false;let onen = false;let Sue = false;
 if(min !== "") {Sue=true;innum = parseInt(min, 10) * 60000;writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");} 
 else if(h !== "") {Sue=true;innum = parseInt(h, 10) * 3600000;writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");} 
@@ -72,8 +72,9 @@ const support = isLoon || isSurge;if (!support) {$.error(`No Loon or Surge`);$no
 if (typeof scriptResourceCache === 'undefined') {console.log("\nNCNAME: 不支持此 SubStore,\n查看脚本说明\nhttps://github.com/Keywos/rule/raw/main/cname.js");
 if (target == "Surge") {$notification.post("NCNAME Sub-Store未更新", "", "请点击或查看Log查看脚本说明安装对应版本", { url: "https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule" })} 
 else if (target == "Loon") {$notification.post("NCNAME Sub-Store未更新", "", "请点击安装插件, 或查看Log安装对应版本, 并关闭原本的Substore", "loon://import?plugin=https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Tool/Loon/Plugin/Sub-Store.plugin")}return e;}
-var bs = $arguments["bs"] ? $arguments["bs"] : 12;
-const ein = e.length;
+var bs = $arguments["bs"] ? $arguments["bs"] : 12;const ein = e.length;
+// const idname =subs.process[1].id;
+// console.log("\nname: "+subname+"\nid: "+idname)
 console.log(`设定API超时: ${timeout}毫秒`);
 console.log(`有缓API超时: ${cd}毫秒`);
 console.log(`批处理节点数: ${bs} 个`);
@@ -216,7 +217,7 @@ batch.map(async (proxy) => {
   const writelog = apiw ? `写入缓存:${apiw}, ` : '';
   const Push = (eout == ein) ? "全部通过测试, " : "去除无效节点后有" + eout + "个, ";
   if (!offtz) {$notification.post(
-    `${tzname}共${ein}个节点`,"",
+    `${subname}: 共${ein}个节点`,"",
     `${writelog}${readlog}${Pushtd}${Push}用时:${mTIme(timeDiff)}`
   )}return e;
 }
