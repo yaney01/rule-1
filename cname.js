@@ -43,7 +43,6 @@ https://github.com/Keywos/rule/raw/main/cname.js#city&isp
 const $ = $substore;
 const bl = $arguments["bl"];
 const isp = $arguments["isp"];
-const dns = $arguments["dns"];
 const yun = $arguments["yun"];
 const city = $arguments["city"];
 const flag = $arguments["flag"];
@@ -59,6 +58,7 @@ const tzname = $arguments.tz ? decodeURI($arguments.tz) : "";
 const keynames = $arguments.name ? decodeURI($arguments.name) : "";
 const FGF = $arguments.fgf == undefined ? " " : decodeURI($arguments.fgf);
 const XHFGF = $arguments.sn == undefined ? " " : decodeURI($arguments.sn);
+const dns = $arguments["dnsjx"];
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 const min = $arguments.min ? decodeURI($arguments.min) : "";
 const h = $arguments.h ? decodeURI($arguments.h) : "";
