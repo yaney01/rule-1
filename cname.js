@@ -26,6 +26,7 @@ https://github.com/Keywos/rule/raw/main/cname.js#city&isp
 [offtz]   关闭脚本通知
 [snone]   清理地区只有一个节点的01
 [h=]      缓存过期时间小时
+[tz=]     通知显示的机场名
 [sn=]     国家与序号之间的分隔符，默认为空格
 [min=]    缓存过期时间分钟,h和min只能二选一
 [fgf=]    入口和落地之间的分隔符，默认为空格
@@ -60,8 +61,9 @@ const dns = $arguments["dnsjx"];
 const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
 const min = $arguments.min ? decodeURI($arguments.min) : "";
 const h = $arguments.h ? decodeURI($arguments.h) : "";
-const subs = JSON.parse($request["body"]);
-const subname =subs.name;
+const tzname = $arguments.tz ? decodeURI($arguments.tz) : "";
+//const subs = JSON.parse($request["body"]);
+//const body = $request["body"];let subs;if (body) {subs = JSON.parse(body);} else {subs = {};};const subname =subs.name;
 let writet = "";let innum = 172800000;let loontrue = false;let onen = false;let Sue = false;
 if(min !== "") {Sue=true;innum = parseInt(min, 10) * 60000;writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");} 
 else if(h !== "") {Sue=true;innum = parseInt(h, 10) * 3600000;writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");} 
@@ -218,7 +220,7 @@ batch.map(async (proxy) => {
   const writelog = apiw ? `写入缓存:${apiw}, ` : '';
   const Push = (eout == ein) ? "全部通过测试, " : "去除无效节点后有" + eout + "个, ";
   if (!offtz) {$notification.post(
-    `${subname}: 共${ein}个节点`,"",
+    `${tzname}共${ein}个节点`,"",
     `${writelog}${readlog}${Pushtd}${Push}用时:${mTIme(timeDiff)}`
   )}return e;
 }
