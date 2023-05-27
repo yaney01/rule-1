@@ -63,7 +63,7 @@ function ys() {
       hostname: urlkey,
       port: 80,
     },
-    { protocol: e, hostname: i, port: a, needWrite: r } = n;
+    { protocol: e, hostname: i, port: a} = n;
     console.log(n)
 
 
