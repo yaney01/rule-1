@@ -16,6 +16,16 @@ bcdn = $persistentStore.read("CDN节点");
 loontd = looncdn[bcdn] || "cos";
 let urlkey = "upos-sz-mirror" + loontd + ".bilivideo.com";
 
+let pushof = false;
+let lnpush = $persistentStore.read("通知");
+if (lnpush == "开"){
+  pushof = true;
+} else if (lnpush == "关") {
+  pushof = false;
+} else if(lnpush == ""){
+  pushof = false;
+}
+
 var Zn = $request.url,
 Or = $response.body,
 vt = Or.slice(0, 5),
@@ -32,7 +42,7 @@ let t = pn.fromBinary(qe);
 if (t.dmView?.commandDms?.length) {
   t.dmView.commandDms.length = 0;
   let n = pn.toBinary(t);
-  $notification.post("\u79fb\u9664\u4ea4\u4e92\u5f0f\u5f39\u5e55","","");
+  if(pushof){$notification.post("\u79fb\u9664\u4ea4\u4e92\u5f0f\u5f39\u5e55","","");}
   console.log("\u79fb\u9664\u4ea4\u4e92\u5f0f\u5f39\u5e55");
    $done({ body: It(vt, n) });
 }
@@ -43,7 +53,7 @@ let t = yn.fromBinary(qe),
 if (n?.f5?.f1) {
   n.f5.f1 = 0;
   let e = yn.toBinary(t);
-  $notification.post("\u9690\u85cf\u9752\u5c11\u5e74\u5f39\u7a97","","");
+  if(pushof){$notification.post("\u9690\u85cf\u9752\u5c11\u5e74\u5f39\u7a97","","");}
   console.log("\u9690\u85cf\u9752\u5c11\u5e74\u5f39\u7a97");
    $done({ body: It(vt, e) });
 }
@@ -70,7 +80,7 @@ function f(d) {
   }
 }
 let g = $n.toBinary(t);
-$notification.post("\u91cd\u5b9a\u5411cdn",`${i}`,"");
+if(pushof){$notification.post("\u91cd\u5b9a\u5411cdn",`${i}`,"");}
 console.log("\u91cd\u5b9a\u5411cdn: " + i);
  $done({ body: It(vt, g) });
 }
