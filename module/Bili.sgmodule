@@ -24,12 +24,6 @@ bilibili.helper.teenager = type=http-response,pattern=^https:\/\/grpc\.biliapi\.
 
 bilibili.helper.playView = type=http-response,pattern=^https:\/\/grpc\.biliapi\.net\/bilibili\.app\.playurl\.v1\.PlayURL\/PlayView,requires-body=1,binary-body-mode=1,max-size=0,script-path=https://github.com/Keywos/rule/raw/main/JS/Blinew.js
 
-bilibili.helper.dmView = type=http-response,pattern=^https:\/\/grpc\.biliapi\.net\/bilibili\.community\.service\.dm\.v1\.DM\/DmView,requires-body=1,max-size=-1,binary-body-mode=1,script-path=https://github.com/Keywos/rule/raw/main/JS/Blinew.js
-
-bilibili.helper.teenager = type=http-response,pattern=^https:\/\/grpc\.biliapi\.net\/bilibili\.app\.interface\.v1\.Teenagers\/ModeStatus,requires-body=1,binary-body-mode=1,max-size=0,script-path=https://github.com/Keywos/rule/raw/main/JS/Blinew.js
-
-bilibili.helper.playView = type=http-response,pattern=^https:\/\/grpc\.biliapi\.net\/bilibili\.app\.playurl\.v1\.PlayURL\/PlayView,requires-body=1,binary-body-mode=1,max-size=0,script-path=https://github.com/Keywos/rule/raw/main/JS/Blinew.js
-
 [MITM]
 hostname = %APPEND% grpc.biliapi.net
 
