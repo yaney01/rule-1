@@ -93,14 +93,12 @@ do{
       const readt = scriptResourceCache.gettime(id);
       let nt = new Date().getTime();
       let timedPush = "";if (target == "Loon") {let loontd = "";
-      // const loonkkk = {"1分钟":6e4,"5分钟":3e5,"10分钟":6e5,"30分钟":18e5,"1小时":36e5,"2小时":72e5,"3小时":108e5,"6小时":216e5,"12小时":432e5,"24小时":864e5,"48小时":1728e5,"72小时":2592e5,"SUB参数传入":"innums"};
-      // const loonkkk={"1分钟":"60000","5分钟":"300000","10分钟":"600000","30分钟":"1800000","1小时":"3600000","2小时":"7200000","3小时":"10800000","6小时":"21600000","12小时":"43200000","24小时":"86400000","48小时":"172800000","72小时":"259200000","SUB参数传入":"innums"}
       const loonkkk = {"1\u5206\u949f":6e4,"5\u5206\u949f":3e5,"10\u5206\u949f":6e5,"30\u5206\u949f":18e5,"1\u5c0f\u65f6":36e5,"2\u5c0f\u65f6":72e5,"3\u5c0f\u65f6":108e5,"6\u5c0f\u65f6":216e5,"12\u5c0f\u65f6":432e5,"24\u5c0f\u65f6":864e5,"48\u5c0f\u65f6":1728e5,"72\u5c0f\u65f6":2592e5,"sub\u53c2\u6570\u4f20\u5165":"innums"};
-      intimed = $persistentStore.read("缓存过期时间");loontd = loonkkk[intimed] || 172800000;
+      intimed = $persistentStore.read("\u7f13\u5b58\u8fc7\u671f\u65f6\u95f4");loontd = loonkkk[intimed] || 172800000;
       if(loontd=="innums"){loontd=innum}timedPush = zhTime(parseInt(readt, 10) - nt + parseInt(loontd, 10))
       } else if(target == "Surge" && Sue){timedPush = zhTime(parseInt(readt, 10) - nt + parseInt(innum, 10));
       } else {timedPush = zhTime(parseInt(readt, 10) - nt + parseInt(TIMEDKEY, 10));
-      }Pushtd = `, ${timedPush}后过期 \n`;
+      }Pushtd = `, ${timedPush}\u540e\u8fc7\u671f \n`;
     }}catch(err){}}));o += 1;};
 let i=0;while (i < e.length) {
 const batch = e.slice(i, i + bs);
