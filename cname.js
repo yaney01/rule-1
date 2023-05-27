@@ -26,6 +26,7 @@ https://github.com/Keywos/rule/raw/main/cname.js#city&isp
 [offtz]   关闭脚本通知
 [snone]   清理地区只有一个节点的01
 [h=]      缓存过期时间小时
+[tz=]     通知显示的机场名
 [sn=]     国家与序号之间的分隔符，默认为空格
 [min=]    缓存过期时间分钟,h和min只能二选一
 [fgf=]    入口和落地之间的分隔符，默认为空格
@@ -35,7 +36,7 @@ https://github.com/Keywos/rule/raw/main/cname.js#city&isp
 
 [timeout=] HTTP请求返回结果《无任何缓存》的超时时间，默认1510ms 建议默认值
 
-[cd=] 当《部分有缓存，部分节点没有缓存》的情况下，请求的超时时间，默认460ms
+[cd=] 当《部分有缓存，部分节点没有缓存》的情况下，请求的超时时间，默认460ms。 超时后只会重试一次,共2次
 仅当节点缓存《接近完全》的情况下, 才建议设置[cd=]的值小于50，这样会直接读取缓存。不发送请求, 减少不必要的请求,和时间 
 
 */
@@ -50,32 +51,29 @@ const offtz = $arguments["offtz"];
 const sheng = $arguments["sheng"];
 const debug = $arguments["debug"];
 const numone = $arguments["snone"];
-const { isLoon, isSurge, isQX } = $substore.env;
+const {isLoon,isSurge} = $substore.env;
 let cd = $arguments["cd"] ? $arguments["cd"] : 460;
 let timeout = $arguments["timeout"] ? $arguments["timeout"] : 1520;
 const keynames = $arguments.name ? decodeURI($arguments.name) : "";
 const FGF = $arguments.fgf == undefined ? " " : decodeURI($arguments.fgf);
 const XHFGF = $arguments.sn == undefined ? " " : decodeURI($arguments.sn);
 const dns = $arguments["dnsjx"];
-const target = isLoon ? "Loon" : isSurge ? "Surge" : isQX ? "QX" : undefined;
+const target = isLoon ? "Loon" : isSurge ? "Surge" : undefined;
 const min = $arguments.min ? decodeURI($arguments.min) : "";
 const h = $arguments.h ? decodeURI($arguments.h) : "";
-const subs = JSON.parse($request["body"]);
-const subname =subs.name;
+const tzname = $arguments.tz ? decodeURI($arguments.tz) : "";
 let writet = "";let innum = 172800000;let loontrue = false;let onen = false;let Sue = false;
 if(min !== "") {Sue=true;innum = parseInt(min, 10) * 60000;writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");} 
 else if(h !== "") {Sue=true;innum = parseInt(h, 10) * 3600000;writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");} 
 else{writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");}
 const regexArray = [/游戏|game/i,];const valueArray = ["Game"];
-const nameclear = /邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|下次|版本|官址|备用|到期|过期|已用|国内|国外|联系|邮箱|工单|贩卖|倒卖|防止|(\b(USE|USED|TOTAL|EXPIRE|EMAIL)\b)|\d\s?g/i;
+const nameclear = /邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|下次|版本|官址|备用|到期|过期|已用|国内|国际|国外|联系|邮箱|工单|贩卖|倒卖|防止|(\b(USE|USED|TOTAL|EXPIRE|EMAIL)\b)|\d\s?g/i;
 async function operator(e) {let cs = 0;const startTime = new Date();
-const support = isLoon || isSurge;if (!support) {$.error(`No Loon or Surge`);$notify("仅仅支持Loon或Surge", "", "");console.log("仅仅支持Loon或Surge");return e;}
+const support = isLoon || isSurge;if (!support) {$.error(`No Loon or Surge`);return e;}
 if (typeof scriptResourceCache === 'undefined') {console.log("\nNCNAME: 不支持此 SubStore,\n查看脚本说明\nhttps://github.com/Keywos/rule/raw/main/cname.js");
 if (target == "Surge") {$notification.post("NCNAME Sub-Store未更新", "", "请点击或查看Log查看脚本说明安装对应版本", { url: "https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule" })} 
 else if (target == "Loon") {$notification.post("NCNAME Sub-Store未更新", "", "请点击安装插件, 或查看Log安装对应版本, 并关闭原本的Substore", "loon://import?plugin=https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Tool/Loon/Plugin/Sub-Store.plugin")}return e;}
 var bs = $arguments["bs"] ? $arguments["bs"] : 12;const ein = e.length;
-// const idname =subs.process[1].id;
-// console.log("\nname: "+subname+"\nid: "+idname)
 console.log(`设定API超时: ${timeout}毫秒`);
 console.log(`有缓API超时: ${cd}毫秒`);
 console.log(`批处理节点数: ${bs} 个`);
@@ -218,7 +216,7 @@ batch.map(async (proxy) => {
   const writelog = apiw ? `写入缓存:${apiw}, ` : '';
   const Push = (eout == ein) ? "全部通过测试, " : "去除无效节点后有" + eout + "个, ";
   if (!offtz) {$notification.post(
-    `${subname}: 共${ein}个节点`,"",
+    `${tzname}共${ein}个节点`,"",
     `${writelog}${readlog}${Pushtd}${Push}用时:${mTIme(timeDiff)}`
   )}return e;
 }
