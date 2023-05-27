@@ -66,45 +66,42 @@ let writet = "";let innum = 172800000;let loontrue = false;let onen = false;let 
 if(min !== "") {Sue=true;innum = parseInt(min, 10) * 60000;writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");} 
 else if(h !== "") {Sue=true;innum = parseInt(h, 10) * 3600000;writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");} 
 else{writet = $persistentStore.write(JSON.stringify(innum), "CNAMEKEYD");}
-const regexArray = [/游戏|game/i,];const valueArray = ["Game"];
-const nameclear = /邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|下次|版本|官址|备用|到期|过期|已用|国内|国际|国外|联系|邮箱|工单|贩卖|倒卖|防止|(\b(USE|USED|TOTAL|EXPIRE|EMAIL)\b)|\d\s?g/i;
+const regexArray = [/\u6e38\u620f|game/i,];const valueArray = ["Game"];
+
+const nlc = /\u9080\u8bf7|\u8fd4\u5229|\u5faa\u73af|\u5b98\u7f51|\u5ba2\u670d|\u7f51\u7ad9|\u7f51\u5740|\u83b7\u53d6|\u8ba2\u9605|\u6d41\u91cf|\u5230\u671f|\u4e0b\u6b21|\u7248\u672c|\u5b98\u5740|\u5907\u7528|\u5230\u671f|\u8fc7\u671f|\u5df2\u7528|\u56fd\u5185|\u56fd\u9645|\u56fd\u5916|\u8054\u7cfb|\u90ae\u7bb1|\u5de5\u5355|\u8d29\u5356|\u5012\u5356|\u9632\u6b62|(\b(USE|USED|TOTAL|EXPIRE|EMAIL)\b)|\d\s?g/i;
 async function operator(e) {let cs = 0;const startTime = new Date();
 const support = isLoon || isSurge;if (!support) {$.error(`No Loon or Surge`);return e;}
-if (typeof scriptResourceCache === 'undefined') {console.log("\nNCNAME: 不支持此 SubStore,\n查看脚本说明\nhttps://github.com/Keywos/rule/raw/main/cname.js");
-if (target == "Surge") {$notification.post("NCNAME Sub-Store未更新", "", "请点击或查看Log查看脚本说明安装对应版本", { url: "https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule" })} 
-else if (target == "Loon") {$notification.post("NCNAME Sub-Store未更新", "", "请点击安装插件, 或查看Log安装对应版本, 并关闭原本的Substore", "loon://import?plugin=https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Tool/Loon/Plugin/Sub-Store.plugin")}return e;}
+if (typeof scriptResourceCache === 'undefined') {console.log("\nNCNAME: \u4e0d\u652f\u6301\u6b64 SubStore,\n\u67e5\u770b\u811a\u672c\u8bf4\u660e\nhttps://github.com/Keywos/rule/raw/main/cname.js");
+if (target == "Surge") {$notification.post("NCNAME Sub-Store\u672a\u66f4\u65b0", "", "\u8bf7\u70b9\u51fb\u6216\u67e5\u770blog\u67e5\u770b\u811a\u672c\u8bf4\u660e\u5b89\u88c5\u5bf9\u5e94\u7248\u672c", { url: "https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule" })} 
+else if (target == "Loon") {$notification.post("NCNAME Sub-Store\u672a\u66f4\u65b0", "", "\u8bf7\u70b9\u51fb\u5b89\u88c5\u63d2\u4ef6, \u6216\u67e5\u770blog\u5b89\u88c5\u5bf9\u5e94\u7248\u672c, \u5e76\u5173\u95ed\u539f\u672c\u7684substore", "loon://import?plugin=https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Tool/Loon/Plugin/Sub-Store.plugin")}return e;}
 var bs = $arguments["bs"] ? $arguments["bs"] : 12;const ein = e.length;
-console.log(`设定API超时: ${timeout}毫秒`);
-console.log(`有缓API超时: ${cd}毫秒`);
-console.log(`批处理节点数: ${bs} 个`);
-console.log(`开始处理节点: ${ein} 个`);
-e = e.filter((item) => !nameclear.test(item.name));
-let o = 0;
-let Pushtd = "";
-let intimed = "";
-let stops = false;
+console.log(`\u8bbe\u5b9aapi\u8d85\u65f6: ${zhTime(timeout)}`);console.log(`\u6709\u7f13api\u8d85\u65f6: ${zhTime(cd)}`);console.log(`\u6279\u5904\u7406\u8282\u70b9\u6570: ${bs} \u4e2a`);console.log(`\u5f00\u59cb\u5904\u7406\u8282\u70b9: ${ein} \u4e2a`);
+e = e.filter((item) => !nlc.test(item.name));
+let o = 0;let Pushtd = "";let intimed = "";let stops = false;
 do{
   while (o < e.length && !stops) {
   const batchs = e.slice(o, o + 1);
   await Promise.all(
-    batchs.map(async (proxy) => {
-      try {
-        const inss = new Map();
-        const id = getid(proxy);
-        if (inss.has(id)){return inss.get(id)}
-        const cacheds = scriptResourceCache.get(id);
-        if (cacheds) {
-          if(!onen){timeout=cd;onen=true;stops=true;}
-          const readt = scriptResourceCache.gettime(id);
-          let nt = new Date().getTime();
-          let timedPush = "";if (target == "Loon") {let loontd = "";
-          const loonkkk={"1分钟":"60000","5分钟":"300000","10分钟":"600000","30分钟":"1800000","1小时":"3600000","2小时":"7200000","3小时":"10800000","6小时":"21600000","12小时":"43200000","24小时":"86400000","48小时":"172800000","72小时":"259200000","SUB参数传入":"innums"}
-          intimed = $persistentStore.read("缓存过期时间");loontd = loonkkk[intimed] || "172800000";
-          if(loontd=="innums"){loontd=innum}timedPush = mTIme(parseInt(readt, 10) - nt + parseInt(loontd, 10))
-          } else if(target == "Surge" && Sue){timedPush = mTIme(parseInt(readt, 10) - nt + parseInt(innum, 10));
-          } else {timedPush = mTIme(parseInt(readt, 10) - nt + parseInt(TIMEDKEY, 10));
-          }Pushtd = `, ${timedPush}后过期 \n`;
-        }}catch(err){}}));o += 1;};
+  batchs.map(async (proxy) => {
+  try {
+    const inss = new Map();
+    const id = getid(proxy);
+    if (inss.has(id)){return inss.get(id)}
+    const cacheds = scriptResourceCache.get(id);
+    if (cacheds) {
+      if(!onen){timeout=cd;onen=true;stops=true;}
+      const readt = scriptResourceCache.gettime(id);
+      let nt = new Date().getTime();
+      let timedPush = "";if (target == "Loon") {let loontd = "";
+      // const loonkkk = {"1分钟":6e4,"5分钟":3e5,"10分钟":6e5,"30分钟":18e5,"1小时":36e5,"2小时":72e5,"3小时":108e5,"6小时":216e5,"12小时":432e5,"24小时":864e5,"48小时":1728e5,"72小时":2592e5,"SUB参数传入":"innums"};
+      // const loonkkk={"1分钟":"60000","5分钟":"300000","10分钟":"600000","30分钟":"1800000","1小时":"3600000","2小时":"7200000","3小时":"10800000","6小时":"21600000","12小时":"43200000","24小时":"86400000","48小时":"172800000","72小时":"259200000","SUB参数传入":"innums"}
+      const loonkkk = {"1\u5206\u949f":6e4,"5\u5206\u949f":3e5,"10\u5206\u949f":6e5,"30\u5206\u949f":18e5,"1\u5c0f\u65f6":36e5,"2\u5c0f\u65f6":72e5,"3\u5c0f\u65f6":108e5,"6\u5c0f\u65f6":216e5,"12\u5c0f\u65f6":432e5,"24\u5c0f\u65f6":864e5,"48\u5c0f\u65f6":1728e5,"72\u5c0f\u65f6":2592e5,"sub\u53c2\u6570\u4f20\u5165":"innums"};
+      intimed = $persistentStore.read("缓存过期时间");loontd = loonkkk[intimed] || 172800000;
+      if(loontd=="innums"){loontd=innum}timedPush = zhTime(parseInt(readt, 10) - nt + parseInt(loontd, 10))
+      } else if(target == "Surge" && Sue){timedPush = zhTime(parseInt(readt, 10) - nt + parseInt(innum, 10));
+      } else {timedPush = zhTime(parseInt(readt, 10) - nt + parseInt(TIMEDKEY, 10));
+      }Pushtd = `, ${timedPush}后过期 \n`;
+    }}catch(err){}}));o += 1;};
 let i=0;while (i < e.length) {
 const batch = e.slice(i, i + bs);
 await Promise.all(
@@ -204,20 +201,20 @@ batch.map(async (proxy) => {
   let eout = e.length;
   const endTime = new Date();
   const timeDiff = endTime.getTime() - startTime.getTime();
-  if (dns) { console.log(`DNS解析后共: ${eout} 个`) }
-  apiRead > 0 ? console.log(`读取API缓存: ${apiRead} 个`) : null;
-  apiw > 0 ? console.log(`写入API缓存: ${apiw} 个`) : null;
-  console.log(`处理完后剩余: ${eout} 个`);
-  if (target == "Loon") {console.log("缓存过期时间: " + intimed + ", 还剩" + Pushtd.replace(/,|\n/g, ""));
-  } else {console.log("缓存过期时间: " + mTIme(TIMEDKEY) + ", 还剩" + Pushtd.replace(/,|\n/g, ""));}
-  console.log(`此方法总用时: ${mTIme(timeDiff)}\n----For New CNAME----`);
+  if (dns) { console.log(`dns\u89e3\u6790\u540e\u5171: ${eout} \u4e2a`) }
+  apiRead > 0 ? console.log(`\u8bfb\u53d6api\u7f13\u5b58: ${apiRead} \u4e2a`) : null;
+  apiw > 0 ? console.log(`\u5199\u5165api\u7f13\u5b58: ${apiw} \u4e2a`) : null;
+  console.log(`\u5904\u7406\u5b8c\u540e\u5269\u4f59: ${eout} \u4e2a`);
+  if (target == "Loon") {console.log("\u7f13\u5b58\u8fc7\u671f\u65f6\u95f4: " + intimed + ", \u8fd8\u5269" + Pushtd.replace(/,|\n/g, ""));
+  } else {console.log("\u7f13\u5b58\u8fc7\u671f\u65f6\u95f4: " + zhTime(TIMEDKEY) + ", \u8fd8\u5269" + Pushtd.replace(/,|\n/g, ""));}
+  console.log(`\u6b64\u65b9\u6cd5\u603b\u7528\u65f6: ${zhTime(timeDiff)}\n----For New CNAME----`);
   // Push
   const readlog = apiRead ? `读取缓存:${apiRead} ` : '';
   const writelog = apiw ? `写入缓存:${apiw}, ` : '';
   const Push = (eout == ein) ? "全部通过测试, " : "去除无效节点后有" + eout + "个, ";
   if (!offtz) {$notification.post(
     `${tzname}共${ein}个节点`,"",
-    `${writelog}${readlog}${Pushtd}${Push}用时:${mTIme(timeDiff)}`
+    `${writelog}${readlog}${Pushtd}${Push}用时:${zhTime(timeDiff)}`
   )}return e;
 }
 function getid(e){let t="ld";return MD5(`${t}-${e.server}-${e.port}`)}
@@ -235,4 +232,4 @@ function removels(e){const t=new Set;const n=[];for(const s of e){if(s.qc&&!t.ha
 function removeqc(e){const t=new Set;const n=[];for(const s of e){if(!t.has(s.qc)){t.add(s.qc);const e={...s};delete e.qc;n.push(e)}}return n}
 function jxh(e){const t=e.reduce(((e,t)=>{const n=e.find((e=>e.name===t.name));if(n){n.count++;n.items.push({...t,name:`${t.name}${XHFGF}${n.count.toString().padStart(2,"0")}`})}else{e.push({name:t.name,count:1,items:[{...t,name:`${t.name}${XHFGF}01`}]})}return e}),[]);const n=t.flatMap((e=>e.items));e.splice(0,e.length,...n);return e}
 function onee(e){const t=e.reduce(((e,t)=>{const n=t.name.replace(/[^A-Za-z0-9\u00C0-\u017F\u4E00-\u9FFF]+\d+$/,"");if(!e[n]){e[n]=[]}e[n].push(t);return e}),{});for(const e in t){if(t[e].length===1&&t[e][0].name.endsWith("01")){const n=t[e][0];n.name=e}}return e}
-function mTIme(e){e=e.toString().replace(/-/g, "");if(e<1e3){return`${Math.round(e)}毫秒`}else if(e<6e4){return`${Math.round(e/1e3)}秒`}else if(e<36e5){return`${Math.round(e/6e4)}分钟`}else if(e>=36e5){return`${Math.round(e/36e5)}小时`}}
+function zhTime(e){e=e.toString().replace(/-/g, "");if(e<1e3){return`${Math.round(e)}\u6beb\u79d2`}else if(e<6e4){return`${Math.round(e/1e3)}\u79d2`}else if(e<36e5){return`${Math.round(e/6e4)}\u5206\u949f`}else if(e>=36e5){return`${Math.round(e/36e5)}\u5c0f\u65f6`}}
