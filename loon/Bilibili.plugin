@@ -9,11 +9,11 @@
 
 
 [Script]
-http-response ^https:\/\/grpc\.biliapi\.net\/bilibili\.community\.service\.dm\.v1\.DM\/DmView script-path=https://github.com/Keywos/rule/raw/main/loon/bilibilidm.js, requires-body=true, binary-body-mode=true, timeout=10, tag=bilibili_dmView
+http-response ^https:\/\/grpc\.biliapi\.net\/bilibili\.community\.service\.dm\.v1\.DM\/DmView script-path=https://github.com/Keywos/rule/raw/main/loon/bilinew.js, requires-body=true, binary-body-mode=true, timeout=10, tag=bilibili_dmView
 
-http-response ^https:\/\/grpc\.biliapi\.net\/bilibili\.app\.interface\.v1\.Teenagers\/ModeStatus script-path=https://github.com/Keywos/rule/raw/main/loon/bilibilidm.js, requires-body=true, binary-body-mode=true, timeout=10, tag=bilibili_teenager
+http-response ^https:\/\/grpc\.biliapi\.net\/bilibili\.app\.interface\.v1\.Teenagers\/ModeStatus script-path=https://github.com/Keywos/rule/raw/main/loon/bilinew.js, requires-body=true, binary-body-mode=true, timeout=10, tag=bilibili_teenager
 
-http-response ^https:\/\/grpc\.biliapi\.net\/bilibili\.app\.playurl\.v1\.PlayURL\/PlayView script-path=https://github.com/Keywos/rule/raw/main/loon/bilibilidm.js, requires-body=true, binary-body-mode=true, timeout=10, tag=bilibili_playView
+http-response ^https:\/\/grpc\.biliapi\.net\/bilibili\.app\.playurl\.v1\.PlayURL\/PlayView script-path=https://github.com/Keywos/rule/raw/main/loon/bilinew.js, requires-body=true, binary-body-mode=true, timeout=10, tag=bilibili_playView
 
 [MITM]
 
