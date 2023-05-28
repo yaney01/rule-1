@@ -7,7 +7,7 @@
 # 活动中心
 ^https?:\/\/mime\.baidu\.com\/v5\/custom_page\/layout data="https://github.com/Keywos/rule/raw/main/mocks/reject-dict.json"
 
-#输入法点击图标circle/joinedlist
+# 输入法点击图标circle/joinedlist
 # 机器人 推荐短语 
 ^https?:\/\/mime\.baidu\.com\/(sapi\/|imrobot\/)?v1\/(lccorpus\/usercorpussync|circle\/joinedlist|pub\/relation\/get_robot_list|lccorpus\/(applist|pannellist)) data="https://github.com/Keywos/rule/raw/main/mocks/mime.json"
 
