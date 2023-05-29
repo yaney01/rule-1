@@ -16,7 +16,7 @@ if(/imrobot\/v1\/pub\/relation\/get_robot_list/.test($request.url)){
     (module) => !keys.some((keyword) => module.module_desc.includes(keyword))
   );
 } if (/v5\/custom_page\/getdata/.test($request.url)) {
-    okk.data = okk.filter(
+    okk.data = okk.data.filter(
       (modules) => !keys.some((keyword) => modules.module_desc.includes(keyword))
     );
  } 
