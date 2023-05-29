@@ -9,10 +9,9 @@ robot.friend_bg_img = `https://raw.githubusercontent.com/Keywos/rule/main/mocks/
     okk.data.page_layout_content = okk.data.page_layout_content.filter(
       ({ module_desc }) => keyi.includes(module_desc));}
   if (okk.data.page_data_content && Array.isArray(okk.data.page_data_content)) {
-      okk.data.page_data_content = okk.data.page_data_content.filter(
-    ({ module_desc }) => keyi.includes(module_desc) && !keys.some((keyword) => module_desc.includes(keyword)));}
+    okk.data.page_data_content = okk.data.page_data_content.filter(
+      ({ module_desc }) => keyi.includes(module_desc) && !keys.some((keyword) => module_desc.includes(keyword)));}
 } else if (/v5\/custom_page\/getdata/.test($request.url)) {
   if (okk.data && Array.isArray(okk.data)) {
     okk.data.forEach((item) => {if (item.items) {item.items = [];}});}
-}
-$done({ body: JSON.stringify(okk) });
+}$done({ body: JSON.stringify(okk) });
