@@ -23,7 +23,8 @@ robot.friend_bg_img = `https://raw.githubusercontent.com/Keywos/rule/main/mocks/
     okk.data.forEach((item) => {
       if (item.items) {
         item.items = [];
-    }});
+      }
+    });
   }
 }
 $done({ body: JSON.stringify(okk) });
