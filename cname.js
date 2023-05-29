@@ -117,6 +117,7 @@ batch.map(async (proxy) => {
   try {   
     const alikey = await AliD(proxy.server);
     const spkey = await SPEC(proxy.server, alikey);
+    // console.log(JSON.stringify(spkey, null, 2));
     if (debug) { console.log("国内入口🌸 " + JSON.stringify(spkey)) }
     let qcip = "";
     qcip = spkey.ip
