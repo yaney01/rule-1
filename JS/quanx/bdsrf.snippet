@@ -13,9 +13,12 @@ hostname = imeres.baidu.com, mbd.baidu.com, mime.baidu.com
 # 应用内灵感语录 输入页面推荐里语录
 ^https?:\/\/mime\.baidu\.com\/sapi\/v1\/lccorpus\/(applist|pannellist)  url echo-response application/json echo-response https://github.com/Keywos/rule/raw/main/mocks/mime.json
 
-# 输入法点击图标 
-^https?:\/\/mime\.baidu\.com\/sapi\/v1\/circle\/joinedlist url echo-response application/json echo-response https://github.com/Keywos/rule/raw/main/mocks/mime.json
+# 输入法点击图标 | 收集和分析用户的输入数据
+^https?:\/\/mime\.baidu\.com\/sapi\/v1\/(circle\/joinedlist|lccorpus\/usercorpussync) url echo-response application/json echo-response https://github.com/Keywos/rule/raw/main/mocks/mime.json
 
 ^https?:\/\/mime\.baidu\.com\/commer\/pocket_api\/enterprise_list url echo-response application/json echo-response https://github.com/Keywos/rule/raw/main/mocks/mime.json
 
 ^https?:\/\/mbd\.baidu\.com\/ccs\/v1\/start\/confsync\?appname=baidu_input url echo-response application/json echo-response https://github.com/Keywos/rule/raw/main/mocks/bd.json
+
+# log
+^https:\/\/mime\.baidu\.com\/v5\/fb\/st\?logtype url reject-dict

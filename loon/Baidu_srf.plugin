@@ -8,13 +8,14 @@
 # 应用内灵感语录 输入页面推荐里语录
 ^https?:\/\/mime\.baidu\.com\/sapi\/v1\/lccorpus\/(applist|pannellist) reject-dict
 
-# 输入法点击图标 
-^https?:\/\/mime\.baidu\.com\/sapi\/v1\/circle\/joinedlist reject-dict
+# 输入法点击图标 | 收集和分析用户的输入数据
+^https?:\/\/mime\.baidu\.com\/sapi\/v1\/(circle\/joinedlist|lccorpus\/usercorpussync) reject-dict
 
 ^https?:\/\/mime\.baidu\.com\/commer\/pocket_api\/enterprise_list reject-dict
 
 ^https?:\/\/mbd\.baidu\.com\/ccs\/v1\/start\/confsync\?appname=baidu_input reject-dict
-
+# log
+^https:\/\/mime\.baidu\.com\/v5\/fb\/st\?logtype reject-dict
 [Script]
 http-response ^https?:\/\/mime\.baidu\.com\/(imrobot\/v1\/pub\/relation\/get_robot_list|v5\/custom_page\/(layout|getdata)) script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/bdsrf.js, requires-body=true, timeout=10, tag=BdSrf
 
