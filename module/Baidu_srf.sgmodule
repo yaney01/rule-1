@@ -18,8 +18,6 @@
 # log
 ^https:\/\/mime\.baidu\.com\/v5\/(fb\/st\?logtype|(notiv3|cellloc_noti|noti_cloudswitch_noti)\/info) data="https://github.com/Keywos/rule/raw/main/mocks/mime.json"
 
-
-
 [Script]
 BDSRF = type=http-response,pattern=^https?:\/\/mime\.baidu\.com\/(imrobot\/v1\/pub\/relation\/get_robot_list|v5\/custom_page\/(layout|getdata)),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/bdsrf.js
 
