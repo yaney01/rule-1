@@ -14,4 +14,4 @@ robot.friend_bg_img = `https://raw.githubusercontent.com/Keywos/rule/main/mocks/
 } else if (/v5\/custom_page\/getdata/.test($request.url)) {
   if (okk.data && Array.isArray(okk.data)) {
     okk.data.forEach((item) => {if (item.items) {item.items = [];}});}
-}$done({ body: JSON.stringify(okk) });
+}$done({body: JSON.stringify(okk)});
