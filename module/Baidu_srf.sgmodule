@@ -13,7 +13,7 @@
 ^https?:\/\/mime\.baidu\.com\/commer\/pocket_api\/enterprise_list data="https://github.com/Keywos/rule/raw/main/mocks/mime.json"
 
 ^https?:\/\/mbd\.baidu\.com\/ccs\/v1\/start\/confsync\?appname=baidu_input data="https://github.com/Keywos/rule/raw/main/mocks/bd.json"
-^https?:\/\/h2tcbox\.baidu\.com\/ztbox\?action=zubc&appname=baidu_input data="https://github.com/Keywos/rule/raw/main/mocks/bd.json"
+^https?:\/\/h2tcbox\.baidu\.com\/ztbox\?action=zubc\&appname=baidu_input data="https://github.com/Keywos/rule/raw/main/mocks/bd.json"
 
 # log
 ^https:\/\/mime\.baidu\.com\/v5\/(fb\/st\?logtype|(notiv3|cellloc_noti|noti_cloudswitch_noti)\/info) data="https://github.com/Keywos/rule/raw/main/mocks/mime.json"
