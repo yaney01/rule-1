@@ -1,3 +1,4 @@
+//2023-05-30 18:01:24
 const okk = JSON.parse($response.body);
 if (/imrobot\/v1\/pub\/relation\/get_robot_list/.test($request.url)) {
   okk.data.robot_info.forEach((robot) => {
