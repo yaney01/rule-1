@@ -22,7 +22,7 @@ DOMAIN-SUFFIX, 163jiasu.com, REJECT
 
 [Rewrite]
 # 开屏广告,首页顶部横幅广告
-^https?:\/\/interface3?\.music\.163.com\/eapi\/ad\/.* reject-dict
+^https?:\/\/interface3?\.music\.163.com\/eapi\/ad reject-dict
 
 # 搜索页,填充词,排行榜
 ^https?:\/\/interface3?\.music\.163.com\/eapi\/search\/(chart\/(detail|list)$|default\/keyword\/list\?|rcmd\/keyword\/get\/v2$|specialkeyword\/get\?) reject-dict
