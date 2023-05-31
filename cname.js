@@ -136,7 +136,6 @@ batch.map(async (proxy) => {
         }if (flag) {cmfg = "🆉"}
         qcip = inip.ip
       }
-      //替换game
       regexArray.forEach((regex, index) => {
       if (regex.test(proxy.name)) {rename = valueArray[index];}});
       if ((isp && city) || (sheng && city) || (isp && sheng) || (sheng && isp && city) || yun) {
