@@ -1,8 +1,0 @@
-#!name=PikPak 无限会员
-#!desc=邀请赢会员,无需手动运行，每日仅需运行一次，风控自行承担。脚本仅供测试使用，请支持正规渠道购买使用
-#!author = 小白脸
-#!input = 邀请码
-#!icon = https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/Pikpak.png
-
-[Script]
-cron "0 30 19 * * *" script-path=Pikpak.js, timeout=20, tag=Pikpak
