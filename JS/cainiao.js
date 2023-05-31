@@ -21,14 +21,6 @@ switch (true) {
       });
     });
     break;
-  case /cainiao\.adkeyword/.test($request.url):
-    // 搜索框下方今日好物推荐
-    okk.data.result.adHotKeywords = [];
-    break;
-  case /cainiao\.guoguo\.nbnetflow\.ads\.index\.cn/.test($request.url):
-    // 底部商品推广
-    okk.data.result = [];
-    break;
   case /cainiao\.guoguo\.nbnetflow\.ads\.mshow/.test($request.url):
     const item = ["1316", "1332","1275","1308","1340"];
     for (let i of item) {
@@ -39,16 +31,11 @@ switch (true) {
     break;
   case /guoguo\.nbnetflow\.ads\.show\.cn/.test($request.url):
     // 底部标签页
-    if (okk.data.result) {
-      okk.data.result = okk.data.result.filter(
-        (i) =>
-          !(
-            i?.materialContentMapper?.group_id?.includes("entertainment") ||
-            (i?.materialContentMapper?.bgImg &&
-              i?.materialContentMapper?.advRecGmtModifiedTime)
-          )
-      );
-    }
+  if (okk.data.result) {
+    okk.data.result = okk.data.result.filter(
+    (i) =>!(i?.materialContentMapper?.group_id?.includes("entertainment") ||
+        (i?.materialContentMapper?.bgImg &&
+          i?.materialContentMapper?.advRecGmtModifiedTime)));}
     break;
   default:
     break;
