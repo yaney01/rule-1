@@ -82,8 +82,8 @@ do{
       const readt = scriptResourceCache.gettime(id);
       let nt = new Date().getTime();
       let timedPush = "";if (target == "Loon") {let loontd = "";
-      const loonkkk = {"1\u5206\u949f":6e4,"5\u5206\u949f":3e5,"10\u5206\u949f":6e5,"30\u5206\u949f":18e5,"1\u5c0f\u65f6":36e5,"2\u5c0f\u65f6":72e5,"3\u5c0f\u65f6":108e5,"6\u5c0f\u65f6":216e5,"12\u5c0f\u65f6":432e5,"24\u5c0f\u65f6":864e5,"48\u5c0f\u65f6":1728e5,"72\u5c0f\u65f6":2592e5,"sub\u53c2\u6570\u4f20\u5165":"innums"};
-      intimed = $persistentStore.read("\u7f13\u5b58\u8fc7\u671f\u65f6\u95f4");loontd = loonkkk[intimed] || 172800000;
+      const loonkkk = {"1\u5206\u949f":6e4,"5\u5206\u949f":3e5,"10\u5206\u949f":6e5,"30\u5206\u949f":18e5,"1\u5c0f\u65f6":36e5,"2\u5c0f\u65f6":72e5,"3\u5c0f\u65f6":108e5,"6\u5c0f\u65f6":216e5,"12\u5c0f\u65f6":432e5,"24\u5c0f\u65f6":864e5,"48\u5c0f\u65f6":1728e5,"72\u5c0f\u65f6":2592e5,"\u53c2\u6570\u4f20\u5165":"innums"};
+      intimed = $persistentStore.read("\u8282\u70b9\u7f13\u5b58\u6709\u6548\u671f");loontd = loonkkk[intimed] || 172800000;
       if(loontd=="innums"){loontd=innum}timedPush = zhTime(parseInt(readt, 10) - nt + parseInt(loontd, 10))
       } else if(target == "Surge" && Sue){timedPush = zhTime(parseInt(readt, 10) - nt + parseInt(innum, 10));
       } else {timedPush = zhTime(parseInt(readt, 10) - nt + parseInt(TIMEDKEY, 10));
