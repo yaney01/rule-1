@@ -3,7 +3,7 @@
 #!openUrl = 
 #!author = Maasea
 #!homepage = 
-#!icon = https://gitlab.com/lodepuly/iconlibrary/-/raw/master/App_icon/80px/Bilibili.png
+#!icon = https://gitlab.com/lodepuly/iconlibrary/-/raw/master/App_icon/120px/Bilibili.png
 #!select = CDN节点,阿里云,腾讯云,金山云,七牛云,百度云
 #!select = 通知,开,关
 # https://raw.githubusercontent.com/Maasea/sgmodule/master/Bilibili.Helper.sgmodule
