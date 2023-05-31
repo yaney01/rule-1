@@ -138,8 +138,7 @@ batch.map(async (proxy) => {
       }
       //替换game
       regexArray.forEach((regex, index) => {
-        if (regex.test(proxy.name)) {rename = valueArray[index];}});
-
+      if (regex.test(proxy.name)) {rename = valueArray[index];}});
       if ((isp && city) || (sheng && city) || (isp && sheng) || (sheng && isp && city) || yun) {
         if (flag || yun || sheng || city) {inkey = cmfg + incity + FGF;}
           else {inkey = incity + cmcc + FGF;}
@@ -150,6 +149,7 @@ batch.map(async (proxy) => {
       } else if (city || sheng) {
         inkey = incity + FGF;
       } else {inkey = "";}
+      if (flag && !isp && !city && !sheng && !yun) {inkey = "";}
         if (game) {
           //game
           if (rename === "") {outg = "";} else {//'UDP': '🆄',
