@@ -59,7 +59,7 @@ DOMAIN,h-adashx.ut.taobao.com,REJECT-DROP
 #^https:\/\/m\.360buyimg\.com\/(mobilecms|babel)\/.+\.jpg$ reject
 
 # 松果出行
-^https:\/\/api\.songguo7\.com\/(\w{3})?mp\/v2\/misc\/(toast|user_operate_info|unlock_without_order|unlock_operate_info) reject-dict
+^https:\/\/api\.songguo7\.com\/(\w{3})?mp\/v2\/misc\/(toast|user_operate_info|unlock_without_order|unlock_operate_info|running_operate_info|lock_operate_info) reject-dict
 
 #高德地图 
 ^https?:\/\/m\d\.amap\.com\/ws\/valueadded\/ reject
@@ -93,4 +93,4 @@ iosapps.itunes.apple.com = 17.253.85.201
 token.safebrowsing.apple = 17.253.85.207
 
 [MITM]
-hostname = interface.music.163.com, interface3.music.163.com, sdk.alibaba.com.ailbaba.me, vip7.fzwdyy.cn, vpic.cms.qq.com, client.app.coc.10086.cn,api.songguo7.com, wallet.95516.com, commimg-1.pddpic.com,  list-app-m.i4.cn, rescdn.qqmail.com,api.aliyundrive.com, heic.alicdn.com, m5*.amap.com, sns.amap.com, optimus-ads.amap.com, ad.12306.cn, gw.alicdn.com, httpdns.n.netease.com, *.163jiasu.com, 59.111.*, 112.13.*, 117.147.199.59, boot.biz.weibo.com, sdkapp.uve.weibo.com, i.imgtg.com, static.yximgs.com, run.api.qyfxgd.cn
+hostname = interface.music.163.com, interface3.music.163.com, sdk.alibaba.com.ailbaba.me, vip7.fzwdyy.cn, vpic.cms.qq.com, client.app.coc.10086.cn,api.songguo7.com, wallet.95516.com, commimg-1.pddpic.com,  list-app-m.i4.cn, rescdn.qqmail.com,api.aliyundrive.com, heic.alicdn.com, m5*.amap.com, sns.amap.com, optimus-ads.amap.com, ad.12306.cn, gw.alicdn.com, httpdns.n.netease.com, 163jiasu.com, boot.biz.weibo.com, sdkapp.uve.weibo.com, i.imgtg.com, static.yximgs.com, run.api.qyfxgd.cn
