@@ -4,7 +4,7 @@
 #!author = 
 #!homepage = 
 #!icon = https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/Netease.png
-
+#https://raw.githubusercontent.com/LimeAroma/Loon/main/Plugin/NeteaseCloudMusic_remove_ads.plugin
 
 #[General]
 #force-http-engine-hosts = 59.111.*:0
