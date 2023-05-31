@@ -157,7 +157,6 @@ batch.map(async (proxy) => {
           if (keyoutg.hasOwnProperty(rename)) {outg = keyoutg[rename];} 
           else {outg = "";}}} 
         else {outg = "";};
-
         if (bl) {
           const match = proxy.name.match(/(倍率\D?((\d\.)?\d+)\D?)|((\d\.)?\d+)(倍|X|x|×)/);
           if (match) {
