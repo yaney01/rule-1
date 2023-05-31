@@ -13,21 +13,14 @@ rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数�
 [out=]:   输出节点名可选参数: (cn ，us ，gq ，quan) 对应：(中文，英文缩写 ，国旗 ，英文全称) 默认中文
 --------------------------------
 以下为不常用参数:
-[in=]:    自动判断机场节点名类型(那种类型多就判断为那种)(新增匹配原节点国旗) 也可以加参数指定 (cn ，us ，gq ，quan)
+[in=]:    自动判断机场节点名类型(那种类型多就判断为那种)(优先匹配原节点国旗) 也可以加参数指定 (cn ，us ，gq ，quan)
 [nx]:     保留1倍率与不显示倍率的
 [blnx]:   只保留高倍率
 [clear]:  清理乱七八糟的名字
 */
 //const bl = 1;
-const bl = $arguments["bl"];
-const blpx = $arguments["blpx"];
-const nx = $arguments["nx"];
-const blnx = $arguments["blnx"];
-const numone = $arguments["one"];
-const clear = $arguments["clear"];
-const addflag = $arguments["flag"];
-const jcname = $arguments.name == undefined ? "" : decodeURI($arguments.name);
-const FGF = $arguments.fgf == undefined ? " " : decodeURI($arguments.fgf);
+const bl = $arguments["bl"], blpx = $arguments["blpx"], nx = $arguments["nx"], blnx = $arguments["blnx"], numone = $arguments["one"], clear = $arguments["clear"], addflag = $arguments["flag"];
+const jcname = $arguments.name == undefined ? "" : decodeURI($arguments.name), FGF = $arguments.fgf == undefined ? " " : decodeURI($arguments.fgf);
 const inname = $arguments["in"] === "cn" ? "cn" : $arguments["in"] === "us" ? "us" : $arguments["in"] === "quan" ? "quan" : $arguments["gq"] === "gq" ? "gq" : "";
 function getList(arg) { switch (arg) { case "gq": return gq; case "us": return us; case "quan": return quan; default: return cn; }}
 function jxh(e){const n=e.reduce(((e,n)=>{const t=e.find((e=>e.name===n.name));if(t){t.count++;t.items.push({...n,name:`${n.name}${FGF}${t.count.toString().padStart(2,"0")}`})}else{e.push({name:n.name,count:1,items:[{...n,name:`${n.name}${FGF}01`}]})}return e}),[]);const t=n.flatMap((e=>e.items));e.splice(0,e.length,...t);return e}
