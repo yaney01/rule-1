@@ -1,9 +1,7 @@
 #!name=Sub-Store Cache
-#!desc=高级订阅管理工具 @Peng-YM 持久化缓存, 感谢 @小一 修改 SubStore 源码 默认脚本持久化缓存超时时间48小时
-#https://github.com/xream/Sub-Store/tree/feature/scriptResourceCache
-
+#!desc=高级订阅管理工具 @Peng-YM 持久化缓存脚本缓存
 [MITM]
-hostname= %APPEND% sub.store
+hostname=%APPEND% sub.store
 
 [Script]
 Sub-Store = type=http-request,pattern=^https?:\/\/sub\.store,requires-body=true,timeout=120,max-size=131072,ability=http-client-policy,script-update-interval=-1,script-path=https://raw.githubusercontent.com/Keywos/rule/main/Sub-Store/sub-store.min.js
