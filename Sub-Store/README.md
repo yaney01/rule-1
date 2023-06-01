@@ -13,6 +13,7 @@
 * `TIMEDKEY` 时间默认48小时，Loon可插件内指定，也可以参数指定详见脚本说明
 * [本仓库位置](https://github.com/Keywos/Sub-Store/tree/feature-scriptResourceCache)
 * Surge or Loon [专用](https://github.com/Keywos/rule/raw/main/cname.js)
+* Nolog 为去掉log版本
 ## 使用 Sub-Store
 1. 使用 Safari 打开这个 https://sub.store 如网页正常打开并且未弹出任何错误提示，说明 Sub-Store 已经配置成功。
 2. 可以把 Sub-Store 添加到主屏幕，即可获得类似于 APP 的使用体验。
