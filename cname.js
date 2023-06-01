@@ -10,8 +10,8 @@
 作者：@Key @奶茶姐 @小一 @可莉
 用法：Sub-Store脚本操作里添加
 注意：必须安装以下模块，关闭官方版本才能使用: 目前SubStore还未更新脚本持久化缓存超时
- * Surge: https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule
- * Loon: https://github.com/Keywos/rule/raw/main/loon/sub-store.plugin
+ * Surge: https://github.com/Keywos/rule/raw/main/Sub-Store/Sub-Store.sgmodule
+ * Loon: https://github.com/Keywos/rule/raw/main/Sub-Store/Sub-Store.plugin
  * 可莉版本 Loon: https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Tool/Loon/Plugin/Sub-Store.plugin
 ----------------
 以下是此脚本支持的参数，必须以"#"开头，多个参数使用"&"连接
@@ -61,7 +61,7 @@ const regexArray = [/\u6e38\u620f|game/i,];const valueArray = ["Game"];
 async function operator(e) {let cs = 0;const startTime = new Date();
 const support = isLoon || isSurge;if (!support) {$.error(`No Loon or Surge`);return e;}
 if (typeof scriptResourceCache === 'undefined') {console.log("\nNCNAME: \u4e0d\u652f\u6301\u6b64 SubStore,\n\u67e5\u770b\u811a\u672c\u8bf4\u660e\nhttps://github.com/Keywos/rule/raw/main/cname.js");
-if (target == "Surge") {$notification.post("NCNAME Sub-Store\u672a\u66f4\u65b0", "", "\u8bf7\u70b9\u51fb\u6216\u67e5\u770blog\u67e5\u770b\u811a\u672c\u8bf4\u660e\u5b89\u88c5\u5bf9\u5e94\u7248\u672c", { url: "https://github.com/Keywos/rule/raw/main/module/Sub-Store.sgmodule" })} 
+if (target == "Surge") {$notification.post("NCNAME Sub-Store\u672a\u66f4\u65b0", "", "\u8bf7\u70b9\u51fb\u6216\u67e5\u770blog\u67e5\u770b\u811a\u672c\u8bf4\u660e\u5b89\u88c5\u5bf9\u5e94\u7248\u672c", { url: "https://github.com/Keywos/rule/raw/main/Sub-Store/Sub-Store.sgmodule" })} 
 else if (target == "Loon") {$notification.post("NCNAME Sub-Store\u672a\u66f4\u65b0", "", "\u8bf7\u70b9\u51fb\u5b89\u88c5\u63d2\u4ef6, \u6216\u67e5\u770blog\u5b89\u88c5\u5bf9\u5e94\u7248\u672c, \u5e76\u5173\u95ed\u539f\u672c\u7684substore", "loon://import?plugin=https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Tool/Loon/Plugin/Sub-Store.plugin")}return e;}
 var bs = $arguments["bs"] ? $arguments["bs"] : 12;const ein = e.length;
 console.log(`\u8bbe\u5b9aapi\u8d85\u65f6: ${zhTime(timeout)}`);console.log(`\u6709\u7f13api\u8d85\u65f6: ${zhTime(cd)}`);console.log(`\u6279\u5904\u7406\u8282\u70b9\u6570: ${bs} \u4e2a`);console.log(`\u5f00\u59cb\u5904\u7406\u8282\u70b9: ${ein} \u4e2a`);
