@@ -63,6 +63,9 @@ DOMAIN-SUFFIX,sdk-conf.getui.com
 DOMAIN-SUFFIX,cm-10-138.getui.com
 DOMAIN-SUFFIX,ads.95516.com
 DOMAIN-SUFFIX,ctobsnssdk.com
+DOMAIN-SUFFIX,bds.snssdk.com
+DOMAIN-SUFFIX,p6-ad-sign.byteimg.com
+DOMAIN-SUFFIX,p3.pstatp.com
 #cpu-x ...
 DOMAIN-SUFFIX,doubleclick.net
 DOMAIN-SUFFIX,doubleclick-cn.net
