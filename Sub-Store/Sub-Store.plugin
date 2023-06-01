@@ -1,5 +1,5 @@
 #!name=Sub-Store Cache
-#!desc=高级订阅管理工具 Loon使用前请在本插件的详情页面为[PROXY]项分配代理策略。
+#!desc=高级订阅管理工具 Loon使用前请在本插件的详情页面为[PROXY]项设置策略。
 #!openUrl = https://sub.store
 #!author = Peng-YM
 #!homepage = https://github.com/Keywos/Sub-Store
