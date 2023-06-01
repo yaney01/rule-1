@@ -6,12 +6,12 @@
 ### 2. Surge
 安装使用[模块](https://github.com/Keywos/rule/blob/main/Sub-Store/Sub-Store.sgmodule)即可。
 ## 脚本配置：
+* [本仓库位置](https://github.com/Keywos/Sub-Store/tree/feature-scriptResourceCache)
 * CNAME 专用添加感谢[@小一](https://github.com/xream/Sub-Store/tree/feature/scriptResourceCache/backend/src/utils)脚本持久化缓存 
 * `$scriptResourceCache`
 * `SCRIPT_RESOURCE_CACHE_KEY`
 * `#sub-store-cached-script-resource` 缓存路径
 * `TIMEDKEY` 时间默认48小时，Loon可插件内指定，也可以参数指定详见脚本说明
-* [本仓库位置](https://github.com/Keywos/Sub-Store/tree/feature-scriptResourceCache)
 * Surge or Loon [专用](https://github.com/Keywos/rule/raw/main/cname.js)
 * Nolog 为去掉log版本
 ## 使用 Sub-Store
