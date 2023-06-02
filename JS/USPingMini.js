@@ -2,7 +2,7 @@ let $ = { Ping: "http://cp.cloudflare.com/generate_204" };
 function http(req) {
   return new Promise((resolve) => {
     let startTime = Date.now();
-    $httpClient.post($[req], () => {
+    $httpClient.get($[req], () => {
       let endTime = Date.now();
       resolve(`${req}: ${endTime - startTime}`);
     });});
