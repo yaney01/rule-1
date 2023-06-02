@@ -27,7 +27,7 @@ function saveGif(gifArr) {
 
 function PingToGif(pingTimes) {
   const minValue = 60;
-  const maxValue = 300;
+  const maxValue = 400;
   const gif = pingTimes
     .map((x) => {
       let ptogif = (x - minValue) / (maxValue - minValue);
