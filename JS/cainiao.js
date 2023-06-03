@@ -90,7 +90,7 @@ switch (true) {
         const adTime = i?.materialContentMapper?.advRecGmtModifiedTime;
 
         const stakey = "fly_splash_picture"; // 开屏
-        const hebing = new Set(["entertainment", "kuaishou_banner"]); // 底部标签页活动 、快手banner
+        const hebing = new Set(["entertainment", "kuaishou_banner", "common_header_banner","interests"]); // 底部标签页活动 、快手banner 我的权益
 
         return !(
           stadcn?.includes("29524") ||
