@@ -1,7 +1,7 @@
 #!name = Bilibili
 #!desc = 测试功能
 #!openUrl = 
-#!author = VirgilClyne、app2smile、RuCu6、Maasea、kokoryh
+#!author = MartinsKing、VirgilClyne、app2smile、RuCu6、Maasea、kokoryh
 #!homepage = 
 #!icon = https://github.com/Keywos/rule/raw/main/tv/app/144px/Bilibili.png
 #!select = 去除动态综合页热门话题,开启,关闭

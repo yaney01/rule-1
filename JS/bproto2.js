@@ -1,7 +1,7 @@
 // 测试 loon 2023-06-03 18:26:02 VirgilClyne、app2smile、RuCu6、Maasea、kokoryh、key
 const isLoon =typeof $loon !== 'undefined'
 const isQx =typeof $task !== 'undefined'
-let llog,Hot_topics,Most_visited,colorfulDms,commandDms;
+// let llog,Hot_topics,Most_visited,colorfulDms,commandDms;
 // if (isLoon){
 // 	llog = $persistentStore.read("LOG") !== "开启";
 // 	Hot_topics = $persistentStore.read("去除动态综合页热门话题") !== "关闭";
@@ -9,11 +9,11 @@ let llog,Hot_topics,Most_visited,colorfulDms,commandDms;
 // 	colorfulDms = $persistentStore.read("会员弹幕替换为普通弹幕") !== "关闭";
 // 	commandDms = $persistentStore.read("去除交互式弹幕") !== "关闭";
 // } else {
-	llog = true;
-	Hot_topics = true;
-	Most_visited = true;
-	colorfulDms = true;
-	commandDms = true
+    let	llog = true;
+    let	Hot_topics = true;
+    let	Most_visited = true;
+	let colorfulDms = true;
+    let	commandDms = true
 // }
 const URL = new URLs();
 (async () => {
