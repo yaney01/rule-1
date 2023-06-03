@@ -13,7 +13,8 @@
 # Beta 版本不保证稳定运行
 # 可能需要开启 MITM over HTTP/2
 # QX 不可用
-
+# https://github.com/Keywos/rule/raw/main/mocks/reject-dict.json
+# https://github.com/kokoryh/Script/blob/master/Surge/module/bilibili_test.sgmodule
 # Credit
 # @BiliUniverse, SocialSisterYi/bilibili-API-collect
 
