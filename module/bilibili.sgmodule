@@ -7,7 +7,7 @@
 
 
 [Map Local]
-# 可能的一些推广(beta)
+# 可能的一些推广
 ^https?:\/\/api\.bili(bili\.com|api\.net)\/pgc\/season\/app\/related\/recommend\? data="https://github.com/Keywos/rule/raw/main/mocks/reject-dict.json"
 # 屏蔽直播间广告浮窗
 ^https?:\/\/api\.live\.bilibili\.com\/xlive\/e-commerce-interface\/v1\/ecommerce-user\/get_shopping_info\? data="https://github.com/Keywos/rule/raw/main/mocks/reject-dict.json"
