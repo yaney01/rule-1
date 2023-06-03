@@ -12,7 +12,7 @@ switch (true) {
       "gjjf",    // 裹酱积分
       "ljjq",    // 领寄件券
       "ttlhb",   // 天天领红包
-			"jkymd", // 集卡赢免单
+	  "jkymd", // 集卡赢免单
     ];
     res.dataList = res.dataList.filter((i) => {
       if (i.type.includes("icons_scroll_unable") && i.bizData.items) {
