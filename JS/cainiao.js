@@ -26,15 +26,12 @@ switch (true) {
         return true; // 保留其他情况
       }
     });
-
     res.dataList.forEach((i) => {
       i.bizData.items.forEach((ii) => {
         ii.rightIcon = null;
         ii.bubbleText = null;
       });
-    });
-  }
-}
+    });}}
     break;
   case /cainiao\.guoguo\.nbnetflow\.ads\.mshow/.test($request.url):
     const item = ["1316", "1332", "1275", "1308", "1340"];
