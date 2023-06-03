@@ -1,4 +1,4 @@
-// 测试 loon 2023-06-03 19:26:44 MartinsKing、VirgilClyne、chavyleung、app2smile、RuCu6、Maasea、kokoryh、key
+// 测试 loon 2023-06-03 19:26:44 MartinsKing、VirgilClyne、app2smile、RuCu6、Maasea、kokoryh、key
 const URL = new URLs();
 const isLoon =typeof $loon !== 'undefined'
 const isQx =typeof $task !== 'undefined'
