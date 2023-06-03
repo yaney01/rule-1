@@ -7,16 +7,14 @@ Hot_topics=true,
 Most_visited=false, 
 colorfulDms=true, 
 commandDms=true;
-// console.log(nolog)
 // console.info(isLoon);
-
-// if (isLoon){
-// 	nolog = $persistentStore.read("LOG") == "开启" ? true : false;
-// 	Hot_topics = $persistentStore.read("去除动态综合页热门话题") == "开启" ? true : false;
-// 	Most_visited = $persistentStore.read("去除动态综合页最常访问") == "开启" ? true : false;
-// 	colorfulDms = $persistentStore.read("会员弹幕替换为普通弹幕") == "开启" ? true : false;
-// 	commandDms = $persistentStore.read("去除交互式弹幕") == "开启" ? true : false;
-// } 
+if (isLoon){
+	nolog = $persistentStore.read("LOG") == "开启" ? true : false;
+	Hot_topics = $persistentStore.read("去除动态综合页热门话题") == "开启" ? true : false;
+	Most_visited = $persistentStore.read("去除动态综合页最常访问") == "开启" ? true : false;
+	colorfulDms = $persistentStore.read("会员弹幕替换为普通弹幕") == "开启" ? true : false;
+	commandDms = $persistentStore.read("去除交互式弹幕") == "开启" ? true : false;
+} 
 
 /***************** Processing *****************/
 (async () => {
