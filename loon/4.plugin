@@ -21,11 +21,11 @@
 
 [Script]
 # 开屏广告 | 推荐页banner和广告 | 我的页面 | 1080P | 热搜 | 标签栏
-http-response ^https?:\/\/app\.bilibili\.com\/x\/(v2\/(splash\/list|feed\/index|account\/(mine|myinfo\?)|search\/square)|resource\/show\/tab\/v2) script-path=https://github.com/Keywos/rule/raw/main/JS/bjson.js requires-body=true, timeout=10, tag=bilibili-json
+http-response ^https?:\/\/app\.bilibili\.com\/x\/(v2\/(splash\/list|feed\/index|account\/(mine|myinfo\?)|search\/square)|resource\/show\/tab\/v2) script-path=https://github.com/Keywos/rule/raw/main/JS/bjson.js, requires-body=true, timeout=10, tag=bilibili-json
 # 直播间推广
-http-response ^https?:\/\/api\.live\.bilibili\.com\/xlive\/app-room\/v1\/index\/getInfoByRoom script-path=https://github.com/Keywos/rule/raw/main/JS/bjson.js requires-body=true, timeout=10, tag=bilibili-jsons
+http-response ^https?:\/\/api\.live\.bilibili\.com\/xlive\/app-room\/v1\/index\/getInfoByRoom script-path=https://github.com/Keywos/rule/raw/main/JS/bjson.js, requires-body=true, timeout=10, tag=bilibili-jsons
 # 番剧页 & 观影页广告
-http-response ^https?:\/\/api\.bilibili\.com\/pgc\/page\/(bangumi|cinema\/tab\?) script-path=https://github.com/Keywos/rule/raw/main/JS/bjson.js requires-body=true, timeout=10, tag=bilibili-jsona
+http-response ^https?:\/\/api\.bilibili\.com\/pgc\/page\/(bangumi|cinema\/tab\?) script-path=https://github.com/Keywos/rule/raw/main/JS/bjson.js ,requires-body=true, timeout=10, tag=bilibili-jsona
 
 
 # 视频播放页
