@@ -1,5 +1,5 @@
 #!name=Billbili 
-#!desc= MartinsKing、VirgilClyne、app2smile、RuCu6、Maasea、kokoryh、key
+#!desc= 去除动态综合页话题,最常访问,弹幕,青少年弹窗,播放页广告 MartinsKing、VirgilClyne、app2smile、RuCu6、Maasea、kokoryh、key
 
 [URL Rewrite]
 ^https?:\/\/(grpc\.biliapi\.net|app\.bilibili\.com)\/bilibili\.app\.interface\.v1\.Search\/DefaultWords - reject
