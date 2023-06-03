@@ -3,42 +3,38 @@ switch (true) {
   case /cainiao\.nbpresentation\.protocol\.homepage\.get\.cn/.test(
     $request.url):
     if (okk.data.result) {
-      let res = okk.data.result;
-      if (res.dataList) {
-        res.dataList = res.dataList.filter((i) => {
-          // 顶部图标
-          if (i.type.includes("icons_scroll_unable")) {
-            if (i.bizData.items) {
-              const item = [
-                "bgxq", // 包裹星球
-                "cngy", // 免费领水果
-                "cngreen", // 绿色家园
-                "gjjf", // 裹酱积分
-                "ljjq", // 领寄件券
-                "ttlhb", // 天天领红包
-              ];
-              i.bizData.items = i.bizData.items.filter(
-                (ii) => !item.includes(ii.key)
-              );
-            }
-          } else if (i.type.includes("big_banner_area")) {
-            // 新人福利
-            return false;
-          } else if (i.type.includes("promotion")) {
-            // 促销活动
-            return false;
-          } else {
-            return true;
-          }
-          res.dataList.forEach((i) => {
-            i.bizData.items.forEach((ii) => {
-              ii.rightIcon = null;
-              ii.bubbleText = null;
-            });
-          });
-        });
+  let res = okk.data.result;
+  if (res.dataList) {
+    const ikey = [
+      "bgxq",    // 包裹星球
+      "cngy",    // 免费领水果
+      "cngreen", // 绿色家园
+      "gjjf",    // 裹酱积分
+      "ljjq",    // 领寄件券
+      "ttlhb",   // 天天领红包
+			"jkymd", // 集卡赢免单
+    ];
+    res.dataList = res.dataList.filter((i) => {
+      if (i.type.includes("icons_scroll_unable") && i.bizData.items) {
+        i.bizData.items = i.bizData.items.filter((ii) => !ikey.includes(ii.key));
+        return true;
+      } else if (i.type.includes("big_banner_area")) {
+        return false; // 过滤掉新人福利
+      } else if (i.type.includes("promotion")) {
+        return false; // 过滤掉促销活动
+      } else {
+        return true; // 保留其他情况
       }
-    }
+    });
+
+    res.dataList.forEach((i) => {
+      i.bizData.items.forEach((ii) => {
+        ii.rightIcon = null;
+        ii.bubbleText = null;
+      });
+    });
+  }
+}
     break;
   case /cainiao\.guoguo\.nbnetflow\.ads\.mshow/.test($request.url):
     const item = ["1316", "1332", "1275", "1308", "1340"];
