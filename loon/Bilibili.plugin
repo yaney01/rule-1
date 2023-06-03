@@ -49,4 +49,4 @@ http-response ^https:\/\/(grpc\.biliapi\.net|app\.bilibili\.com)\/bilibili\.app\
 http-response ^https:\/\/(grpc\.biliapi\.net|app\.bilibili\.com)\/bilibili\.main\.community\.reply\.v1\.Reply\/MainList requires-body=true, binary-body-mode=true, timeout=10, debug=1, script-path=https://github.com/Keywos/rule/raw/main/JS/bproto.js, tag=bili.community
 
 [MITM]
-hostname = manga.bilibili.com, api.live.bilibili.com, api.vc.bilibili.com, app.bilibili.com, app.biliapi.net, api.bilibili.com, api.biliapi.net, grpc.biliapi.net
+hostname=manga.bilibili.com, api.live.bilibili.com, api.vc.bilibili.com, app.bilibili.com, app.biliapi.net, api.bilibili.com, api.biliapi.net, grpc.biliapi.net
