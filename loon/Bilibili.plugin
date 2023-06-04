@@ -10,7 +10,7 @@
 #!select = 去除交互式弹幕,开启,关闭
 #!select = 去除青少年弹窗,默认开启
 #!select = LOG,开启,关闭
-
+# 2023-06-04 17:51:29
 [Rewrite]
 ^https?:\/\/(grpc\.biliapi\.net|app\.bilibili\.com)\/bilibili\.app\.interface\.v1\.Search\/DefaultWords reject
 # 可能的一些推广
