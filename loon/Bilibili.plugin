@@ -13,7 +13,7 @@
 # 2023-06-04 17:51:29
 [Rewrite]
 # IP请求、地理位置请求
-^https:\/\/app\.bilibili\.com\/x\/resource\/ip reject
+^https?:\/\/app\.bilibili\.com\/x\/resource\/ip reject
 ^https?:\/\/(grpc\.biliapi\.net|app\.bilibili\.com)\/bilibili\.app\.interface\.v1\.Search\/DefaultWords reject
 # 可能的一些推广
 ^https?:\/\/api\.bili(bili\.com|api\.net)\/pgc\/season\/app\/related\/recommend\? reject-dict
@@ -33,7 +33,7 @@ http-response ^https?:\/\/api\.bilibili\.com\/pgc\/page\/(bangumi|cinema\/tab\?)
 # 视频播放页 | 动态页 | 后台播放限制 | 青少年
 http-response ^https?:\/\/grpc\.biliapi\.net\/bilibili\.app\.(view\.v1\.View\/View$|dynamic\.v2\.Dynamic\/Dyn(All|Video)$|playurl\.v1\.PlayURL\/PlayView$|interface\.v1\.Teenagers\/ModeStatus) requires-body=true, binary-body-mode=true, timeout=10, script-path=https://github.com/Keywos/rule/raw/main/JS/bproto.js, tag=biliproto
 # 弹幕 | 评论列表广告去除
-http-response ^https:\/\/grpc\.biliapi\.net\/bilibili\.(community\.service\.dm\.v1\.DM\/(DmView|DmSegMobile)|main\.community\.reply\.v1\.Reply\/MainList) requires-body=true, binary-body-mode=true, timeout=10, script-path=https://github.com/Keywos/rule/raw/main/JS/bproto.js, tag=biliproto
+http-response ^https?:\/\/grpc\.biliapi\.net\/bilibili\.(community\.service\.dm\.v1\.DM\/(DmView|DmSegMobile)|main\.community\.reply\.v1\.Reply\/MainList) requires-body=true, binary-body-mode=true, timeout=10, script-path=https://github.com/Keywos/rule/raw/main/JS/bproto.js, tag=biliproto
 
 [MITM]
 hostname=manga.bilibili.com, api.live.bilibili.com, api.vc.bilibili.com, app.bilibili.com, app.biliapi.net, api.bilibili.com, api.biliapi.net, grpc.biliapi.net
