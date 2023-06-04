@@ -12,6 +12,8 @@
 #!select = LOG,开启,关闭
 # 2023-06-04 17:51:29
 [Rewrite]
+# IP请求、地理位置请求
+^https:\/\/app\.bilibili\.com\/x\/resource\/ip reject
 ^https?:\/\/(grpc\.biliapi\.net|app\.bilibili\.com)\/bilibili\.app\.interface\.v1\.Search\/DefaultWords reject
 # 可能的一些推广
 ^https?:\/\/api\.bili(bili\.com|api\.net)\/pgc\/season\/app\/related\/recommend\? reject-dict
