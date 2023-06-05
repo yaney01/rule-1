@@ -7,5 +7,5 @@ CNPing = type=generic,timeout=5,script-path=https://github.com/Keywos/rule/raw/m
 USPing = type=generic,timeout=5,script-path=https://github.com/Keywos/rule/raw/main/JS/USPingMini.js
 
 [Panel]
-CNPing = script-name=CNPing,update-interval=1
-USPing = script-name=USPing,update-interval=1
+CNPing = script-name=CNPing,update-interval=10
+USPing = script-name=USPing,update-interval=10
