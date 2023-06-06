@@ -1,6 +1,6 @@
 #!name=百度输入法
 #!desc=净化 个人页随机图片
-
+#!system=ios
 [Map Local]
 # 百度输入法开屏
 ^https?:\/\/mime\.baidu\.com\/v5\/start_screen_ads/list data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/reject-dict.json"

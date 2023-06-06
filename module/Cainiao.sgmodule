@@ -1,6 +1,6 @@
 #!name=菜鸟
 #!desc=净化
-
+#!system=ios
 [Map Local]
 ^https?:\/\/guide-acs\.m\.taobao\.com\/gw\/mtop\.cainiao\.(nbmensa\.research\.researchservice\.consultmerge|adx\.flyad\.getad) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/reject-dict.json"
 ^https:\/\/cn-acs\.m\.cainiao\.com\/gw\/mtop\.com\.cainiao\.longquan\.place\.getpageresourcecontent\.cn\/\d\. data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/reject-dict.json"
