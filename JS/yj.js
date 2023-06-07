@@ -1,5 +1,5 @@
 //转自https://raw.githubusercontent.com/RS0485/network-rules/main/scripts/gas-price.js
-//兼容surge loon
+//兼容surge
 /*
 [Panel]
 YJ = script-name=YJ,update-interval=43200
@@ -16,7 +16,7 @@ try{
 //持久化适合远程引用不添加本地模块
 //工具>脚本编辑器>左下角齿轮图标>$persistentStore
 const region_pref = $persistentStore.read("yj");
-	if (typeof region_pref !== 'undefined' && region_pref !== null) { //Surge Loon写法
+	if (typeof region_pref !== 'undefined' && region_pref !== null) { //Surge 写法
 		console.log("2")
     region = region_pref
 }}catch(i){}
