@@ -10,4 +10,4 @@
 
 [Script]
 
-cron "0 18 * * *" script-path=https://github.com/Keywos/rule/raw/main/JS/loonyj.js, tag=每日邮价
+cron "0 18 * * *" script-path=https://github.com/Keywos/rule/raw/main/JS/loonyj.js, tag=每日油价
