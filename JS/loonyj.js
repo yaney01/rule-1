@@ -1,3 +1,5 @@
+//转自https://raw.githubusercontent.com/RS0485/network-rules/main/scripts/gas-price.js
+//只兼容loon
 var region = "shanxi-3/xian";
 
 const loondq = $persistentStore.read("地区");
