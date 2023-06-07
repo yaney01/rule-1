@@ -54,7 +54,7 @@ DOMAIN-SUFFIX,ad.weibo.com
 DOMAIN-SUFFIX,adstrategy.biz.weibo.com
 #DOMAIN-SUFFIX,s.weibo.com
 DOMAIN-SUFFIX,vs.biz.weibo.com
-#云闪付
+#
 DOMAIN-SUFFIX,switch.cup.com.cn
 DOMAIN-SUFFIX,sdk.open.talk.getui.net
 DOMAIN-SUFFIX,sdk-conf.getui.com
@@ -64,6 +64,8 @@ DOMAIN-SUFFIX,ctobsnssdk.com
 DOMAIN-SUFFIX,bds.snssdk.com
 DOMAIN-SUFFIX,p6-ad-sign.byteimg.com
 DOMAIN-SUFFIX,p3.pstatp.com
+DOMAIN-SUFFIX,pgdt.gtimg.cn
+DOMAIN-SUFFIX,pgdt.gtimg.com
 #cpu-x ...
 DOMAIN-SUFFIX,doubleclick.net
 DOMAIN-SUFFIX,doubleclick-cn.net
