@@ -1,6 +1,11 @@
 //转自https://raw.githubusercontent.com/RS0485/network-rules/main/scripts/gas-price.js
 //兼容surge loon
-
+/*
+[Panel]
+YJ = script-name=YJ,update-interval=43200
+[Script]
+YJ = type=generic,timeout=5,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/yj.js,argument=shanxi-3/xian
+*/
 var region = 'shanxi-3/xian'
 
 if (typeof $argument !== 'undefined' && $argument !== '') {
