@@ -14,7 +14,7 @@ if (typeof $argument !== 'undefined' && $argument !== '') {
 
 try{
 //持久化适合远程引用不添加本地模块
-//工具>脚本编辑器>左下角齿轮图标>$persistentStore
+//工具>脚本编辑器>左下角齿轮图标>$persistentStore 添加key 为 yj 里面内容为地区
 const region_pref = $persistentStore.read("yj");
 	if (typeof region_pref !== 'undefined' && region_pref !== null) { //Surge 写法
 		console.log("2")
