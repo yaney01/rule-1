@@ -2,7 +2,7 @@
 const timeoutGPT = 500;
 const timeoutAPI = 800;
 let cskey = 1, gkey = 1, body = {};
-function getAPI(max = 2) {
+function getAPI(max = 1) {
   let url = "http://ip-api.com/json/?lang=zh-CN";
   const outnew = new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -51,7 +51,7 @@ let ipa = getAPI()
 });
 //let day = " "+new Date().getHours() + ":" + new Date().getMinutes();
 const k = ["T1","XX","AL","DZ","AD","AO","AG","AR","AM","AU","AT","AZ","BS","BD","BB","BE","BZ","BJ","BT","BA","BW","BR","BG","BF","CV","CA","CL","CO","KM","CR","HR","CY","DK","DJ","DM","DO","EC","SV","EE","FJ","FI","FR","GA","GM","GE","DE","GH","GR","GD","GT","GN","GW","GY","HT","HN","HU","IS","IN","ID","IQ","IE","IL","IT","JM","JP","JO","KZ","KE","KI","KW","KG","LV","LB","LS","LR","LI","LT","LU","MG","MW","MY","MV","ML","MT","MH","MR","MU","MX","MC","MN","ME","MA","MZ","MM","NA","NR","NP","NL","NZ","NI","NE","NG","MK","NO","OM","PK","PW","PA","PG","PE","PH","PL","PT","QA","RO","RW","KN","LC","VC","WS","SM","ST","SN","RS","SC","SL","SG","SK","SI","SB","ZA","ES","LK","SR","SE","CH","TH","TG","TO","TT","TN","TR","TV","UG","AE","US","UY","VU","ZM","BO","BN","CG","CZ","VA","FM","MD","PS","KR","TW","TZ","TL","GB"]
-function getGPT(cs = 2) {
+function getGPT(cs = 1) {
   let url = "http://chat.openai.com/cdn-cgi/trace";
   const outnew = new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -93,11 +93,11 @@ function getGPT(cs = 2) {
 let getGp = getGPT().then((i) => {
     let gp = "", warp = i.warp, loc = i.loc, l = k.indexOf(loc);
     if (l != -1) {
-      gp = "ChatGPT:"+loc+" ✓";
+      gp = "GPT:"+loc+" ✓";
     } else {
-      gp = "ChatGPT: ×";
+      gp = "GPT: ×";
     }
-    return `${gp}     Protect: ${warp}`;
+    return `${gp}        ➟     Protect: ${warp}`;
   }).catch((i) => {
     return `重试${gkey}次  ChatGPT不支持`;
 });
@@ -107,7 +107,9 @@ let getGp = getGPT().then((i) => {
 Promise.all([getGp, ipa])
 .then((okey) => {
   let [g, i] = okey;
-  $done({title:g,content: i});
+  $done({title:g,content: i,
+	//icon: "speedometer", 'icon-color': "#80A0BF",
+	});
 })
 .catch((ikey) => {
   let [g, i] = ikey;
@@ -116,7 +118,7 @@ Promise.all([getGp, ipa])
 
 function smKey(s){
 	console.log(s)
-s = s.replace(/\s?\.?\,?(?:inc|com|llc|ltd|pte|services|network|infrastructure|shanghai|proxy|limited|corporation|communications|information|technology|id\d{2,6}|\(.+\)|\.|\,)\s?\.?/ig, "")
+s = s.replace(/\s?\.?\,?(?:inc|com|llc|ltd|pte|services|network|infrastructure|limited|shanghai|proxy|corporation|communications|information|technology|id\d{2,6}|\(.+\)|\.|\,)\s?\.?/ig, "")
 if (s.length > 23) {
     return s.slice(0, 23) + "..";
   } else {
