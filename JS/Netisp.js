@@ -116,7 +116,7 @@ Promise.all([getGp, ipa])
 
 function smKey(s){
 	console.log(s)
-s = s.replace(/\s?\.?\,?(?:inc|com|llc|ltd|pte|services|network|infrastructure|limited|corporation|communications|information|technology|id\d{2,6}|\(.+\)|\.|\,)\s?\.?/ig, "")
+s = s.replace(/\s?\.?\,?(?:inc|com|llc|ltd|pte|services|network|infrastructure|shanghai|proxy|limited|corporation|communications|information|technology|id\d{2,6}|\(.+\)|\.|\,)\s?\.?/ig, "")
 if (s.length > 23) {
     return s.slice(0, 23) + "..";
   } else {
