@@ -93,11 +93,11 @@ function getGPT(cs = 1) {
 let getGp = getGPT().then((i) => {
     let gp = "", warp = i.warp, loc = i.loc, l = k.indexOf(loc);
     if (l != -1) {
-      gp = "GPT:"+loc+" ✓";
+      gp = "GPT: "+loc+" ✓";
     } else {
       gp = "GPT: ×";
     }
-    return `${gp}        ➟     Protect: ${warp}`;
+    return `${gp}       ➟     Protect: ${warp}`;
   }).catch((i) => {
     return `重试${gkey}次  ChatGPT不支持`;
 });
