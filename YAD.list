@@ -72,7 +72,8 @@ DOMAIN-SUFFIX,doubleclick-cn.net
 DOMAIN,google.com.miaozhen.com
 DOMAIN,www.googleadservices.com
 DOMAIN,api-access.pangolin-sdk-toutiao-b.com
-DOMAIN-SUFFIX,gorgon.youdao.com,REJECT
+DOMAIN,nex.163.com
+DOMAIN-SUFFIX,gorgon.youdao.com
 #闲鱼
 DOMAIN,m.ykimg.com
 DOMAIN,iyes.youku.com
