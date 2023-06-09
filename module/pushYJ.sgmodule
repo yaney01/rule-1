@@ -4,4 +4,4 @@
 # 工具>脚本编辑器>左下角齿轮图标>$persistentStore 添加key 为 yj 里面内容为地区
 [Script]
 
-YJCRON=type=cron,cronexp=0 8 * * *,wake-system=1,timeout=120,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/surgeyj.js
+YJCRON=type=cron,cronexp=0 8 * * *,wake-system=1,timeout=120,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/surgepushYJ.js
