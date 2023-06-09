@@ -97,7 +97,7 @@ let getGp = getGPT().then((i) => {
     } else {
       gp = "ChatGPT: ×";
     }
-    return `${gp}     ➟    Warp: ${warp}-${loc}`;
+    return `${gp}     ➟    ${loc}-Team: ${warp}`;
   }).catch((i) => {
     return `重试${gkey}次  ChatGPT不支持`;
 });
