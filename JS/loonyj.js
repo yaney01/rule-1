@@ -81,7 +81,7 @@ $httpClient.get(
         console.log( `解析油价信息失败, 数量=${prices.length},  URL=${query_addr}`);
         done();
       } else {
-        $done($notification.post("实时油价信息", `${friendly_tips}`, `${prices[0].name}  ${prices[0].value}\n${prices[1].name}  ${prices[1].value}\n${prices[2].name}  ${prices[2].value}\n${prices[3].name}  ${prices[3].value}`, "https://google.com"));
+        $done($notification.post("实时油价信息", `${friendly_tips}`, `${prices[0].name}  ${prices[0].value}\n${prices[1].name}  ${prices[1].value}\n${prices[2].name}  ${prices[2].value}\n${prices[3].name}  ${prices[3].value}`, "http://m.qiyoujiage.com/${region}.shtml"));
       }
     }
   }
