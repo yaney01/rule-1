@@ -1,5 +1,5 @@
 //转自https://raw.githubusercontent.com/RS0485/network-rules/main/scripts/gas-price.js
-//兼容surge
+//兼容surge 点击通知可查看详情
 /*
 [Panel]
 YJ = script-name=YJ,update-interval=43200
