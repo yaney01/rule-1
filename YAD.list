@@ -55,6 +55,8 @@ DOMAIN-SUFFIX,adstrategy.biz.weibo.com
 #DOMAIN-SUFFIX,s.weibo.com
 DOMAIN-SUFFIX,vs.biz.weibo.com
 #
+DOMAIN-SUFFIX,ad.xiaomi.com
+DOMAIN-SUFFIX,ad.intl.xiaomi.com
 DOMAIN-SUFFIX,switch.cup.com.cn
 DOMAIN-SUFFIX,sdk.open.talk.getui.net
 DOMAIN-SUFFIX,sdk-conf.getui.com
