@@ -65,7 +65,7 @@ function operator(proxies) {
     var inputList = getList(regss);
   }
   var outputList = getList($arguments["out"]);
-  var countries = inputList.reduce((acc, curr, index) => {
+  var ik = inputList.reduce((acc, curr, index) => {
     acc[curr] = [outputList[index], 0];return acc;
   }, {});
   if (clear) {proxies = proxies.filter((item) => !nameclear.test(item.name));}
@@ -74,24 +74,23 @@ function operator(proxies) {
   const toBeDeleted = [];
   const newProxies = [];
   proxies.forEach((res) => {
-    let isMatched = false;
+    let isfgf = false;
     console.log(res)
     const ikey=[]
     if (!nf) {ikey.push(jcname)}
-    for (const elem of Object.keys(countries)) {
+    for (const elem of Object.keys(ik)) {
       if (res.name.indexOf(elem) !== -1) {
-        if (!isMatched) {
-          isMatched = true;
-          countries[elem][1] += 1;
+        if (!isfgf) {
+          isfgf = true;
+          ik[elem][1] += 1;
           let namekey = nf ? jcname + FGF : "";
           if (addflag) {
-            ikey.push(getflag(us[Object.keys(countries).indexOf(elem)]) +FGF+ namekey + countries[elem][0]);
-          } else {ikey.push(countries[elem][0]);}
+            ikey.push(getflag(us[Object.keys(ik).indexOf(elem)]) +FGF+ namekey + ik[elem][0]);
+          } else {ikey.push(ik[elem][0]);}
             if (bl) {//替换对应的
               regexArray.forEach((regex, index) => {
                 if (regex.test(res.name)) {
-                ikey.splice(2, 0, valueArray[index]);}});
-                
+                ikey.splice(2, 0, valueArray[index]);}}); 
             const match = res.name.match(/(倍率\D?((\d\.)?\d+)\D?)|((\d\.)?\d+)(倍|X|x|×)/);
             if (match) {//正则匹配对应数字加×
             const matchedValue = match[0].match(/(\d[\d.]*)/)[0];
@@ -101,7 +100,7 @@ function operator(proxies) {
         }
       }
     }
-    if (isMatched) {// ikey 空字符串
+    if (isfgf) {// ikey 空字符串
       const filteredResultArray = ikey.filter(item => item.trim() !== '');
       newProxies.push({...res, name: filteredResultArray.join(FGF)});
     } else {toBeDeleted.push(res);}
