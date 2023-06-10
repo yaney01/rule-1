@@ -1,15 +1,27 @@
 //转自https://raw.githubusercontent.com/RS0485/network-rules/main/scripts/gas-price.js
-//只兼容loon
-var region = "shanxi-3/xian";
+//兼容surge 点击通知可查看详情
+/*
+[Panel]
+YJ = script-name=YJ,update-interval=43200
+[Script]
+YJ = type=generic,timeout=5,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/yj.js,argument=shanxi-3/xian
+*/
+var region = 'shanxi-3/xian'
 
-const loondq = $persistentStore.read("地区");
-
-if (loondq !== undefined) {
-  region = loondq;
+if (typeof $argument !== 'undefined' && $argument !== '') {
+    region = $argument
 }
 
-const query_addr = `http://m.qiyoujiage.com/${region}.shtml`;
+try{
+//持久化适合远程引用不添加本地模块
+//工具>脚本编辑器>左下角齿轮图标>$persistentStore 添加key 为 yj 里面内容为地区
+const region_pref = $persistentStore.read("yj");
+	if (typeof region_pref !== 'undefined' && region_pref !== null) { //Surge 写法
+		console.log("2")
+    region = region_pref
+}}catch(i){}
 
+const query_addr = `http://m.qiyoujiage.com/${region}.shtml`
 $httpClient.get(
   {
     url: query_addr,
@@ -81,7 +93,7 @@ $httpClient.get(
         console.log( `解析油价信息失败, 数量=${prices.length},  URL=${query_addr}`);
         done();
       } else {
-        $done($notification.post("实时油价信息", `${friendly_tips}`, `${prices[0].name}  ${prices[0].value}\n${prices[1].name}  ${prices[1].value}\n${prices[2].name}  ${prices[2].value}\n${prices[3].name}  ${prices[3].value}`, "http://m.qiyoujiage.com/${region}.shtml"));
+        $done($notification.post("实时油价信息", `${friendly_tips}`, `${prices[0].name}  ${prices[0].value}\n${prices[1].name}  ${prices[1].value}\n${prices[2].name}  ${prices[2].value}\n${prices[3].name}  ${prices[3].value}`, {url: `http://m.qiyoujiage.com/${region}.shtml`}));
       }
     }
   }

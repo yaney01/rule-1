@@ -97,7 +97,7 @@ let getGp = getGPT().then((i) => {
     } else {
       gp = "GPT: ×";
     }
-    return `${gp}       ➟     Protect: ${warp}`;
+    return `${gp}       ➟     Privacy: ${warp}`;
   }).catch((i) => {
     return `重试${gkey}次  ChatGPT不支持`;
 });
