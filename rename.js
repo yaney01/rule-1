@@ -1,7 +1,7 @@
 /*说明: https://github.com/Keywos/rule/blob/main/readme.md
 用法：Sub-Store脚本操作添加
 例如：https://raw.githubusercontent.com/Keywos/rule/main/rename.js#name=测试&flag
-日期：2023-05-23 
+日期：2023-06-10 12:37:26
 -------------------------------- 
 rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数使用"&"连接，参考上述地址为例使用参数。
 [bl]:     保留: 家宽 ，IPLC 几倍之类的标识
@@ -9,6 +9,7 @@ rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数�
 [fgf]:    自义定分隔符,默认是空格
 [one]:    清理只有一个节点的地区的01 
 [flag]:   给节点前面加国旗
+[nf]:     默认下面参数的name在最前面，如果加此参数，name在国旗之后
 [name=]:  添加机场名前缀在节点最前面
 [out=]:   输出节点名可选参数: (cn ，us ，gq ，quan) 对应：(中文，英文缩写 ，国旗 ，英文全称) 默认中文
 --------------------------------
@@ -18,8 +19,8 @@ rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数�
 [blnx]:   只保留高倍率
 [clear]:  清理乱七八糟的名字
 */
-//const bl = 1;
-const bl = $arguments["bl"], blpx = $arguments["blpx"], nx = $arguments["nx"], blnx = $arguments["blnx"], numone = $arguments["one"], clear = $arguments["clear"], addflag = $arguments["flag"];
+// console.log(JSON.stringify(k, null, 2));
+const bl = $arguments["bl"], nf = $arguments["nf"],blpx = $arguments["blpx"], nx = $arguments["nx"], blnx = $arguments["blnx"], numone = $arguments["one"], clear = $arguments["clear"], addflag = $arguments["flag"];
 const jcname = $arguments.name == undefined ? "" : decodeURI($arguments.name), FGF = $arguments.fgf == undefined ? " " : decodeURI($arguments.fgf);
 const inname = $arguments["in"] === "cn" ? "cn" : $arguments["in"] === "us" ? "us" : $arguments["in"] === "quan" ? "quan" : $arguments["gq"] === "gq" ? "gq" : "";
 function getList(arg) { switch (arg) { case "gq": return gq; case "us": return us; case "quan": return quan; default: return cn; }}
@@ -74,31 +75,34 @@ function operator(proxies) {
   const newProxies = [];
   proxies.forEach((res) => {
     let isMatched = false;
-    const resultArray = [jcname];
+    console.log(res)
+    const ikey=[]
+    if (!nf) {ikey.push(jcname)}
     for (const elem of Object.keys(countries)) {
       if (res.name.indexOf(elem) !== -1) {
         if (!isMatched) {
           isMatched = true;
           countries[elem][1] += 1;
+          let namekey = nf ? jcname + FGF : "";
           if (addflag) {
-            resultArray.push(getflag(us[Object.keys(countries).indexOf(elem)]) + FGF + countries[elem][0]);
-          } else {resultArray.push(countries[elem][0]);}
+            ikey.push(getflag(us[Object.keys(countries).indexOf(elem)]) +FGF+ namekey + countries[elem][0]);
+          } else {ikey.push(countries[elem][0]);}
             if (bl) {//替换对应的
               regexArray.forEach((regex, index) => {
                 if (regex.test(res.name)) {
-                resultArray.splice(2, 0, valueArray[index]);}});
+                ikey.splice(2, 0, valueArray[index]);}});
                 
             const match = res.name.match(/(倍率\D?((\d\.)?\d+)\D?)|((\d\.)?\d+)(倍|X|x|×)/);
             if (match) {//正则匹配对应数字加×
             const matchedValue = match[0].match(/(\d[\d.]*)/)[0];
             if (matchedValue !== '1') {
             const newValue = matchedValue + "×";
-            resultArray.push(newValue);}}}
+            ikey.push(newValue);}}}
         }
       }
     }
-    if (isMatched) {// resultArray 空字符串
-      const filteredResultArray = resultArray.filter(item => item.trim() !== '');
+    if (isMatched) {// ikey 空字符串
+      const filteredResultArray = ikey.filter(item => item.trim() !== '');
       newProxies.push({...res, name: filteredResultArray.join(FGF)});
     } else {toBeDeleted.push(res);}
   });
