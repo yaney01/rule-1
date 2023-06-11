@@ -1,7 +1,7 @@
 /*说明: https://github.com/Keywos/rule/blob/main/readme.md
 用法：Sub-Store脚本操作添加
 例如：https://raw.githubusercontent.com/Keywos/rule/main/rename.js#name=测试&flag
-日期：2023-05-23 
+日期：2023-06-10 12:55:44
 -------------------------------- 
 rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数使用"&"连接，参考上述地址为例使用参数。
 [bl]:     保留: 家宽 ，IPLC 几倍之类的标识
@@ -9,6 +9,7 @@ rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数�
 [fgf]:    自义定分隔符,默认是空格
 [one]:    清理只有一个节点的地区的01 
 [flag]:   给节点前面加国旗
+[nf]:     默认下面参数的name在最前面，如果加此参数，name在国旗之后
 [name=]:  添加机场名前缀在节点最前面
 [out=]:   输出节点名可选参数: (cn ，us ，gq ，quan) 对应：(中文，英文缩写 ，国旗 ，英文全称) 默认中文
 --------------------------------
@@ -18,16 +19,16 @@ rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数�
 [blnx]:   只保留高倍率
 [clear]:  清理乱七八糟的名字
 */
-//const bl = 1;
-const bl = $arguments["bl"], blpx = $arguments["blpx"], nx = $arguments["nx"], blnx = $arguments["blnx"], numone = $arguments["one"], clear = $arguments["clear"], addflag = $arguments["flag"];
+// console.log(JSON.stringify(k, null, 2));
+const bl = $arguments["bl"], nf = $arguments["nf"],blpx = $arguments["blpx"], nx = $arguments["nx"], blnx = $arguments["blnx"], numone = $arguments["one"], clear = $arguments["clear"], addflag = $arguments["flag"];
 const jcname = $arguments.name == undefined ? "" : decodeURI($arguments.name), FGF = $arguments.fgf == undefined ? " " : decodeURI($arguments.fgf);
 const inname = $arguments["in"] === "cn" ? "cn" : $arguments["in"] === "us" ? "us" : $arguments["in"] === "quan" ? "quan" : $arguments["gq"] === "gq" ? "gq" : "";
-function getList(arg) { switch (arg) { case "gq": return gq; case "us": return us; case "quan": return quan; default: return cn; }}
+function gl(arg) { switch (arg) { case "gq": return gq; case "us": return us; case "quan": return quan; default: return cn; }}
 function jxh(e){const n=e.reduce(((e,n)=>{const t=e.find((e=>e.name===n.name));if(t){t.count++;t.items.push({...n,name:`${n.name}${FGF}${t.count.toString().padStart(2,"0")}`})}else{e.push({name:n.name,count:1,items:[{...n,name:`${n.name}${FGF}01`}]})}return e}),[]);const t=n.flatMap((e=>e.items));e.splice(0,e.length,...t);return e}
-function oneProxies(proxies){const groups = proxies.reduce((groups, proxy) => { const name = proxy.name.replace(/[^A-Za-z0-9\u00C0-\u017F\u4E00-\u9FFF]+\d+$/, ''); if (!groups[name]) { groups[name] = []; } groups[name].push(proxy);return groups; }, {});for(const name in groups) {if (groups[name].length === 1 && groups[name][0].name.endsWith('01')) {const proxy = groups[name][0];proxy.name = name;}};return proxies;}
-function getflag(e){const n=e.toUpperCase().split("").map((e=>127397+e.charCodeAt()));return String.fromCodePoint(...n).replace(/🇹🇼/g,"🇨🇳")}
-function getRegion(pn) { if (gq.some((name) => pn.includes(name))) { return "gq"; } else if (cn.some((name) => pn.includes(name))) { return "cn"; } else if (quan.some((name) => pn.includes(name))) { return "quan"; } else if (us.some((name) => pn.includes(name))) { return "us"; } else { return null; } } 
-function fampx(proxies) {const wis = [];const wnout = [];for (const proxy of proxies) {const fan = specialRegex.some(regex => regex.test(proxy.name));if (fan) {wis.push(proxy);} else {wnout.push(proxy);}}const sps = wis.map(proxy => specialRegex.findIndex(regex => regex.test(proxy.name)));wis.sort((a, b) => sps[wis.indexOf(a)] - sps[wis.indexOf(b)] || a.name.localeCompare(b.name));wnout.sort((a, b) => proxies.indexOf(a) - proxies.indexOf(b));return wnout.concat(wis);}
+function oneP(y){const groups = y.reduce((groups, proxy) => { const name = proxy.name.replace(/[^A-Za-z0-9\u00C0-\u017F\u4E00-\u9FFF]+\d+$/, ''); if (!groups[name]) { groups[name] = []; } groups[name].push(proxy);return groups; }, {});for(const name in groups) {if (groups[name].length === 1 && groups[name][0].name.endsWith('01')) {const proxy = groups[name][0];proxy.name = name;}};return y;}
+function gF(e){const n=e.toUpperCase().split("").map((e=>127397+e.charCodeAt()));return String.fromCodePoint(...n).replace(/🇹🇼/g,"🇨🇳")}
+function gReg(pn) { if (gq.some((name) => pn.includes(name))) { return "gq"; } else if (cn.some((name) => pn.includes(name))) { return "cn"; } else if (quan.some((name) => pn.includes(name))) { return "quan"; } else if (us.some((name) => pn.includes(name))) { return "us"; } else { return null; } } 
+function fampx(y) {const wis = [];const wnout = [];for (const proxy of y) {const fan = specialRegex.some(regex => regex.test(proxy.name));if (fan) {wis.push(proxy);} else {wnout.push(proxy);}}const sps = wis.map(proxy => specialRegex.findIndex(regex => regex.test(proxy.name)));wis.sort((a, b) => sps[wis.indexOf(a)] - sps[wis.indexOf(b)] || a.name.localeCompare(b.name));wnout.sort((a, b) => y.indexOf(a) - y.indexOf(b));return wnout.concat(wis);}
 const rurekey = {'UK': 'GB','BGP': 'B-G-P', '狮城': '新加坡', 'USA': 'United States', 'Los Angeles': 'United States Los Angeles', 'San Jose': 'United States San Jose', 'Silicon Valley': 'United States Silicon Valley', 'Michigan': 'United States Michigan', '圣何塞': '美国 圣何塞', '洛杉矶': '美国 洛杉矶', '澳洲': '澳大利亚', '波黑共和国': '波斯尼亚和黑塞哥维那', '印尼': '印度尼西亚', '阿联酋': '迪拜', '阿拉伯联合酋长国': '迪拜', 'United Arab Emirates': 'Dubai United Arab Emirates', '孟加拉': '孟加拉国', '捷克共和国': '捷克', '新台': '台北', 'Taipei': 'Taiwan', 'Chuncheon': 'Korea Chuncheon', '春川': '韩国 春川', 'Seoul': 'Korea Seoul', 'Tokyo': 'Japan', 'Osaka': 'Japan', '东京': '日本 东京', '大坂': '日本 大坂', 'London': 'United Kingdom London', '伦敦': '英国 伦敦', 'Mumbai': 'India', 'Frankfurt': 'Germany', 'Zurich': 'Switzerland', 'Moscow': 'Russia Moscow', '莫斯科': '俄罗斯 莫斯科',};
 const gq = ["🇭🇰","🇲🇴","🇹🇼","🇯🇵","🇰🇷","🇸🇬","🇺🇸","🇬🇧","🇫🇷","🇩🇪","🇦🇺","🇦🇪","🇦🇫","🇦🇱","🇩🇿","🇦🇴","🇦🇷","🇦🇲","🇦🇹","🇦🇿","🇧🇭","🇧🇩","🇧🇾","🇧🇪","🇧🇿","🇧🇯","🇧🇹","🇧🇴","🇧🇦","🇧🇼","🇧🇷","🇻🇬","🇧🇳","🇧🇬","🇧🇫","🇧🇮","🇰🇭","🇨🇲","🇨🇦","🇨🇻","🇰🇾","🇨🇫","🇹🇩","🇨🇱","🇨🇴","🇰🇲","🇨🇬","🇨🇩","🇨🇷","🇭🇷","🇨🇾","🇨🇿","🇩🇰","🇩🇯","🇩🇴","🇪🇨","🇪🇬","🇸🇻","🇬🇶","🇪🇷","🇪🇪","🇪🇹","🇫🇯","🇫🇮","🇬🇦","🇬🇲","🇬🇪","🇬🇭","🇬🇷","🇬🇱","🇬🇹","🇬🇳","🇬🇾","🇭🇹","🇭🇳","🇭🇺","🇮🇸","🇮🇳","🇮🇩","🇮🇷","🇮🇶","🇮🇪","🇮🇲","🇮🇱","🇮🇹","🇨🇮","🇯🇲","🇯🇴","🇰🇿","🇰🇪","🇰🇼","🇰🇬","🇱🇦","🇱🇻","🇱🇧","🇱🇸","🇱🇷","🇱🇾","🇱🇹","🇱🇺","🇲🇰","🇲🇬","🇲🇼","🇲🇾","🇲🇻","🇲🇱","🇲🇹","🇲🇷","🇲🇺","🇲🇽","🇲🇩","🇲🇨","🇲🇳","🇲🇪","🇲🇦","🇲🇿","🇲🇲","🇳🇦","🇳🇵","🇳🇱","🇳🇿","🇳🇮","🇳🇪","🇳🇬","🇰🇵","🇳🇴","🇴🇲","🇵🇰","🇵🇦","🇵🇾","🇵🇪","🇵🇭","🇵🇹","🇵🇷","🇶🇦","🇷🇴","🇷🇺","🇷🇼","🇸🇲","🇸🇦","🇸🇳","🇷🇸","🇸🇱","🇸🇰","🇸🇮","🇸🇴","🇿🇦","🇪🇸","🇱🇰","🇸🇩","🇸🇷","🇸🇿","🇸🇪","🇨🇭","🇸🇾","🇹🇯","🇹🇿","🇹🇭","🇹🇬","🇹🇴","🇹🇹","🇹🇳","🇹🇷","🇹🇲","🇻🇮","🇺🇬","🇺🇦","🇺🇾","🇺🇿","🇻🇪","🇻🇳","🇾🇪","🇿🇲","🇿🇼","🇦🇩","🇷🇪","🇵🇱","🇬🇺","🇻🇦","🇱🇮","🇨🇼","🇸🇨","🇦🇶","🇨🇳",]
 const us = ["HK","MO","TW","JP","KR","SG","US","GB","FR","DE","AU","AE","AF","AL","DZ","AO","AR","AM","AT","AZ","BH","BD","BY","BE","BZ","BJ","BT","BO","BA","BW","BR","VG","BN","BG","BF","BI","KH","CM","CA","CV","KY","CF","TD","CL","CO","KM","CG","CD","CR","HR","CY","CZ","DK","DJ","DO","EC","EG","SV","GQ","ER","EE","ET","FJ","FI","GA","GM","GE","GH","GR","GL","GT","GN","GY","HT","HN","HU","IS","IN","ID","IR","IQ","IE","IM","IL","IT","CI","JM","JO","KZ","KE","KW","KG","LA","LV","LB","LS","LR","LY","LT","LU","MK","MG","MW","MY","MV","ML","MT","MR","MU","MX","MD","MC","MN","ME","MA","MZ","MM","NA","NP","NL","NZ","NI","NE","NG","KP","NO","OM","PK","PA","PY","PE","PH","PT","PR","QA","RO","RU","RW","SM","SA","SN","RS","SL","SK","SI","SO","ZA","ES","LK","SD","SR","SZ","SE","CH","SY","TJ","TZ","TH","TG","TO","TT","TN","TR","TM","VI","UG","UA","UY","UZ","VE","VN","YE","ZM","ZW","AD","RE","PL","GU","VA","LI","CW","SC","AQ","CN",];
@@ -39,77 +40,79 @@ const nameblnx = /(高倍|(?!1)2+(x|倍)|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰)/i;
 const namenx = /(高倍|(?!1)(0\.|\d)+(x|倍)|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰)/i;
 const regexArray=[/ˣ²/, /ˣ³/, /ˣ⁴/, /ˣ⁵/, /ˣ⁶/, /ˣ⁷/, /ˣ⁸/, /ˣ⁹/, /ˣ¹⁰/, /ˣ²⁰/, /ˣ³⁰/, /ˣ⁴⁰/, /ˣ⁵⁰/, /IPLC/i, /IEPL/i, /核心/, /边缘/, /高级/, /标准/, /实验/, /商宽/, /家宽/, /游戏|game/i, /购物/, /专线/, /LB/, /cloudflare/i, /\budp\b/i, /\bgpt\b/i,/udpn\b/];
 const valueArray= [ "2×","3×","4×","5×","6×","7×","8×","9×","10×","20×","30×","40×","50×","IPLC","IEPL","Kern","Edge","Pro","Std","Exp","Biz","Fam","Game","Buy","Zx","LB","CF","UDP","GPT","UDPN"];
-function operator(proxies) {
-  const newProxiess = [];
-  proxies.forEach((proxy) => {
+function operator(y) {
+  const newP = [];
+  y.forEach((proxy) => {
     Object.keys(rurekey).forEach((ikey) => {
       if (proxy.name.includes(ikey)) {
         proxy = { ...proxy, name: proxy.name.replace(ikey, rurekey[ikey]) };
       }
     });
-    newProxiess.push(proxy);
+    newP.push(proxy);
   });
-  proxies.length = 0;
-  Array.prototype.push.apply(proxies, newProxiess);
+  y.length = 0;
+  Array.prototype.push.apply(y, newP);
   if (inname !== "") { 
-    var inputList = getList(inname); 
+    var inputList = gl(inname); 
   } else {
-      const inn = proxies.slice(0, 10).map((proxy) => getRegion(proxy.name)).reduce((counts, region) => {
+      const inn = y.slice(0, 10).map((proxy) => gReg(proxy.name)).reduce((counts, region) => {
           counts[region] = (counts[region] || 0) + 1;
           return counts;
       }, {});
     const rein = Object.entries(inn);
     rein.sort((a, b) => b[1] - a[1]);
     const regss = rein[0][0];
-    var inputList = getList(regss);
+    var inputList = gl(regss);
   }
-  var outputList = getList($arguments["out"]);
-  var countries = inputList.reduce((acc, curr, index) => {
+  var outputList = gl($arguments["out"]);
+  var ik = inputList.reduce((acc, curr, index) => {
     acc[curr] = [outputList[index], 0];return acc;
   }, {});
-  if (clear) {proxies = proxies.filter((item) => !nameclear.test(item.name));}
-  if (nx) {proxies = proxies.filter((res) => res.name.match(namenx) ? false : true);}
-  if (blnx) {proxies = proxies.filter((res) => res.name.match(nameblnx) ? true : false);}
-  const toBeDeleted = [];
-  const newProxies = [];
-  proxies.forEach((res) => {
-    let isMatched = false;
-    const resultArray = [jcname];
-    for (const elem of Object.keys(countries)) {
+  if(clear){y = y.filter(item => !nameclear.test(item.name))}
+  if(nx){y = y.filter(res => !res.name.match(namenx))}
+  if(blnx){y = y.filter(res => res.name.match(nameblnx))}
+  const delFgf = [];
+  const newPr = [];
+  y.forEach((res) => {
+    let isFgf = false;
+    console.log(res)
+    const ikey=[]
+    if (!nf) {ikey.push(jcname)}
+    for (const elem of Object.keys(ik)) {
       if (res.name.indexOf(elem) !== -1) {
-        if (!isMatched) {
-          isMatched = true;
-          countries[elem][1] += 1;
+        if (!isFgf) {
+          isFgf = true;
+          ik[elem][1] += 1;
+          let namekey = nf ? jcname + FGF : "";
           if (addflag) {
-            resultArray.push(getflag(us[Object.keys(countries).indexOf(elem)]) + FGF + countries[elem][0]);
-          } else {resultArray.push(countries[elem][0]);}
-            if (bl) {//替换对应的
+            ikey.push(gF(us[Object.keys(ik).indexOf(elem)]) +FGF+ namekey + ik[elem][0]);
+          } else {ikey.push(ik[elem][0]);}
+            if (bl) {
               regexArray.forEach((regex, index) => {
                 if (regex.test(res.name)) {
-                resultArray.splice(2, 0, valueArray[index]);}});
-                
+                ikey.splice(2, 0, valueArray[index]);}}); 
             const match = res.name.match(/(倍率\D?((\d\.)?\d+)\D?)|((\d\.)?\d+)(倍|X|x|×)/);
-            if (match) {//正则匹配对应数字加×
-            const matchedValue = match[0].match(/(\d[\d.]*)/)[0];
-            if (matchedValue !== '1') {
-            const newValue = matchedValue + "×";
-            resultArray.push(newValue);}}}
+            if (match) {
+            const rev = match[0].match(/(\d[\d.]*)/)[0];
+            if (rev !== '1') {
+            const newValue = rev + "×";
+            ikey.push(newValue);}}}
         }
       }
     }
-    if (isMatched) {// resultArray 空字符串
-      const filteredResultArray = resultArray.filter(item => item.trim() !== '');
-      newProxies.push({...res, name: filteredResultArray.join(FGF)});
-    } else {toBeDeleted.push(res);}
+    if (isFgf) {
+      const kb = ikey.filter(item => item.trim() !== '');
+      newPr.push({...res, name: kb.join(FGF)});
+    } else {delFgf.push(res);}
   });
-  toBeDeleted.forEach((proxy) => {
-    const index = proxies.indexOf(proxy);
+  delFgf.forEach((proxy) => {
+    const index = y.indexOf(proxy);
     if (index !== -1) {
-    proxies.splice(index, 1);}
+    y.splice(index, 1);}
   }); 
-  proxies = newProxies;
-  proxies = jxh(proxies);
-  numone && (proxies = oneProxies(proxies));
-  blpx && (proxies = fampx(proxies));
-  return proxies;
+  y = newPr;
+  y = jxh(y);
+  numone && (y = oneP(y));
+  blpx && (y = fampx(y));
+  return y;
 }
