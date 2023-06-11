@@ -518,7 +518,7 @@ async function operator(e) {
                   luodi = outip.countryCode;
                 }
               }
-              console.log(noali)
+            //   console.log(noali)
           if (!noali || v4){
             const spkey = await SPEC(proxy.server, alikey);
             qcip = spkey.ip;
@@ -562,11 +562,12 @@ async function operator(e) {
                 cmfg = cmcc;
               }
             } 
-          }
-         if(noali || v6) {   
+          } else
+        //  if(noali || v6) 
+            {   
               const inip = await INIA(proxy.server);
               if (debug) {
-                console.log("国外入口 " + JSON.stringify(inip));
+                console.log("ipapi入口 " + JSON.stringify(inip));
               }
               if (inip.country == "中国"){
                 if (city && sheng) {
