@@ -97,15 +97,12 @@ let apiRead = 0,
   apiw = 0;
 const outs = new Map();
 async function OUTIA(e) {
-  console.log(e+"落地")
   const t = getid(e);
   if (outs.has(t)) {
-    console.log("落地1")
     return outs.get(t);
   }
   const n = scriptResourceCache.get(t);
   if (n) {
-    console.log("落地2")
     apiRead++;
     return n;
   } else {
@@ -114,7 +111,6 @@ async function OUTIA(e) {
       if (cd < 51 && onen) {
         return n;
       } else {
-        console.log("落地3")
         const retry = async (retryCount) => {
           const url = `http://ip-api.com/json?lang=zh-CN&fields=status,message,country,countryCode,city,query`;
           let r = ProxyUtils.produce([e], target);
