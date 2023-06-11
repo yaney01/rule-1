@@ -51,7 +51,7 @@ let ipa = getAPI()
       //let citys = country+" "+dq;if (dq == country){citys = dq;}
 			//${org} ${ip}  ${us} 
 			//${getF(us)}加国旗
-      return `${country}: ${us} ${smKey(ip,21)}\t${tk}ms\n${smKey(as,26)}\t${day}`;
+      return `${country}: ${us} ${smKey(ip,21)}${tk}ms\n${smKey(as,26)}${day}`;
   }).catch((i) => {
     return  `重试${cskey}次  IPAPI检测超时`;
 });
@@ -106,7 +106,7 @@ let getGp = getGPT().then((i) => {
     } else {
       gp = "GPT: "+loc+" × ";
     }
-    return `${gp}       ➟     Priv: ${warp}    ${tk}ms`;
+    return `${gp}       ➟     Priv: ${warp}  ${tk}ms`;
   }).catch((i) => {
     return `重试${gkey}次  ChatGPT不支持`;
 });
@@ -125,7 +125,7 @@ Promise.all([getGp, ipa])
 });
 
 function smKey(s,e){
-	//console.log(s) 简化isp org 目前不用了
+	//console.log(s)
 //s = s.replace(/\s?\.?\,?(?:inc|com|llc|ltd|pte|services|network|infrastructure|limited|shanghai|proxy|corporation|communications|information|technology|id\d{2,6}|\(.+\)|\.|\,)\s?\.?/ig, " ")
 if (s.length > e) {
     return s.slice(0, e);
@@ -135,5 +135,5 @@ if (s.length > e) {
     return s;
   }
 }
-//加国旗需取消下面函数的注释
+
 //function getF(e) {const n = e.toUpperCase().split("").map((e) => 127397 + e.charCodeAt());return String.fromCodePoint(...n).replace(/🇹🇼/g, "🇨🇳")}
