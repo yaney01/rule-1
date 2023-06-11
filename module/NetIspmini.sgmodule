@@ -6,4 +6,4 @@
 NetISP = type=generic,timeout=5,script-path=https://github.com/Keywos/rule/raw/main/JS/Netisp.js
 
 [Panel]
-NetISP = script-name=NetISP,update-interval=-1
+NetISP = script-name=NetISP,update-interval=43200
