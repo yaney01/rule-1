@@ -75,7 +75,7 @@ function operator(y) {
   const newPr = [];
   y.forEach((res) => {
     let isFgf = false;
-    console.log(res)
+    // console.log(res)
     const ikey=[]
     if (!nf) {ikey.push(jcname)}
     for (const elem of Object.keys(ik)) {
