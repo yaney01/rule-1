@@ -52,7 +52,7 @@ let ipa = getAPI()
 			org=sK(org,1);
 			let os = as.split(" ")[1];
 			let ok="";
-			if (os == org){
+			if (os.toLowerCase() === org.toLowerCase()) {
 				ok = ast
 				} else {
 					ok = as +" "+ org
@@ -147,7 +147,7 @@ if (s.length > e) {
 }
 
 function sK(s,e){
-    return s.split(" ", e).join(" ").replace(/\.|\,/g, "");
+    return s.split(" ", e).join(" ").replace(/\.|\,|com/g, "");
 }
 
 //function getF(e) {const n = e.toUpperCase().split("").map((e) => 127397 + e.charCodeAt());return String.fromCodePoint(...n).replace(/🇹🇼/g, "🇨🇳")}
