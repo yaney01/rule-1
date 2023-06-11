@@ -584,7 +584,7 @@ async function operator(e) {
                 //ipapi运营商...
                 cmcc = "";
                 if (flag) {
-                  cmfg = "";
+                  cmfg = "🅲";
                 }
               } else {
                 incity = inip.country;
