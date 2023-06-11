@@ -150,7 +150,7 @@ async function OUTIA(e) {
 }
 const ali = new Map();
 async function AliD(e) {
-  const t = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(e);
+  const t = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$|^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$/.test(e);
   if (t) {
     return e;
   } else {
