@@ -1,0 +1,21 @@
+#!name=去广告合集
+#!desc=目前只有:爱思,中国移动
+
+[General]
+#force-http-engine-hosts =  %APPEND% 
+
+[URL Rewrite]
+# 爱思开屏
+^https?:\/\/list-app-m\.i4\.cn\/getopfstadinfo\.xhtml - reject
+
+[Map Local]
+#中国移动 client.app.coc.10086.cn
+^https?:\/\/client\.app\.coc\.10086\.cn\/biz-orange\/DN\/(explorePage\/getAdverList|init\/startInit) data="https://github.com/Keywos/rule/raw/main/mocks/reject-200.txt"
+
+[Script]
+# 爱思 list-app-m.i4.cn, search-app-m.i4.cn
+爱思 = type=http-response,pattern=^https?:\/\/(search|list)-app-m\.i4\.cn\/(getHotSearchList|getAppList)\.xhtml,requires-body=1,max-size=0,script-path=https://github.com/Keywos/rule/raw/main/JS/aisi.js
+
+
+[MITM]
+hostname = %APPEND% client.app.coc.10086.cn, list-app-m.i4.cn, search-app-m.i4.cn
