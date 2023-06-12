@@ -1,19 +1,30 @@
 #!name=去广告合集
-#!desc=目前只有:爱思,中国移动
+#!desc=目前只有:爱思,中国移动,网易邮箱大师
 
 [General]
 #force-http-engine-hosts = %APPEND% 
 tcp-connection = true
+
 [URL Rewrite]
 # 爱思开屏
 ^https?:\/\/list-app-m\.i4\.cn\/getopfstadinfo\.xhtml - reject
 
+# 网易邮箱大师
+^https?:\/\/appconf\.mail\.163\.com\/mmad\/get\.do - reject
+^http?:\/\/analytics\.163\.com\/ntes - reject
+
 [Map Local]
-#中国移动 client.app.coc.10086.cn
+#中国移动开屏 client.app.coc.10086.cn
 ^https?:\/\/client\.app\.coc\.10086\.cn\/biz-orange\/DN\/(explorePage\/getAdverList|init\/startInit) data="https://github.com/Keywos/rule/raw/main/mocks/reject-200.txt"
 
 # 微信公众号底部 mp.weixin.qq.com
 ^https?:\/\/mp\.weixin\.qq\.com\/mp\/getappmsgad data="https://github.com/Keywos/rule/raw/main/mocks/WeChat.json"
+
+# 网易邮箱大师开屏 analytics.163.com, appconf.mail.163.com
+^https?:\/\/appconf\.mail\.163\.com\/mmad\/ data="https://github.com/Keywos/rule/raw/main/mocks/reject-200.txt"
+
+
+
 [Script]
 # # 爱思推广全部干掉只保留搜索 list-app-m.i4.cn, search-app-m.i4.cn
 爱思 = type=http-response,pattern=^https?:\/\/(search|list)-app-m\.i4\.cn\/(getHotSearchList|getAppList)\.xhtml,requires-body=1,max-size=0,script-path=https://github.com/Keywos/rule/raw/main/JS/aisi.js
