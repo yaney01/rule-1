@@ -40,6 +40,7 @@ https://github.com/Keywos/rule/raw/main/cname.js#city&isp
 [cd=] 当《部分有缓存，部分节点没有缓存》的情况下，请求的超时时间，默认460ms。 超时后只会重试一次,共2次
 仅当节点缓存《接近完全》的情况下, 才建议设置[cd=]的值小于50，这样会直接读取缓存。不发送请求, 减少不必要的请求,和时间 
 
+
 */
 const $ = $substore,
   bl = $arguments["bl"],
