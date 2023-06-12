@@ -1,5 +1,5 @@
 #!name=去广告合集
-#!desc=目前只有:爱思,中国移动,网易邮箱大师,qq邮箱,大师兄,腾讯手机管家,招商银行
+#!desc=目前只有:爱思,中国移动,网易邮箱大师,qq邮箱,大师兄,腾讯手机管家,招商银行,it之家
 
 [General]
 force-http-engine-hosts = %APPEND% sdk.alibaba.com.ailbaba.me
@@ -22,6 +22,11 @@ tcp-connection = true
 # 腾讯手机管理开屏 us.l.qq.com
 ^https:\/\/us\.l\.qq\.com\/exapp - reject
 
+# it之家 api.zuihuimai.com, dat.ruanmei.com
+^https?:\/\/api\.zuihuimai\.com\/static\/.*\/hongbao reject
+^https?:\/\/dat\.ruanmei\.com\/ithome\/money\/acd\.json$ reject
+
+
 [Map Local]
 # 中国移动开屏 client.app.coc.10086.cn
 ^https?:\/\/client\.app\.coc\.10086\.cn\/biz-orange\/DN\/(explorePage\/getAdverList|init\/startInit) data="https://github.com/Keywos/rule/raw/main/mocks/reject-200.txt"
@@ -35,12 +40,13 @@ tcp-connection = true
 # 招商银行开屏 webappcfg.paas.cmbchina.com
 ^https?:\/\/webappcfg\.paas\.cmbchina\.com\/v\d\/func\/getmarketconfig data="dict.json"
 
-
 [Script]
 # 爱思推广全部干掉只保留搜索 list-app-m.i4.cn, search-app-m.i4.cn
 爱思 = type=http-response,pattern=^https?:\/\/(search|list)-app-m\.i4\.cn\/(getHotSearchList|getAppList)\.xhtml,requires-body=1,max-size=0,script-path=https://github.com/Keywos/rule/raw/main/JS/aisi.js
 
+# it之家 napi.ithome.com
+it之家 = type=http-response,pattern=^https:\/\/napi\.ithome\.com\/api\/news\/index,requires-body=1,max-size=0,script-path=https://github.com/Keywos/rule/raw/main/JS/surgeithome.js
 
 [MITM]
 h2 = true
-hostname = %APPEND% client.app.coc.10086.cn, list-app-m.i4.cn, search-app-m.i4.cn, mp.weixin.qq.com, webappcfg.paas.cmbchina.com, rescdn.qqmail.com, us.l.qq.com
+hostname = %APPEND% client.app.coc.10086.cn, list-app-m.i4.cn, search-app-m.i4.cn, mp.weixin.qq.com, webappcfg.paas.cmbchina.com, rescdn.qqmail.com, us.l.qq.com, napi.ithome.com, api.zuihuimai.com, dat.ruanmei.com
