@@ -2,8 +2,8 @@
 #!desc=目前只有:爱思,中国移动
 
 [General]
-#force-http-engine-hosts =  %APPEND% 
-
+#force-http-engine-hosts = %APPEND% 
+tcp-connection = true
 [URL Rewrite]
 # 爱思开屏
 ^https?:\/\/list-app-m\.i4\.cn\/getopfstadinfo\.xhtml - reject
@@ -20,4 +20,5 @@
 
 
 [MITM]
+h2 = true
 hostname = %APPEND% client.app.coc.10086.cn, list-app-m.i4.cn, search-app-m.i4.cn, mp.weixin.qq.com
