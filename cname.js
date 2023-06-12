@@ -156,7 +156,7 @@ async function AliD(e) {
     }
     const n = scriptResourceCache.get(t);
     if (n) {
-      // return n;
+      return n;
     } else {
       const n = new Promise((s, o) => {
         if (cd < 51 && onen) {
