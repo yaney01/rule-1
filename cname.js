@@ -1,13 +1,13 @@
 /*
 用法：Sub-Store脚本操作里添加：默认48H缓存超时
 日期：2023-06-12 18:04:49 仅支持Surge、Loon; 其他不支持置顶节点请使用rename
+符号：🅳电信 🅻联通 🆈移动 🅶广电 🅲公司 🆉直连 🎮游戏
+作者：@Key @奶茶姐 @小一 @可莉
+接口：入口查询[国内spapi 识别到国外为ip-api] 落地查询[ip-api]
 注意：必须安装以下模块，关闭官方版本才能使用: 目前SubStore还未更新脚本持久化缓存超时
  * Surge: https://github.com/Keywos/rule/raw/main/Sub-Store/Sub-Store.sgmodule
  * Loon: https://github.com/Keywos/rule/raw/main/Sub-Store/Sub-Store.plugin
  * 可莉版本 Loon: https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Tool/Loon/Plugin/Sub-Store.plugin
-符号：🅳电信 🅻联通 🆈移动 🅶广电 🅲公司 🆉直连 🎮游戏
-作者：@Key @奶茶姐 @小一 @可莉
-接口：入口查询[国内spapi 识别到国外为ip-api] 落地查询[ip-api]
 功能：根据接口返回的真实结果，重新对节点命名。添加入口城市、落地国家或地区、国内运营商信息，并对这些数据做持久化缓存（48小时有效期），减少API请求次数，提高运行效率。
 [bl]      保留倍率
 [isp]     运营商/直连
