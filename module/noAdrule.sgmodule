@@ -23,6 +23,8 @@ tcp-connection = true
 # 网易邮箱大师开屏 analytics.163.com, appconf.mail.163.com
 ^https?:\/\/appconf\.mail\.163\.com\/mmad\/ data="https://github.com/Keywos/rule/raw/main/mocks/reject-200.txt"
 
+# 招商银行开屏 webappcfg.paas.cmbchina.com
+^https?:\/\/webappcfg\.paas\.cmbchina\.com\/v\d\/func\/getmarketconfig data="dict.json"
 
 
 [Script]
@@ -32,4 +34,4 @@ tcp-connection = true
 
 [MITM]
 h2 = true
-hostname = %APPEND% client.app.coc.10086.cn, list-app-m.i4.cn, search-app-m.i4.cn, mp.weixin.qq.com
+hostname = %APPEND% client.app.coc.10086.cn, list-app-m.i4.cn, search-app-m.i4.cn, mp.weixin.qq.com, webappcfg.paas.cmbchina.com
