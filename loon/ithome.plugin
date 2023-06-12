@@ -4,8 +4,8 @@
 #!author = 
 #!homepage = 
 #!icon = https://github.com/Keywos/rule/raw/main/tv/app/144px/ithome.png
-#!select = 轮播图,开启,关闭
-#!select = 置顶,开启,关闭
+#!select = 去除轮播图,开启,关闭
+#!select = 去除置顶,开启,关闭
 [Rewrite]
 ^https?:\/\/api\.zuihuimai\.com\/static\/.*\/hongbao reject
 ^https?:\/\/dat\.ruanmei\.com\/ithome\/money\/acd\.json$ reject

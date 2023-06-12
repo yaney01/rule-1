@@ -1,8 +1,8 @@
 const isLoon =typeof $loon !== 'undefined'
 let lbt=true, zd=true
 if (isLoon){
-	lbt = $persistentStore.read("轮播图") === "开启";
-    zd = $persistentStore.read("置顶") === "开启";
+	lbt = $persistentStore.read("去除轮播图") === "开启";
+    zd = $persistentStore.read("去除置顶") === "开启";
 }
 let i = JSON.parse($response.body);
 if(lbt){
