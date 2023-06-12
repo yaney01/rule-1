@@ -1,4 +1,5 @@
-//@key
+//@key ip信息根据ipapi判断 as和org去重合并
+//gpt判断走的gtp openai.com的分流
 const timeoutGPT = 500;
 const timeoutAPI = 800;
 let cskey = 1, gkey = 1, body = {};
@@ -46,12 +47,21 @@ let ipa = getAPI()
       let { query:ip, regionName:dq, countryCode:us, org, isp, country, city, as, tk} = key;
       //org = smKey(org,26)
 			//isp = smKey(isp,26) // ${isp}
-			as=as.split(" ", 3).join(" ").replace(/\.|\,/g, "")
+			ast=sK(as,3);
+			as=sK(as,2);
+			org=sK(org,1);
+			let os = as.split(" ")[1];
+			let ok="";
+			if (os.toLowerCase() === org.toLowerCase()) {
+				ok = ast
+				} else {
+					ok = as +" "+ org
+					}
 			dq = smKey(dq,6)
       //let citys = country+" "+dq;if (dq == country){citys = dq;}
 			//${org} ${ip}  ${us} 
 			//${getF(us)}加国旗
-      return `${country}: ${us} ${smKey(ip,21)}${tk}ms\n${smKey(as,26)}${day}`;
+      return `${country}: ${us} ${smKey(ip,21)}${tk}ms\n${smKey(ok,20)}${day}`;
   }).catch((i) => {
     return  `重试${cskey}次  IPAPI检测超时`;
 });
@@ -102,11 +112,11 @@ function getGPT(cs = 1) {
 let getGp = getGPT().then((i) => {
     let gp = "", warp = i.warp, tk=i.tk ,loc = i.loc, l = k.indexOf(loc);
     if (l != -1) {
-      gp = "GPT: "+loc+" ✓ ";
+      gp = "GPT: "+loc+" ✓";
     } else {
-      gp = "GPT: "+loc+" × ";
+      gp = "GPT: "+loc+" ×";
     }
-    return `${gp}       ➟     Priv: ${warp}  ${tk}ms`;
+    return `${gp}        ➟     Priv: ${warp}  ${tk}ms`;
   }).catch((i) => {
     return `重试${gkey}次  ChatGPT不支持`;
 });
@@ -134,6 +144,10 @@ if (s.length > e) {
 	} else {
     return s;
   }
+}
+
+function sK(s,e){
+    return s.split(" ", e).join(" ").replace(/\.|\,|com/g, "");
 }
 
 //function getF(e) {const n = e.toUpperCase().split("").map((e) => 127397 + e.charCodeAt());return String.fromCodePoint(...n).replace(/🇹🇼/g, "🇨🇳")}
