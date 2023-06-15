@@ -4,7 +4,7 @@
 #!author = Key
 #!homepage = 
 #!icon = https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/YouTube.png
-#!select = 字幕位置,单行,第一行,第二行
+#!select = 字幕位置,仅输出译文,译文位于外文之上,译文位于外文之下
 
 
 [MITM]
