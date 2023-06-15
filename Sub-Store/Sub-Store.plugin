@@ -15,8 +15,8 @@ DOMAIN, ip-api.com, PROXY
 hostname=sub.store
 
 [Script]
-http-request ^https?:\/\/sub\.store\/((download)|api\/(preview|sync|(utils\/node-info))) script-path=https://raw.githubusercontent.com/Keywos/rule/main/Sub-Store/sub-store-1.min.js, requires-body=true, timeout=120, tag=Sub-Store Cache-Core 
-http-request https?:\/\/sub\.store script-path=https://raw.githubusercontent.com/Keywos/rule/main/Sub-Store/sub-store-0.min.js, requires-body=true, timeout=120, tag=Sub-Store Cache-Simple 
+http-request ^https?:\/\/sub\.store\/((download)|api\/(preview|sync|(utils\/node-info))) script-path=https://raw.githubusercontent.com/Keywos/rule/main/Sub-Store/sub-store-1.min-nolog.js, requires-body=true, timeout=120, tag=Sub-Store Cache-Core 
+http-request https?:\/\/sub\.store script-path=https://raw.githubusercontent.com/Keywos/rule/main/Sub-Store/sub-store-0.min-nolog.js, requires-body=true, timeout=120, tag=Sub-Store Cache-Simple 
 cron "0 0 * * *" script-path=https://raw.githubusercontent.com/Keywos/rule/main/Sub-Store/cron-sync-artifacts.min.js, tag=Sub-Store Sync
 
 #dev版本
