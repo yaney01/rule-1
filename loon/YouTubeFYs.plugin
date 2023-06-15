@@ -11,4 +11,4 @@
 hostname = www.youtube.com
 
 [Script]
-http-response ^https:\/\/www\.youtube\.com\/api\/timedtext script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/YouTubeFY.js, requires-body=true, timeout=20, tag=YouTube Translate
+http-response ^https:\/\/www\.youtube\.com\/api\/timedtext script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/loonYouTubeFY.js, requires-body=true, timeout=20, tag=YouTube Translate
