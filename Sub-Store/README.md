@@ -19,19 +19,15 @@
 2. 可以把 Sub-Store 添加到主屏幕，即可获得类似于 APP 的使用体验。
 3. 更详细的使用指南请参考[文档](https://www.notion.so/Sub-Store-6259586994d34c11a4ced5c406264b46)。
 
-Right Arrows
+
 
 →
-实心右指三角
 ➔
 ➜
 ➝
 ➞
-🠖
-🠒
 ☞
 ☛
-实心向右箭头
 ➟
 ➠
 ➢
@@ -138,15 +134,9 @@ Right Arrows
 ›
 ❯
 ❱
-˲
-Left Arrows
 
 ←
-实心左指三角
-向左的黑色箭頭
-🠔
 ↚
-🠐
 ☚
 ↜
 ↞
@@ -204,15 +194,11 @@ Left Arrows
 ‹
 ❮
 ❰
-˱
-Up Arrows
+
 
 ↑
 ▲
-向上的黑色箭頭
-🠕
-🠑
-空心上指索引
+
 ↟
 ↥
 ↾
@@ -253,13 +239,10 @@ Up Arrows
 ᐱ
 ᗑ
 ᛣ
-Down Arrows
 
 ↓
 ▼
-向下的黑色箭頭
-🠗
-🠓
+
 ☟
 ↡
 ↧
@@ -290,9 +273,7 @@ Down Arrows
 ᐁ
 ᐯ
 ᗐ
-Left Right Arrows
 
-左右箭头
 ↭
 ↮
 ↹
@@ -320,9 +301,7 @@ Left Right Arrows
 ⥩
 ⬄
 ⇼
-Up Down Arrows
 
-上下箭头
 ↨
 ⇅
 ⇕
@@ -335,12 +314,8 @@ Up Down Arrows
 ⥍
 ⥏
 ⥑
-Diagonal Arrows
 
-西北箭头
-东北箭头
-东南箭头
-西南箭头
+
 ⇖
 ⇗
 ⇘
@@ -377,73 +352,19 @@ Diagonal Arrows
 ⬁
 ⬂
 ⬃
-Heavy Arrows
 
-🠸
-🠺
-🠻
-🠹
-🡄
-🡆
-🡅
-🡇
-🡸
-🡺
-🡹
-🡻
-🡼
-🡽
-🡾
-🡿
-🢀
-🢂
-🢁
-🢃
-🢄
-🢅
-🢆
-🢇
+
 ➨
 ➜
 ➽
 ❰
 ❱
-Heavy Compressed Arrows
 
-🠼
-🠾
-🠽
-🠿
-🡀
-🡂
-🡁
-🡃
-Curved Arrows
 
-⮨
-⮩
-⮪
-⮫
 ➥
 ➦
-⮬
-⮭
-⮮
-⮯
-Shadowed Arrows
 
-🢠
-🢡
-🢢
-🢣
-🢤
-🢥
-🢦
-🢧
-🢨
-🢩
-🢪
-🢫
+
 ➩
 ➪
 ➫
@@ -452,16 +373,8 @@ Shadowed Arrows
 ➮
 ➯
 ➱
-Arrow to/from Bar
 
-⭰
-⭲
-⭱
-⭳
-⭶
-⭷
-⭸
-⭹
+
 ⇤
 ⇥
 ⤒
@@ -482,56 +395,13 @@ Arrow to/from Bar
 ↸
 ⇱
 ⇲
-Navigation Arrows
 
-🡠
-🡢
-🡡
-🡣
-🡤
-🡥
-🡦
-🡧
-🡨
-🡪
-🡩
-🡫
-🡬
-🡭
-🡮
-🡯
-🡰
-🡲
-🡱
-🡳
-🡴
-🡵
-🡶
-🡷
-🡸
-🡺
-🡹
-🡻
-🡼
-🡽
-🡾
-🡿
-🢀
-🢂
-🢁
-🢃
-🢄
-🢅
-🢆
-🢇
-Hand Pointing Index
+
 
 ☚
 ☞
-空心上指索引
 ☟
 ☛
-90 Degree Arrows
 
 ↳
 ↲
@@ -540,24 +410,18 @@ Hand Pointing Index
 ↵
 ↴
 ☇
-Circle Circular Arrows
 
 ↺
 ↻
 ⟲
 ⟳
-⭯
-⭮
+
 ↺
 ↻
 ⥀
 ⥁
-↶
 ↷
-⮌
-⮍
-⮎
-⮏
+
 ⤻
 ⤸
 ⤾
@@ -566,42 +430,17 @@ Circle Circular Arrows
 ⤼
 ⤽
 ⤹
-🗘
-⮔
-顺时针向右和向左打开圆形箭头
-顺时针向右和向左打开带有圆圈一个叠加的圆形箭头
-顺时针向下和向上打开圆形箭头
-逆时针向下和向上打开圆形箭头
-指向右侧然后向上弯曲的箭头
-指向右侧然后向下弯曲的箭头
+
+
 ⤶
 ⤷
-有钩的向右箭头
-有钩的向左箭头
 ⃕
-Circled Arrows
 
-⮈
-⮊
-⮉
-⮋
 ➲
-Ribbon Arrows
 
-⮰
-⮱
-⮲
-⮳
-⮴
-⮵
-⮶
-⮷
-Paired Twin Two Arrows
 
-⮄
-⮆
-⮅
-⮇
+
+
 ⇈
 ⇊
 ⇇
@@ -610,34 +449,26 @@ Paired Twin Two Arrows
 ⇄
 ⇅
 ⇵
-⮀
 ⮂
-⮁
 ⮃
-Triple Three Arrows
 
 ⇶
 ⇚
 ⇛
 ⤊
 ⟱
-Keyboard Arrows
 
 ←
 →
 ↑
 ↓
-Tab Key
 
-⭾
-⭿
-Bow and Arrows
+
 
 ➶
 ➴
 ➷
 ➹
-Waved Arrows
 
 ⬿
 ⤳
@@ -647,7 +478,7 @@ Waved Arrows
 ⇝
 ⬳
 ⟿
-Harpoon Arrows
+
 
 ↼
 ⇀
@@ -697,7 +528,6 @@ Harpoon Arrows
 ⥭
 ⥮
 ⥯
-Stroked Arrows
 
 ⇷
 ⇸
@@ -709,10 +539,7 @@ Stroked Arrows
 ⇞
 ⇟
 ⇼
-⭺
-⭼
-⭻
-⭽
+
 ⬴
 ⤀
 ⬵
@@ -727,17 +554,12 @@ Stroked Arrows
 ⤗
 ⬽
 ⤘
-Double Head Arrows
 
 ↞
 ↠
 ↟
 ↡
-⯬
-⯭
-⯮
-⯯
-Miscellaneous Arrows
+
 
 ↯
 ☈
@@ -745,52 +567,25 @@ Miscellaneous Arrows
 ⥽
 ⥾
 ⥿
-Arrows Within Triangle Arrowhead
 
-🢔
-🢖
-🢕
-🢗
-Arrow Heads
 
-⮜
-⮞
-⮝
-⮟
+
 ➤
-⮘
-⮚
-⮙
-⮛
+
 ➢
 ➣
-实心右指三角
 ➤
 ▲
-🢐
-🢒
-🢑
-🢓
+
 ⌃
 ⌄
-Arrow Shafts
 
 ■
 □
-🞑
-🞒
-🞓
+
 ▦
 ▤
 ⧈
 ▨
 ▧
-🢜
-🢝
-🢞
-🢟
-🢬
-🢭
-Fedex Logo Arrow
 
-🡆
