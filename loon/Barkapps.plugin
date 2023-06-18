@@ -1,5 +1,5 @@
 #!name=Barkapps
-#!desc=利用Barkapp推送限免app，需要自己下载Bark并找到key填写插件内
+#!desc=利用Barkapp推送限免app，需要自己下载Bark并找到key填写插件内, 持久化缓存已经通知过的app,避免重复请求,只有新数据才会通知, 测试的时候可以直接删除持久化缓存: uuidkey 即可@Key
 #!input = Bark推送KEY
 #!icon = https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/AppStore.png
 
