@@ -3,5 +3,12 @@
 #!input = Bark推送KEY
 #!icon = https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/AppStore.png
 
+
+[MITM]
+hostname=barkapp.key.com
+
 [Script]
+# 跳转商店
+http-request ^https?:\/\/barkapp\.key\.com script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/loonpushBarkapps.js, requires-body=true, timeout=20, tag=BarkappREQ
+# 定时获取
 cron "0 */6 * * *" script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/loonpushBarkapps.js, timeout=20, tag=Barkapps
