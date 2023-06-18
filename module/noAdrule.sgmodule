@@ -29,23 +29,23 @@ tcp-connection = true
 
 [Map Local]
 # 中国移动开屏 client.app.coc.10086.cn
-^https?:\/\/client\.app\.coc\.10086\.cn\/biz-orange\/DN\/(explorePage\/getAdverList|init\/startInit) data="https://github.com/Keywos/rule/raw/main/mocks/reject-200.txt"
+^https?:\/\/client\.app\.coc\.10086\.cn\/biz-orange\/DN\/(explorePage\/getAdverList|init\/startInit) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks//reject-200.txt"
 
 # 微信公众号底部 mp.weixin.qq.com
-^https?:\/\/mp\.weixin\.qq\.com\/mp\/getappmsgad data="https://github.com/Keywos/rule/raw/main/mocks/WeChat.json"
+^https?:\/\/mp\.weixin\.qq\.com\/mp\/getappmsgad data="https://raw.githubusercontent.com/Keywos/rule/main/mocks//WeChat.json"
 
 # 网易邮箱大师开屏 analytics.163.com, appconf.mail.163.com
-^https?:\/\/appconf\.mail\.163\.com\/mmad\/ data="https://github.com/Keywos/rule/raw/main/mocks/reject-200.txt"
+^https?:\/\/appconf\.mail\.163\.com\/mmad\/ data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/reject-200.txt"
 
 # 招商银行开屏 webappcfg.paas.cmbchina.com
-^https?:\/\/webappcfg\.paas\.cmbchina\.com\/v\d\/func\/getmarketconfig data="dict.json"
+^https?:\/\/webappcfg\.paas\.cmbchina\.com\/v\d\/func\/getmarketconfig data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/dict.json"
 
 [Script]
 # 爱思推广全部干掉只保留搜索 list-app-m.i4.cn, search-app-m.i4.cn
-爱思 = type=http-response,pattern=^https?:\/\/(search|list)-app-m\.i4\.cn\/(getHotSearchList|getAppList)\.xhtml,requires-body=1,max-size=0,script-path=https://github.com/Keywos/rule/raw/main/JS/aisi.js
+爱思 = type=http-response,pattern=^https?:\/\/(search|list)-app-m\.i4\.cn\/(getHotSearchList|getAppList)\.xhtml,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/aisi.js
 
 # it之家 napi.ithome.com
-it之家 = type=http-response,pattern=^https:\/\/napi\.ithome\.com\/api\/news\/index,requires-body=1,max-size=0,script-path=https://github.com/Keywos/rule/raw/main/JS/surgeithome.js
+it之家 = type=http-response,pattern=^https:\/\/napi\.ithome\.com\/api\/news\/index,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/surgeithome.js
 
 [MITM]
 h2 = true
