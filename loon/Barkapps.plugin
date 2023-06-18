@@ -1,5 +1,5 @@
 #!name=Barkapps
-#!desc=利用Barkapp推送限免app，需要自己下载Bark并找到key填写插件内
+#!desc=利用Barkapp推送限免app，需要自己下载Bark并找到key填写插件内 @Key
 #!input = Bark推送KEY
 #!icon = https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/AppStore.png
 
