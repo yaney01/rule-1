@@ -1,7 +1,6 @@
 //@key
 let key = this.$argument ?? "";
 const loonkey = $persistentStore.read("Bark推送KEY");
-console.log(loonkey)
 if (loonkey !== undefined) {
   key = loonkey;
 }
