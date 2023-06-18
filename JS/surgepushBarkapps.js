@@ -1,6 +1,9 @@
-/*@key 小白脸
+/*
+@key 小白脸
+#!name=Barkapps
 #!desc= 利用Barkapp推送限免app，需要自己下载Bark并找到key填进argument
 # 持久化缓存每次获取的列表，每个app只会推送一次，持久化数据位置: uuidkeys
+# 点击的时候才会请求uuid然后跳转
 [MITM]
 hostname = %APPEND% barkapp.key.com
 [Script]
