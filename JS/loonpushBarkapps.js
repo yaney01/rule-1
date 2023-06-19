@@ -31,7 +31,7 @@ Promise.all([
             origin: "https://m.gofans.cn",
           },},500,"get");
       let reu = $persistentStore.read("uuidkeys");
-      let readuuid = reu ? JSON.parse(reu) : [""];
+      let readuuid = reu ? JSON.parse(reu) : [];
       if (readuuid.length > 30) {
         readuuid.splice(0, readuuid.length - 30);
       }
@@ -45,19 +45,16 @@ Promise.all([
         .map(function (i) {
           return i.uuid;
         });
-      
-
-      if (uuids && uuids.length) {
-        readuuid.push(...uuids);
-        let writeuuid = JSON.stringify(readuuid);
-        $persistentStore.write(writeuuid, "uuidkeys");
-
+    if (uuids && uuids.length) {
+      readuuid.push(...uuids)
+      let writeuuid = JSON.stringify(readuuid);
+      $persistentStore.write(writeuuid, "uuidkeys");
       await Promise.all(
         uuidList.map(async (ik, nc) => {
             let {icon,name: napp,uuid,description,original_price: yj,price: xj,updated_at} = ik;
 						console.log(nc+": "+uuid);
-            const pushapp = await tKey(
-              {
+            const ps = nc < 1 ? "active" : "passive";
+            const kkk = await tKey({
                 url: "https://api.day.app/push",
                 headers: { "Content-Type": "application/json; charset=utf-8" },
                 body: JSON.stringify({
@@ -66,16 +63,16 @@ Promise.all([
                   device_key: key,
                   icon: icon,
                   //badge: "921", //通知数量
-                  level: "passive",
+                  level: ps,
                   //active：默认值，系统会立即亮屏显示通知
                   //timeSensitive：时效性通知，可在专注状态下显示通知。
                   //passive：仅将通知添加到通知列表，不会亮屏提醒。
                   url:`https://barkapp.key.com/key&${uuid}`
                 }),
-              },500,"post");
-							console.log("发送通知成功"+nc)
-							$done()
+              },3000,"post");
             }));
+            console.log("发送通知成功")
+            $done()
           } else {
               console.log("已经发送过通知或者无新数据")
               $done()       
@@ -122,8 +119,6 @@ async function tKey(options, timeout, method = "get") {
                 reject(error);
               } else {
                 let endtime = Date.now() - time;
-								//console.log(data)
-								//console.log(response)
                 let ststus = response.status;
                 switch (ststus) {
                   case 200:
@@ -179,7 +174,7 @@ async function tKey(options, timeout, method = "get") {
           }),
           new Promise((resolve, reject) => {
             setTimeout(() => reject(new Error("timeout")), timeout);
-          }),
+          })
         ]);
         if (result) {
           resolve(result);
