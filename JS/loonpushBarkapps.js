@@ -1,4 +1,4 @@
-/*
+/* 2023-06-19 13:47:54
 @key 小白脸
 利用Barkapp推送限免app，需要自己下载Bark并找到key填进argument
 持久化缓存每次获取的列表，每个app只会推送一次，持久化数据位置: uuidkeys
