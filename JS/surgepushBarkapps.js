@@ -1,4 +1,4 @@
-/* 2023-06-19 13:47:50
+/* 2023-06-19 19:55:50
 @key 小白脸
 #!name=Barkapps
 #!desc= 利用Barkapp推送限免app，需要自己下载Bark并找到key填进argument
@@ -38,8 +38,8 @@ Promise.all([
           },},500,"get");
       let reu = $persistentStore.read("uuidkeys");
       let readuuid = reu ? JSON.parse(reu) : [];
-      if (readuuid.length > 30) {
-        readuuid.splice(0, readuuid.length - 30);
+      if (readuuid.length > 20) {
+        readuuid.splice(0, readuuid.length - 12);
       }
       let uuidList = uuk.data.filter(function (item) {
         return !readuuid.includes(item.uuid);
@@ -103,13 +103,12 @@ function sM(s, e) {
   }
 }
 function getTI(e) {
-    const k = new Date(e * 1000);
-    const y = k.toLocaleString("en-CN");
-    return y.replace(/:\d\d$|,|^\d\d/g, "");
-  }
-  
+  const k = new Date(e * 1000);
+  const y = k.toLocaleString("en-CN");
+  return y.replace(/:\d\d$|,|^\d\d/g, "");
+}
 function sK(s, e) {
-return s.split("\n", e).join(" ");
+  return s.split("\n", e).join(" ");
 }
 async function tKey(options, timeout, method = "get") {
   let rec = 1,
@@ -134,42 +133,11 @@ async function tKey(options, timeout, method = "get") {
                         let keyj = JSON.parse(data);
                         keyj.tk = endtime;
                         resolve(keyj);
-                        // console.log("application/json");
-                        break;
-                      case type.includes("text/html"):
-                        // console.log("text/html");
-                        break;
-                      case type.includes("text/plain"):
-                        // console.log("text/plain");
-                        break;
-                      case type.includes("image/svg+xml"):
-                        // console.log("image/svg+xml");
-                        let lines = data.split("\n");
-                        let key = lines.reduce((acc, line) => {
-                          let [key, value] = line.split("=");
-                          acc[key] = value;
-                          acc.tk = endtime;
-                          return acc;
-                        }, {});
-                        resolve(key);
                         break;
                       default:
                         resolve("nullkey");
                         break;
                     }
-                    break;
-                  case 204:
-                    // console.log("204");
-                    // console.log(endtime);
-                    let tk = { tk: endtime };
-                    // console.log(tk)
-                    resolve(tk);
-                    break;
-                  case 429:
-                    resolve("次数过多");
-                    break;
-                  case 404:
-                    resolve("404");
                     break;
                   default:
                     resolve("nullkeys");
