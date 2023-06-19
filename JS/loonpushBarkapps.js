@@ -55,7 +55,7 @@ Promise.all([
       await Promise.all(
         uuidList.map(async (ik, nc) => {
             let {icon,name: napp,uuid,description,original_price: yj,price: xj,updated_at} = ik;
-            console.log(icon)
+            //console.log(icon)
             const pushapp = await tKey(
               {
                 url: "https://api.day.app/push",

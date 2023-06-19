@@ -23,8 +23,8 @@ tcp-connection = true
 ^https:\/\/us\.l\.qq\.com\/exapp - reject
 
 # it之家 api.zuihuimai.com, dat.ruanmei.com
-^https?:\/\/api\.zuihuimai\.com\/static\/.*\/hongbao reject
-^https?:\/\/dat\.ruanmei\.com\/ithome\/money\/acd\.json$ reject
+^https?:\/\/api\.zuihuimai\.com\/static\/.*\/hongbao - reject
+^https?:\/\/dat\.ruanmei\.com\/ithome\/money\/acd\.json$ - reject
 
 
 [Map Local]

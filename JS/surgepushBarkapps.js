@@ -4,13 +4,15 @@
 #!desc= 利用Barkapp推送限免app，需要自己下载Bark并找到key填进argument
 # 持久化缓存每次获取的列表，每个app只会推送一次，持久化数据位置: uuidkeys
 # 点击的时候才会请求uuid然后跳转
+
 [MITM]
 hostname = %APPEND% barkapp.key.com
-[Script]
-BarkappREQ = type=http-request,pattern=^https?:\/\/barkapp\.key\.com,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/surgepushBarkapps.js,requires-body=true
-*/
-// Barkapps=type=cron,cronexp=0 */6 * * *,wake-system=1,timeout=120,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/surgepushBarkapps.js,argument=
 
+[Script]
+
+BarkappREQ = type=http-request,pattern=^https?:\/\/barkapp\.key\.com,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/surgepushBarkapps.js,requires-body=true
+Barkapps=type=cron,cronexp=0 9,13,21 * * *,wake-system=1,timeout=120,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/surgepushBarkapps.js,argument=填自己的key
+*/
 
 const key = this.$argument ?? "";
 let url;if (typeof $request !== 'undefined' && $request.url)
@@ -59,7 +61,7 @@ Promise.all([
       await Promise.all(
         uuidList.map(async (ik, nc) => {
             let {icon,name: napp,uuid,description,original_price: yj,price: xj,updated_at} = ik;
-            console.log(icon)
+            //console.log(icon)
             const pushapp = await tKey(
               {
                 url: "https://api.day.app/push",
