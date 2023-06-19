@@ -3,7 +3,6 @@
 #!input = Bark推送KEY
 #!icon = https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/AppStore.png
 
-
 [MITM]
 hostname=barkapp.key.com
 
