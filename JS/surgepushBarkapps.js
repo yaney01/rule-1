@@ -21,7 +21,7 @@ Promise.all([
   (async () => {
     try {
     if(key !==""){
-      if (/barkapp\.key\.com/.test(url)) {
+    if (/barkapp\.key\.com/.test(url)) {
             let spurl = url.split("&")[1];
           const uuapp = await tKey(
             {url: `https://api.gofans.cn/v1/m/apps/${spurl}`,
@@ -30,7 +30,7 @@ Promise.all([
                 origin: "https://m.gofans.cn",
               },},500,"get");
           $done({response: {status: 302,headers: {Location: uuapp.track_url}}}); 
-      } else {
+    } else {
       const uuk = await tKey({url: "https://api.gofans.cn/v1/m/app_records?page=1&limit=10",
           headers: {
             referer: "https://m.gofans.cn/",
@@ -38,8 +38,8 @@ Promise.all([
           },},500,"get");
       let reu = $persistentStore.read("uuidkeys");
       let readuuid = reu ? JSON.parse(reu) : [""];
-      if (readuuid.length > 10) {
-        readuuid.splice(0, readuuid.length - 10);
+      if (readuuid.length > 30) {
+        readuuid.splice(0, readuuid.length - 30);
       }
       let uuidList = uuk.data.filter(function (item) {
         return !readuuid.includes(item.uuid);
@@ -51,17 +51,17 @@ Promise.all([
         .map(function (i) {
           return i.uuid;
         });
-      console.log(uuids);
+      
 
       if (uuids && uuids.length) {
         readuuid.push(...uuids);
         let writeuuid = JSON.stringify(readuuid);
         $persistentStore.write(writeuuid, "uuidkeys");
-      }
+
       await Promise.all(
         uuidList.map(async (ik, nc) => {
             let {icon,name: napp,uuid,description,original_price: yj,price: xj,updated_at} = ik;
-            //console.log(icon)
+						console.log(nc+": "+uuid);
             const pushapp = await tKey(
               {
                 url: "https://api.day.app/push",
@@ -79,8 +79,15 @@ Promise.all([
                   url:`https://barkapp.key.com/key&${uuid}`
                 }),
               },500,"post");
-            }));}
-    } else {
+							console.log("发送通知成功"+nc)
+							$done()
+            }));
+          } else {
+              console.log("已经发送过通知或者无新数据")
+              $done()       
+            }
+          }
+        } else {
       $done($notification.post("", "", "未填写key"));
     } 
     } catch (error) {
@@ -108,7 +115,7 @@ function sK(s, e) {
 return s.split("\n", e).join(" ");
 }
 async function tKey(options, timeout, method = "get") {
-  let rec = 3,
+  let rec = 1,
     cskey = 1;
   const promise = new Promise((resolve, reject) => {
     const retry = async (attempt) => {
@@ -121,6 +128,8 @@ async function tKey(options, timeout, method = "get") {
                 reject(error);
               } else {
                 let endtime = Date.now() - time;
+								//console.log(data)
+								//console.log(response)
                 let ststus = response.status;
                 switch (ststus) {
                   case 200:
@@ -150,7 +159,7 @@ async function tKey(options, timeout, method = "get") {
                         resolve(key);
                         break;
                       default:
-                        // console.log("未知");
+                        resolve("nullkey");
                         break;
                     }
                     break;
@@ -168,6 +177,7 @@ async function tKey(options, timeout, method = "get") {
                     resolve("404");
                     break;
                   default:
+                    resolve("nullkeys");
                     break;
                 }
               }
@@ -195,3 +205,4 @@ async function tKey(options, timeout, method = "get") {
   });
   return promise;
 }
+s
