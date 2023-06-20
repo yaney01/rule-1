@@ -2,6 +2,8 @@
 #!desc=利用Barkapp推送限免app，需要自己下载Bark并找到key填写插件内, 持久化缓存已经通知过的app,避免重复请求,只有新数据才会通知, 如果填错了key需要删除持久化缓存: uuidkeys 即可 @Key
 #!input = Bark推送KEY
 #!icon = https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/AppStore.png
+#!author = Barkapp下载地址
+#!homepage = https://apps.apple.com/us/app/bark-%E7%BB%99%E4%BD%A0%E7%9A%84%E6%89%8B%E6%9C%BA%E5%8F%91%E6%8E%A8%E9%80%81/id1403753865?l=zh
 
 [MITM]
 hostname=barkapp.key.com
