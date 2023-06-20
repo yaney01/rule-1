@@ -31,7 +31,7 @@
 | 推送 |  |
 | Barkapps限免推送 | [Barkapps 放本地argument传Key](https://raw.githubusercontent.com/Keywos/rule/main/module/Barkapps.sgmodule) | [Barkapps 插件内自义定Key](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/Barkapps.plugin) |
 | 极简汇率推送 | [JJHL](https://raw.githubusercontent.com/Keywos/rule/main/module/JJHL.sgmodule) | [](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/.plugin) |
-| 每日油价推送 | [pushYJ argument传地区或持久化数据传](https://raw.githubusercontent.com/Keywos/rule/main/module/pushYJ.sgmodule) | [jkyj 插件内自义定](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/jkyj.plugin) |
+| 每日油价推送 | [pushYJ argument或持久化数据传参](https://raw.githubusercontent.com/Keywos/rule/main/module/pushYJ.sgmodule) | [jkyj 插件内自义定](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/jkyj.plugin) |
 | 面板 |  |
 | PingGif面板 | [PingGif](https://raw.githubusercontent.com/Keywos/rule/main/module/PingGif.sgmodule) | [](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/.plugin) |
 | NetIsp面板 | [NetIspmini](https://raw.githubusercontent.com/Keywos/rule/main/module/NetIspmini.sgmodule) | [](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/.plugin) |
