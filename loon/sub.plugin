@@ -21,3 +21,4 @@ http-request https?:\/\/sub\.store script-path=https://github.com/Keywos/rule/ra
 #!input = author
 #!select = appType,tool,social,health,sport
 #!select = price,0.99,1.99,4.99,测试,test
+ 

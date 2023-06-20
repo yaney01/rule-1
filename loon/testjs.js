@@ -4,6 +4,7 @@
  * 脚本功能：检查节点是否支持Dazn/Discovery/Param/Disney/Netflix/ChatGPT/YouTube解锁服务
  * 原作者：XIAO_KOP
  */
+
 const NF_BASE_URL = "https://www.netflix.com/title/81280792";
 const DISNEY_BASE_URL = 'https://www.disneyplus.com';
 const DISNEY_LOCATION_BASE_URL = 'https://disney.api.edge.bamgrid.com/graph/v1/device/graphql';
@@ -359,13 +360,13 @@ function nfTest() {
             node: nodeName,
             timeout: 6000, //ms
             headers: {
-                              // 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36',
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36',
+                // 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36',
                 'referer': 'https://www.netflix.com/',
                 'origin': 'https://www.netflix.com',
-                // 'sec-ch-ua': 'Chromium";v="116", "Not)A;Brand";v="24", "Microsoft Edge";v="116',
-                // 'sec-ch-ua-mobile': '?0',
-                // 'sec-ch-ua-platform': 'macOS',
+                'sec-ch-ua': 'Chromium";v="116", "Not)A;Brand";v="24", "Microsoft Edge";v="116',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': 'macOS',
                         }
         }
         
