@@ -25,6 +25,7 @@
 | 百度输入法AD | [Baidu_srf](https://raw.githubusercontent.com/Keywos/rule/main/module/Baidu_srf.sgmodule) | [Baidu_srf](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/Baidu_srf.plugin) |
 | 哔哩哔哩AD | [bilibili](https://raw.githubusercontent.com/Keywos/rule/main/module/bilibili.sgmodule) | [Bilibili 插件内自义定](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/Bilibili.plugin) |
 | 网易云AD | [wyy](https://raw.githubusercontent.com/Keywos/rule/main/module/wyy.sgmodule) | [wy](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/wy.plugin) |
+| 菜鸟AD | [Cainiao](https://raw.githubusercontent.com/Keywos/rule/main/module/Cainiao.sgmodule) | [Cainiao](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/Cainiao.plugin) |
 | IT之家AD | [noAdrule](https://raw.githubusercontent.com/Keywos/rule/main/module/noAdrule.sgmodule) | [ithomes 插件内自义定](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/ithomes.plugin) |
 | YouTube翻译 | [YouTubeFY](https://raw.githubusercontent.com/Keywos/rule/main/module/YouTubeFY.sgmodule) | [YouTubeFY 插件内自义定](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/YouTubeFY.plugin) |
 | 推送 |  |
