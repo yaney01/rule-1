@@ -35,7 +35,7 @@
 | PingGif面板 | [PingGif](https://raw.githubusercontent.com/Keywos/rule/main/module/PingGif.sgmodule) | [](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/.plugin) |
 | NetIsp面板 | [NetIspmini](https://raw.githubusercontent.com/Keywos/rule/main/module/NetIspmini.sgmodule) | [](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/.plugin) |
 
-## rule
+## Rule
 
 | Rule | raw | io |
 | :-----| :-----| :-----|
