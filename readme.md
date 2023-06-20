@@ -31,6 +31,7 @@
 | YouTube翻译 | [YouTubeFY](https://raw.githubusercontent.com/Keywos/rule/main/module/YouTubeFY.sgmodule) | [YouTubeFY 插件内自义定](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/YouTubeFY.plugin) |
 | Barkapps限免推送 | [Barkapps 放本地argument传Key](https://raw.githubusercontent.com/Keywos/rule/main/module/Barkapps.sgmodule) | [Barkapps 插件内自义定Key](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/Barkapps.plugin) |
 | 极简汇率推送 | [JJHL](https://raw.githubusercontent.com/Keywos/rule/main/module/JJHL.sgmodule) | [](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/.plugin) |
+| 每日油价推送 | [pushYJ](https://raw.githubusercontent.com/Keywos/rule/main/module/pushYJ.sgmodule) | [jkyj 插件内自义定](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/jkyj.plugin) |
 
 ## rule
 
