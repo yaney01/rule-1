@@ -30,6 +30,7 @@
 | IT之家AD | [noAdrule](https://raw.githubusercontent.com/Keywos/rule/main/module/noAdrule.sgmodule) | [ithomes](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/ithomes.plugin) |
 | YouTube翻译 | [YouTubeFY](https://raw.githubusercontent.com/Keywos/rule/main/module/YouTubeFY.sgmodule) | [YouTubeFY](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/YouTubeFY.plugin) |
 | Barkapps限免推送 | [Barkapps ](https://raw.githubusercontent.com/Keywos/rule/main/module/Barkapps.sgmodule) | [Barkapps](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/Barkapps.plugin) |
+| 极简汇率推送 | [JJHL](https://raw.githubusercontent.com/Keywos/rule/main/module/JJHL.sgmodule) | [](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/.plugin) |
 
 ## rule
 
