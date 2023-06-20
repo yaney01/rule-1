@@ -32,6 +32,7 @@ https://github.com/Keywos/rule/raw/main/Sub-Store/Sub-Store.plugin
 | Rule | raw | io |
 | :-----| :-----| :-----|
 | DIRECT | [China](https://raw.githubusercontent.com/Keywos/rule/main/cn.list) | [China](https://keywos.github.io/rule/cn.list) |
+| IPASN | [CN](https://raw.githubusercontent.com/Keywos/rule/main/asn.list) | [CN](https://keywos.github.io/rule/asn.list) |
 | Proxy | [Proxy](https://raw.githubusercontent.com/Keywos/rule/main/us.list) | [Proxy](https://keywos.github.io/rule/us.list) |
 | Team | [Team](https://raw.githubusercontent.com/Keywos/rule/main/gpt.list) | [Team](https://keywos.github.io/rule/gpt.list) |
 | AD | [AD](https://raw.githubusercontent.com/Keywos/rule/main/ad.list) | [AD](https://keywos.github.io/rule/ad.list) | 
