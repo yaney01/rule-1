@@ -22,7 +22,7 @@
 
 |   | Surge | Loon |
 |   | 手动安装 | 点击跳转安装 |
-| :-----| :-----| :-----|
+| :-----| :-----surge| :-----|
 | Sub-Store | [sgmodule](https://raw.githubusercontent.com/Keywos/rule/main/Sub-Store/Sub-Store.sgmodule) | [plugin](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/Sub-Store/Sub-Store.plugin) |
 | 百度输入法 | [sgmodule](https://raw.githubusercontent.com/Keywos/rule/main/module/Baidu_srf.sgmodule) | [plugin](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/Baidu_srf.plugin) |
 
