@@ -23,13 +23,13 @@
 |   | Surge | Loon |
 | :-----| :-----| :-----|
 |   | 手动安装 | 点击跳转安装 |
-| Sub-Store | [sgmodule](https://raw.githubusercontent.com/Keywos/rule/main/Sub-Store/Sub-Store.sgmodule) | [plugin](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/Sub-Store/Sub-Store.plugin) |
+| Sub-Store | [sgmodule 参数指定](https://raw.githubusercontent.com/Keywos/rule/main/Sub-Store/Sub-Store.sgmodule) | [plugin 插件内自义定](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/Sub-Store/Sub-Store.plugin) |
 | 百度输入法AD | [Baidu_srf](https://raw.githubusercontent.com/Keywos/rule/main/module/Baidu_srf.sgmodule) | [Baidu_srf](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/Baidu_srf.plugin) |
-| 哔哩哔哩AD | [bilibili](https://raw.githubusercontent.com/Keywos/rule/main/module/bilibili.sgmodule) | [Bilibili](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/Bilibili.plugin) |
+| 哔哩哔哩AD | [bilibili](https://raw.githubusercontent.com/Keywos/rule/main/module/bilibili.sgmodule) | [Bilibili 插件内自义定](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/Bilibili.plugin) |
 | 网易云AD | [wyy](https://raw.githubusercontent.com/Keywos/rule/main/module/wyy.sgmodule) | [wy](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/wy.plugin) |
-| IT之家AD | [noAdrule](https://raw.githubusercontent.com/Keywos/rule/main/module/noAdrule.sgmodule) | [ithomes](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/ithomes.plugin) |
-| YouTube翻译 | [YouTubeFY](https://raw.githubusercontent.com/Keywos/rule/main/module/YouTubeFY.sgmodule) | [YouTubeFY](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/YouTubeFY.plugin) |
-| Barkapps限免推送 | [Barkapps ](https://raw.githubusercontent.com/Keywos/rule/main/module/Barkapps.sgmodule) | [Barkapps](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/Barkapps.plugin) |
+| IT之家AD | [noAdrule](https://raw.githubusercontent.com/Keywos/rule/main/module/noAdrule.sgmodule) | [ithomes 插件内自义定](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/ithomes.plugin) |
+| YouTube翻译 | [YouTubeFY](https://raw.githubusercontent.com/Keywos/rule/main/module/YouTubeFY.sgmodule) | [YouTubeFY 插件内自义定](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/YouTubeFY.plugin) |
+| Barkapps限免推送 | [Barkapps 放本地argument传Key](https://raw.githubusercontent.com/Keywos/rule/main/module/Barkapps.sgmodule) | [Barkapps 插件内自义定Key](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/Barkapps.plugin) |
 | 极简汇率推送 | [JJHL](https://raw.githubusercontent.com/Keywos/rule/main/module/JJHL.sgmodule) | [](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/.plugin) |
 
 ## rule
