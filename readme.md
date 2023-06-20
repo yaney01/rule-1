@@ -3,7 +3,7 @@
 
 * 未经允许禁用转载与传播,此库仅为个人备份
 
-<!-- ![](https://github.com/Keywos/rule/raw/main/tv/sub/) -->
+![](http://profile-counter.glitch.me/keywos/count.svg)
 ### 重命名脚本分为两个版本 ！
 ## [rename.js](https://keywos.cf/rename.js) 
 本地: 按原节点, 批量重命名, 速度最快
