@@ -24,7 +24,12 @@
 | :-----| :-----| :-----|
 |   | 手动安装 | 点击跳转安装 |
 | Sub-Store | [sgmodule](https://raw.githubusercontent.com/Keywos/rule/main/Sub-Store/Sub-Store.sgmodule) | [plugin](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/Sub-Store/Sub-Store.plugin) |
-| 百度输入法 | [sgmodule](https://raw.githubusercontent.com/Keywos/rule/main/module/Baidu_srf.sgmodule) | [plugin](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/Baidu_srf.plugin) |
+| 百度输入法 | [Baidu_srf](https://raw.githubusercontent.com/Keywos/rule/main/module/Baidu_srf.sgmodule) | [Baidu_srf](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/Baidu_srf.plugin) |
+| 哔哩哔哩 | [bilibili](https://raw.githubusercontent.com/Keywos/rule/main/module/bilibili.sgmodule) | [Bilibili](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/Bilibili.plugin) |
+| 网易云 | [wyy](https://raw.githubusercontent.com/Keywos/rule/main/module/wyy.sgmodule) | [wy](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/wy.plugin) |
+| IT之家 | [noAdrule](https://raw.githubusercontent.com/Keywos/rule/main/module/noAdrule.sgmodule) | [ithomes](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/ithomes.plugin) |
+| YouTube翻译 | [YouTubeFY](https://raw.githubusercontent.com/Keywos/rule/main/module/YouTubeFY.sgmodule) | [YouTubeFY](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/YouTubeFY.plugin) |
+| Barkapps限免推送 | [Barkapps](https://raw.githubusercontent.com/Keywos/rule/main/module/Barkapps.sgmodule) | [Barkapps](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/Barkapps.plugin) |
 
 ## rule
 
