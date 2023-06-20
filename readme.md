@@ -34,6 +34,7 @@
 | 每日油价推送 | [pushYJ](https://raw.githubusercontent.com/Keywos/rule/main/module/pushYJ.sgmodule) | [jkyj 插件内自义定](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/jkyj.plugin) |
 |  |  |
 | PingGif面板 | [PingGif](https://raw.githubusercontent.com/Keywos/rule/main/module/PingGif.sgmodule) | [](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/.plugin) |
+| Netisp面板 | [Netispmini](https://raw.githubusercontent.com/Keywos/rule/main/module/Netispmini.sgmodule) | [](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/Keywos/rule/main/loon/.plugin) |
 
 ## rule
 
