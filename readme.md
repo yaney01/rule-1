@@ -14,17 +14,10 @@
 
 * cname因为增加了缓存机制， 需要安装对应的模块或者插件， 只支持
 `Loon`、 `Surge` 默认持久化缓存时间为48小时 必须安装以下模块，关闭官方版本才能使用: 目前SubStore还未更新脚本持久化缓存超时
- * Surge: 
-``` 
-https://github.com/Keywos/rule/raw/main/Sub-Store/Sub-Store.sgmodule
-```
- * Loon: 
-```
-https://github.com/Keywos/rule/raw/main/Sub-Store/Sub-Store.plugin
-```
+
 * SubStore内选择"脚本操作"，填写脚本地址
 
-https://www.nsloon.com/openloon/import?plugin=https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Tool/Loon/Plugin/Cainiao_remove_ads.plugin
+
 ## rule
 
 | iOS | Surge手动安装 | Loon点击跳转安装 |
