@@ -67,7 +67,7 @@ Promise.all([
                   //passive：仅将通知添加到通知列表，不会亮屏提醒。
                   url:`https://barkapp.key.com/key&${uuid}`
                 }),
-              },8000,"post");
+              },15000,"post");
             }));
             console.log("发送通知成功")
             $done()
