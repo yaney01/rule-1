@@ -1,5 +1,5 @@
 #!name = TikTok解锁
-#!desc = 解锁TikTok，需要配置此插件节点与地区。
+#!desc = 解锁TikTok，需要配置此插件节点， 可插件内选择地区。
 #!openUrl = 
 #!author = 可莉🅥 Key
 #!homepage = https://gitlab.com/lodepuly/vpn_tool/-/tree/main/Tool/Loon/Plugin
