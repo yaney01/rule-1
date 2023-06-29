@@ -4,7 +4,7 @@
 #!author = 可莉🅥 Key
 #!homepage = https://gitlab.com/lodepuly/vpn_tool/-/tree/main/Tool/Loon/Plugin
 #!icon = https://gitlab.com/lodepuly/iconlibrary/-/raw/master/App_icon/120px/TikTok.png
-#!select = TikTok解锁地区,日本,韩国,英国,美国,台湾,香港,新加坡,法国
+#!select = TikTok解锁地区,日本,韩国,英国,美国,台湾,香港,新加坡,法国,马来西亚,菲律宾,泰国
 
 [Rule]
 DOMAIN, p16-tiktokcdn-com.akamaized.net, PROXY
