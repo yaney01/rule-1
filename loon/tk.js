@@ -1,5 +1,5 @@
-let keyus={日本: JP, 韩国: KR, 英国:UK, 美国:US, 台湾:TW, 香港:HK, 新加坡:SG, 法国:FR},
-lk = $persistentStore.read("TikTok解锁地区"),loc = keyus[lk] || KR,url = $request.url;
+let keyus={日本: "JP", 韩国: "KR", 英国:"UK", 美国:"US", 台湾:"TW", 香港:"HK", 新加坡:"SG", 法国:"FR"},
+lk = $persistentStore.read("TikTok解锁地区"),loc = keyus[lk] || "KR",url = $request.url;
 console.log(url)
 if (/tnc|dm/.test(url)) {
   url = url.replace(/\/\?.+/g,"?");
