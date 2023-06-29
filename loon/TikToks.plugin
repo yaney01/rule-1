@@ -37,7 +37,7 @@ DOMAIN-KEYWORD, tiktok, PROXY
 hostname = byteoversea.com, tik-tokapi.com, tiktokv.com
 
 [Script]
-http-request https?:\/\/.+\.(byteoversea|tiktokv).com\/.+(_region=CN&|&mcc_mnc=4) script-path=https://raw.githubusercontent.com/Keywos/rule/main/loon/tk.js, timeout=20, tag=TikTok
+http-request https?:\/\/.+\.(byteoversea|tiktokv).com\/.+(_region=CN&|&mcc_mnc=4) script-path=https://raw.githubusercontent.com/Keywos/rule/main/loon/tks.js, timeout=20, tag=TikTok
   
 #https://mon.tiktokv.com/monitor/collect/batch/?residence=
 #https://ugattribution-sg.tiktokv.com/skan/conv?residence=
