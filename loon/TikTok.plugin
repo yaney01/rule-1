@@ -1,0 +1,45 @@
+#!name = TikTok解锁
+#!desc = 解锁TikTok，需要配置此插件节点与地区。
+#!openUrl = 
+#!author = 可莉🅥 Key
+#!homepage = https://gitlab.com/lodepuly/vpn_tool/-/tree/main/Tool/Loon/Plugin
+#!icon = https://gitlab.com/lodepuly/iconlibrary/-/raw/master/App_icon/120px/TikTok.png
+#!select = TikTok解锁地区,日本,韩国,英国,美国,台湾,香港,新加坡,法国
+
+[Rule]
+DOMAIN, p16-tiktokcdn-com.akamaized.net, PROXY
+DOMAIN-SUFFIX, bytedapm.com, PROXY
+DOMAIN-SUFFIX, bytegecko-i18n.com, PROXY
+DOMAIN-SUFFIX, bytegecko.com, PROXY
+DOMAIN-SUFFIX, byteoversea.com, PROXY
+DOMAIN-SUFFIX, ibytedtos.com, PROXY
+DOMAIN-SUFFIX, ibyteimg.com, PROXY
+DOMAIN-SUFFIX, ipstatp.com, PROXY
+DOMAIN-SUFFIX, isnssdk.com, PROXY
+DOMAIN-SUFFIX, muscdn.com, PROXY
+DOMAIN-SUFFIX, musical.ly, PROXY
+DOMAIN-SUFFIX, sgpstatp.com, PROXY
+DOMAIN-SUFFIX, snssdk.com, PROXY
+DOMAIN-SUFFIX, tik-tokapi.com, PROXY
+DOMAIN-SUFFIX, tiktok.com, PROXY
+DOMAIN-SUFFIX, tiktokcdn-us.com, PROXY
+DOMAIN-SUFFIX, tiktokcdn.com, PROXY
+DOMAIN-SUFFIX, tiktokv.com, PROXY
+DOMAIN-KEYWORD, musical.ly, PROXY
+DOMAIN-KEYWORD, tiktok, PROXY
+
+[Rewrite]
+#(?<=&mcc_mnc=)4 2 307
+(?<=\d\/\?\w{7}_\w{4}=)1[6-9]..(?=.?.?&) 18.4 307
+^(https?:\/\/(tnc|dm)[\w-]+\.\w+\.com\/.+)(\?)(.+) $1$4 302
+
+[MITM]
+hostname = byteoversea.com, tik-tokapi.com, tiktokv.com
+
+[Script]
+http-request https?:\/\/.+\.(byteoversea|tiktokv).com\/.+(_region=CN&|&mcc_mnc=4) script-path=https://raw.githubusercontent.com/Keywos/rule/main/loon/tk.js, timeout=20, tag=TikTok
+  
+#https://mon.tiktokv.com/monitor/collect/batch/?residence=
+#https://ugattribution-sg.tiktokv.com/skan/conv?residence=
+#https://api21-core-c-alisg.tiktokv.com/aweme/v1/aweme/stats/?residence=
+#https://api16-normal-c-alisg.tiktokv.com/aweme/v1/policy/notice/?residence=KR&device_id=72501&os_version=17.0&iid=725011605&app_name=musical_ly&locale=zh-Hans&ac=WIFI&sys_region=KR&js_sdk_version=1.77.0.2&version_code=21.1.0&chan60F585F7A&op_region=KR&tma_jssdk_version=1.77.0.2&os_api=18&idfa=0000000000&device&device_type=iPhone13,3&tz_name=Asia/Shanghai&account_region=&current_region=PL&tz_offset=28800&app_language=zh&carrier_region=KR&build_number=211023&aid=1233&mcc_mnc=26002&screen_width=1170&uoo=1&content_language=&language=zh&cdid=24312A3E&openudid=060fea24218d&app_version=21.1.0&scene=0
