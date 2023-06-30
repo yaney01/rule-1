@@ -25,10 +25,11 @@ console.log(resource)
 
 console.log("++++")
 */
-let yreq = $request, yurl = yreq.url, loonua = false, loonurl = false,
+let yreq = $request, yurl = yreq.url, loonua = false, loonurl = false, loonqx = false,
 	yua = yreq.headers["User-Agent"] || yreq.headers["user-agent"];
 (yua.includes("Loon")) && (loonua = true);
 (/conf|snippet|txt|\?/.test(yurl)) && (loonurl = true);
+(/qx/.test(yurl)) && (loonqx = true);
 const isStashiOS = 'undefined' !== typeof $environment && $environment['stash-version'];
 const isSurgeiOS = 'undefined' !== typeof $environment && $environment['surge-version'];
 const isShadowrocket = 'undefined' !== typeof $rocket;
@@ -59,7 +60,7 @@ console.log("UA为: "+yua)
     if (yurl.indexOf("?") != -1){
         urlArg = "?" + yurl.split("?")[1];
     }else{urlArg = ""};
-} else if (isLooniOS || isSurgeiOS || isLanceX || isShadowrocket || isEgern){
+} else if ((/qx/.test(yurl) && isLooniOS) || isSurgeiOS || isLanceX || isShadowrocket || isEgern){
     req = yurl.replace(/qx$|qx\?.*/,'');
     if (yurl.indexOf("qx?") != -1){
         urlArg = "?" + yurl.split("qx?")[1];
