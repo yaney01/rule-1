@@ -58,7 +58,7 @@ if (loonua) {
     if (yurl.indexOf("?") != -1){
         urlArg = "?" + yurl.split("?")[1];
     }else{urlArg = ""};
-} else if ((/qx/.test(yurl) && isLooniOS) || isSurgeiOS || isLanceX || isShadowrocket || isEgern){
+} else if ((/qx$|qx\?.*/.test(yurl) && isLooniOS) || isSurgeiOS || isLanceX || isShadowrocket || isEgern){
     req = yurl.replace(/qx$|qx\?.*/,'');
     if (yurl.indexOf("qx?") != -1){
         urlArg = "?" + yurl.split("qx?")[1];
