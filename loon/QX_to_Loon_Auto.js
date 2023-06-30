@@ -36,6 +36,9 @@ var req
 var urlArg
 if (loonua) {
 	req = yurl
+    if (yurl.indexOf("?") != -1){
+        urlArg = "?" + yurl.split("?")[1];
+    }else{urlArg = ""};
 } else if (isLooniOS || isSurgeiOS || isLanceX || isShadowrocket || isEgern){
     req = yurl.replace(/qx$|qx\?.*/,'');
     if (yurl.indexOf("qx?") != -1){
