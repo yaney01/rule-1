@@ -7,13 +7,28 @@
 感谢@mieqq 提供的replace-body.js
 插件图标用的 @Keikinn 的 StickerOnScreen项目 以及 @Toperlock 的图标库项目，感谢，感谢
 **/
+/*
+let resourceType = $resourceType;
+//资源内容
+let resource = $resource;
+//资源url
+let zyurl = $resourceUrl;
+
+console.log("+++")
+
+console.log(zyurl)
+
+console.log(resourceType)
+
+console.log(resource)
 
 
+console.log("++++")
+*/
 let yreq = $request, yurl = yreq.url, loonua = false, loonurl = false,
 	yua = yreq.headers["User-Agent"] || yreq.headers["user-agent"];
 (yua.includes("Loon")) && (loonua = true);
-(/conf|snippet|txt|\?/.test(yurl)) && (loonurl = true)
-console.log("UA为: "+yua)
+(/conf|snippet|txt|\?/.test(yurl)) && (loonurl = true);
 const isStashiOS = 'undefined' !== typeof $environment && $environment['stash-version'];
 const isSurgeiOS = 'undefined' !== typeof $environment && $environment['surge-version'];
 const isShadowrocket = 'undefined' !== typeof $rocket;
@@ -39,6 +54,7 @@ var desc = "";
 var req
 var urlArg
 if (loonua && loonurl) {
+console.log("UA为: "+yua)
 	req = yurl
     if (yurl.indexOf("?") != -1){
         urlArg = "?" + yurl.split("?")[1];
