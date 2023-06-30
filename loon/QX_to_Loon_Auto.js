@@ -11,8 +11,7 @@
 let yreq = $request, yurl = yreq.url, loonua = false, loonurl = false,
 	yua = yreq.headers["User-Agent"] || yreq.headers["user-agent"];
 (yua.includes("Loon")) && (loonua = true);
-(/conf|snippet|txt|\?/.test(yurl)) && (loonurl = true)
-console.log("UA为: "+yua)
+(/conf|snippet|txt|\?/.test(yurl)) && (loonurl = true);
 const isStashiOS = 'undefined' !== typeof $environment && $environment['stash-version'];
 const isSurgeiOS = 'undefined' !== typeof $environment && $environment['surge-version'];
 const isShadowrocket = 'undefined' !== typeof $rocket;
@@ -38,6 +37,7 @@ var desc = "";
 var req
 var urlArg
 if (loonua && loonurl) {
+console.log("UA为: "+yua)
 	req = yurl
     if (yurl.indexOf("?") != -1){
         urlArg = "?" + yurl.split("?")[1];
