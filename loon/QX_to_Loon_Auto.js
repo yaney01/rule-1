@@ -8,6 +8,7 @@
 插件图标用的 @Keikinn 的 StickerOnScreen项目 以及 @Toperlock 的图标库项目，感谢，感谢
 **/
 
+
 let yreq = $request, yurl = yreq.url, loonua = false, loonurl = false,
 	yua = yreq.headers["User-Agent"] || yreq.headers["user-agent"];
 (yua.includes("Loon")) && (loonua = true);
