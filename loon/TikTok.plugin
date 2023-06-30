@@ -1,11 +1,11 @@
 #!name = TikTok解锁
-#!desc = 可插件内选择地区(建议) 或者手动输入国家代码，手动输入需在选择里选 "手动输入" 手动输入地区代码的值才会生效
+#!desc = [必选: 可插件内选择地区] [可选: 手动输入国家代码，手动输入需在选择里选 "手动输入" 手动输入地区代码的值才会生效]
 #!openUrl = 
 #!author = 可莉🅥 Key
 #!homepage = 
 #!icon = https://gitlab.com/lodepuly/iconlibrary/-/raw/master/App_icon/120px/TikTok.png
 #!select = TikTok解锁地区,日本,韩国,英国,美国,台湾,香港,新加坡,法国,马来西亚,菲律宾,泰国,手动输入
-#!input = 手动输入地区代码
+#!input = 手动输入地区代码[可选]
 [Rule]
 DOMAIN, p16-tiktokcdn-com.akamaized.net, PROXY
 DOMAIN-SUFFIX, bytedapm.com, PROXY
