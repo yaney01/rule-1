@@ -9,7 +9,9 @@
 **/
 let yreq = $request, yurl = yreq.url, loonua = false,
 	yua = yreq.headers["User-Agent"] || yreq.headers["user-agent"];
-(yua.includes("Loon")) && (loonua = true)
+(yua.includes("Loon")) && (loonua = true);
+console.log("UA为----")
+console.log(yua)
 const isStashiOS = 'undefined' !== typeof $environment && $environment['stash-version'];
 const isSurgeiOS = 'undefined' !== typeof $environment && $environment['surge-version'];
 const isShadowrocket = 'undefined' !== typeof $rocket;
