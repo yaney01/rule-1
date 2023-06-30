@@ -8,7 +8,7 @@
 插件图标用的 @Keikinn 的 StickerOnScreen项目 以及 @Toperlock 的图标库项目，感谢，感谢
 **/
 let yreq = $request, yurl = yreq.url, loonua = false,
-	yua = yreq.headers["User-Agent"] || yreq.header["user-agent"];
+	yua = yreq.headers["User-Agent"] || yreq.headers["user-agent"];
 (yua.includes("Loon")) && (loonua = true)
 const isStashiOS = 'undefined' !== typeof $environment && $environment['stash-version'];
 const isSurgeiOS = 'undefined' !== typeof $environment && $environment['surge-version'];
