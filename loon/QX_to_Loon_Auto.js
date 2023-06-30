@@ -7,9 +7,10 @@
 感谢@mieqq 提供的replace-body.js
 插件图标用的 @Keikinn 的 StickerOnScreen项目 以及 @Toperlock 的图标库项目，感谢，感谢
 **/
-let yreq = $request, yurl = yreq.url, loonua = false,
+let yreq = $request, yurl = yreq.url, loonua = false, loonurl = false,
 	yua = yreq.headers["User-Agent"] || yreq.headers["user-agent"];
 (yua.includes("Loon")) && (loonua = true);
+(/conf|snippet|txt|\?/.test(yurl)) && (loonurl = true)
 console.log("UA为----")
 console.log(yua)
 const isStashiOS = 'undefined' !== typeof $environment && $environment['stash-version'];
@@ -36,7 +37,7 @@ var name = "";
 var desc = "";
 var req
 var urlArg
-if (loonua) {
+if (loonua && loonurl) {
 	req = yurl
     if (yurl.indexOf("?") != -1){
         urlArg = "?" + yurl.split("?")[1];
@@ -114,40 +115,41 @@ body = body.replace(/[\s\S]*(\/\*+\n[\s\S]*\n\*+\/\n)[\s\S]*/,"$1").match(/[^\r\
 }else{
     body = body.match(/[^\r\n]+/g);};
     
-let pluginDesc = [];
-let httpFrame = "";
-let URLRewrite = [];
-let script = [];
-let MapLocal = [];
-let MITM = "";
-let cron = []; 
-let providers = [];  
-let others = [];       //不支持的内容
+let pluginDesc = [],
+httpFrame = "",
+URLRewrite = [],
+script = [],
+MapLocal = [],
+MITM = "",
+cron = [],
+providers = [],
+others = [];       //不支持的内容
 
 
-let scname = "";       //脚本名
-let js = "";           //脚本链接
-let sctype = "";       //脚本类型
-let ptn = "";          //正则
-let rebody = "";       //是否需要body
-let size = "";         //允许最大body大小
-let proto = "";        //是否开启binary-body-mode
-let cronExp = "";      //cron表达式
-let croName = "";      //cron任务名
-let cronJs = "";       //cron脚本链接
-let rejectType = "";   //重写reject类型
-let urlInNum = "";     //重写中"url"字样出现的位置
-let reHdType = "";     //request|response-header
-let reHdPtn = "";      //re-header 正则
-let reHdArg1 = "";     //用以匹配的headers
-let reHdArg2 = "";     //替换
-let arg = "";          //echo-response 返回内容
-let mockPtn = "";      //echo-res转mock 正则
-let dataCon = "";      //echo-res转mock 返回内容
-let reBdType = "";     //request|response-body
-let reBdPtn = "";      //re-header 正则
-let reBdArg1 = "";     //用以匹配的headers
-let reBdArg2 = "";     //替换
+let scname = "",   //脚本名
+js = "",           //脚本链接
+sctype = "",       //脚本类型
+ptn = "",          //正则
+rebody = "",       //是否需要body
+size = "",         //允许最大body大小
+proto = "",        //是否开启binary-body-mode
+cronExp = "",      //cron表达式
+croName = "",      //cron任务名
+cronJs = "",       //cron脚本链接
+rejectType = "",   //重写reject类型
+urlInNum = "",     //重写中"url"字样出现的位置
+reHdType = "",     //request|response-header
+reHdPtn = "",      //re-header 正则
+reHdArg1 = "",     //用以匹配的headers
+reHdArg2 = "",     //替换
+arg = "",          //echo-response 返回内容
+mockPtn = "",      //echo-res转mock 正则
+dataCon = "",      //echo-res转mock 返回内容
+reBdType = "",     //request|response-body
+reBdPtn = "",      //re-header 正则
+reBdArg1 = "",     //用以匹配的headers
+reBdArg2 = "";     //替换
+  
 
 
 body.forEach((x, y, z) => {
