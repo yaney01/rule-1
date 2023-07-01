@@ -87,7 +87,7 @@ function operator(y) {
             regexArray.forEach((regex, index) => {
               if (regex.test(res.name)) {
               ikey.splice(2, 0, valueArray[index]);}}); 
-            const match = res.name.match(/(倍率\D?((\d\.)?\d+)\D?)|((\d\.)?\d+)(倍|X|x|×)/);
+            const match = res.name.match(/((倍率|X|x|×)\D?((\d\.)?\d+)\D?)|((\d\.)?\d+)(倍|X|x|×)/);
             if (match) {
               const rev = match[0].match(/(\d[\d.]*)/)[0];
               if (rev !== '1') {
