@@ -1,5 +1,5 @@
 /*
- * 监控汇率变化, 自用改了下面板格式 2023-07-01 12:05:42
+ * 监控汇率变化, @Key 改了下面板格式 2023-07-01 12:05:42
 [Panel]
 CNYUSD = script-name=CNYUSD,update-interval=43200
 [Script]
