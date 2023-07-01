@@ -38,8 +38,8 @@ Promise.all([
           },},500,"get");
       let reu = $persistentStore.read("uuidkeys");
       let readuuid = reu ? JSON.parse(reu) : [];
-      if (readuuid.length > 20) {
-        readuuid.splice(0, readuuid.length - 12);
+      if (readuuid.length > 40) {
+        readuuid.splice(0, readuuid.length - 40);
       }
       let uuidList = uuk.data.filter(function (item) {
         return !readuuid.includes(item.uuid);
