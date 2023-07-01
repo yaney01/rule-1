@@ -1,5 +1,5 @@
 /*
-更新日期：2023-06-17 12:44:01
+更新日期：2023-07-01 11:20:01
 说明: https://github.com/Keywos/rule/blob/main/readme.md
 用法：Sub-Store脚本操作添加
 例如：https://raw.githubusercontent.com/Keywos/rule/main/rename.js#name=测试&flag
