@@ -1,16 +1,10 @@
-/*
- * 监控汇率变化, @Key 改了下面板格式 2023-07-01 12:05:42
+/* 监控汇率变化,@Peng-YM @chxm1023
+ * @Key 改了下面板格式 2023-07-01 15:29:42
+ 
 [Panel]
 CNYUSD = script-name=CNYUSD,update-interval=43200
 [Script]
 CNYUSD = type=generic,timeout=10,script-path=https://github.com/Keywos/rule/raw/main/JS/MBcnyusd.js
- * @author: Peng-YM
- * @Alter: chxm1023
- * 更新地址：https://raw.githubusercontent.com/chxm1023/Task/main/hljk.js
- * 配置方法：
- * 1. 设置基准货币，默认人民币(CNY)。
- * 2. 设置保留几位小数。
- * @update ：YangZhaocool
  */
 
 const base = "CNY"; // 基准货币，可以改成其他币种
@@ -20,10 +14,14 @@ const $ = API("exchange");
 const currencyNames = {
     CNY: ["人民币", "🇨🇳"],
     USD: ["美元", "🇺🇸"],
-    //HKD: ["港币", "🇭🇰"],
+    HKD: ["港币", "🇭🇰"],
     JPY: ["日元", "🇯🇵"],
     KRW: ["韩元", "🇰🇷"],
     TRY: ["里拉", "🇹🇷"],
+    GBP: ["英镑", "🇬🇧"],
+    EUR: ["欧元", "🇪🇺"],
+    PHP: ["菲律宾比索", "🇵🇭"],
+    MYR: ["马来西亚令吉", "🇲🇾"]
 };
 //.toString().padEnd(8, " ")
 $.http.get({
