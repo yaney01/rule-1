@@ -103,7 +103,7 @@ function sK(s, e) {
   return s.split("\n", e).join(" ");
 }
 async function tKey(options, timeout, method = "get") {
-  let rec = 1,
+  let rec = 0,
     cskey = 1;
   const promise = new Promise((resolve, reject) => {
     const retry = async (attempt) => {
