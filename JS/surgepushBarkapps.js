@@ -38,8 +38,8 @@ Promise.all([
           },},500,"get");
       let reu = $persistentStore.read("uuidkeys");
       let readuuid = reu ? JSON.parse(reu) : [];
-      if (readuuid.length > 20) {
-        readuuid.splice(0, readuuid.length - 12);
+      if (readuuid.length > 40) {
+        readuuid.splice(0, readuuid.length - 40);
       }
       let uuidList = uuk.data.filter(function (item) {
         return !readuuid.includes(item.uuid);
@@ -111,7 +111,7 @@ function sK(s, e) {
   return s.split("\n", e).join(" ");
 }
 async function tKey(options, timeout, method = "get") {
-  let rec = 1,
+  let rec = 0,
     cskey = 1;
   const promise = new Promise((resolve, reject) => {
     const retry = async (attempt) => {

@@ -8,8 +8,8 @@
 [Rule]
 DOMAIN-SUFFIX,pos.baidu.com,REJECT
 DOMAIN-SUFFIX,statics.woozooo.com,REJECT
-DOMAIN,aid.m.taobao.com,REJECT-DROP
-DOMAIN,h-adashx.ut.taobao.com,REJECT-DROP
+DOMAIN,aid.m.taobao.com,REJECT
+DOMAIN,h-adashx.ut.taobao.com,REJECT
 [Rewrite]
 
 # 网易

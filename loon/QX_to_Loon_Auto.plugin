@@ -1,5 +1,5 @@
 #!name = 远程资源转换器
-#!desc = (测试)
+#!desc = 默认直接转qx的  conf|snippet|txt 后缀的不需要加qx后缀 js格式的需要加qx后缀(测试)
 #!openUrl = https://github.com/chengkongyiban/stash/tree/main/Rewrite_Parser_Wiki
 #!author = 小白脸 chengkongyiban key (测试)
 #!homepage = https://github.com/chengkongyiban/stash/tree/main/Rewrite_Parser_Wiki
