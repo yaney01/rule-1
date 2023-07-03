@@ -32,4 +32,16 @@ DOMAIN-KEYWORD, tiktok, PROXY
 hostname = *.byteoversea.com, *.tik-tokapi.com, *.tiktokv.com
 
 [Script]
-http-request https?:\/\/.+\.(byteoversea|tiktokv).com\/.+(_region=CN&|&mcc_mnc=4) script-path=https://raw.githubusercontent.com/Keywos/rule/main/loon/tk.js, timeout=20, tag=TikTok
+http-request ^https?:\/\/.+\.(byteoversea|tiktokv).com\/.+(_region=CN&|&mcc_mnc=4) script-path=https://raw.githubusercontent.com/Keywos/rule/main/loon/tk.js, timeout=20, tag=TikTok
+
+# 原版
+# [Rewrite]
+# (?<=&mcc_mnc=)4 2 307
+
+# (?<=\d\/\?\w{7}_\w{4}=)1[6-9]..(?=.?.?&) 18.4 307
+
+# (?<=^https?:\/\/.+\.(byteoversea|tiktokv).com\/.+_region=)CN(?=&) JP 307 #优化正则?
+
+# (?<=_region=)CN(?=&) JP 307
+
+# ^(https?:\/\/(tnc|dm)[\w-]+\.\w+\.com\/.+)(\?)(.+) $1$4 302
