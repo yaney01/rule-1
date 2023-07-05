@@ -1,5 +1,12 @@
 #!name=GroupAuto
 #!desc=根据 api 返回的节点 (速度:持久化缓存非线性权重) 与 (延时:持久化缓存) 对节点进行优选
+# 需要填写手动选择的策略组select
+
+# 参数
+# group=         你的策略组名(需要填写手动选择的策略组select)
+# tolerance=10   容差10ms 小于10ms则不切换节点
+# timecache=18   缓存到期时间(小时) 或 超过40个数据会清理旧的数据
+# push           加参数为开启通知, 不加参数则不通知
 
 [Panel]
 GroupAuto = script-name=GroupAuto,update-interval=3
