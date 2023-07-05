@@ -1,4 +1,4 @@
-/* 2023-07-06 01:20:13
+/* 2023-07-06 01:22:12
 作用: 根据 Surge httpApi 请求 (最近请求详情:速度、 参数指定的策略组:与其对应HASH节点延时、节点名)
 策略: 根据 api 返回的节点 (速度:持久化缓存非线性权重) 与 (延时:持久化缓存) 对节点进行优选, 不用担心费流量，因为通过httpApi取的最近请求里的速度数据
 参数: 
@@ -23,7 +23,6 @@ if (typeof $argument !== "undefined" && $argument !== "") {
   th = ins.timecache ? ins.timecache : th;
   tol = ins.tolerance ? ins.tolerance : tol;
   push = ins.push ? ins.push : false;
-  
 }
 (async () => {
   // 获取请求记录详情过滤获取最高上下传速度
