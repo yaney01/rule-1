@@ -2,19 +2,24 @@
 作用: 根据 Surge httpApi 请求 (最近请求详情:速度、 参数指定的策略组:与其对应HASH节点延时、节点名)
 策略: 根据 api 返回的节点 (速度:持久化缓存非线性权重) 与 (延时:持久化缓存) 对节点进行优选, 不用担心费流量，因为通过httpApi取的最近请求里的速度数据
 参数: 
+
 group=          你的策略组名(需要填写手动选择的策略组select)
 tolerance=10    容差10ms 小于10ms则不切换节点
 timecache=18    缓存到期时间(小时) 或 超过40个数据会清理旧的数据
 push            加参数为开启通知, 不加参数则不通知
+
 #!name=GroupAuto
 #!desc=根据 api 返回的节点 (速度:持久化缓存非线性权重) 与 (延时:持久化缓存) 对节点进行优选
+
 [Panel]
 GroupAuto = script-name=GroupAuto,update-interval=3
+
 [Script]
 # 面板 运行 (面板与定时任务可同时存在)
 GroupAuto = type=generic,timeout=3,script-path=https://github.com/Keywos/rule/raw/main/JS/ProGroup.js,argument=group=VPS&tolerance=10&timecache=18
 # 定时自动运行 5分钟一次
 Cron_GroupAuto = type=cron, cronexp= "0/5 * * * *", timeout=5,script-path=https://github.com/Keywos/rule/raw/main/JS/ProGroup.js,argument=group=VPS&tolerance=1&timecache=18
+
 */
 let Groupkey = "VPS",tol = "10",th = "18",p = "", j = "", push = false;
 if (typeof $argument !== "undefined" && $argument !== "") {
