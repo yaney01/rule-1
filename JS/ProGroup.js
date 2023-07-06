@@ -150,14 +150,14 @@ if (typeof $argument !== "undefined" && $argument !== "") {
   const Pushs = "优选结果为: " + minKey +": " + avgt[minKey] + " ms"
   
   if (nowproxy === minKey) {
-    p = "优选节点相同, 不更改节点: ";
+    p = "优选相同, 不更改: ";
     j = nowproxy;
   } else if (avgt[nowproxy] - avgt[minKey] > tol) {
     await httpAPI("/v1/policy_groups/select","POST",(body = { group_name: Groupkey, policy: minKey }));
     p = "更改优选节点为: ";
     j = minKey;
   } else {
-    p ="容差范围内, 不更改节点: " +(avgt[nowproxy] - avgt[minKey]) +"ms: ";
+    p ="容差内, 不更改: " +(avgt[nowproxy] - avgt[minKey]) +"ms: ";
     j = nowproxy;
   }
   console.log(Pushs);
