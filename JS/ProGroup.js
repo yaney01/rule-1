@@ -149,13 +149,13 @@ if (typeof $argument !== "undefined" && $argument !== "") {
   
   let Pushs = "";
   if (nowproxy === minKey) {
-		Pushs = "优选相同,不更换: " + minKey +": " + avgt[minKey] + " ms"
+		Pushs = "继承优选: " + minKey +": " + avgt[minKey] + "ms"
    
   } else if (avgt[nowproxy] - avgt[minKey] > tol) {
     await httpAPI("/v1/policy_groups/select","POST",(body = { group_name: Groupkey, policy: minKey }));
-    Pushs = "优选结果为: " + minKey +": " + avgt[minKey] + " ms"
+    Pushs = "优选成功: " + minKey +": " + avgt[minKey] + "ms"
   } else {
-    Pushs = "容差,不更换: " + minKey +": " + avgt[minKey] + " ms"
+    Pushs = "容差,继承优选: " + minKey +": " + avgt[minKey] + "ms"
   }
   console.log(Pushs);
   (push) && ($notification.post("",Pushs,""));
