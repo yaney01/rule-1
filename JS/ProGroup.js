@@ -160,7 +160,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
   console.log(Pushs);
   (push) && ($notification.post("",Pushs,""));
   $done({
-    title: "GroupAuto Select: " + Groupkey,
+    title: "GroupAuto "+Object.keys(k[Groupkey]).length+"C: " + Groupkey,
     content: Pushs,
   });
 })();
