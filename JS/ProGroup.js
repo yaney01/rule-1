@@ -12,13 +12,13 @@ push            加参数为开启通知, 不加参数则不通知
 #!desc=根据 api 返回的节点 (速度:持久化缓存非线性权重) 与 (延时:持久化缓存) 对节点进行优选
 
 [Panel]
-GroupAuto = script-name=GroupAuto,update-interval=3
+GroupAuto = script-name=GroupAuto,update-interval=6
 
 [Script]
 # 面板 运行 (面板与定时任务可同时存在)
-GroupAuto = type=generic,timeout=3,script-path=https://github.com/Keywos/rule/raw/main/JS/ProGroup.js,argument=group=VPS&tolerance=10&timecache=18
+GroupAuto = type=generic,timeout=6,script-path=https://github.com/Keywos/rule/raw/main/JS/ProGroup.js,argument=group=VPS&tolerance=10&timecache=18
 # 定时自动运行 5分钟一次
-Cron_GroupAuto = type=cron, cronexp= "0/5 * * * *", timeout=5,script-path=https://github.com/Keywos/rule/raw/main/JS/ProGroup.js,argument=group=VPS&tolerance=1&timecache=18
+Cron_GroupAuto = type=cron, cronexp= "0/5 * * * *", timeout=6,script-path=https://github.com/Keywos/rule/raw/main/JS/ProGroup.js,argument=group=VPS&tolerance=1&timecache=18
 
 */
 let Groupkey = "VPS",tol = "10",th = "18",p = "", j = "", push = false;
