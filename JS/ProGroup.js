@@ -154,7 +154,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     j = nowproxy;
   } else if (avgt[nowproxy] - avgt[minKey] > tol) {
     await httpAPI("/v1/policy_groups/select","POST",(body = { group_name: Groupkey, policy: minKey }));
-    p = "更改优选节点为: " + minKey + ": ";
+    p = "更改优选节点为: ";
     j = minKey;
   } else {
     p ="容差范围内, 不更改节点: " +(avgt[nowproxy] - avgt[minKey]) +"ms: ";
