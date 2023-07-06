@@ -147,25 +147,21 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     }
   }
   
-  const Pushs = "优选结果为: " + minKey +": " + avgt[minKey] + " ms"
-  
+  let Pushs = "";
   if (nowproxy === minKey) {
-    p = "优选相同, 不更改: ";
-    j = nowproxy;
+		Pushs = "优选相同,不更换: " + minKey +": " + avgt[minKey] + " ms"
+   
   } else if (avgt[nowproxy] - avgt[minKey] > tol) {
     await httpAPI("/v1/policy_groups/select","POST",(body = { group_name: Groupkey, policy: minKey }));
-    p = "更改优选节点为: ";
-    j = minKey;
+    Pushs = "优选结果为: " + minKey +": " + avgt[minKey] + " ms"
   } else {
-    p ="容差内, 不更改: " +(avgt[nowproxy] - avgt[minKey]) +"ms: ";
-    j = nowproxy;
+    Pushs = "容差,不更换: " + minKey +": " + avgt[minKey] + " ms"
   }
   console.log(Pushs);
-  console.log(p);
-  (push) && ($notification.post("",Pushs,p+j));
+  (push) && ($notification.post("",Pushs,""));
   $done({
     title: "GroupAuto Select: " + Groupkey,
-    content: p + j,
+    content: Pushs,
   });
 })();
 function httpAPI(path = "", method = "GET", body = null) {
