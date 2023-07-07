@@ -59,6 +59,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
   );
   // 获取策略组内节点
   const proxy = await httpAPI("/v1/policy_groups");
+  if (Object.keys(proxy).includes(Groupkey)){
   // 提取 name 属性的值到一个新数组
   const proxyName = proxy[Groupkey].map((obj) => obj.name);
 
@@ -169,6 +170,13 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     title: "GroupAuto " + he +":"+ me +" "+ Object.keys(k[Groupkey]).length+"C: "+ Groupkey,
     content: Pushs,
   });
+  } else {
+	console.log("group参数未输入正确的策略组")
+	$done({
+    title: "GroupAuto",
+    content: "group参数未输入正确的策略组",
+  });
+ }
 })();
 function httpAPI(path = "", method = "GET", body = null) {
   return new Promise((resolve) => {
