@@ -157,7 +157,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     await httpAPI("/v1/policy_groups/select","POST",(body = { group_name: Groupkey, policy: minKey }));
     Pushs = "优选成功: " + minKey +": " + avgt[minKey]
   } else {
-    Pushs = "容差,继承优选: " + minKey +": " + avgt[minKey]
+    Pushs = "容差,继承优选: " + nowproxy +": " + avgt[nowproxy]
   }
   console.log(Pushs);
   const te = new Date(t),he = te.getHours(),me = te.getMinutes();
