@@ -15,7 +15,7 @@ push            加参数为开启通知, 不加参数则不通知
 GroupAuto = script-name=GroupAuto,update-interval=6
 
 [Script]
-# 面板 运行 (面板与定时任务可同时存在 C代表次数)
+# 面板 运行 (面板与定时任务可同时存在 C代表次数;  节点后面数字代表 速度, 延迟, 延迟最大与最小值的差 三者的取值)
 GroupAuto = type=generic,timeout=6,script-path=https://github.com/Keywos/rule/raw/main/JS/ProGroup.js,argument=group=VPS&tolerance=10&timecache=18
 # 定时自动运行 5分钟一次
 Cron_GroupAuto = type=cron, cronexp= "0/5 * * * *", timeout=6,wake-system=0,script-path=https://github.com/Keywos/rule/raw/main/JS/ProGroup.js,argument=tolerance=1&timecache=18&group=Proxy
@@ -128,16 +128,18 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     }
   }
   
-  // 计算平均
-  const avgt = {};
+  // 计算平均与最大最小差值
+    const avgt = {};
   for (const sp in AllKey) {
     const sa = AllKey[sp];
     if (sa.length > 0) {
       const sum = sa.reduce((a, b) => a + b, 0);
       const average = Math.round(sum / sa.length);
-      avgt[sp] = average;
+      const rangei = rangeMax(sa)
+      avgt[sp] = average + rangei;
     }
   }
+  
   let minKey = null, minValue = Infinity;
   for (const key in avgt) {
     const value = avgt[key];
@@ -149,13 +151,13 @@ if (typeof $argument !== "undefined" && $argument !== "") {
   
   let Pushs = "";
   if (nowproxy === minKey) {
-		Pushs = "继承优选: " + minKey +": " + avgt[minKey] + "ms"
+		Pushs = "继承优选: " + minKey +": " + avgt[minKey]
    
   } else if (avgt[nowproxy] - avgt[minKey] > tol) {
     await httpAPI("/v1/policy_groups/select","POST",(body = { group_name: Groupkey, policy: minKey }));
-    Pushs = "优选成功: " + minKey +": " + avgt[minKey] + "ms"
+    Pushs = "优选成功: " + minKey +": " + avgt[minKey]
   } else {
-    Pushs = "容差,继承优选: " + minKey +": " + avgt[minKey] + "ms"
+    Pushs = "容差,继承优选: " + minKey +": " + avgt[minKey]
   }
   console.log(Pushs);
   const te = new Date(t),he = te.getHours(),me = te.getMinutes();
@@ -187,4 +189,10 @@ function reSpeed(x, y) {
     const ob = 0.99 * Math.exp(-x / 2e6);
     return Math.round(y * ob);
   }
+}
+
+function rangeMax(e) {
+  const max = Math.max(...e),
+  min = Math.min(...e);
+  return max - min;
 }
