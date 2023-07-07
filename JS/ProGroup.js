@@ -1,4 +1,4 @@
-/* 2023-07-06 01:22:12
+/* 2023-07-08 00:22:12 修复策略组节点变更时需要删除缓存,现在不需要删除缓存了
 作用: 根据 Surge httpApi 请求 (最近请求详情:速度、 参数指定的策略组:与其对应HASH节点延时、节点名)
 策略: 根据 api 返回的节点 (速度:持久化缓存非线性权重) 与 (延时:持久化缓存) 对节点进行优选, 不用担心费流量，因为通过httpApi取的最近请求里的速度数据
 参数: 
@@ -104,6 +104,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
       timeNms--;
     }
   }
+  (JSON.stringify(Object.keys(Object.values(k[Groupkey])[0])) !== JSON.stringify(Object.keys(kv))) && (k[Groupkey] = {});
   k[Groupkey][t] = kv;
   // 按时间戳 清理旧缓存
   const GT = k[Groupkey];
