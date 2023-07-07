@@ -129,7 +129,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
   }
   
   // 计算平均与最大最小差值
-    const avgt = {};
+  const avgt = {};
   for (const sp in AllKey) {
     const sa = AllKey[sp];
     if (sa.length > 0) {
@@ -160,7 +160,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     Pushs = "容差内优选: " + nowproxy +": " + avgt[nowproxy]
   }
   console.log(Pushs);
-  const te = new Date(t),he = te.getHours(),me = te.getMinutes();
+  const te = new Date(t),he = String(te.getHours()).padStart(2, '0'),me = String(te.getMinutes()).padStart(2, '0');
   (push) && ($notification.post("",Pushs,""));
   $done({
     title: "GroupAuto " + he +":"+ me +" "+ Object.keys(k[Groupkey]).length+"C: "+ Groupkey,
