@@ -16,6 +16,7 @@ GroupAuto = script-name=GroupAuto,update-interval=6
 
 [Script]
 # 面板 运行 (面板与定时任务可同时存在 C代表次数;  节点后面数字代表 速度, 延迟, 延迟最大与最小值的差 三者的平均非线性取值)
+# 如遇到问题可以去:工具>脚本编辑器>左下角齿轮图标>$persistentStore 删除 KEY_GroupAuto持久化数据
 GroupAuto = type=generic,timeout=6,script-path=https://github.com/Keywos/rule/raw/main/JS/ProGroup.js,argument=tolerance=10&timecache=18&group=Proxy
 
 # 定时自动运行(可选) 5分钟一次
