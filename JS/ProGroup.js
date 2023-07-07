@@ -158,9 +158,10 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     Pushs = "容差,继承优选: " + minKey +": " + avgt[minKey] + "ms"
   }
   console.log(Pushs);
+  const te = new Date(t),he = te.getHours(),me = te.getMinutes();
   (push) && ($notification.post("",Pushs,""));
   $done({
-    title: "GroupAuto "+Object.keys(k[Groupkey]).length+"C: " + Groupkey,
+    title: "GroupAuto " + he +":"+ me +" "+ Object.keys(k[Groupkey]).length+"C: "+ Groupkey,
     content: Pushs,
   });
 })();
