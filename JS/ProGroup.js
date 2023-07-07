@@ -5,18 +5,18 @@
 
 group=          你的策略组名(需要填写手动选择的策略组select)
 tolerance=10    容差10ms 小于10ms则不切换节点
-timecache=18    缓存到期时间(小时) 或 超过40个数据会清理旧的数据
+timecache=18    缓存到期时间(小时) 或 超过66个数据会清理旧的数据
 push            加参数为开启通知, 不加参数则不通知
 
 #!name=GroupAuto
-#!desc=根据 api 返回的节点 (速度:持久化缓存非线性权重) 与 (延时:持久化缓存) 对节点进行优选
+#!desc=#!desc=优选节点: 根据 httpApi 返回的 (速度:持久化缓存非线性权重) (平均延时:持久化缓存)  (延迟最大与最小值的差) 优选
 
 [Panel]
 GroupAuto = script-name=GroupAuto,update-interval=6
 
 [Script]
 # 面板 运行 (面板与定时任务可同时存在 C代表次数;  节点后面数字代表 速度, 延迟, 延迟最大与最小值的差 三者的取值)
-GroupAuto = type=generic,timeout=6,script-path=https://github.com/Keywos/rule/raw/main/JS/ProGroup.js,argument=group=VPS&tolerance=10&timecache=18
+GroupAuto = type=generic,timeout=6,script-path=https://github.com/Keywos/rule/raw/main/JS/ProGroup.js,argument=tolerance=10&timecache=18&group=Proxy
 # 定时自动运行 5分钟一次
 Cron_GroupAuto = type=cron, cronexp= "0/5 * * * *", timeout=6,wake-system=0,script-path=https://github.com/Keywos/rule/raw/main/JS/ProGroup.js,argument=tolerance=1&timecache=18&group=Proxy
 
@@ -97,7 +97,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
   // 按个数 清理旧缓存
   let timeNms = Object.keys(k[Groupkey]).length;
   for (const t in k[Groupkey]) {
-    if (timeNms > 40) {
+    if (timeNms > 65) {
       delete k[Groupkey][t];
       timeNms--;
     }
