@@ -17,8 +17,8 @@ GroupAuto = script-name=GroupAuto,update-interval=3
 [Script]
 # 面板 运行 (面板与定时任务可同时存在)
 GroupAuto = type=generic,timeout=3,script-path=https://github.com/Keywos/rule/raw/main/JS/ProGroup.js,argument=group=VPS&tolerance=10&timecache=18
-# 定时自动运行 5分钟一次
-Cron_GroupAuto = type=cron, cronexp= "0/5 * * * *", timeout=5,script-path=https://github.com/Keywos/rule/raw/main/JS/ProGroup.js,argument=group=VPS&tolerance=1&timecache=18
+# 定时自动运行(可选) 5分钟一次,每天的0点至1点和7点至24点
+# Cron_GroupAuto = type=cron, cronexp= "0/5 0-1,7-24 * * *", timeout=10,wake-system=0,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/ProGroup.js, argument=tolerance=10&timecache=18&group=Proxy
 
 */
 
