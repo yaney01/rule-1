@@ -170,7 +170,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
   const te = new Date(t),he = String(te.getHours()).padStart(2, '0'),me = String(te.getMinutes()).padStart(2, '0');
   (push) && ($notification.post("",Pushs,""));
   $done({
-    title: "GroupAuto " + he +":"+ me +" "+ Object.keys(k[Groupkey]).length+"C: "+ Groupkey,
+    title: "GroupAuto " + he +":"+ me +" "+ Object.keys(k[Groupkey]).length+"C: "+ Groupkey +'\''+ Object.keys(proxy).length,
     content: Pushs,
   });
   } else {
