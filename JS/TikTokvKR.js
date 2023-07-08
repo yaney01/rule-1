@@ -1,0 +1,1 @@
+let loc = "KR",url = $request.url;if (/_region=CN&|&mcc_mnc=4/.test(url)) {url = url.replace(/_region=CN&/g,`_region=${loc}&`).replace(/&mcc_mnc=4/g,"&mcc_mnc=2");$done({response:{status: 307,headers:{Location: url},}})}else{$done({})
