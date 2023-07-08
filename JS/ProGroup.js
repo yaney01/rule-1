@@ -106,9 +106,9 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     }
   }
   
-  let ag = String(Object.keys(Object.values(k[Groupkey])[0]));
-  let ng = String(Object.keys(kv));
-  if (ag !== ng)k[Groupkey] = {};
+  //let ag = String(Object.keys(Object.values(k[Groupkey])[0]));
+  //let ng = String(Object.keys(kv));
+  //if (ag !== ng)k[Groupkey] = {};
   k[Groupkey][t] = kv;
   // 按时间戳 清理旧缓存
   const GT = k[Groupkey];
