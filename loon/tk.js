@@ -4,7 +4,7 @@ if(loc == "inkey"){
   inkeys = $persistentStore.read("手动输入地区代码[可选]");
   loc = inkeys
 }
-if (/(tnc|dm).+?\.com.*?\?.+/.test(url)) {
+if (/^https?:\/\/(tnc|dm).+\.[^\s/]+\.com\/\w+/v\d/?/.test(url)) {
   url = url.replace(/\/\?/g,'');
   const response = {
     status: 302,
