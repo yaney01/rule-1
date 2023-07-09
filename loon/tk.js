@@ -7,7 +7,7 @@ if(loc == "inkey"){
 if (/(tnc|dm).+?\.com.*/.test(url)) {
   url = url.replace(/\/\?.+/g,"\?");
   const response = {
-    status: 302,
+    status: 307,
     headers: {Location: url},
   };
   $done({response});
