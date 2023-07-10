@@ -1,12 +1,13 @@
 #!name=GroupAuto
-#!desc=优选节点: 根据 httpApi 返回的 (速度:持久化缓存非线性权重) (平均延时:持久化缓存)  (延迟最大与最小值的差) 优选
-# 需要填写手动选择的策略组select
+#!desc=优选节点: 根据 httpApi 返回的 (速度:持久化缓存) (平均延时:持久化缓存) 优选
 
-# 参数
-# group=         你的策略组名(需要填写手动选择的策略组select)
-# tolerance=10   容差10ms 小于10ms则不切换节点
-# timecache=18   缓存到期时间(小时) 或 超过66个数据会清理旧的数据
-# push           加参数为开启通知, 不加参数则不通知
+# 必选参数:
+# group=          你的策略组名(需要填写手动选择的策略组select)
+
+# 可选参数:
+# tolerance=10    容差10ms 小于10ms则不切换节点
+# timecache=18    缓存到期时间(小时) 或 超过40个数据会清理旧的数据
+# push            加参数为开启通知, 不加参数则不通知
 
 [Panel]
 GroupAuto = script-name=GroupAuto,update-interval=6
