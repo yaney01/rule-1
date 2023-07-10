@@ -34,6 +34,9 @@ DOMAIN,h-adashx.ut.taobao.com,REJECT
 #555横幅
 ^https:\/\/vip7\.fzwdyy\.cn:8083\/api\/(getAdvertInfo|getGOOGAdvert) - reject
 ^https:\/\/vpic\.cms\.qq\.com\/nj_vpic reject
+
+^https:\/\/a\.weilai555\.com:1000\/api\/v1\/advert\/config\? reject
+
 #tf
 ^https?:\/\/run\.api\.qyfxgd\.cn\/api\/v\d\/advert\/config reject
 #Loon 3.0.8
@@ -93,4 +96,4 @@ http-request ^https?:\/\/ad\.12306\.cn\/ad\/ser\/getAdList script-path=https://c
 #token.safebrowsing.apple = 17.253.85.207
 
 [MITM]
-hostname = interface.music.163.com, interface3.music.163.com, sdk.alibaba.com.ailbaba.me, vip7.fzwdyy.cn, vpic.cms.qq.com, client.app.coc.10086.cn,api.songguo7.com, wallet.95516.com, commimg-1.pddpic.com,  list-app-m.i4.cn, rescdn.qqmail.com,api.aliyundrive.com, m5*.amap.com, sns.amap.com, optimus-ads.amap.com, ad.12306.cn, httpdns.n.netease.com, 163jiasu.com, boot.biz.weibo.com, sdkapp.uve.weibo.com, i.imgtg.com, static.yximgs.com, run.api.qyfxgd.cn
+hostname = interface.music.163.com, interface3.music.163.com, sdk.alibaba.com.ailbaba.me, vip7.fzwdyy.cn, vpic.cms.qq.com, client.app.coc.10086.cn,api.songguo7.com, wallet.95516.com, commimg-1.pddpic.com,  list-app-m.i4.cn, rescdn.qqmail.com,api.aliyundrive.com, m5*.amap.com, sns.amap.com, optimus-ads.amap.com, ad.12306.cn, httpdns.n.netease.com, 163jiasu.com, boot.biz.weibo.com, sdkapp.uve.weibo.com, i.imgtg.com, static.yximgs.com, run.api.qyfxgd.cn, a.weilai555.com:1000
