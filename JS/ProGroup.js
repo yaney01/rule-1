@@ -30,4 +30,196 @@ GroupAuto = type=generic,timeout=3,script-path=https://github.com/Keywos/rule/ra
 
 */
 
-let Groupkey="VPS",tol="10",th="18",push=false,timeout=9900;if(typeof $argument!=="undefined"&&$argument!==""){const e=getin("$argument");Groupkey=e.group?e.group:Groupkey;th=e.timecache?e.timecache:th;tol=e.tolerance?e.tolerance:tol;push=e.push?e.push:false}(async()=>{let e,t,o={},n="";const s=await httpAPI("/v1/policy_groups");if(!Object.keys(s).includes(Groupkey)){$done({title:"GroupAuto",content:"group参数未输入正确的策略组"})}const r=await httpAPI("/v1/policy_groups/test","POST",body={group_name:Groupkey});if(!r){$done(bkey)}else{e=r.available[0]}const c=await httpAPI("/v1/traffic");const{connector:u}=c;const i={};Object.keys(u).forEach((e=>{const{inMaxSpeed:t,outMaxSpeed:o,lineHash:n}=u[e];if(n&&t){i[n]=t+o}}));const a=await httpAPI("/v1/policies/benchmark_results");t=s[Groupkey].map((e=>{const t=e.lineHash;const o=e.name;let n=a[t];if(n.lastTestScoreInMS===-1){n.lastTestScoreInMS=9999}const s=n?n.lastTestScoreInMS:9988;return{name:o,ms:s,lineHash:t}}));t.forEach((e=>{var t=e.lineHash;if(t in i){e.se=i[t]}else{e.se="0"}delete e.lineHash}));const p=(new Date).getTime();const l=$persistentStore.read("KEY_GroupAutos");let f=l?JSON.parse(l):{};f[Groupkey]=f[Groupkey]||{};let h=Object.keys(f[Groupkey]).length;for(const e in f[Groupkey]){if(h>65){delete f[Groupkey][e];h--}}if(Object.values(f[Groupkey])[0]){const e=Object.values(f[Groupkey])[0];if(e.some((e=>!t.some((t=>t.name===e.name))))){f[Groupkey]={};console.log("数据变更，清理缓存")}}f[Groupkey][p]=t;const y=Date.now();Object.keys(f).forEach((e=>{const t=f[e];Object.keys(t).forEach((e=>{const o=y-parseInt(e);const n=o/(36e4*th);if(n>1){delete t[e]}}))}));$persistentStore.write(JSON.stringify(f),"KEY_GroupAutos");Object.values(f[Groupkey]).forEach((e=>{e.forEach((({name:e,ms:t,se:n})=>{if(!o[e]){o[e]={sum:t,count:1,sek:n}}else{o[e].sum+=t;o[e].sek+=n;o[e].count++}}))}));Object.keys(o).forEach((e=>{const{sum:t,count:n,sek:s}=o[e];o[e]={sum:t,count:n,sek:s/n,avg:reSpeed(s,t/n)}}));const m=Object.fromEntries(Object.entries(o).map((([e,t])=>[e,t.avg])));let k=null,g=Infinity;for(const e in m){const t=m[e];if(t<g){k=e;g=t}}if(e===k){n="继承: "+k+": "+o[k]["count"]+"C"+" "+BtoM(o[k]["sek"])+" "+m[k]}else if(m[e]-m[k]>tol){await httpAPI("/v1/policy_groups/select","POST",body={group_name:Groupkey,policy:k});n="优选: "+k+": "+o[k]["count"]+"C"+" "+BtoM(o[k]["sek"])+" "+m[k]}else{n="容差:"+e+": "+o[e]["count"]+"C"+" "+BtoM(o[e]["sek"])+" "+m[e]}console.log(n);push&&$notification.post("",n,"");const G=new Date(p),d=G.getHours(),b=G.getMinutes();$done({title:"GroupAuto "+Groupkey+"'"+Object.keys(s[Groupkey]).length+"  "+d+":"+b,content:n})})();function httpAPI(e="",t="GET",o=null){return new Promise(((n,s)=>{const r=new Promise(((e,t)=>{setTimeout((()=>{t("");n("")}),timeout)}));const c=new Promise((n=>{$httpAPI(t,e,o,n)}));Promise.race([c,r]).then((e=>{n(e)})).catch((e=>{s(e)}))}))}function getin(){return Object.fromEntries($argument.split("&").map((e=>e.split("="))).map((([e,t])=>[e,decodeURIComponent(t)])))}function reSpeed(e,t){if(e>1e7){return Math.round(t*.6)}else{const o=.99*Math.exp(-e/2e7);return Math.round(t*o)}}var bkey={title:"GroupAuto",content:"超过Surge httpApi 限制"};function BtoM(e){var t=e/(1024*1024);if(t<.01){return"0.01M"}return t.toFixed(2)+"M"}
+let Groupkey = "VPS", tol = "10", th = "18", push = false;// httpapi10秒限制
+if (typeof $argument !== "undefined" && $argument !== "") {
+  const ins = getin("$argument");
+  Groupkey = ins.group ? ins.group : Groupkey;
+  th = ins.timecache ? ins.timecache : th;
+  tol = ins.tolerance ? ins.tolerance : tol;
+  push = ins.push ? ins.push : false;}
+(async () => {
+  //var timestamp = Date.now();
+  let NP,resMs,AK = {},Pushs = "";
+  // 获取策略组内节点
+  const proxy = await httpAPI("/v1/policy_groups");
+  //console.log(proxy)
+  if (!Object.keys(proxy).includes(Groupkey)) {
+    $done({title: "GroupAuto",content: "group参数未输入正确的策略组",});
+  }
+  // 请求测速选择的策略组
+  const testReq = await httpAPI("/v1/policy_groups/test","POST",(body = { group_name: Groupkey }));
+  if (!testReq) {$done(bkey);} else { NP = testReq.available[0] } //console.log("当前策略"+NP); 
+  const Sproxy = await httpAPI("/v1/traffic");
+  const { connector } = Sproxy;
+  const iom = {}; // inMaxSpeed outMaxSpeed Max
+  Object.keys(connector).forEach((key) => {
+    const { inMaxSpeed, outMaxSpeed, lineHash } = connector[key];
+    if (lineHash && inMaxSpeed) {
+      iom[lineHash] = inMaxSpeed + outMaxSpeed;
+    }
+  });
+  //console.log(iom)
+  // 获取所有延时结果
+  const testGroup = await httpAPI("/v1/policies/benchmark_results");
+  // 提取 /v1/policy_groups 代理节点 中的 name 和 lineHash 的值
+  resMs = proxy[Groupkey].map((i) => {
+    const lineHash = i.lineHash;
+    const name = i.name;
+    // 获取对应 /v1/policies/benchmark_results 的 lastTestScoreInMS为ms
+    let HashValue = testGroup[lineHash];
+    if (HashValue.lastTestScoreInMS === -1) {
+      HashValue.lastTestScoreInMS = 9999;
+    }
+    const HashMs = HashValue ? HashValue.lastTestScoreInMS : 9988;
+    return { name, ms: HashMs, lineHash };
+  });
+  //console.log(JSON.stringify(resMs, null, 2));
+  resMs.forEach((i) => {
+    var lineHash = i.lineHash;
+    if (lineHash in iom) {
+      i.se = iom[lineHash];
+    } else {
+      i.se = "0";
+    }
+    delete i.lineHash;
+  });
+  //console.log(iom)
+  //console.log(JSON.stringify(resMs, '', 2));
+  const t = new Date().getTime();
+  // 读取存储的数据
+  const readData = $persistentStore.read("KEY_GroupAutos");
+  let k = readData ? JSON.parse(readData) : {};
+  k[Groupkey] = k[Groupkey] || {};
+  // 按个数 清理旧缓存
+  let timeNms = Object.keys(k[Groupkey]).length;
+  for (const t in k[Groupkey]) {
+    if (timeNms > 65) {
+      delete k[Groupkey][t];
+      timeNms--;
+    }
+  }
+  if (Object.values(k[Groupkey])[0]) {
+    const groupValues = Object.values(k[Groupkey])[0];
+    if (groupValues.some((i) => !resMs.some((e) => e.name === i.name))) {
+      k[Groupkey] = {};console.log("数据变更，清理缓存");
+    }
+  }
+  k[Groupkey][t] = resMs;
+  // 按时间戳 清理旧缓存
+  const h = Date.now();
+  Object.keys(k).forEach((ig) => {
+    const y = k[ig];
+    Object.keys(y).forEach((e) => {
+      const t = h - parseInt(e);
+      const o = t / (36e4 * th);
+      if (o > 1) {
+        delete y[e];
+      }
+    });
+  });
+  $persistentStore.write(JSON.stringify(k), "KEY_GroupAutos");
+  // console.log(JSON.stringify(k[Groupkey],null,2));
+  Object.values(k[Groupkey]).forEach((arr) => {
+    arr.forEach(({ name, ms, se }) => {
+      if (!AK[name]) {
+        AK[name] = { sum: Number(ms), count: 1, sek: Number(se) };
+      } else {
+        AK[name].sum += Number(ms);
+        AK[name].sek += Number(se);
+        AK[name].count++;
+      }
+      // console.log(JSON.stringify(AK[name], null, 2));
+    });
+  });
+
+  Object.keys(AK).forEach((name) => {
+    const { sum, count, sek } = AK[name];
+    AK[name] = {sum, count, sek: Number(sek) / Number(count),
+      avg: reSpeed(Number(sek), Number(sum) / Number(count)),
+    };
+  });
+  // console.log(AK);
+  const avgt = Object.fromEntries(
+    Object.entries(AK).map(([key, value]) => [key, value.avg])
+  );
+  // console.log(avgt)
+  let MK = null, MV = Infinity;
+  for (const key in avgt) {
+    const value = avgt[key];
+    if (value < MV) {
+      MK = key;
+      MV = value;
+    }
+  }
+  if (NP === MK) {
+    Pushs ="继承: " +MK +": " +AK[MK]["count"] +"C" +" " +BtoM(AK[MK]["sek"]) +" " +avgt[MK]; //继承优选
+  } else if (avgt[NP] - avgt[MK] > tol) {
+    await httpAPI("/v1/policy_groups/select","POST",(body = { group_name: Groupkey, policy: MK }));
+    Pushs ="优选: " +MK +": " +AK[MK]["count"] +"C" +" " +BtoM(AK[MK]["sek"]) +" " +avgt[MK]; //优选成功
+  } else {
+    Pushs ="容差:" +NP +": " +AK[NP]["count"] +"C" +" " +BtoM(AK[NP]["sek"]) +" " +avgt[NP]; //容差内优选
+  }
+  //var timestamps = Date.now();
+  //console.log((timestamps - timestamp)+"ms")
+  console.log(Pushs);
+  push && $notification.post("", Pushs, "");
+  const te = new Date(t),
+    he = te.getHours(),
+    me = te.getMinutes();
+  $done({
+    title:"Group Auto: " +Groupkey +"'" +Object.keys(proxy[Groupkey]).length +"  " +he +":" +me,
+    content: Pushs,
+  });
+})();
+
+function httpAPI(path = "", method = "GET", body = null) {
+  return new Promise((resolve, reject) => {
+    const Ptimeout = new Promise((_, reject) => {
+      setTimeout(() => {reject("");resolve("");}, 9900);});
+    const Preq = new Promise((resolve) => {
+      $httpAPI(method, path, body, resolve);});
+    Promise.race([Preq, Ptimeout]).then((result) => {
+        resolve(result);
+      }).catch((error) => {reject(error);});
+  });
+}
+
+function getin() {
+  return Object.fromEntries(
+    $argument
+      .split("&")
+      .map((i) => i.split("="))
+      .map(([k, v]) => [k, decodeURIComponent(v)])
+  );
+}
+
+function reSpeed(x, y) {
+  if (x > 1e7) {
+    return Math.round(y * 0.6);
+  } else {
+    const ob = 0.99 * Math.exp(-x / 2e7);
+    return Math.round(y * ob);
+  }
+}
+
+var bkey = {
+  title: "Group Auto",
+  content: "超过Surge httpApi 限制",
+};
+
+function BtoM(i) {
+  var bytes = i / (1024 * 1024);
+  if (bytes < 0.01) {
+    return "0.01M";
+  }
+  return bytes.toFixed(2) + "M";
+}
+/*
+function httpAPI(path = "", method = "GET", body = null ) {
+  return new Promise((resolve) => {
+    $httpAPI(method, path, body, (result) => {
+      resolve(result);
+    });
+  });
+}
+*/
