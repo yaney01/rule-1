@@ -30,7 +30,7 @@ GroupAuto = type=generic,timeout=3,script-path=https://github.com/Keywos/rule/ra
 
 */
 
-let Groupkey = "VPS", tol = "10", th = "18", push = false;// httpapi10秒限制
+let Groupkey = "VPS", tol = "10", th = "18", push = false;
 if (typeof $argument !== "undefined" && $argument !== "") {
   const ins = getin("$argument");
   Groupkey = ins.group ? ins.group : Groupkey;
@@ -38,34 +38,26 @@ if (typeof $argument !== "undefined" && $argument !== "") {
   tol = ins.tolerance ? ins.tolerance : tol;
   push = ins.push ? ins.push : false;}
 (async () => {
-  //var timestamp = Date.now();
   let NP,resMs,AK = {},Pushs = "";
-  // 获取策略组内节点
   const proxy = await httpAPI("/v1/policy_groups");
-  //console.log(proxy)
   if (!Object.keys(proxy).includes(Groupkey)) {
     $done({title: "GroupAuto",content: "group参数未输入正确的策略组",});
   }
-  // 请求测速选择的策略组
   const testReq = await httpAPI("/v1/policy_groups/test","POST",(body = { group_name: Groupkey }));
-  if (!testReq) {$done(bkey);} else { NP = testReq.available[0] } //console.log("当前策略"+NP); 
+  if (!testReq) {$done(bkey);} else { NP = testReq.available[0] }
   const Sproxy = await httpAPI("/v1/traffic");
   const { connector } = Sproxy;
-  const iom = {}; // inMaxSpeed outMaxSpeed Max
+  const iom = {};
   Object.keys(connector).forEach((key) => {
     const { inMaxSpeed, outMaxSpeed, lineHash } = connector[key];
     if (lineHash && inMaxSpeed) {
       iom[lineHash] = inMaxSpeed + outMaxSpeed;
     }
   });
-  //console.log(iom)
-  // 获取所有延时结果
   const testGroup = await httpAPI("/v1/policies/benchmark_results");
-  // 提取 /v1/policy_groups 代理节点 中的 name 和 lineHash 的值
   resMs = proxy[Groupkey].map((i) => {
     const lineHash = i.lineHash;
     const name = i.name;
-    // 获取对应 /v1/policies/benchmark_results 的 lastTestScoreInMS为ms
     let HashValue = testGroup[lineHash];
     if (HashValue.lastTestScoreInMS === -1) {
       HashValue.lastTestScoreInMS = 9999;
@@ -73,7 +65,6 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     const HashMs = HashValue ? HashValue.lastTestScoreInMS : 9988;
     return { name, ms: HashMs, lineHash };
   });
-  //console.log(JSON.stringify(resMs, null, 2));
   resMs.forEach((i) => {
     var lineHash = i.lineHash;
     if (lineHash in iom) {
@@ -83,14 +74,11 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     }
     delete i.lineHash;
   });
-  //console.log(iom)
-  //console.log(JSON.stringify(resMs, '', 2));
+
   const t = new Date().getTime();
-  // 读取存储的数据
   const readData = $persistentStore.read("KEY_GroupAutos");
   let k = readData ? JSON.parse(readData) : {};
   k[Groupkey] = k[Groupkey] || {};
-  // 按个数 清理旧缓存
   let timeNms = Object.keys(k[Groupkey]).length;
   for (const t in k[Groupkey]) {
     if (timeNms > 65) {
@@ -105,20 +93,19 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     }
   }
   k[Groupkey][t] = resMs;
-  // 按时间戳 清理旧缓存
   const h = Date.now();
   Object.keys(k).forEach((ig) => {
     const y = k[ig];
     Object.keys(y).forEach((e) => {
       const t = h - parseInt(e);
-      const o = t / (36e4 * th);
+      const o = t / (36e5 * th);
       if (o > 1) {
         delete y[e];
       }
     });
   });
   $persistentStore.write(JSON.stringify(k), "KEY_GroupAutos");
-  // console.log(JSON.stringify(k[Groupkey],null,2));
+
   Object.values(k[Groupkey]).forEach((arr) => {
     arr.forEach(({ name, ms, se }) => {
       if (!AK[name]) {
@@ -128,7 +115,6 @@ if (typeof $argument !== "undefined" && $argument !== "") {
         AK[name].sek += Number(se);
         AK[name].count++;
       }
-      // console.log(JSON.stringify(AK[name], null, 2));
     });
   });
 
@@ -138,11 +124,10 @@ if (typeof $argument !== "undefined" && $argument !== "") {
       avg: reSpeed(Number(sek), Number(sum) / Number(count)),
     };
   });
-  // console.log(AK);
+
   const avgt = Object.fromEntries(
     Object.entries(AK).map(([key, value]) => [key, value.avg])
   );
-  // console.log(avgt)
   let MK = null, MV = Infinity;
   for (const key in avgt) {
     const value = avgt[key];
@@ -152,15 +137,13 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     }
   }
   if (NP === MK) {
-    Pushs ="继承: " +MK +": " +AK[MK]["count"] +"C" +" " +BtoM(AK[MK]["sek"]) +" " +avgt[MK]; //继承优选
+    Pushs ="继承: " +MK +": " +AK[MK]["count"] +"C" +" " +BtoM(AK[MK]["sek"]) +" " +avgt[MK];
   } else if (avgt[NP] - avgt[MK] > tol) {
     await httpAPI("/v1/policy_groups/select","POST",(body = { group_name: Groupkey, policy: MK }));
-    Pushs ="优选: " +MK +": " +AK[MK]["count"] +"C" +" " +BtoM(AK[MK]["sek"]) +" " +avgt[MK]; //优选成功
+    Pushs ="优选: " +MK +": " +AK[MK]["count"] +"C" +" " +BtoM(AK[MK]["sek"]) +" " +avgt[MK];
   } else {
-    Pushs ="容差:" +NP +": " +AK[NP]["count"] +"C" +" " +BtoM(AK[NP]["sek"]) +" " +avgt[NP]; //容差内优选
+    Pushs ="容差:" +NP +": " +AK[NP]["count"] +"C" +" " +BtoM(AK[NP]["sek"]) +" " +avgt[NP];
   }
-  //var timestamps = Date.now();
-  //console.log((timestamps - timestamp)+"ms")
   console.log(Pushs);
   push && $notification.post("", Pushs, "");
   const te = new Date(t),
@@ -214,12 +197,3 @@ function BtoM(i) {
   }
   return bytes.toFixed(2) + "M";
 }
-/*
-function httpAPI(path = "", method = "GET", body = null ) {
-  return new Promise((resolve) => {
-    $httpAPI(method, path, body, (result) => {
-      resolve(result);
-    });
-  });
-}
-*/
