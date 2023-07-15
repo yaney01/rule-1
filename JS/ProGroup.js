@@ -1,4 +1,4 @@
-/* 2023-07-10 17:18:50
+/* 2023-07-15 14:09:12 新增参数 timeout
 作用: 
 · 如果策略组 节点变更 会重新缓存结果 重新取值
 · 如果有节点偶尔ping不通 那么大概率不会选中他 
@@ -13,6 +13,7 @@
 # group=          你的策略组名(需要填写手动选择的策略组select)
 
 # 可选参数:
+# timeout=6000    单位 ms 最大值9900 Surge Httpapi限制为10s 即 10000ms
 # tolerance=10    容差10ms 小于10ms则不切换节点
 # timecache=18    缓存到期时间(小时) 或 超过40个数据会清理旧的数据
 # push            加参数为开启通知, 不加参数则不通知
@@ -30,45 +31,92 @@ GroupAuto = type=generic,timeout=3,script-path=https://github.com/Keywos/rule/ra
 
 */
 
-let Groupkey = "VPS", tol = "10", th = "18", push = false;
+let Groupkey = "VPS", tol = "10", th = "18", push = false, timeout = 6000;
 if (typeof $argument !== "undefined" && $argument !== "") {
   const ins = getin("$argument");
-  Groupkey = ins.group ? ins.group : Groupkey;
-  th = ins.timecache ? ins.timecache : th;
-  tol = ins.tolerance ? ins.tolerance : tol;
-  push = ins.push ? ins.push : false;}
+  Groupkey = ins.group || Groupkey;
+  th = ins.timecache || th;
+  tol = ins.tolerance || tol;
+  push = ins.push || false;
+  if (ins.timeout) {
+    timeout = Math.max(100, Math.min(9900, ins.timeout));
+  }
+}
+
+function httpAPI(path = "", method = "GET", body = null) {
+  return new Promise((resolve, reject) => {
+    const tPr = new Promise((_, reject) => {
+      setTimeout(() => {reject("");resolve("");
+      }, timeout);
+    });
+    const reqPr = new Promise((resolve) => {
+      $httpAPI(method, path, body, resolve);
+    });
+    Promise.race([reqPr, tPr]).then((result) => {
+        resolve(result);
+      }).catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+function getin() {
+  return Object.fromEntries(
+    $argument.split("&").map((i) => i.split("="))
+    .map(([k, v]) => [k, decodeURIComponent(v)])
+  );
+}
+
+function BtoM(i) {
+  var bytes = i / (1024 * 1024);
+  if (bytes < 0.01) {return "0.01M";}
+  return bytes.toFixed(2) + "M";
+}
+
+function reSpeed(x, y) {
+  if (x > 1e7) {return Math.round(y * 0.6);
+  } else {
+    const ob = 0.99 * Math.exp(-x / 2e7);
+    return Math.round(y * ob);
+  }
+}
+
 (async () => {
-  let NP,resMs,AK = {},Pushs = "";
+	let NP,resMS,AK = {},Pushs = "";
+  await httpAPI("/v1/policy_groups/test","POST",(body = { group_name: Groupkey }));
+	const Npolicy = await httpAPI("/v1/policy_groups/select?group_name="+Groupkey);
+	NP = Npolicy.policy
+
   const proxy = await httpAPI("/v1/policy_groups");
   if (!Object.keys(proxy).includes(Groupkey)) {
     $done({title: "GroupAuto",content: "group参数未输入正确的策略组",});
   }
-  const testReq = await httpAPI("/v1/policy_groups/test","POST",(body = { group_name: Groupkey }));
-  if (!testReq) {$done(bkey);} else { NP = testReq.available[0] }
+
   const Sproxy = await httpAPI("/v1/traffic");
   const { connector } = Sproxy;
-  const iom = {};
+  const IOM = {}; // inMaxSpeed outMaxSpeed Max
   Object.keys(connector).forEach((key) => {
     const { inMaxSpeed, outMaxSpeed, lineHash } = connector[key];
     if (lineHash && inMaxSpeed) {
-      iom[lineHash] = inMaxSpeed + outMaxSpeed;
+      IOM[lineHash] = inMaxSpeed + outMaxSpeed;
     }
   });
+
   const testGroup = await httpAPI("/v1/policies/benchmark_results");
-  resMs = proxy[Groupkey].map((i) => {
+  // /v1/policy_groups  中的 name 和 lineHash 
+  resMS = proxy[Groupkey].map((i) => {
     const lineHash = i.lineHash;
     const name = i.name;
+    //  /v1/policies/benchmark_results 的 lastTestScoreInMS 为 ms
     let HashValue = testGroup[lineHash];
-    if (HashValue.lastTestScoreInMS === -1) {
-      HashValue.lastTestScoreInMS = 9999;
-    }
-    const HashMs = HashValue ? HashValue.lastTestScoreInMS : 9988;
+    if (HashValue.lastTestScoreInMS === -1) {HashValue.lastTestScoreInMS = 996;}
+    const HashMs = HashValue ? HashValue.lastTestScoreInMS : 998;
     return { name, ms: HashMs, lineHash };
   });
-  resMs.forEach((i) => {
+  resMS.forEach((i) => {
     var lineHash = i.lineHash;
-    if (lineHash in iom) {
-      i.se = iom[lineHash];
+    if (lineHash in IOM) {
+      i.se = IOM[lineHash];
     } else {
       i.se = "0";
     }
@@ -88,11 +136,12 @@ if (typeof $argument !== "undefined" && $argument !== "") {
   }
   if (Object.values(k[Groupkey])[0]) {
     const groupValues = Object.values(k[Groupkey])[0];
-    if (groupValues.some((i) => !resMs.some((e) => e.name === i.name))) {
-      k[Groupkey] = {};console.log("数据变更，清理缓存");
+    if (groupValues.some((i) => !resMS.some((e) => e.name === i.name))) {
+      k[Groupkey] = {};
+      console.log("数据变更，清理缓存");
     }
   }
-  k[Groupkey][t] = resMs;
+  k[Groupkey][t] = resMS;
   const h = Date.now();
   Object.keys(k).forEach((ig) => {
     const y = k[ig];
@@ -105,7 +154,6 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     });
   });
   $persistentStore.write(JSON.stringify(k), "KEY_GroupAutos");
-
   Object.values(k[Groupkey]).forEach((arr) => {
     arr.forEach(({ name, ms, se }) => {
       if (!AK[name]) {
@@ -125,24 +173,26 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     };
   });
 
-  const avgt = Object.fromEntries(
+  const AVGT = Object.fromEntries(
     Object.entries(AK).map(([key, value]) => [key, value.avg])
   );
-  let MK = null, MV = Infinity;
-  for (const key in avgt) {
-    const value = avgt[key];
-    if (value < MV) {
-      MK = key;
-      MV = value;
+  // console.log(JSON.stringify(AVGT,'',2));
+  let minKey = null,
+    minValue = Infinity;
+  for (const key in AVGT) {
+    const value = AVGT[key];
+    if (value < minValue) {
+      minKey = key;
+      minValue = value;
     }
   }
-  if (NP === MK) {
-    Pushs ="继承: " +MK +": " +AK[MK]["count"] +"C" +" " +BtoM(AK[MK]["sek"]) +" " +avgt[MK];
-  } else if (avgt[NP] - avgt[MK] > tol) {
-    await httpAPI("/v1/policy_groups/select","POST",(body = { group_name: Groupkey, policy: MK }));
-    Pushs ="优选: " +MK +": " +AK[MK]["count"] +"C" +" " +BtoM(AK[MK]["sek"]) +" " +avgt[MK];
+  if (NP === minKey) {
+    Pushs ="继承: " +minKey +": "+AK[minKey]["count"] +"C"+" "+BtoM(AK[minKey]["sek"]) +" "+AVGT[minKey];
+  } else if (AVGT[NP] - AVGT[minKey] > tol) {
+    await httpAPI("/v1/policy_groups/select","POST",(body = { group_name: Groupkey, policy: minKey }));
+    Pushs ="优选: " +minKey +": "+AK[minKey]["count"] +"C"+" "+BtoM(AK[minKey]["sek"]) +" "+AVGT[minKey];
   } else {
-    Pushs ="容差:" +NP +": " +AK[NP]["count"] +"C" +" " +BtoM(AK[NP]["sek"]) +" " +avgt[NP];
+    Pushs ="容差:" +NP +": "+AK[NP]["count"] +"C" +" "+BtoM(AK[NP]["sek"]) +" "+AVGT[NP];
   }
   console.log(Pushs);
   push && $notification.post("", Pushs, "");
@@ -150,50 +200,8 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     he = te.getHours(),
     me = te.getMinutes();
   $done({
-    title:"Group Auto: " +Groupkey +"'" +Object.keys(proxy[Groupkey]).length +"  " +he +":" +me,
+    title:"Group Auto: "+Groupkey +"‘"+Object.keys(proxy[Groupkey]).length +"  " +he +":" +me,
     content: Pushs,
   });
 })();
 
-function httpAPI(path = "", method = "GET", body = null) {
-  return new Promise((resolve, reject) => {
-    const Ptimeout = new Promise((_, reject) => {
-      setTimeout(() => {reject("");resolve("");}, 9900);});
-    const Preq = new Promise((resolve) => {
-      $httpAPI(method, path, body, resolve);});
-    Promise.race([Preq, Ptimeout]).then((result) => {
-        resolve(result);
-      }).catch((error) => {reject(error);});
-  });
-}
-
-function getin() {
-  return Object.fromEntries(
-    $argument
-      .split("&")
-      .map((i) => i.split("="))
-      .map(([k, v]) => [k, decodeURIComponent(v)])
-  );
-}
-
-function reSpeed(x, y) {
-  if (x > 1e7) {
-    return Math.round(y * 0.6);
-  } else {
-    const ob = 0.99 * Math.exp(-x / 2e7);
-    return Math.round(y * ob);
-  }
-}
-
-var bkey = {
-  title: "Group Auto",
-  content: "超过Surge httpApi 限制",
-};
-
-function BtoM(i) {
-  var bytes = i / (1024 * 1024);
-  if (bytes < 0.01) {
-    return "0.01M";
-  }
-  return bytes.toFixed(2) + "M";
-}
