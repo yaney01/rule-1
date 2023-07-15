@@ -126,7 +126,7 @@ function reSpeed(x, y) {
   });
 
   const t = new Date().getTime();
-  const readData = $persistentStore.read("KEY_GroupAutos");
+  const readData = $persistentStore.read("KEY_Group_Auto");
   let k = readData ? JSON.parse(readData) : {};
   k[Groupkey] = k[Groupkey] || {};
   let timeNms = Object.keys(k[Groupkey]).length;
@@ -155,7 +155,7 @@ function reSpeed(x, y) {
       }
     });
   });
-  $persistentStore.write(JSON.stringify(k), "KEY_GroupAutos");
+  $persistentStore.write(JSON.stringify(k), "KEY_Group_Auto");
   Object.values(k[Groupkey]).forEach((arr) => {
     arr.forEach(({ name, ms, se }) => {
       if (!AK[name]) {
