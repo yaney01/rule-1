@@ -27,19 +27,21 @@ GroupAuto = script-name=GroupAuto,update-interval=3
 
 [Script]
 # 面板 运行 (面板与定时任务可同时存在)
-GroupAuto = type=generic,timeout=3,script-path=https://github.com/Keywos/rule/raw/main/JS/ProGroup.js,argument=group=VPS&tolerance=10&timecache=18
+GroupAuto = type=generic,timeout=3,script-path=https://github.com/Keywos/rule/raw/main/JS/ProGroup.js,argument=group=VPS&tolerance=10&timecache=18&color=#6699FF&icon=speedometer
 # 定时自动运行(可选需取消#注释) 30分钟一次,每天2到7点不运行
 # Cron_GroupAuto = type=cron, cronexp= "0/30 0,1,7-23 * * *", timeout=10,wake-system=0,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/ProGroup.js, argument=tolerance=10&timecache=18&group=Proxy
 
 */
 
-let Groupkey = "VPS", tol = "10", th = "18", push = false, timeout = 6000;
+let Groupkey = "VPS", tol = "10", th = "18", push = false, timeout = 6000,icons= "",icolor="";
 if (typeof $argument !== "undefined" && $argument !== "") {
   const ins = getin("$argument");
   Groupkey = ins.group || Groupkey;
   th = ins.timecache || th;
   tol = ins.tolerance || tol;
   push = ins.push || false;
+  icons = ins.icon || icons;
+  icolor = ins.color || icolor;
   if (ins.timeout) {
     timeout = Math.max(100, Math.min(9900, ins.timeout));
   }
@@ -204,6 +206,8 @@ function reSpeed(x, y) {
   $done({
     title:"Group Auto: "+Groupkey +"‘"+Object.keys(proxy[Groupkey]).length +"  " +he +":" +me,
     content: Pushs,
+    icon: icons,
+    'icon-color': icolor
   });
 })();
 
