@@ -120,7 +120,7 @@ console.log(NP)
       k[Groupkey] = {};
       console.log("数据变更，清理缓存");
     }
-}
+}}
   k[Groupkey][t] = resMS;
   const h = Date.now();
   Object.keys(k).forEach((ig) => {
