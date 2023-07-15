@@ -205,13 +205,17 @@ console.log(NP)
     }
   }
 	console.log(minKey)
+	let CC =""
   if (NP === minKey) {
-    Pushs ="继承: " +minKey +": "+AK[minKey]["count"] +"C"+" "+BtoM(AK[minKey]["sek"]) +" "+AVGT[minKey];
+    Pushs ="继承: " +minKey +": "+BtoM(AK[minKey]["sek"]) +" "+AVGT[minKey];
+		CC =AK[minKey]["count"] +"C"
   } else if (AVGT[NP] - AVGT[minKey] > tol) {
     await httpAPI("/v1/policy_groups/select","POST",(body = { group_name: Groupkey, policy: minKey }));
-    Pushs ="优选: " +minKey +": "+AK[minKey]["count"] +"C"+" "+BtoM(AK[minKey]["sek"]) +" "+AVGT[minKey];
+    Pushs ="优选: " +minKey +": "+BtoM(AK[minKey]["sek"]) +" "+AVGT[minKey];
+		CC = AK[minKey]["count"] +"C"
   } else {
-    Pushs ="容差:" +NP +": "+AK[NP]["count"] +"C" +" "+BtoM(AK[NP]["sek"]) +" "+AVGT[NP];
+    Pushs ="容差:" +NP +": "+BtoM(AK[NP]["sek"]) +" "+AVGT[NP];
+		CC = AK[NP]["count"] +"C"
   }
   console.log(Pushs);
   push && $notification.post("", Pushs, "");
@@ -219,7 +223,7 @@ console.log(NP)
     he = te.getHours(),
     me = te.getMinutes();
   $done({
-    title:"Group Auto: "+Groupkey +"‘"+Object.keys(proxy[Groupkey]).length +"  " +he +":" +me,
+    title:"XGroup: "+Groupkey +"‘"+Object.keys(proxy[Groupkey]).length+" "+CC,
     content: Pushs,
 		icon: icons,
     'icon-color': icolor
