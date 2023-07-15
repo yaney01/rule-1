@@ -92,7 +92,7 @@ function reSpeed(x, y) {
   const Protest = await httpAPI("/v1/policy_groups/test","POST",(body = { group_name: Groupkey }));
 	if (Protest){
 		console.log(Protest)
-	const Npolicy = await httpAPI("/v1/policy_groups/select?group_name="+Groupkey);
+	const Npolicy = await httpAPI("/v1/policy_groups/select?group_name="+encodeURIComponent(Groupkey));
 	NP = Npolicy.policy
 console.log(NP)
   const proxy = await httpAPI("/v1/policy_groups");
