@@ -33,7 +33,7 @@ GroupAuto = type=generic,timeout=3,script-path=https://github.com/Keywos/rule/ra
 
 */
 
-let Groupkey = "VPS", tol = "10", th = "18", push = false, timeout = 6000,icons= "",icolor="";
+let Groupkey = "VPS", tol = "10", th = "18", push = false, timeout = 6000, icons= "",icolor="";
 if (typeof $argument !== "undefined" && $argument !== "") {
   const ins = getin("$argument");
   Groupkey = ins.group || Groupkey;
@@ -45,7 +45,9 @@ if (typeof $argument !== "undefined" && $argument !== "") {
   if (ins.timeout) {
     timeout = Math.max(100, Math.min(9900, ins.timeout));
   }
+	//console.log(ins)
 }
+
 
 function httpAPI(path = "", method = "GET", body = null) {
   return new Promise((resolve, reject) => {
@@ -87,10 +89,12 @@ function reSpeed(x, y) {
 
 (async () => {
 	let NP,resMS,AK = {},Pushs = "";
-  await httpAPI("/v1/policy_groups/test","POST",(body = { group_name: Groupkey }));
+  const Protest = await httpAPI("/v1/policy_groups/test","POST",(body = { group_name: Groupkey }));
+	if (Protest){
+		console.log(Protest)
 	const Npolicy = await httpAPI("/v1/policy_groups/select?group_name="+Groupkey);
 	NP = Npolicy.policy
-
+console.log(NP)
   const proxy = await httpAPI("/v1/policy_groups");
   if (!Object.keys(proxy).includes(Groupkey)) {
     $done({title: "GroupAuto",content: "group参数未输入正确的策略组",});
@@ -129,7 +133,9 @@ function reSpeed(x, y) {
 
   const t = new Date().getTime();
   const readData = $persistentStore.read("KEY_Group_Auto");
+	console.log("5")
   let k = readData ? JSON.parse(readData) : {};
+	console.log("6")
   k[Groupkey] = k[Groupkey] || {};
   let timeNms = Object.keys(k[Groupkey]).length;
   for (const t in k[Groupkey]) {
@@ -138,13 +144,20 @@ function reSpeed(x, y) {
       timeNms--;
     }
   }
-  if (Object.values(k[Groupkey])[0]) {
+	console.log(JSON.stringify(resMS, null, 2));
+	//console.log(Object.values(k[Groupkey])[0])
+  
+
+   if (Object.values(k[Groupkey])[0]) {
     const groupValues = Object.values(k[Groupkey])[0];
-    if (groupValues.some((i) => !resMS.some((e) => e.name === i.name))) {
+    
+    if (groupValues.some((i) => !resMS.some((e) => e.name === i.name)) ||
+        resMS.some((i) => !groupValues.some((e) => e.name === i.name))) {
       k[Groupkey] = {};
       console.log("数据变更，清理缓存");
     }
-  }
+}
+
   k[Groupkey][t] = resMS;
   const h = Date.now();
   Object.keys(k).forEach((ig) => {
@@ -158,6 +171,7 @@ function reSpeed(x, y) {
     });
   });
   $persistentStore.write(JSON.stringify(k), "KEY_Group_Auto");
+	console.log(k)
   Object.values(k[Groupkey]).forEach((arr) => {
     arr.forEach(({ name, ms, se }) => {
       if (!AK[name]) {
@@ -180,7 +194,7 @@ function reSpeed(x, y) {
   const AVGT = Object.fromEntries(
     Object.entries(AK).map(([key, value]) => [key, value.avg])
   );
-  // console.log(JSON.stringify(AVGT,'',2));
+  console.log(AVGT);
   let minKey = null,
     minValue = Infinity;
   for (const key in AVGT) {
@@ -190,6 +204,7 @@ function reSpeed(x, y) {
       minValue = value;
     }
   }
+	console.log(minKey)
   if (NP === minKey) {
     Pushs ="继承: " +minKey +": "+AK[minKey]["count"] +"C"+" "+BtoM(AK[minKey]["sek"]) +" "+AVGT[minKey];
   } else if (AVGT[NP] - AVGT[minKey] > tol) {
@@ -206,8 +221,14 @@ function reSpeed(x, y) {
   $done({
     title:"Group Auto: "+Groupkey +"‘"+Object.keys(proxy[Groupkey]).length +"  " +he +":" +me,
     content: Pushs,
-    icon: icons,
+		icon: icons,
     'icon-color': icolor
   });
+	} else {
+		 $done({
+    title:"错误",
+    content: "",
+  });
+		
+	}
 })();
-
