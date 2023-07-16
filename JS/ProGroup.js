@@ -233,8 +233,8 @@ function NodeData(records) {
 
   } catch (error) {
     const err = 'Feedback @𝙺𝚎𝚢 !! ';
-    console.log(err+error)
-    $done({title:err, content:error})
+    console.log(err+error.message)
+    $done({title:err, content:error.message})
   }
 })();
 
