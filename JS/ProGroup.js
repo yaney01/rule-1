@@ -41,7 +41,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
   if (ins.timeout) {timeout = Math.max(100, Math.min(9900, ins.timeout));}
 }
 
-function httpAPI(path = "", method = "GET", body = null) {
+function httpAPII(path = "", method = "GET", body = null) {
   return new Promise((resolve, reject) => {
     const tPr = new Promise((_, reject) => {
       setTimeout(() => {reject("");resolve("");
@@ -55,6 +55,14 @@ function httpAPI(path = "", method = "GET", body = null) {
       }).catch((error) => {
         reject(error);
       });
+  });
+}
+
+function httpAPI(path = "", method = "GET", body = null ) {
+  return new Promise((resolve) => {
+    $httpAPI(method, path, body, (result) => {
+      resolve(result);
+    });
   });
 }
 
