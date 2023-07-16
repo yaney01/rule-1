@@ -1,4 +1,4 @@
-/* 2023-07-16 18:52:51
+/* 2023-07-16 18:57:38
 作用: 
 · 如果策略组 节点变更 会重新缓存结果 重新取值
 · 如果有节点偶尔ping不通 那么大概率不会选中他 
@@ -198,7 +198,7 @@ function NodeData(records) {
     const minValue = Object.keys(AllKey).find((name) => AllKey[name].sek === minAvg);// 获取对应的节点名称
     const NowNodesek = AllKey[NowNode].sek;// 当前节点评分
     if ( NowNode === minValue ) {
-      Pushs ="继承: "+minValue +": "+BtoM(AllKey[minValue]["sek"])+" "+minValue;
+      Pushs ="继承: "+minValue +": "+BtoM(AllKey[minValue]["sek"])+" "+minAvg;
       CC =AllKey[minValue]["count"]+"C"
     } else if (NowNodesek - minAvg > tol) {
       await httpAPI("/v1/policy_groups/select","POST",
