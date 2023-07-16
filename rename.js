@@ -68,7 +68,7 @@ function operator(y) {
   if(blnx){y = y.filter(res => res.name.match(nameblnx))}
   if (key) {y = y.filter(res =>
       res.name.match(/港|Hong|HK|新加坡|SG|Singapore|日本|Japan|JP|美国|United States|US|韩|土耳其|TR|Turkey|Korea|KR|🇸🇬|🇭🇰|🇯🇵|🇺🇸|🇰🇷|🇹🇷/i) &&
-      res.name.match(/2|4|6|7/i))
+      res.name.match(/洛杉矶|圣何塞|2|4|6|7/i))
   }
   const delFgf = [];
   const newPr = [];
