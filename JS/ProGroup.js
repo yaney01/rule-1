@@ -197,26 +197,24 @@ function NodeData(records) {
     const minAvg = Math.min(...minKey);// 最优评分
     const minValue = Object.keys(AllKey).find((name) => AllKey[name].sek === minAvg);// 获取对应的节点名称
     const NowNodesek = AllKey[NowNode].sek;// 当前节点评分
-    
-    console.log(JSON.stringify(AllKey,'',2))
     if ( NowNode === minKey ) {
-      Pushs ="继承: " +minKey +": "+BtoM(AllKey[minKey]["sek"]) +" "+minValue;
-      CC =AllKey[minKey]["count"] +"C"
+      Pushs ="继承: "+minKey +": "+BtoM(AllKey[minKey]["sek"])+" "+minValue;
+      CC =AllKey[minKey]["count"]+"C"
     } else if (NowNodesek - minValue > tol) {
       await httpAPI("/v1/policy_groups/select","POST",
       (body = {
         group_name: Groupkey, 
         policy: minKey 
       }));
-        Pushs ="优选: " +minKey +": "+BtoM(AllKey[minKey]["sek"]) +" "+minValue;
-        CC = AllKey[minKey]["count"] +"C"
+        Pushs ="优选: "+minKey+": "+BtoM(AllKey[minKey]["sek"])+" "+minValue;
+        CC = AllKey[minKey]["count"]+"C"
     } else {
-      Pushs ="容差:" +NowNode +": "+BtoM(AllKey[NowNode]["sek"]) +" "+ NowNodesek;
-      CC = AllKey[NowNode]["count"] +"C"
+      Pushs ="容差:"+NowNode+": "+BtoM(AllKey[NowNode]["sek"])+" "+NowNodesek;
+      CC = AllKey[NowNode]["count"]+"C"
     }
 
     console.log(newp+Pushs+" "+CC+fgf);
-    push && $notification.post("", Pushs, "");
+    push && $notification.post("",Pushs,"");
 
     $done({
       title:"XGroup: "+Groupkey +fgf+Object.keys(proxy[Groupkey]).length+" "+CC,
