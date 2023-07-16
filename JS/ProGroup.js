@@ -200,7 +200,7 @@ function NodeData(records) {
     if ( NowNode === minKey ) {
       Pushs ="继承: "+minKey +": "+BtoM(AllKey[minKey]["sek"])+" "+minValue;
       CC =AllKey[minKey]["count"]+"C"
-    } else if (NowNodesek - minValue > tol) {
+    } else if (NowNodesek - minAvg > tol) {
       await httpAPI("/v1/policy_groups/select","POST",
       (body = {
         group_name: Groupkey, 
