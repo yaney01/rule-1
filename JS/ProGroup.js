@@ -1,4 +1,4 @@
-/* 2023-07-16 18:01:57
+/* 2023-07-16 18:20:07
 作用: 
 · 如果策略组 节点变更 会重新缓存结果 重新取值
 · 如果有节点偶尔ping不通 那么大概率不会选中他 
@@ -84,20 +84,20 @@ class NodeStats {
   constructor(name) {
     this.name = name;
     this.se = 0;
+    this.sum = 0;
     this.count = 0;
     this.avg = 0;
     this.sek = 0;
   }
   
   collect(records) {
-    let sum = 0;
     for (let record of records) {
       if (record.name === this.name) {
         this.count++;
         const counts = this.count;
-        sum += record.ms;
+        this.sum += record.ms;
         this.se += (record.se / counts)|1;
-        const tmpAvg = (sum / counts)|1;
+        const tmpAvg = (this.sum / counts)|1;
         this.avg = tmpAvg;
         this.sek = reSpeed(this.se, tmpAvg);
       }
@@ -198,7 +198,7 @@ function NodeData(records) {
     const minValue = Object.keys(AllKey).find((name) => AllKey[name].sek === minAvg);// 获取对应的节点名称
     const NowNodesek = AllKey[NowNode].sek;// 当前节点评分
     
-
+    console.log(JSON.stringify(AllKey,'',2))
     if ( NowNode === minKey ) {
       Pushs ="继承: " +minKey +": "+BtoM(AllKey[minKey]["sek"]) +" "+minValue;
       CC =AllKey[minKey]["count"] +"C"
