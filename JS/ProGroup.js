@@ -138,18 +138,18 @@ function NodeData(records) {
       console.log(NowNode)
 
     const testGroup = await httpAPI("/v1/policies/benchmark_results");
-    // /v1/policy_groups  中的 name 和 lineHash 
-    resMS = proxy[Groupkey].map((i) => {
-      const lineHash = i.lineHash;
-      const name = i.name;
-      //  /v1/policies/benchmark_results 的 lastTestScoreInMS 为 ms
-      let HashValue = testGroup[lineHash];
-      if (!HashValue) {
-        HashValue = { lastTestScoreInMS: 996 };
-      } else if (HashValue.lastTestScoreInMS === -1) {HashValue.lastTestScoreInMS = 997;}
-      const HashMs = HashValue ? HashValue.lastTestScoreInMS : 998;
-      return { name, ms: HashMs, lineHash };
-    });
+      // /v1/policy_groups  中的 name 和 lineHash 
+      resMS = proxy[Groupkey].map((i) => {
+        const lineHash = i.lineHash;
+        const name = i.name;
+        //  /v1/policies/benchmark_results 的 lastTestScoreInMS 为 ms
+        let HashValue = testGroup[lineHash];
+        if (!HashValue) {
+          HashValue = { lastTestScoreInMS: 996 };
+        } else if (HashValue.lastTestScoreInMS === -1) {HashValue.lastTestScoreInMS = 997;}
+        const HashMs = HashValue ? HashValue.lastTestScoreInMS : 998;
+        return { name, ms: HashMs, lineHash };
+      });
 
     const Sproxy = await httpAPI("/v1/traffic");
       const { connector } = Sproxy;
@@ -176,12 +176,12 @@ function NodeData(records) {
     // 读写 清理 超过数量 超过时间戳 缓存
     const tc = new Date().getTime();
     const readData = $persistentStore.read("KEY_Group_Auto");
-    let k = readData ? JSON.parse(readData) : {};
-    k[Groupkey] = k[Groupkey] || {};
-    let timeNms = Object.keys(k[Groupkey]).length;
-    for (const t in k[Groupkey]) {
-      if (timeNms > 65) {delete k[Groupkey][t];timeNms--;}
-    }
+      let k = readData ? JSON.parse(readData) : {};
+      k[Groupkey] = k[Groupkey] || {};
+      let timeNms = Object.keys(k[Groupkey]).length;
+      for (const t in k[Groupkey]) {
+        if (timeNms > 65) {delete k[Groupkey][t];timeNms--;}
+      }
     if (Object.values(k[Groupkey])[0]) {
       const groupValues = Object.values(k[Groupkey])[0];
       if (groupValues.some((i) => !resMS.some((e) => e.name === i.name)) || resMS.some((i) => !groupValues.some((e) => e.name === i.name))) {k[Groupkey] = {};newp="\n数据变更, 清理缓存 !";}
