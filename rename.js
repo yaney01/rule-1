@@ -21,7 +21,7 @@ rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数�
 [clear]:  清理乱名
 */
 
-const bl = $arguments["bl"], nf = $arguments["nf"],blpx = $arguments["blpx"], nx = $arguments["nx"], blnx = $arguments["blnx"], numone = $arguments["one"], clear = $arguments["clear"], addflag = $arguments["flag"];
+const bl = $arguments["bl"], nf = $arguments["nf"],blpx = $arguments["blpx"], nx = $arguments["nx"], blnx = $arguments["blnx"], numone = $arguments["one"], key = $arguments["key"],clear = $arguments["clear"], addflag = $arguments["flag"];
 const jcname = $arguments.name == undefined ? "" : decodeURI($arguments.name), FGF = $arguments.fgf == undefined ? " " : decodeURI($arguments.fgf);
 const inname = $arguments["in"] === "cn" ? "cn" : $arguments["in"] === "us" ? "us" : $arguments["in"] === "quan" ? "quan" : $arguments["gq"] === "gq" ? "gq" : "";
 function gl(arg) { switch (arg) { case "gq": return gq; case "us": return us; case "quan": return quan; default: return cn; }}
@@ -66,6 +66,10 @@ function operator(y) {
   if(clear){y = y.filter(res => !nameclear.test(res.name))}
   if(nx){y = y.filter(res => !res.name.match(namenx))}
   if(blnx){y = y.filter(res => res.name.match(nameblnx))}
+  if (key) {y = y.filter(res =>
+      res.name.match(/港|Hong|HK|新加坡|SG|Singapore|日本|Japan|JP|美国|United States|US|韩|土耳其|TR|Turkey|Korea|KR|🇸🇬|🇭🇰|🇯🇵|🇺🇸|🇰🇷|🇹🇷/i) &&
+      res.name.match(/2|4|6|7/i))
+  }
   const delFgf = [];
   const newPr = [];
   y.forEach((res) => {
@@ -111,5 +115,9 @@ function operator(y) {
   y = jxh(y);
   numone && (y = oneP(y));
   blpx && (y = fampx(y));
+  if (key) { y = y.filter(res => 
+    !res.name.match(/((香港|Hong|HK) 0[5-9]|((新加坡|SG|Singapore|日本|Japan|JP|美国|United States|US|韩|土耳其|TR|Turkey|Korea|KR) 0[3-9]))/i)) 
+  }
   return y;
 }
+
