@@ -143,7 +143,7 @@ function NodeData(records) {
         NowNode = Protest.available[0];
       }
       if (!NowNode) {throw new Error("无法获取测速结果或策略组信息")}
-      console.log(NowNode)
+      // console.log(NowNode)
 
     const testGroup = await httpAPI("/v1/policies/benchmark_results");
       // /v1/policy_groups  中的 name 和 lineHash 
