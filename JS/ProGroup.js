@@ -206,7 +206,7 @@ function NodeData(records) {
     const minValue = Object.keys(AllKey).find((name) => AllKey[name].sek === minAvg);// 获取对应的节点名称
     const NowNodesek = AllKey[NowNode].sek;// 当前节点评分
     if ( NowNode === minValue ) {
-      Pushs ="继承: "+minValue +": "+BtoM(AllKey[minValue]["sek"])+" "+minAvg;
+      Pushs ="继承: "+minValue +": "+BtoM(AllKey[minValue]["se"])+" "+minAvg;
       CC =AllKey[minValue]["count"]+"C"
     } else if (NowNodesek - minAvg > tol) {
       await httpAPI("/v1/policy_groups/select","POST",
@@ -214,13 +214,13 @@ function NodeData(records) {
         group_name: Groupkey, 
         policy: minValue 
       }));
-        Pushs ="优选: "+minValue+": "+BtoM(AllKey[minValue]["sek"])+" "+minAvg;
+        Pushs ="优选: "+minValue+": "+BtoM(AllKey[minValue]["se"])+" "+minAvg;
         CC = AllKey[minValue]["count"]+"C"
     } else {
-      Pushs ="容差:"+NowNode+": "+BtoM(AllKey[NowNode]["sek"])+" "+NowNodesek;
+      Pushs ="容差:"+NowNode+": "+BtoM(AllKey[NowNode]["se"])+" "+NowNodesek;
       CC = AllKey[NowNode]["count"]+"C"
     }
-
+    console.log(AllKey)
     console.log(newp+Pushs+" "+CC+fgf);
     push && $notification.post("",Pushs,"");
 
