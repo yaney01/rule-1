@@ -1,5 +1,5 @@
 #!name=Sub-Store-Mock
-#!desc=使用 Surge Mock 以提升加载速度，减少请求 @key
+#!desc=次为额外模块: 需要搭配 SubStore 模块; 使用 Surge Mock 以提升加载速度，减少请求 @key
 # 脚本操作移动到第一行 方便使用脚本
 # https://raw.githubusercontent.com/Keywos/rule/main/rename.js
 # https://raw.githubusercontent.com/Keywos/rule/main/cname.js
