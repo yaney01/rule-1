@@ -4,31 +4,34 @@
 # https://raw.githubusercontent.com/Keywos/rule/main/rename.js
 # https://raw.githubusercontent.com/Keywos/rule/main/cname.js
 
+# https://github.com/Keywos/Sub-Store-Front-End 前端地址
+
 [Map Local]
 # PNG ICO SVG
 ^https?:\/\/sub-store\.vercel\.app\/144x144\.png data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/144x144.png" header="Content-Type: image/png"
 ^https?:\/\/sub-store\.vercel\.app\/[^14]\d{1,2}x\d{1,3}\.png data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/144x144.png" header="Content-Type: image/png"
 ^https?:\/\/sub-store\.vercel\.app\/apple-touch-icon\.png data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/apple-touch-icon.png" header="Content-Type: image/png"
 ^https?:\/\/sub-store\.vercel\.app\/apple-touch-icon-.+\.png data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/apple-touch-icon-120x120.png" header="Content-Type: image/png"
-^https?:\/\/sub-store\.vercel\.app\/favicon.svg$ data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/favicon.svg" header="Content-Type: image/svg+xml"
-^https?:\/\/sub-store\.vercel\.app\/favicon.ico data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/favicon.ico" header="Content-Type: image/vnd.microsoft.icon"
+^https?:\/\/sub-store\.vercel\.app\/favicon\.svg$ data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/favicon.svg" header="Content-Type: image/svg+xml"
+^https?:\/\/sub-store\.vercel\.app\/favicon\.ico data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/favicon.ico" header="Content-Type: image/vnd.microsoft.icon"
 ^https?:\/\/sub-store\.vercel\.app\/assets\/logo.00e82781.svg data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/logo.00e82781.svg" header="Content-Type: image/svg+xml"
-^https?:\/\/sub-store\.vercel\.app\/assets\/user-solid.2c8cd2fe.svg data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/user-solid.2c8cd2fe.svg" header="Content-Type: image/svg+xml"
-^https?:\/\/sub-store\.vercel\.app\/assets\/key-solid.2c05aac3.svg data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/key-solid.2c05aac3.svg" header="Content-Type: image/svg+xml"
-^https?:\/\/sub-store\.vercel\.app\/assets\/avatar.b17e852d.svg data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/avatar.b17e852d.svg" header="Content-Type: image/svg+xml"
-# JS HTML
-^https?:\/\/sub-store\.vercel\.app\/($|subs$|my$) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/index.html" header="Content-Type: text/html; charset=utf-8"
-^https?:\/\/sub-store\.vercel\.app\/assets\/index\.d55f7a11\.js data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/index.d55f7a11.js" header="Content-Type: application/javascript; charset=utf-8"
-^https?:\/\/sub-store\.vercel\.app\/assets/@nutui/nutui.798a7341.js data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/nutui.798a7341.js" header="Content-Type: application/javascript; charset=utf-8"
-^https?:\/\/sub-store\.vercel\.app\/assets/monaco-editor.5df43bca.js data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/monaco-editor.5df43bca.js" header="Content-Type: application/javascript; charset=utf-8"
-^https?:\/\/sub-store\.vercel\.app\/assets/@vueuse/core.51b968c9.js data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/core.51b968c9.js" header="Content-Type: application/javascript; charset=utf-8"
+^https?:\/\/sub-store\.vercel\.app\/assets\/user-solid\.2c8cd2fe\.svg data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/user-solid.2c8cd2fe.svg" header="Content-Type: image/svg+xml"
+^https?:\/\/sub-store\.vercel\.app\/assets\/key-solid\.2c05aac3\.svg data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/key-solid.2c05aac3.svg" header="Content-Type: image/svg+xml"
+^https?:\/\/sub-store\.vercel\.app\/assets\/avatar\.b17e852d\.svg data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/avatar.b17e852d.svg" header="Content-Type: image/svg+xml"
+# HTML
+^https?:\/\/sub-store\.vercel\.app\/($|subs$|my$|edit\/subs\/) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/index.html" header="Content-Type: text/html; charset=utf-8"
+# JS
+^https?:\/\/sub-store\.vercel\.app\/assets\/index\.d55f7a11\.js data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/index718.js" header="Content-Type: application/javascript; charset=utf-8"
+^https?:\/\/sub-store\.vercel\.app\/assets\/@vueuse\/core\.a7bef11d\.js data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/core.a7bef11d.js" header="Content-Type: application/javascript; charset=utf-8"
+^https?:\/\/sub-store\.vercel\.app\/assets\/@nutui\/nutui\.5f5ffb42\.js data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/nutui.5f5ffb42.js" header="Content-Type: application/javascript; charset=utf-8"
+^https?:\/\/sub-store\.vercel\.app\/assets\/monaco-editor\.5df43bca\.js data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/monaco-editor.5df43bca.js" header="Content-Type: application/javascript; charset=utf-8"
 # CSS
-^https?:\/\/sub-store\.vercel\.app\/assets/index.343b168e.css data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/index.343b168e.css" header="Content-Type: text/css; charset=utf-8"
-^https?:\/\/sub-store\.vercel\.app\/assets/monaco-editor.de6ceb67.css data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/monaco-editor.de6ceb67.css" header="Content-Type: text/css; charset=utf-8"
+^https?:\/\/sub-store\.vercel\.app\/assets/index\.343b168e\.css data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/index.343b168e.css" header="Content-Type: text/css; charset=utf-8"
+^https?:\/\/sub-store\.vercel\.app\/assets/monaco-editor\.de6ceb67\.css data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/monaco-editor.de6ceb67.css" header="Content-Type: text/css; charset=utf-8"
 # FONT
-^https?:\/\/sub-store\.vercel\.app\/assets/iconfont.2dcf725c.woff2 data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/iconfont.2dcf725c.woff2" header="Content-Type: font/woff2"
+^https?:\/\/sub-store\.vercel\.app\/assets/iconfont\.2dcf725c\.woff2 data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/iconfont.2dcf725c.woff2" header="Content-Type: font/woff2"
 # JSON
-^https?:\/\/sub-store\.vercel\.app\/manifest.json data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/manifest.json" header="Content-Type: application/json; charset=utf-8"
+^https?:\/\/sub-store\.vercel\.app\/manifest\.json data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/manifest.json" header="Content-Type: application/json; charset=utf-8"
 
 [MITM]
 hostname = %APPEND% sub.store, sub-store.vercel.app
