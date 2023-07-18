@@ -64,8 +64,8 @@ function getin() {
 
 function BtoM(i) {
   var bytes = i / (1024 * 1024);
-  if (bytes < 0.01) {return "0.01MB/s";}
-  return bytes.toFixed(2) + "MB/s";
+  if (bytes < 0.01) {return "0.01MB";}
+  return bytes.toFixed(2) + "MB";
 }
 
 function reSpeed(x, y) {
