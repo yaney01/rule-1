@@ -1,4 +1,4 @@
-/* 2023...
+/* 2023-07-18 07:23:38
 作用: 
 · 如果策略组 节点变更 会重新缓存结果 重新取值
 · 如果有节点偶尔ping不通 那么大概率不会选中他 
@@ -34,7 +34,7 @@ GroupAuto = type=generic,timeout=3,script-path=https://github.com/Keywos/rule/ra
 
 */
 
-let Groupkey = "VPS", tol = "10", th = "18",avgn = "30", fgf = "''", push = false, icons= "",icolor="";//timeout = 6000,
+let Groupkey = "VPS", tol = "10", th = "18",avgn = "30", fgf = "''", push = false, icons= "",icolor="";
 if (typeof $argument !== "undefined" && $argument !== "") {
   const ins = getin("$argument");
   Groupkey = ins.group || Groupkey;
@@ -44,7 +44,6 @@ if (typeof $argument !== "undefined" && $argument !== "") {
   icons = ins.icon || icons;
   icolor = ins.color || icolor;
   avgn = ins.avgnumber || avgn;
-  // if (ins.timeout) {timeout = Math.max(100, Math.min(9900, ins.timeout));}
 }
 
 
@@ -65,8 +64,8 @@ function getin() {
 
 function BtoM(i) {
   var bytes = i / (1024 * 1024);
-  if (bytes < 0.01) {return "0.01M";}
-  return bytes.toFixed(2) + "M";
+  if (bytes < 0.01) {return "0.01MB/s";}
+  return bytes.toFixed(2) + "MB/s";
 }
 
 function reSpeed(x, y) {
@@ -103,12 +102,10 @@ class NodeStats {
   }
 }
 
-function getUnia(){
-  const xhUni = Math.floor(Math.random() * (0x2679 - 0x2672 + 1)) + 0x2672;// Unicode
-  return String.fromCodePoint(xhUni);
+function getUnia(e){
+  e++
+  return e
 }
-
-
 
 function getUni(x) {
   let xhUni;
@@ -119,7 +116,6 @@ function getUni(x) {
   } while (x == outUni);
   return outUni;
 }
-
 
 
 function NodeData(records) {
@@ -140,16 +136,14 @@ function NodeData(records) {
   try {
     const proxy = await httpAPI("/v1/policy_groups");
       if (!Object.keys(proxy).includes(Groupkey)) {
-        throw new Error("group参数未输入正确的策略组")
-      }
-    const NowNodeolicy = await httpAPI(`/v1/policy_groups/select?group_name=${encodeURIComponent(Groupkey)}`);
-      let NowNode,resMS,Pushs = "",newp="",CC ="",UC="C";
-      if (NowNodeolicy) {
-        NowNode = NowNodeolicy.policy;
-      } 
+        throw new Error("group参数未输入正确的策略组")}
+		const NowNodeolicy = $surge.selectGroupDetails().decisions[Groupkey];
+    let NowNode,resMS,logday=false,logKey="",Pushs="",newp="",CC ="",UC="C";
+      if (NowNodeolicy) NowNode = NowNodeolicy;
     const Protest = await httpAPI("/v1/policy_groups/test","POST",(body = { group_name: Groupkey }));
-      if (Protest){fgf = "'";
-        NowNode = Protest.available[0];
+      if (Protest){
+				fgf = "'";
+        if (!NowNodeolicy) NowNode = Protest.available[0];
       }
       if (!NowNode) {throw new Error("无法获取测速结果或策略组信息")}
       // console.log(NowNode)
@@ -179,40 +173,52 @@ function NodeData(records) {
           }          
         });
       } 
-      resMS.forEach((i) => {
-        var lineHash = i.lineHash;
-        if (lineHash in IOM) {
-          i.se = IOM[lineHash];
-        } else {
-          i.se = 0;
-        }
-        delete i.lineHash;
-      });
-      // console.log(JSON.stringify(resMS, null, 2));
-
+    resMS.forEach((i) => {let lineHash = i.lineHash;
+      if (lineHash in IOM) {i.se = IOM[lineHash];} else {i.se = 0;}delete i.lineHash;});
+    // console.log(resMS);
     // 读写 清理 超过数量 超过时间戳 缓存
-    const tc = new Date().getTime();
+    const nowDay = new Date();
+    const tc = nowDay.getTime();
     const readData = $persistentStore.read("KEY_Group_Auto");
       let k = readData ? JSON.parse(readData) : {};
       k[Groupkey] = k[Groupkey] || {};
 			const getFunUn = getUni(k['Unicode']) || "♴";
+      let ccKey = getUnia(k['ccKey']) || 1, dayKey;
+      (ccKey % 10 === 0) && (logday=true)
+      if (!k['dayKey']) {
+        nowDay.setHours(nowDay.getHours()+8);
+        dayKey = String(nowDay.toISOString().slice(0, 10));
+        k['dayKey'] = dayKey;logday=true;
+      } else {
+        dayKey = k['dayKey'];
+      }
+      const endDay = Math.floor((nowDay - new Date(dayKey)) / (864e5));
       let timeNms = Object.keys(k[Groupkey]).length;
       for (const t in k[Groupkey]) {
         if (timeNms > (avgn-1)) {
           delete k[Groupkey][t];
           timeNms--;
-          UC = getFunUn;
+          UC = " "+getFunUn;
         }
       }
     if (Object.values(k[Groupkey])[0]) {
       const groupValues = Object.values(k[Groupkey])[0];
-      if (groupValues.some((i) => !resMS.some((e) => e.name === i.name)) || resMS.some((i) => !groupValues.some((e) => e.name === i.name))) {k[Groupkey] = {};newp="\n数据变更, 清理缓存 !";}
+      if (groupValues.some((i) => !resMS.some((e) => e.name === i.name)) || resMS.some((i) => !groupValues.some((e) => e.name === i.name))) {
+          k[Groupkey] = {};logday=true;
+          newp="\n数据变更, 清理缓存 !";
+        }
     }
     k[Groupkey][tc] = resMS;
     Object.keys(k).forEach((ig) => {const y = k[ig];
-      Object.keys(y).forEach((e) => {const t = tc - parseInt(e);const o = t/(36e5 * th);if (o>1) {delete y[e];}});
+      Object.keys(y).forEach((e) => {
+        const t = tc - parseInt(e);
+        const o = t/(36e5 * th);
+        if (o>1) {          
+          delete y[e];
+        }});
     });
 		k['Unicode'] = getFunUn;
+    k['ccKey'] = ccKey;
     $persistentStore.write(JSON.stringify(k), "KEY_Group_Auto");
     // console.log(k[Groupkey])
     const AllKey = NodeData(k[Groupkey]);// 函数处理
@@ -221,30 +227,24 @@ function NodeData(records) {
     const minValue = Object.keys(AllKey).find((name) => AllKey[name].sek === minAvg);// 获取对应的节点名称
     const NowNodesek = AllKey[NowNode].sek;// 当前节点评分
     const Pleng = Object.keys(proxy[Groupkey]).length+" ";// 节点个数
+    logday && (logKey = `\n脚本从${dayKey}开始 已经运行了${endDay} 天共: ${ccKey} 次`);
     if ( NowNode === minValue ) {
-      Pushs ="继承: "+minValue +": "+BtoM(AllKey[minValue]["se"])+" "+minAvg;
-      CC =AllKey[minValue]["count"]
+      Pushs ="继承: "+minValue +": "+minAvg;
+      CC = BtoM(AllKey[minValue]["se"])+" "+AllKey[minValue]["count"]
     } else if (NowNodesek - minAvg > tol) {
-      await httpAPI("/v1/policy_groups/select","POST",
-      (body = {
-        group_name: Groupkey, 
-        policy: minValue 
-      }));
-        Pushs ="优选: "+minValue+": "+BtoM(AllKey[minValue]["se"])+" "+minAvg;
-        CC = AllKey[minValue]["count"]
+      const selectGroup = $surge.setSelectGroupPolicy(Groupkey,minValue)
+      if (!selectGroup) await httpAPI("/v1/policy_groups/select","POST",(body = {group_name: Groupkey, policy: minValue }));
+        Pushs ="优选: "+minValue+": "+minAvg;
+        CC = BtoM(AllKey[minValue]["se"])+" "+AllKey[minValue]["count"]
     } else {
-      Pushs ="容差:"+NowNode+": "+BtoM(AllKey[NowNode]["se"])+" "+NowNodesek;
-      CC = AllKey[NowNode]["count"]
+      Pushs ="容差:"+NowNode+": "+NowNodesek;
+      CC = BtoM(AllKey[NowNode]["se"])+" "+AllKey[NowNode]["count"]
     }
-    
-
-    const xt = "XGroup: "+Groupkey +fgf+Pleng+CC+" "+UC
-    const xc = Pushs+newp
-
-    console.log(AllKey)
-    console.log("\n"+xt+"\n"+xc);
-
-    push && $notification.post(xt,xc,"");
+    const xt = Groupkey +fgf+Pleng+CC+UC;
+    const xc = Pushs+"k"+newp;
+        // console.log(AllKey)
+    console.log(logKey+"\n"+xt+"\n"+xc);
+    push && $notification.post(xt,xc,logKey);
 
     $done({
       title: xt,
@@ -259,23 +259,3 @@ function NodeData(records) {
     $done({title:err, content:error.message})
   }
 })();
-
-
-/*
-function httpAPII(path = "", method = "GET", body = null) {
-  return new Promise((resolve, reject) => {
-    const tPr = new Promise((_, reject) => {
-      setTimeout(() => {reject("");resolve("");
-      }, timeout);
-    });
-    const reqPr = new Promise((resolve) => {
-      $httpAPI(method, path, body, resolve);
-    });
-    Promise.race([reqPr, tPr]).then((result) => {
-        resolve(result);
-      }).catch((error) => {
-        reject(error);
-      });
-  });
-}
-*/
