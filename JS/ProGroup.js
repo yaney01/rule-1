@@ -230,7 +230,7 @@ function NodeData(records) {
     }
     console.log(AllKey)
     console.log(newp+Pushs+" "+Pleng+CC+fgf);
-    push && $notification.post(newp,Pushs+Pleng+CC,"");
+    push && $notification.post(newp,Pushs,"");
 
     $done({
       title:"XGroup: "+Groupkey +fgf+Pleng+CC,
