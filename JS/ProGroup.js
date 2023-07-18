@@ -230,7 +230,7 @@ function NodeData(records) {
     const Pleng = Object.keys(proxy[Groupkey]).length+" ";// 节点个数
     if(logday){
       endDay = Math.floor((nowDay - new Date(dayKey)) / (864e5));
-      logKey = `从 ${dayKey} 开始 已经运行 ${endDay} 天共: ${ccKey} 次`;
+      logKey = `自 ${dayKey.slice(2, 10)} 已运行 ${endDay} 天共: ${ccKey} 次`;
     }
     if ( NowNode === minValue ) {
       Pushs ="继承: "+minValue +": "+minAvg;
