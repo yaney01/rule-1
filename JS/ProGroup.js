@@ -227,7 +227,7 @@ function NodeData(records) {
     const minValue = Object.keys(AllKey).find((name) => AllKey[name].sek === minAvg);// 获取对应的节点名称
     const NowNodesek = AllKey[NowNode].sek;// 当前节点评分
     const Pleng = Object.keys(proxy[Groupkey]).length+" ";// 节点个数
-    logday && (logKey = `\n脚本从${dayKey}开始 已经运行了${endDay} 天共: ${ccKey} 次`);
+    logday && (logKey = `脚本从${dayKey}开始 已经运行了${endDay} 天共: ${ccKey} 次`);
     if ( NowNode === minValue ) {
       Pushs ="继承: "+minValue +": "+minAvg;
       CC = BtoM(AllKey[minValue]["se"])+" "+AllKey[minValue]["count"]
