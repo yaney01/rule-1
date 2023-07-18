@@ -18,6 +18,7 @@
 # timeout=6000    单位 ms 最大值9900 Surge Httpapi限制为10s 即 10000ms
 # tolerance=10    容差10ms 小于10ms则不切换节点
 # timecache=18    缓存到期时间(小时) 或 超过66个数据会清理旧的数据
+# avgnumber=30    缓存节点测试次数， 超过会清理
 # push            加参数为开启通知, 不加参数则不通知
 #!name=GroupAuto
 #!desc=根据 api 返回的节点 (速度:持久化缓存非线性权重) 与 (延时:持久化缓存) 对节点进行优选
@@ -33,14 +34,19 @@ GroupAuto = type=generic,timeout=3,script-path=https://github.com/Keywos/rule/ra
 
 */
 
-let Groupkey = "VPS", tol = "10", th = "18", fgf = "''", push = false, timeout = 6000, icons= "",icolor="";
+let Groupkey = "VPS", tol = "10", th = "18",avgn = "30", fgf = "''", push = false, icons= "",icolor="";//timeout = 6000,
 if (typeof $argument !== "undefined" && $argument !== "") {
   const ins = getin("$argument");
-  Groupkey = ins.group || Groupkey;th = ins.timecache || th;tol = ins.tolerance || tol;
-  push = ins.push || false;icons = ins.icon || icons;icolor = ins.color || icolor;
-  if (ins.timeout) {timeout = Math.max(100, Math.min(9900, ins.timeout));}
+  Groupkey = ins.group || Groupkey;
+  th = ins.timecache || th;
+  tol = ins.tolerance || tol;
+  push = ins.push || false;
+  icons = ins.icon || icons;
+  icolor = ins.color || icolor;
+  avgn = ins.avgnumber || avgn;
+  // if (ins.timeout) {timeout = Math.max(100, Math.min(9900, ins.timeout));}
 }
-
+/*
 function httpAPII(path = "", method = "GET", body = null) {
   return new Promise((resolve, reject) => {
     const tPr = new Promise((_, reject) => {
@@ -57,6 +63,7 @@ function httpAPII(path = "", method = "GET", body = null) {
       });
   });
 }
+*/
 
 function httpAPI(path = "", method = "GET", body = null ) {
   return new Promise((resolve) => {
@@ -188,7 +195,7 @@ function NodeData(records) {
       k[Groupkey] = k[Groupkey] || {};
       let timeNms = Object.keys(k[Groupkey]).length;
       for (const t in k[Groupkey]) {
-        if (timeNms > 65) {delete k[Groupkey][t];timeNms--;}
+        if (timeNms > avgn) {delete k[Groupkey][t];timeNms--;}
       }
     if (Object.values(k[Groupkey])[0]) {
       const groupValues = Object.values(k[Groupkey])[0];
@@ -200,11 +207,12 @@ function NodeData(records) {
     });
     $persistentStore.write(JSON.stringify(k), "KEY_Group_Auto");
     // console.log(k[Groupkey])
-    const AllKey = NodeData(k[Groupkey]); // 函数处理
-    const minKey = Object.values(AllKey).map((n) => n.sek); // []
+    const AllKey = NodeData(k[Groupkey]);// 函数处理
+    const minKey = Object.values(AllKey).map((n) => n.sek);// []
     const minAvg = Math.min(...minKey);// 最优评分
     const minValue = Object.keys(AllKey).find((name) => AllKey[name].sek === minAvg);// 获取对应的节点名称
     const NowNodesek = AllKey[NowNode].sek;// 当前节点评分
+    const Pleng = Object.keys(proxy[Groupkey]).length+" ";// 节点个数
     if ( NowNode === minValue ) {
       Pushs ="继承: "+minValue +": "+BtoM(AllKey[minValue]["se"])+" "+minAvg;
       CC =AllKey[minValue]["count"]+"C"
@@ -221,11 +229,11 @@ function NodeData(records) {
       CC = AllKey[NowNode]["count"]+"C"
     }
     console.log(AllKey)
-    console.log(newp+Pushs+" "+CC+fgf);
-    push && $notification.post("",Pushs,"");
+    console.log(newp+Pushs+" "+Pleng+CC+fgf);
+    push && $notification.post(newp,Pushs+Pleng+CC,"");
 
     $done({
-      title:"XGroup: "+Groupkey +fgf+Object.keys(proxy[Groupkey]).length+" "+CC,
+      title:"XGroup: "+Groupkey +fgf+Pleng+CC,
       content: Pushs+newp,
       icon: icons,
       'icon-color': icolor
