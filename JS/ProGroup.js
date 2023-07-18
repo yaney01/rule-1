@@ -1,4 +1,4 @@
-/* 2023-07-18 12:18:50
+/* 2023...
 作用: 
 · 如果策略组 节点变更 会重新缓存结果 重新取值
 · 如果有节点偶尔ping不通 那么大概率不会选中他 
@@ -103,10 +103,24 @@ class NodeStats {
   }
 }
 
-function getUni(){
-  const xhUni = Math.floor(Math.random() * (0x2679 - 0x2673 + 1)) + 0x2673;// Unicode
+function getUnia(){
+  const xhUni = Math.floor(Math.random() * (0x2679 - 0x2672 + 1)) + 0x2672;// Unicode
   return String.fromCodePoint(xhUni);
 }
+
+
+
+function getUni(x) {
+  let xhUni;
+  let outUni;
+  do {
+    xhUni = Math.floor(Math.random() * (0x2679 - 0x2673 + 1)) + 0x2673;
+    outUni = String.fromCodePoint(xhUni);
+  } while (x == outUni);
+  return outUni;
+}
+
+
 
 function NodeData(records) {
   const nodes = {};
@@ -181,12 +195,13 @@ function NodeData(records) {
     const readData = $persistentStore.read("KEY_Group_Auto");
       let k = readData ? JSON.parse(readData) : {};
       k[Groupkey] = k[Groupkey] || {};
+			const getFunUn = getUni(k['Unicode']) || "♴";
       let timeNms = Object.keys(k[Groupkey]).length;
       for (const t in k[Groupkey]) {
         if (timeNms > (avgn-1)) {
           delete k[Groupkey][t];
           timeNms--;
-          UC = getUni();
+          UC = getFunUn;
         }
       }
     if (Object.values(k[Groupkey])[0]) {
@@ -197,6 +212,7 @@ function NodeData(records) {
     Object.keys(k).forEach((ig) => {const y = k[ig];
       Object.keys(y).forEach((e) => {const t = tc - parseInt(e);const o = t/(36e5 * th);if (o>1) {delete y[e];}});
     });
+		k['Unicode'] = getFunUn;
     $persistentStore.write(JSON.stringify(k), "KEY_Group_Auto");
     // console.log(k[Groupkey])
     const AllKey = NodeData(k[Groupkey]);// 函数处理
@@ -222,7 +238,7 @@ function NodeData(records) {
     }
     
 
-    const xt = "XGroup: "+Groupkey +fgf+Pleng+CC+UC
+    const xt = "XGroup: "+Groupkey +fgf+Pleng+CC+" "+UC
     const xc = Pushs+newp
 
     console.log(AllKey)
