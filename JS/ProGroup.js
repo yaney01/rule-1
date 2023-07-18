@@ -237,7 +237,7 @@ function NodeData(records) {
         Pushs ="优选: "+minValue+": "+minAvg;
         CC = BtoM(AllKey[minValue]["se"])+" "+AllKey[minValue]["count"]
     } else {
-      Pushs ="容差:"+NowNode+": "+NowNodesek;
+      Pushs ="容差: "+NowNode+": "+NowNodesek;
       CC = BtoM(AllKey[NowNode]["se"])+" "+AllKey[NowNode]["count"]
     }
     const xt = Groupkey +fgf+Pleng+CC+UC;
