@@ -1,4 +1,4 @@
-/* 2023-07-18 07:23:38
+/* 2023-07-18 12:18:50
 作用: 
 · 如果策略组 节点变更 会重新缓存结果 重新取值
 · 如果有节点偶尔ping不通 那么大概率不会选中他 
@@ -46,24 +46,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
   avgn = ins.avgnumber || avgn;
   // if (ins.timeout) {timeout = Math.max(100, Math.min(9900, ins.timeout));}
 }
-/*
-function httpAPII(path = "", method = "GET", body = null) {
-  return new Promise((resolve, reject) => {
-    const tPr = new Promise((_, reject) => {
-      setTimeout(() => {reject("");resolve("");
-      }, timeout);
-    });
-    const reqPr = new Promise((resolve) => {
-      $httpAPI(method, path, body, resolve);
-    });
-    Promise.race([reqPr, tPr]).then((result) => {
-        resolve(result);
-      }).catch((error) => {
-        reject(error);
-      });
-  });
-}
-*/
+
 
 function httpAPI(path = "", method = "GET", body = null ) {
   return new Promise((resolve) => {
@@ -120,6 +103,11 @@ class NodeStats {
   }
 }
 
+function getUni(){
+  const xhUni = Math.floor(Math.random() * (0x2679 - 0x2672 + 1)) + 0x2672;// Unicode
+  return String.fromCodePoint(xhUni);
+}
+
 function NodeData(records) {
   const nodes = {};
   for (let record of Object.values(records)[0]) {
@@ -141,7 +129,7 @@ function NodeData(records) {
         throw new Error("group参数未输入正确的策略组")
       }
     const NowNodeolicy = await httpAPI(`/v1/policy_groups/select?group_name=${encodeURIComponent(Groupkey)}`);
-      let NowNode,resMS,Pushs = "",newp="",CC ="";
+      let NowNode,resMS,Pushs = "",newp="",CC ="",UC="C";
       if (NowNodeolicy) {
         NowNode = NowNodeolicy.policy;
       } 
@@ -195,7 +183,11 @@ function NodeData(records) {
       k[Groupkey] = k[Groupkey] || {};
       let timeNms = Object.keys(k[Groupkey]).length;
       for (const t in k[Groupkey]) {
-        if (timeNms > avgn) {delete k[Groupkey][t];timeNms--;}
+        if (timeNms > (avgn-1)) {
+          delete k[Groupkey][t];
+          timeNms--;
+          UC = getUni();
+        }
       }
     if (Object.values(k[Groupkey])[0]) {
       const groupValues = Object.values(k[Groupkey])[0];
@@ -215,7 +207,7 @@ function NodeData(records) {
     const Pleng = Object.keys(proxy[Groupkey]).length+" ";// 节点个数
     if ( NowNode === minValue ) {
       Pushs ="继承: "+minValue +": "+BtoM(AllKey[minValue]["se"])+" "+minAvg;
-      CC =AllKey[minValue]["count"]+"C"
+      CC =AllKey[minValue]["count"]
     } else if (NowNodesek - minAvg > tol) {
       await httpAPI("/v1/policy_groups/select","POST",
       (body = {
@@ -223,18 +215,24 @@ function NodeData(records) {
         policy: minValue 
       }));
         Pushs ="优选: "+minValue+": "+BtoM(AllKey[minValue]["se"])+" "+minAvg;
-        CC = AllKey[minValue]["count"]+"C"
+        CC = AllKey[minValue]["count"]
     } else {
       Pushs ="容差:"+NowNode+": "+BtoM(AllKey[NowNode]["se"])+" "+NowNodesek;
-      CC = AllKey[NowNode]["count"]+"C"
+      CC = AllKey[NowNode]["count"]
     }
+    
+
+    const xt = "XGroup: "+Groupkey +fgf+Pleng+CC+UC
+    const xc = Pushs+newp
+
     console.log(AllKey)
-    console.log(newp+Pushs+" "+Pleng+CC+fgf);
-    push && $notification.post(newp,Pushs,"");
+    console.log("\n"+xt+"\n"+xc);
+
+    push && $notification.post(xt,xc,"");
 
     $done({
-      title:"XGroup: "+Groupkey +fgf+Pleng+CC,
-      content: Pushs+newp,
+      title: xt,
+      content: xc,
       icon: icons,
       'icon-color': icolor
     });
@@ -246,3 +244,22 @@ function NodeData(records) {
   }
 })();
 
+
+/*
+function httpAPII(path = "", method = "GET", body = null) {
+  return new Promise((resolve, reject) => {
+    const tPr = new Promise((_, reject) => {
+      setTimeout(() => {reject("");resolve("");
+      }, timeout);
+    });
+    const reqPr = new Promise((resolve) => {
+      $httpAPI(method, path, body, resolve);
+    });
+    Promise.race([reqPr, tPr]).then((result) => {
+        resolve(result);
+      }).catch((error) => {
+        reject(error);
+      });
+  });
+}
+*/
