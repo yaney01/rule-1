@@ -104,7 +104,7 @@ class NodeStats {
 }
 
 function getUni(){
-  const xhUni = Math.floor(Math.random() * (0x2679 - 0x2672 + 1)) + 0x2672;// Unicode
+  const xhUni = Math.floor(Math.random() * (0x2679 - 0x2673 + 1)) + 0x2673;// Unicode
   return String.fromCodePoint(xhUni);
 }
 
