@@ -137,9 +137,10 @@ function NodeData(records) {
     const proxy = await httpAPI("/v1/policy_groups");
       if (!Object.keys(proxy).includes(Groupkey)) {
         throw new Error("group参数未输入正确的策略组")}
-		const NowNodeolicy = $surge.selectGroupDetails().decisions[Groupkey];
-    let NowNode,resMS,logday=false,logKey="",Pushs="",newp="",CC ="",UC="C";
-      if (NowNodeolicy) NowNode = NowNodeolicy;
+    const NowNodeolicy = await httpAPI(`/v1/policy_groups/select?group_name=${encodeURIComponent(Groupkey)}`);
+		// const NowNodeolicy = $surge.selectGroupDetails().decisions[Groupkey];
+    let NowNode,resMS,logday=false,logKey="",endDay="",Pushs="",newp="",CC ="",UC="C";
+      if (NowNodeolicy) NowNode = NowNodeolicy.policy;
     const Protest = await httpAPI("/v1/policy_groups/test","POST",(body = { group_name: Groupkey }));
       if (Protest){
 				fgf = "'";
@@ -186,13 +187,13 @@ function NodeData(records) {
       let ccKey = getUnia(k['ccKey']) || 1, dayKey;
       (ccKey % 10 === 0) && (logday=true)
       if (!k['dayKey']) {
-        nowDay.setHours(nowDay.getHours()+8);
+        nowDay.setHours(nowDay.getHours());//+8
         dayKey = String(nowDay.toISOString().slice(0, 10));
         k['dayKey'] = dayKey;logday=true;
       } else {
         dayKey = k['dayKey'];
       }
-      const endDay = Math.floor((nowDay - new Date(dayKey)) / (864e5));
+      
       let timeNms = Object.keys(k[Groupkey]).length;
       for (const t in k[Groupkey]) {
         if (timeNms > (avgn-1)) {
@@ -227,7 +228,10 @@ function NodeData(records) {
     const minValue = Object.keys(AllKey).find((name) => AllKey[name].sek === minAvg);// 获取对应的节点名称
     const NowNodesek = AllKey[NowNode].sek;// 当前节点评分
     const Pleng = Object.keys(proxy[Groupkey]).length+" ";// 节点个数
-    logday && (logKey = `脚本从${dayKey}开始 已经运行了${endDay} 天共: ${ccKey} 次`);
+    if(logday){
+      endDay = Math.floor((nowDay - new Date(dayKey)) / (864e5));
+      logKey = `脚本从${dayKey}开始 已经运行了${endDay} 天共: ${ccKey} 次`;
+    }
     if ( NowNode === minValue ) {
       Pushs ="继承: "+minValue +": "+minAvg;
       CC = BtoM(AllKey[minValue]["se"])+" "+AllKey[minValue]["count"]
