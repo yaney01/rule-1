@@ -1,0 +1,10 @@
+#!name=Ping CN CF 二合一面板
+#!desc=根据网络延迟生成柱状图
+#!system=ios
+
+[Script]
+ProPing = type=generic,timeout=6,script-path=https://github.com/Keywos/rule/raw/main/JS/ProPing.js
+
+
+[Panel]
+ProPing = script-name=ProPing,update-interval=120
