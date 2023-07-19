@@ -38,8 +38,8 @@ function saK(d, t) {
   } catch (error) {
     k = {};
   }
-  k["CN"] = (k["CN"] || getArr(1, 5)).concat(d).slice(-6);
-  k["CF"] = (k["CF"] || getArr(30, 5)).concat(t).slice(-6);
+  k["CN"] = (k["CN"] || getArr(1, 5)).concat(d).slice(-7);
+  k["CF"] = (k["CF"] || getArr(30, 5)).concat(t).slice(-7);
   $persistentStore.write(JSON.stringify(k), "KEY_ProPing");
   return k;
 }
