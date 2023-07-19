@@ -3,8 +3,7 @@
 #!system=ios
 
 [Script]
-ProPing = type=generic,timeout=6,script-path=https://github.com/Keywos/rule/raw/main/JS/ProPing.js
-
+ProPing = type=generic,timeout=6,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/ProPing.js
 
 [Panel]
 ProPing = script-name=ProPing,update-interval=120
