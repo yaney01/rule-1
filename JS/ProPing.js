@@ -1,5 +1,12 @@
 const cnurl = "http://connectivitycheck.platform.hicloud.com/generate_204";
 const cfurl = "http://cp.cloudflare.com/generate_204";
+let num = "7",icons="barometer",icolor="#80A0BF";
+if (typeof $argument !== "undefined" && $argument !== "") {
+  const ins = getin("$argument");
+  num = ins.num || num;
+  icons = ins.icon || icons;
+  icolor = ins.color || icolor;
+}
 (async () => {
 	try {
 	  let cn = [],cf = [];
@@ -21,8 +28,8 @@ const cfurl = "http://cp.cloudflare.com/generate_204";
 	  $done({
 		title: `CN: ${d}    ➟    CF: ${e}`,
 		content: od + "." + op,
-		icon: "barometer",
-		"icon-color": "#80A0BF",
+		icon: icons,
+        'icon-color': icolor
 	  });
 	} catch (i) {
 	  const err = 'Feedback @𝙺𝚎𝚢 !! ';
@@ -38,10 +45,16 @@ function saK(d, t) {
   } catch (error) {
     k = {};
   }
-  k["CN"] = (k["CN"] || getArr(1, 5)).concat(d).slice(-7);
-  k["CF"] = (k["CF"] || getArr(30, 5)).concat(t).slice(-7);
+  k["CN"] = (k["CN"] || getArr(1, 5)).concat(d).slice(-num);
+  k["CF"] = (k["CF"] || getArr(30, 5)).concat(t).slice(-num);
   $persistentStore.write(JSON.stringify(k), "KEY_ProPing");
   return k;
+}
+function getin() {
+  return Object.fromEntries(
+    $argument.split("&").map((i) => i.split("="))
+    .map(([k, v]) => [k, decodeURIComponent(v)])
+  );
 }
 function getArr(x, l) {return Array(l).fill(x);}
 async function http(url) {return new Promise((t) => {let e = Date.now();$httpClient.get(url, () => {let n = Date.now();t(n - e);});});}
