@@ -71,12 +71,14 @@ function BtoM(i) {
 
 function reSpeed(x, y) {
   if (x > 1e7) {
-    return (y * 0.6)|0; //Math.round
-  } else {
-    const ob = 0.99 * Math.exp(x / 2e7);
-    return (y * ob)|0;
+    return (y * 0.6)|0; // Math.round
+  } else{
+  const t = x/2e7;
+  const ob = 0.99 * Math.exp(-t);
+  return (y * ob)|0;
   }
 }
+
 // 节点数据类
 class NodeStats {
   constructor(name) {
