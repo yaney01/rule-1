@@ -1,6 +1,6 @@
 const cnurl = "http://connectivitycheck.platform.hicloud.com/generate_204";
 const cfurl = "http://cp.cloudflare.com/generate_204";
-let num = "7",icons="barometer",icolor="#80A0BF";
+let num = "7",icons="",icolor="";
 if (typeof $argument !== "undefined" && $argument !== "") {
   const ins = getin("$argument");
   num = ins.num || num;
