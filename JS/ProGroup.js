@@ -34,13 +34,14 @@ GroupAuto = type=generic,timeout=3,script-path=https://github.com/Keywos/rule/ra
 
 */
 
-let Groupkey = "VPS", tol = "10", th = "18",avgn = "30", fgf = "''", push = false, icons= "",icolor="";
+let Groupkey = "VPS", tol = "10", th = "18",avgn = "30", fgf = "''", push = 0, icons= "",icolor="",debug=0;
 if (typeof $argument !== "undefined" && $argument !== "") {
   const ins = getin("$argument");
   Groupkey = ins.group || Groupkey;
   th = ins.timecache || th;
   tol = ins.tolerance || tol;
-  push = ins.push || false;
+  push = ins.push || 0;
+	debug = ins.debug || 0;
   icons = ins.icon || icons;
   icolor = ins.color || icolor;
   avgn = ins.avgnumber || avgn;
@@ -249,6 +250,8 @@ function NodeData(records) {
         // console.log(AllKey)
     console.log("\n"+logKey+"\n"+xt+"\n"+xc);
     push && $notification.post(xt,xc,logKey);
+		debug && (console.log(resMS),
+		console.log(JSON.stringify(AllKey, null, 2)))
 
     $done({
       title: xt,
