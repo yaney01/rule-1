@@ -2,9 +2,13 @@
 #!desc=此为额外模块: 需要搭配 SubStore 模块;  使用 Surge Mock 以提升加载速度，减少请求 @key
 # 脚本操作移动到第一行 方便使用脚本
 # https://raw.githubusercontent.com/Keywos/rule/main/rename.js
-# https://raw.githubusercontent.com/Keywos/rule/main/cname.js
 
-# https://github.com/Keywos/Sub-Store-Front-End 前端地址
+# cname 需要 Sub-Store Version2.14.0+
+# https://raw.githubusercontent.com/Keywos/rule/main/cname.js 
+
+# 前端项目地址
+# https://github.com/Keywos/Sub-Store-Front-End 
+# https://github.com/sub-store-org/Sub-Store-Front-End
 
 [Map Local]
 # PNG ICO SVG
