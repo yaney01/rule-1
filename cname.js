@@ -57,7 +57,7 @@ Surge需要进入[脚本编辑器]→左下角[设置]→[$persistentStore]  [su
 const $ = $substore;
 const iar = $arguments;
 const { yw, bl, isp, yun, city, flag, game, yuan, sheng, offtz, debug, snone: numone} = iar;
-const h = iar.h ? decodeURI(iar.h) : "",
+const h = iar.h ? decodeURI(iar.h) : "99",
 min = iar.min ? decodeURI(iar.min) : "",
 tzname = iar.tz ? decodeURI(iar.tz) : "",
 firstN = iar.name ? decodeURI(iar.name) : "";
@@ -69,13 +69,13 @@ const keyp = "3.s",EXPIRATION_KEY = "sub-store-csr-expiration-time";
 if (min !== "") {
   Sue = true;
   innum = parseInt(min, 10) * 6e4;
-  writet = $persistentStore.write(innum, EXPIRATION_KEY);
+  writet = $persistentStore.write(JSON.stringify(innum), EXPIRATION_KEY);
 } else if (h !== "") {
   Sue = true;
   innum = parseInt(h, 10) * 36e5;
-  writet = $persistentStore.write(innum, EXPIRATION_KEY);
+  writet = $persistentStore.write(JSON.stringify(innum), EXPIRATION_KEY);
 } else {
-  writet = $persistentStore.write(innum, EXPIRATION_KEY);
+  writet = $persistentStore.write(JSON.stringify(innum), EXPIRATION_KEY);
 }
 let TIMEDKEY = $persistentStore.read(EXPIRATION_KEY);
 const nlc =/\u9080\u8bf7|\u8fd4\u5229|\u5faa\u73af|\u7981\u6b62|\u5b98\u7f51|\u4f7f\u7528|\u5ba2\u670d|\u7f51\u7ad9|\u7f51\u5740|\u83b7\u53d6|\u8ba2\u9605|\u6d41\u91cf|\u5230\u671f|\u4e0b\u6b21|\u7248\u672c|\u5b98\u5740|\u5907\u7528|\u5230\u671f|\u8fc7\u671f|\u5df2\u7528|\u56fd\u5185|\u56fd\u9645|\u56fd\u5916|\u8054\u7cfb|\u90ae\u7bb1|\u5de5\u5355|\u8d29\u5356|\u5012\u5356|\u9632\u6b62|(\b(USE|USED|TOTAL|EXPIRE|EMAIL)\b)|\d\s?g/i;
