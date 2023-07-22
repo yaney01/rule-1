@@ -1,7 +1,7 @@
 /*
 更新日期：2023-07-01 11:20:01
 说明: https://github.com/Keywos/rule/blob/main/readme.md
-用法：Sub-Store脚本操作添加
+用法：Sub-Store 脚本操作添加
 例如：https://raw.githubusercontent.com/Keywos/rule/main/rename.js#name=测试&flag
 -------------------------------- 
 rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数使用"&"连接，参考上述地址为例使用参数。
@@ -20,10 +20,11 @@ rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数�
 [blnx]:   只保留高倍率
 [clear]:  清理乱名
 */
-const key  = $arguments["key"]
-const bl = $arguments["bl"], nf = $arguments["nf"],blpx = $arguments["blpx"], nx = $arguments["nx"], blnx = $arguments["blnx"], numone = $arguments["one"],clear = $arguments["clear"], addflag = $arguments["flag"];
-const jcname = $arguments.name == undefined ? "" : decodeURI($arguments.name), FGF = $arguments.fgf == undefined ? " " : decodeURI($arguments.fgf);
-const inname = $arguments["in"] === "cn" ? "cn" : $arguments["in"] === "us" ? "us" : $arguments["in"] === "quan" ? "quan" : $arguments["gq"] === "gq" ? "gq" : "";
+
+const iar = $arguments;
+const { key, bl, nf, blpx, nx, blnx, one:numone, clear, flag:addflag } = iar;
+const jcname = iar.name == undefined ? "" : decodeURI(iar.name), FGF = iar.fgf == undefined ? " " : decodeURI(iar.fgf);
+const inname =  iar.in === "cn" ? "cn" :  iar.in === "us" ? "us" :  iar.in === "quan" ? "quan" :  iar.gq === "gq" ? "gq" : "";
 function gl(arg) { switch (arg) { case "gq": return gq; case "us": return us; case "quan": return quan; default: return cn; }}
 function jxh(e){const n=e.reduce(((e,n)=>{const t=e.find((e=>e.name===n.name));if(t){t.count++;t.items.push({...n,name:`${n.name}${FGF}${t.count.toString().padStart(2,"0")}`})}else{e.push({name:n.name,count:1,items:[{...n,name:`${n.name}${FGF}01`}]})}return e}),[]);const t=n.flatMap((e=>e.items));e.splice(0,e.length,...t);return e}
 function oneP(y){const groups = y.reduce((groups, proxy) => { const name = proxy.name.replace(/[^A-Za-z0-9\u00C0-\u017F\u4E00-\u9FFF]+\d+$/, ''); if (!groups[name]) { groups[name] = []; } groups[name].push(proxy);return groups; }, {});for(const name in groups) {if (groups[name].length === 1 && groups[name][0].name.endsWith('01')) {const proxy = groups[name][0];proxy.name = name;}};return y;}
