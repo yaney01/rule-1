@@ -5,4 +5,4 @@
 hostname=%APPEND% sub.store
 
 [Script]
-Sub-Store Dev= type=http-request,pattern=^https?:\/\/sub\.store,requires-body=true,timeout=120,max-size=131072,ability=http-client-policy,script-update-interval=-1,script-path=https://github.com/Keywos/rule/raw/main/Sub-Store/dev/sub-store.js,debug=1
+Sub-Store Dev= type=http-request,pattern=^https?:\/\/sub\.store,requires-body=true,timeout=120,max-size=131072,ability=http-client-policy,script-update-interval=-1,script-path=https://github.com/Keywos/rule/raw/main/Sub-Store/dev/sub-store.js
