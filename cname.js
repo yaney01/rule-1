@@ -1,5 +1,5 @@
 /*
-更新日期：2023-07-22 17:41:30 仅支持Surge、Loon 
+更新日期：2023-07-24 14:41:30 仅支持Surge、Loon 
 用法：Sub-Store Version 2.14+ 脚本操作里添加：默认48H缓存超时 可参数自定
 符号：🅳电信 🅻联通 🆈移动 🅶广电 🅲公司 🆉直连 🎮游戏
 作者：@Key @奶茶姐 @小一 @可莉
@@ -201,7 +201,7 @@ async function operator(e) {
             debug && (pk.keyoutld = outip, console.log("落地信息 " + JSON.stringify(outip)));
     
             
-            yisp && (yuanisp = outip.outisp);
+            yisp && (yuanisp = FGF+outip.outisp);
 
             luodi = (outUsq === "中国") ? outCity : (yw ? outUs : outUsq);
             let btip = outQuery !== inServer
