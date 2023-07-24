@@ -1,4 +1,4 @@
-/* 2023-06-19 19:55:50
+/* 2023-06-19
 @key 小白脸
 #!name=Barkapps
 #!desc= 利用Barkapp推送限免app，需要自己下载Bark并找到key填进argument
