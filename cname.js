@@ -195,12 +195,12 @@ async function operator(e) {
             }
 
             const outip = await OUTIA(pk);
-            let {country:outUsq, countryCode:outUs, city:outCity, query:outQuery,isp} = outip;//落地
+            let {country:outUsq, countryCode:outUs, city:outCity, query:outQuery,isp:oisp} = outip;//落地
             
         
 
             debug && (pk.keyoutld = outip, console.log("落地信息 " + JSON.stringify(outip)));
-            yisp && (yuanisp = outip.isp)
+            yisp && (yuanisp = outip.oisp);
 
             luodi = (outUsq === "中国") ? outCity : (yw ? outUs : outUsq);
             let btip = outQuery !== inServer
