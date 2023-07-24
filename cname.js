@@ -6,10 +6,10 @@
 接口：入口查询[国内spapi 识别到国外为ip-api] 落地查询[ip-api]
 功能：根据接口返回的真实结果，重新对节点命名。添加入口城市、落地国家或地区、国内运营商信息，并对这些数据做持久化缓存（48小时有效期），减少API请求次数，提高运行效率。
 
-参数必须以"#"开头，多个参数使用"&"连接 https://github.com/Keywos/rule/raw/main/cname.js#city&isp
+参数必须以"#"开头，多个参数使用"&"连接 https://github.com/Keywos/rule/raw/main/cname.js#city&iisp
 
 # 入口
-[isp]     运营商/直连
+[iisp]     运营商/直连
 [city]    加入口城市
 [sheng]   加入口省份
 [yuan]    境外显示为原本地区(仅对国外入口生效) 不加此参数 境外入口则直接显示为: 境外
@@ -58,7 +58,7 @@ Surge需要进入[脚本编辑器]→左下角[设置]→[$persistentStore]  [su
 
 const $ = $substore;
 const iar = $arguments;
-const { yw, bl, isp, yun, city, flag, game, yuan, sheng, offtz, debug, snone: numone, yisp} = iar;
+const { yw, bl, iisp, yun, city, flag, game, yuan, sheng, offtz, debug, snone: numone, yisp} = iar;
 const h = iar.h ? decodeURI(iar.h) : "99",
 min = iar.min ? decodeURI(iar.min) : "",
 tzname = iar.tz ? decodeURI(iar.tz) : "",
@@ -195,12 +195,13 @@ async function operator(e) {
             }
 
             const outip = await OUTIA(pk);
-            let {country:outUsq, countryCode:outUs, city:outCity, query:outQuery,isp:oisp} = outip;//落地
+            let {country:outUsq, countryCode:outUs, city:outCity, query:outQuery, isp:outisp} = outip;//落地
             
-        
-
+   
             debug && (pk.keyoutld = outip, console.log("落地信息 " + JSON.stringify(outip)));
-            yisp && (yuanisp = outip.oisp);
+    
+            
+            yisp && (yuanisp = outip.outisp);
 
             luodi = (outUsq === "中国") ? outCity : (yw ? outUs : outUsq);
             let btip = outQuery !== inServer
@@ -217,10 +218,10 @@ async function operator(e) {
                 if (isCN){
                   debug && (pk.keyinsp = spkey, console.log("国内入口 " + JSON.stringify(spkey)));
                     inQcip = inSpIp;
-                    if(isp && flag){
+                    if(iisp && flag){
                         inSpIsp=inSpIsp.replace(/中国/g, "")
                         flag && (Oispflag = keycm.hasOwnProperty(inSpIsp) ? keycm[inSpIsp] : "🅲");
-                    } else if(isp){
+                    } else if(iisp){
                         Oisp = /电信|联通|移动|广电/.test(inSpIsp) ? inSpIsp.replace(/中国/g, "") : "企业";
                     }
                     (inSpSheng === inSpCity) && (inSpCity = "");
@@ -258,19 +259,19 @@ async function operator(e) {
                     } else {
                         if(inQuery === outQuery){
                             flag && (Oispflag = "🆉");
-                            (sheng || city || isp) && (zhi  = "直连");
+                            (sheng || city || iisp) && (zhi  = "直连");
                         } else if (yuan){
                             flag && (Oispflag = "🅲");
-                            (sheng || city || isp) && (zhi  = inUsq);
+                            (sheng || city || iisp) && (zhi  = inUsq);
                         } else {
                             flag && (Oispflag = "🆇");
-                            (sheng || city || isp) && (zhi  = "境外");
+                            (sheng || city || iisp) && (zhi  = "境外");
                         }
                     }
               }
             } else {
               flag && (Oispflag = "🆉");
-              (sheng || city || isp) && (zhi  = "直连");
+              (sheng || city || iisp) && (zhi  = "直连");
             }
 
             flag && (adflag = getflag(outUs));
@@ -285,7 +286,7 @@ async function operator(e) {
               }
             }
             // regexArray.forEach((regex, index) => {if (regex.test(pk.name)) {rename = valueArray[index];}});
-            (!isp && !city && !sheng) && (Oispflag = "",FGF ="");
+            (!iisp && !city && !sheng) && (Oispflag = "",FGF ="");
 
             keyover = keyover.concat(
                 firstN, Oispflag,Osh,Oct,Oisp,zhi,FGF,adflag,luodi,OGame,nxx,yuanisp
