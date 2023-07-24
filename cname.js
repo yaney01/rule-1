@@ -362,7 +362,7 @@ async function OUTIA(e) {
         return n;
       } else {
         const retry = async (retryCount) => {
-          const url = `http://ip-api.com/json?lang=zh-CN&fields=status,message,country,countryCode,city,query`;
+          const url = `http://ip-api.com/json?lang=zh-CN&fields=status,message,country,countryCode,city,query,isp`;
           let r = ProxyUtils.produce([e], target);
           try {
             const response = await Promise.race([
