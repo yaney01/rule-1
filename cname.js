@@ -63,7 +63,7 @@ const h = iar.h ? decodeURI(iar.h) : "99",
 min = iar.min ? decodeURI(iar.min) : "",
 tzname = iar.tz ? decodeURI(iar.tz) : "",
 firstN = iar.name ? decodeURI(iar.name) : "";
-let FGF = iar.fgf == undefined ? " " : decodeURI(iar.fgf),
+const FGF = iar.fgf == undefined ? " " : decodeURI(iar.fgf),
   XHFGF = iar.sn == undefined ? " " : decodeURI(iar.sn),
   { isLoon: isLoon, isSurge: isSurge } = $substore.env, dns = iar.dnsjx,target = isLoon ? "Loon" : isSurge ? "Surge" : undefined,keypr= "peedtest";
 let cd = iar.cd ? iar.cd : 460, timeout = iar.timeout ? iar.timeout : 1520, writet = "", innum = 1728e5, loontrue = false, onen = false, Sue = false
