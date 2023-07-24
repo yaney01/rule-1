@@ -33,6 +33,8 @@
 [sn=]     国家与序号之间的分隔符，默认为空格
 [name=]   添加机场名称前缀
 
+[yisp]    显示落地详细ISP
+
 [yw]  落地为英文缩写，不建议与其他入口参数配合使用 因为其他参数api没有返回英文
 [bs=] 批处理节点数建议10左右，如果经常读不到节点建议减小批处理个数
 [timeout=] HTTP请求返回结果《无任何缓存》的超时时间，默认1510ms
@@ -56,7 +58,7 @@ Surge需要进入[脚本编辑器]→左下角[设置]→[$persistentStore]  [su
 
 const $ = $substore;
 const iar = $arguments;
-const { yw, bl, isp, yun, city, flag, game, yuan, sheng, offtz, debug, snone: numone} = iar;
+const { yw, bl, isp, yun, city, flag, game, yuan, sheng, offtz, debug, snone: numone, yisp} = iar;
 const h = iar.h ? decodeURI(iar.h) : "99",
 min = iar.min ? decodeURI(iar.min) : "",
 tzname = iar.tz ? decodeURI(iar.tz) : "",
@@ -165,7 +167,7 @@ async function operator(e) {
         batch.map(async (pk) => {
           try {
             let keyover = [], Yserver = pk.server,luodi = "",inQcip = "",nxx = "",adflag = "",
-             OGame="",Oisp="",Oispflag="",Osh="", Oct="",zhi = "",
+             OGame="",Oisp="",Oispflag="",Osh="", Oct="",zhi = "", yuanisp ="",
              isCN = false,v4 = false, v6 = false, isNoAli = false;
             const inServer = await AliD(Yserver);
             switch (inServer) { // 入口 server
@@ -193,9 +195,12 @@ async function operator(e) {
             }
 
             const outip = await OUTIA(pk);
-            let {country:outUsq, countryCode:outUs, city:outCity, query:outQuery} = outip;//落地
+            let {country:outUsq, countryCode:outUs, city:outCity, query:outQuery,isp} = outip;//落地
+            
+        
 
             debug && (pk.keyoutld = outip, console.log("落地信息 " + JSON.stringify(outip)));
+            yisp && (yuanisp = outip.isp)
 
             luodi = (outUsq === "中国") ? outCity : (yw ? outUs : outUsq);
             let btip = outQuery !== inServer
@@ -283,7 +288,7 @@ async function operator(e) {
             (!isp && !city && !sheng) && (Oispflag = "",FGF ="");
 
             keyover = keyover.concat(
-                firstN, Oispflag,Osh,Oct,Oisp,zhi,FGF,adflag,luodi,OGame,nxx
+                firstN, Oispflag,Osh,Oct,Oisp,zhi,FGF,adflag,luodi,OGame,nxx,yuanisp
                 ).filter(ki => ki !== "");
                 // console.log(keyover)
             const overName = keyover.join("");
