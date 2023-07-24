@@ -201,7 +201,7 @@ async function operator(e) {
             debug && (pk.keyoutld = outip, console.log("落地信息 " + JSON.stringify(outip)));
     
             
-            yisp && (yuanisp = FGF+outip.outisp);
+            yisp && (yuanisp = FGF+outisp);
 
             luodi = (outUsq === "中国") ? outCity : (yw ? outUs : outUsq);
             let btip = outQuery !== inServer
