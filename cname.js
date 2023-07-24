@@ -63,8 +63,8 @@ const h = iar.h ? decodeURI(iar.h) : "99",
 min = iar.min ? decodeURI(iar.min) : "",
 tzname = iar.tz ? decodeURI(iar.tz) : "",
 firstN = iar.name ? decodeURI(iar.name) : "";
-const FGF = iar.fgf == undefined ? " " : decodeURI(iar.fgf),
-  XHFGF = iar.sn == undefined ? " " : decodeURI(iar.sn),
+let FGF = iar.fgf == undefined ? " " : decodeURI(iar.fgf);
+const XHFGF = iar.sn == undefined ? " " : decodeURI(iar.sn),
   { isLoon: isLoon, isSurge: isSurge } = $substore.env, dns = iar.dnsjx,target = isLoon ? "Loon" : isSurge ? "Surge" : undefined,keypr= "peedtest";
 let cd = iar.cd ? iar.cd : 460, timeout = iar.timeout ? iar.timeout : 1520, writet = "", innum = 1728e5, loontrue = false, onen = false, Sue = false
 const keyp = "3.s",EXPIRATION_KEY = "sub-store-csr-expiration-time";
@@ -290,7 +290,7 @@ async function operator(e) {
               }
             }
             // regexArray.forEach((regex, index) => {if (regex.test(pk.name)) {rename = valueArray[index];}});
-            (!iisp && !city && !sheng) && (Oispflag = "",FGF ="");
+            (!iisp && !city && !sheng && !yisp) && (Oispflag = "",FGF ="");
 
             keyover = keyover.concat(
                 firstN, Oispflag,Osh,Oct,Oisp,zhi,FGF,adflag,luodi,OGame,nxx,yuanisp
