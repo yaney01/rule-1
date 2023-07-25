@@ -70,7 +70,7 @@ let FGF = iar.fgf == undefined ? " " : decodeURI(iar.fgf),FGFS = FGF,debug = iar
 debug = 1
 
 const { yw, bl, iisp, yisp, yun, city, flag, game, yuan, sheng, offtz, snone: numone} = iar;
-const h = iar.h ? decodeURI(iar.h) : "99",min = iar.min ? decodeURI(iar.min) : "",tzname = iar.tz ? decodeURI(iar.tz) : "",firstN = iar.name ? decodeURI(iar.name) : "";
+const h = iar.h ? decodeURI(iar.h) : "",min = iar.min ? decodeURI(iar.min) : "",tzname = iar.tz ? decodeURI(iar.tz) : "",firstN = iar.name ? decodeURI(iar.name) : "";
 const XHFGF = iar.sn == undefined ? " " : decodeURI(iar.sn),{ isLoon: isLoon, isSurge: isSurge } = $substore.env, dns = iar.dnsjx,target = isLoon ? "Loon" : isSurge ? "Surge" : undefined,keypr= "peedtest";
 let cd = iar.cd ? iar.cd : 460, timeout = iar.timeout ? iar.timeout : 2000, writet = "", innum = 1728e5, loontrue = false, onen = false, Sue = false
 const keyp = "3.s",EXPIRATION_KEY = "sub-store-csr-expiration-time";
