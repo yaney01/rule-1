@@ -160,7 +160,7 @@ function NodeData(records) {
         let HashValue = testGroup[lineHash];
         if (!HashValue) {
           HashValue = { lastTestScoreInMS: 6996 };
-        } else if (HashValue.lastTestScoreInMS === -1) {HashValue.lastTestScoreInMS = 66666666666666666;}
+        } else if (HashValue.lastTestScoreInMS === -1) {HashValue.lastTestScoreInMS = 6666;}
         const HashMs = HashValue ? HashValue.lastTestScoreInMS : 5678;
         return { name, ms: HashMs, lineHash };
       });
