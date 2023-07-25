@@ -32,6 +32,7 @@ GroupAuto = type=generic,timeout=3,script-path=https://github.com/Keywos/rule/ra
 # 定时自动运行(可选需取消#注释) 30分钟一次,每天2到7点不运行
 # Cron_GroupAuto = type=cron, cronexp= "0/30 0,1,7-23 * * *", timeout=15,wAllKeye-system=0,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/ProGroup.js, argument=tolerance=10&timecache=18&group=Proxy
 
+异常：如遇问题， Surge需要进入[脚本编辑器]→左下角[设置]→[$persistentStore]  [KEY_Group_Auto]删除缓存数据。
 */
 
 let Groupkey = "VPS", tol = "10", th = "18",avgn = "30", fgf = "''", push = false, icons= "",icolor="",debug=1;

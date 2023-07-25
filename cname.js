@@ -54,6 +54,9 @@
 
 # 其他参数
 [debug]     调试日志，普通用户不建议使用。
+
+异常：如遇问题，Loon可以进入[配置]→[持久化缓存]→[删除指定数据]→输入Key [sub-store-cached-script-resource]并删除缓存。
+Surge需要进入[脚本编辑器]→左下角[设置]→[$persistentStore]  [sub-store-cached-script-resource]删除缓存数据。
  */
 
 /**
