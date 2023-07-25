@@ -34,7 +34,7 @@ GroupAuto = type=generic,timeout=3,script-path=https://github.com/Keywos/rule/ra
 
 */
 
-let Groupkey = "VPS", tol = "10", th = "18",avgn = "30", fgf = "''", push = 0, icons= "",icolor="",debug=0;
+let Groupkey = "VPS", tol = "10", th = "18",avgn = "30", fgf = "''", push = false, icons= "",icolor="",debug=1;
 if (typeof $argument !== "undefined" && $argument !== "") {
   const ins = getin("$argument");
   Groupkey = ins.group || Groupkey;
@@ -68,14 +68,13 @@ function BtoM(i) {
   if (bytes < 0.01) {return "0.01MB";}
   return bytes.toFixed(2) + "MB";
 }
-
 function reSpeed(x, y) {
   if (x > 1e7) {
-    return (y * 0.6)|0; // Math.round
+    return Math.floor(y * 0.6);
   } else{
-  const t = x/2e7;
+  const t = x /2e7;
   const ob = 0.99 * Math.exp(-t);
-  return (y * ob)|0;
+  return Math.floor(y * ob);
   }
 }
 
@@ -96,8 +95,8 @@ class NodeStats {
         this.count++;
         const counts = this.count;
         this.sum += record.ms;
-        this.se += (record.se / counts)|1;
-        const tmpAvg = (this.sum / counts)|1;
+        this.se += Math.floor(record.se / counts);
+        const tmpAvg = Math.floor(this.sum / counts);
         this.avg = tmpAvg;
         this.sek = reSpeed(this.se, tmpAvg);
       }
@@ -160,9 +159,9 @@ function NodeData(records) {
         //  /v1/policies/benchmark_results 的 lastTestScoreInMS 为 ms
         let HashValue = testGroup[lineHash];
         if (!HashValue) {
-          HashValue = { lastTestScoreInMS: 996 };
-        } else if (HashValue.lastTestScoreInMS === -1) {HashValue.lastTestScoreInMS = 997;}
-        const HashMs = HashValue ? HashValue.lastTestScoreInMS : 998;
+          HashValue = { lastTestScoreInMS: 6996 };
+        } else if (HashValue.lastTestScoreInMS === -1) {HashValue.lastTestScoreInMS = 66666666666666666;}
+        const HashMs = HashValue ? HashValue.lastTestScoreInMS : 5678;
         return { name, ms: HashMs, lineHash };
       });
 
@@ -249,7 +248,7 @@ function NodeData(records) {
     }
     const xt = Groupkey +fgf+Pleng+CC+UC;
     const xc = Pushs+"k"+newp;
-        // console.log(AllKey)
+    // console.log(AllKey)
     console.log("\n"+logKey+"\n"+xt+"\n"+xc);
     push && $notification.post(xt,xc,logKey);
 		debug && (console.log(resMS),
@@ -268,3 +267,4 @@ function NodeData(records) {
     $done({title:err, content:error.message})
   }
 })();
+
