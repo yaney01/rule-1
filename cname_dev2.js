@@ -177,6 +177,7 @@ async function operator(e) {
              OGame="",Oisp="",Oispflag="",Osh="", Oct="",zhi = "",yuanisp ="",
              isCN = false,v4 = false, v6 = false, isNoAli = false;
             const inServer = await AliD(Yserver);
+            delog(inServer)
             switch (inServer) { // 入口 server
               case "keyn":
                 isNoAli = true;
@@ -306,7 +307,7 @@ async function operator(e) {
       klog(`处理进度${i}/${ein}`)
       if (!onen){
         if(ein > (i*2)){
-            if (i >= ((e.length / 3)|0) && i < ((e.length * 2 / 3)|0)) {
+            if (i >= ((e.length / 3)|0) && i < ((e.length * 2 / 3)|0) && ein>i) {
                 $notification.post("CNAME", `处理进度${i}/${ein}`, "耐心等待, 请勿重复点击预览...");
             }
         }
