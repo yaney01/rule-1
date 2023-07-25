@@ -1,15 +1,15 @@
 /*
-更新日期：2023-07-22 17:41:30 仅支持Surge、Loon 
+更新日期：2023-07-24 16:21:30 仅支持Surge、Loon 
 用法：Sub-Store Version 2.14+ 脚本操作里添加：默认48H缓存超时 可参数自定
 符号：🅳电信 🅻联通 🆈移动 🅶广电 🅲公司 🆉直连 🎮游戏
 作者：@Key @奶茶姐 @小一 @可莉
 接口：入口查询[国内spapi 识别到国外为ip-api] 落地查询[ip-api]
 功能：根据接口返回的真实结果，重新对节点命名。添加入口城市、落地国家或地区、国内运营商信息，并对这些数据做持久化缓存（48小时有效期），减少API请求次数，提高运行效率。
 
-参数必须以"#"开头，多个参数使用"&"连接 https://github.com/Keywos/rule/raw/main/cname.js#city&isp
+参数必须以"#"开头，多个参数使用"&"连接 https://github.com/Keywos/rule/raw/main/cname.js#city&iisp
 
 # 入口
-[isp]     运营商/直连
+[iisp]     运营商/直连
 [city]    加入口城市
 [sheng]   加入口省份
 [yuan]    境外显示为原本地区(仅对国外入口生效) 不加此参数 境外入口则直接显示为: 境外
@@ -32,6 +32,8 @@
 [fgf=]    入口和落地之间的分隔符，默认为空格
 [sn=]     国家与序号之间的分隔符，默认为空格
 [name=]   添加机场名称前缀
+
+[yisp]    显示落地详细ISP
 
 [yw]  落地为英文缩写，不建议与其他入口参数配合使用 因为其他参数api没有返回英文
 [bs=] 批处理节点数建议10左右，如果经常读不到节点建议减小批处理个数
@@ -56,13 +58,13 @@ Surge需要进入[脚本编辑器]→左下角[设置]→[$persistentStore]  [su
 
 const $ = $substore;
 const iar = $arguments;
-const { yw, bl, isp, yun, city, flag, game, yuan, sheng, offtz, debug, snone: numone} = iar;
+const { yw, bl, iisp, yun, city, flag, game, yuan, sheng, offtz, debug, snone: numone, yisp} = iar;
 const h = iar.h ? decodeURI(iar.h) : "99",
 min = iar.min ? decodeURI(iar.min) : "",
 tzname = iar.tz ? decodeURI(iar.tz) : "",
 firstN = iar.name ? decodeURI(iar.name) : "";
-let FGF = iar.fgf == undefined ? " " : decodeURI(iar.fgf),
-  XHFGF = iar.sn == undefined ? " " : decodeURI(iar.sn),
+let FGF = iar.fgf == undefined ? " " : decodeURI(iar.fgf),FGFS = FGF;
+const XHFGF = iar.sn == undefined ? " " : decodeURI(iar.sn),
   { isLoon: isLoon, isSurge: isSurge } = $substore.env, dns = iar.dnsjx,target = isLoon ? "Loon" : isSurge ? "Surge" : undefined,keypr= "peedtest";
 let cd = iar.cd ? iar.cd : 460, timeout = iar.timeout ? iar.timeout : 1520, writet = "", innum = 1728e5, loontrue = false, onen = false, Sue = false
 const keyp = "3.s",EXPIRATION_KEY = "sub-store-csr-expiration-time";
@@ -165,7 +167,7 @@ async function operator(e) {
         batch.map(async (pk) => {
           try {
             let keyover = [], Yserver = pk.server,luodi = "",inQcip = "",nxx = "",adflag = "",
-             OGame="",Oisp="",Oispflag="",Osh="", Oct="",zhi = "",
+             OGame="",Oisp="",Oispflag="",Osh="", Oct="",zhi = "", yuanisp ="",
              isCN = false,v4 = false, v6 = false, isNoAli = false;
             const inServer = await AliD(Yserver);
             switch (inServer) { // 入口 server
@@ -193,9 +195,17 @@ async function operator(e) {
             }
 
             const outip = await OUTIA(pk);
-            let {country:outUsq, countryCode:outUs, city:outCity, query:outQuery} = outip;//落地
-
+            let {country:outUsq, countryCode:outUs, city:outCity, query:outQuery, isp:outisp} = outip;//落地
+            
+   
             debug && (pk.keyoutld = outip, console.log("落地信息 " + JSON.stringify(outip)));
+    
+            
+            //yisp && (yuanisp = FGF+outisp);
+            if (yisp) {
+            yuanisp = FGFS+outisp
+            };
+           
 
             luodi = (outUsq === "中国") ? outCity : (yw ? outUs : outUsq);
             let btip = outQuery !== inServer
@@ -212,10 +222,10 @@ async function operator(e) {
                 if (isCN){
                   debug && (pk.keyinsp = spkey, console.log("国内入口 " + JSON.stringify(spkey)));
                     inQcip = inSpIp;
-                    if(isp && flag){
+                    if(iisp && flag){
                         inSpIsp=inSpIsp.replace(/中国/g, "")
                         flag && (Oispflag = keycm.hasOwnProperty(inSpIsp) ? keycm[inSpIsp] : "🅲");
-                    } else if(isp){
+                    } else if(iisp){
                         Oisp = /电信|联通|移动|广电/.test(inSpIsp) ? inSpIsp.replace(/中国/g, "") : "企业";
                     }
                     (inSpSheng === inSpCity) && (inSpCity = "");
@@ -253,19 +263,19 @@ async function operator(e) {
                     } else {
                         if(inQuery === outQuery){
                             flag && (Oispflag = "🆉");
-                            (sheng || city || isp) && (zhi  = "直连");
+                            (sheng || city || iisp) && (zhi  = "直连");
                         } else if (yuan){
                             flag && (Oispflag = "🅲");
-                            (sheng || city || isp) && (zhi  = inUsq);
+                            (sheng || city || iisp) && (zhi  = inUsq);
                         } else {
                             flag && (Oispflag = "🆇");
-                            (sheng || city || isp) && (zhi  = "境外");
+                            (sheng || city || iisp) && (zhi  = "境外");
                         }
                     }
               }
             } else {
               flag && (Oispflag = "🆉");
-              (sheng || city || isp) && (zhi  = "直连");
+              (sheng || city || iisp) && (zhi  = "直连");
             }
 
             flag && (adflag = getflag(outUs));
@@ -280,10 +290,10 @@ async function operator(e) {
               }
             }
             // regexArray.forEach((regex, index) => {if (regex.test(pk.name)) {rename = valueArray[index];}});
-            (!isp && !city && !sheng) && (Oispflag = "",FGF ="");
+            (!iisp && !city && !sheng) && (Oispflag = "",FGF ="");
 
             keyover = keyover.concat(
-                firstN, Oispflag,Osh,Oct,Oisp,zhi,FGF,adflag,luodi,OGame,nxx
+                firstN, Oispflag,Osh,Oct,Oisp,zhi,FGF,adflag,luodi,OGame,nxx,yuanisp
                 ).filter(ki => ki !== "");
                 // console.log(keyover)
             const overName = keyover.join("");
@@ -363,7 +373,7 @@ async function OUTIA(e) {
         return n;
       } else {
         const retry = async (retryCount) => {
-          const url = `http://ip-api.com/json?lang=zh-CN&fields=status,message,country,countryCode,city,query`;
+          const url = `http://ip-api.com/json?lang=zh-CN&fields=status,message,country,countryCode,city,query,isp`;
           let r = ProxyUtils.produce([e], target);
           try {
             const response = await Promise.race([

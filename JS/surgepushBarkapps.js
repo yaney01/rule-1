@@ -1,4 +1,4 @@
-/* 2023-06-19 19:55:50
+/* 2023-06-19
 @key 小白脸
 #!name=Barkapps
 #!desc= 利用Barkapp推送限免app，需要自己下载Bark并找到key填进argument
@@ -29,7 +29,7 @@ Promise.all([
                 origin: "https://m.gofans.cn",
               },},500,"get");
           $done({response: {status: 302,headers: {Location: uuapp.track_url}}}); 
-    } else if(key !==""){
+    } else if(key ===""){
       $done($notification.post("", "", "未填写key"));
     } else {
       const uuk = await tKey({url: "https://api.gofans.cn/v1/m/app_records?page=1&limit=10",
