@@ -87,8 +87,6 @@ const nlc =/邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流�
 // const regexArray = [/\u6e38\u620f|game/i];
 // const valueArray = ["Game"];
 async function operator(e) {
-
-
   if(e.length < 1) {
     $notification.post("CNAME","订阅无节点","");
     return e;}
