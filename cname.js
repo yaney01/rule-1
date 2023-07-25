@@ -344,12 +344,13 @@ function sleep(e) {
   return new Promise((t) => setTimeout(t, e));
 }
 
+
 let apiRead = 0,apiw = 0;
-const outs = new Map();
+const outipApi = new Map();
 async function OUTIA(e) {
   const t = getid(e);
-  if (outs.has(t)) {
-    return outs.get(t);
+  if (outipApi.has(t)) {
+    return outipApi.get(t);
   }
   const n = scriptResourceCache.get(t);
   if (n) {
@@ -390,7 +391,7 @@ async function OUTIA(e) {
         retry(0);
       }
     });
-    outs.set(t, n);
+    outipApi.set(t, n);
     return n;
   }
 }
