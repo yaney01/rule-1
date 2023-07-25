@@ -84,11 +84,12 @@ const nlc =/邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流�
 // const regexArray = [/\u6e38\u620f|game/i];
 // const valueArray = ["Game"];
 async function operator(e) {
-klog("开始处理...");
+
+
   if(e.length < 1) {
     $notification.post("无节点","","");
     return e;}
-  let cs = 0;
+//   let cs = 0;
   const startTime = new Date();
   const support = isLoon || isSurge;
   if (!support) {$.error(`No Loon or Surge`);
@@ -109,10 +110,12 @@ klog("开始处理...");
  * delog()  debug:boolean  console.log
  * klog()  console.log
  */
+
+  klog(`开始处理节点: ${ein} 个`);
+  klog(`批处理节点数: ${bs} 个`);
+
   klog(`设定api超时: ${zhTime(timeout)}`);
   klog(`有缓api超时: ${zhTime(cd)}`);
-  klog(`批处理节点数: ${bs} 个`);
-  klog(`开始处理节点: ${ein} 个`);
   e = e.filter((item) => !nlc.test(item.name));
   let o = 0,Pushtd = "",intimed = "",stops = false,rere=false;
   //   do {
@@ -163,6 +166,7 @@ klog("开始处理...");
       );
       o += 1;
     }
+    if (!onen) $notification.post("CNAME", `开始处理节点: ${ein} 个 批处理数量: ${bs} 个`, "耐心等待, 请勿重复点击预览...");
     let i = 0;
     while (i < e.length) {
       const batch = e.slice(i, i + bs);
