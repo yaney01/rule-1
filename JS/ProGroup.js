@@ -248,7 +248,7 @@ function NodeData(records) {
       CC = BtoM(AllKey[NowNode]["se"])+" "+AllKey[NowNode]["count"]
     }
     const xt = Groupkey +fgf+Pleng+CC+UC;
-    const xc = Pushs+"k"+newp;
+    const xc = Pushs+newp;
     // console.log(AllKey)
     console.log("\n"+logKey+"\n"+xt+"\n"+xc);
     push && $notification.post(xt,xc,logKey);
