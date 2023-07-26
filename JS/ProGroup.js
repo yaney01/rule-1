@@ -35,7 +35,7 @@ GroupAuto = type=generic,timeout=3,script-path=https://github.com/Keywos/rule/ra
 异常：如遇问题， Surge需要进入[脚本编辑器]→左下角[设置]→[$persistentStore]  [KEY_Group_Auto]删除缓存数据。
 */
 
-let Groupkey = "VPS", tol = "10", th = "18",avgn = "30", fgf = "''", push = false, icons= "",icolor="",debug=1;
+let Groupkey = "VPS", tol = "10", th = "18",avgn = "30",isLs=0, fgf = "''", push = false, icons= "",icolor="",debug=1;
 if (typeof $argument !== "undefined" && $argument !== "") {
   const ins = getin("$argument");
   Groupkey = ins.group || Groupkey;
@@ -138,8 +138,9 @@ function NodeData(records) {
 (async () => {
   try {
     const proxy = await httpAPI("/v1/policy_groups");
-      if (!Object.keys(proxy).includes(Groupkey)) {
-        throw new Error("group参数未输入正确的策略组")}
+    if (!Object.keys(proxy).includes(Groupkey)) {
+      throw new Error("group参数未输入正确的策略组")}
+    const Pleng = Object.keys(proxy[Groupkey]).length+" ";// 节点个数
     const NowNodeolicy = await httpAPI(`/v1/policy_groups/select?group_name=${encodeURIComponent(Groupkey)}`);
 		// const NowNodeolicy = $surge.selectGroupDetails().decisions[Groupkey];
     let NowNode,resMS,logday=false,logKey="",endDay="",Pushs="",newp="",CC ="",UC="C";
@@ -161,11 +162,16 @@ function NodeData(records) {
         let HashValue = testGroup[lineHash];
         if (!HashValue) {
           HashValue = { lastTestScoreInMS: 6996 };
-        } else if (HashValue.lastTestScoreInMS === -1) {HashValue.lastTestScoreInMS = 6666;}
+        } else if ( HashValue.lastTestScoreInMS === -1 ) {
+          isLs++;
+          HashValue.lastTestScoreInMS = 6666;
+        }
         const HashMs = HashValue ? HashValue.lastTestScoreInMS : 5678;
         return { name, ms: HashMs, lineHash };
       });
-
+    if ( isLs == Pleng ){
+      throw new Error(Groupkey+" 策略组所有节点 Ping 失败, 请检查配置")
+    }
     const Sproxy = await httpAPI("/v1/traffic");
       const { connector } = Sproxy;
       const IOM = {}; // inMaxSpeed outMaxSpeed Max
@@ -230,7 +236,7 @@ function NodeData(records) {
     const minAvg = Math.min(...minKey);// 最优评分
     const minValue = Object.keys(AllKey).find((name) => AllKey[name].sek === minAvg);// 获取对应的节点名称
     const NowNodesek = AllKey[NowNode].sek;// 当前节点评分
-    const Pleng = Object.keys(proxy[Groupkey]).length+" ";// 节点个数
+    
     if(logday){
       endDay = Math.floor((nowDay - new Date(dayKey)) / (864e5));
       logKey = `自 ${dayKey.slice(2, 10)} 已运行 ${endDay} 天共: ${ccKey} 次`;
@@ -265,6 +271,7 @@ function NodeData(records) {
   } catch (error) {
     const err = 'Feedback @𝙺𝚎𝚢 !! ';
     console.log(err+error.message)
+    push && $notification.post(err,error.message,"");
     $done({title:err, content:error.message})
   }
 })();
