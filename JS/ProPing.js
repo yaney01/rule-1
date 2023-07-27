@@ -46,7 +46,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     const od = ptoG(n["CN"]);
     const op = ptoG(n["CF"]);
     $done({
-      title: `CF: ${e}    ➟    CN: ${d}`,
+      title: `CF: ${e}  ➟     CN: ${d}`,
       content: op + " " + od,
       icon: icons,
       "icon-color": icolor,
