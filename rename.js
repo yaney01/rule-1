@@ -1,33 +1,44 @@
 /*
-更新日期：2023-07-01 11:20:01
+更新日期：2023-07-27 19:25:18
 说明: https://github.com/Keywos/rule/blob/main/readme.md
 用法：Sub-Store 脚本操作添加
 例如：https://raw.githubusercontent.com/Keywos/rule/main/rename.js#name=测试&flag&in=cn&out=quan
- 
 rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数使用"&"连接，参考上述地址为例使用参数。
 --------------------------------
-[in=]:    自动判断机场节点名类型(那种类型多就判断为那种)(优先匹配原节点国旗) !!! 如果不准的情况, 可以加参数指定 (cn ，us ，gq ，quan), 例如 in=cn 识别原节点的中文名
 
-[out=]:   输出节点名可选参数: (cn ，us ，gq ，quan) 对应：(中文，英文缩写 ，国旗 ，英文全称) 默认中文
-[name=]:  添加机场名前缀在节点最前面
+# 主要参数
+[in=]    自动判断机场节点名类型(那种类型多就判断为那种)(优先匹配原节点国旗) !!! 如果不准的情况, 可以加参数指定 (cn ，us ，gq ，quan), 例如 in=cn 识别原节点的中文名
+[out=]   输出节点名可选参数: (cn ，us ，gq ，quan) 对应：(中文，英文缩写 ，国旗 ，英文全称) 默认中文
 
-[bl]:     保留: 家宽 ，IPLC 几倍之类的标识
-[blpx]:   如果用了上面的bl参数,对保留标识后的名称分组排序,如果没用上面的bl参数单独使用blpx则不起任何作用
-[fgf]:    自义定分隔符,默认是空格
-[one]:    清理只有一个节点的地区的01 
-[flag]:   给节点前面加国旗
-[nf]:     默认下面参数的name在最前面，如果加此参数，name在国旗之后
-[nx]:     保留1倍率与不显示倍率的
-[blnx]:   只保留高倍率
-[clear]:  清理乱名
+# 分隔符参数
+[fgf=]   节点名前缀或国旗分隔符，默认为空格；
+[sn=]    设置国家与序号之间的分隔符，默认为空格；
+
+# 序号参数
+[one]    清理只有一个节点的地区的01 
+[flag]   给节点前面加国旗
+
+# 前缀参数
+[name=]  节点添加机场名称前缀；
+[nf]     默认下面参数的name在最前面，如果加此参数，name在国旗之后
+
+# 保留参数
+[nx]     保留1倍率与不显示倍率的
+[blnx]   只保留高倍率
+[clear]  清理乱名
+[bl]     保留: 家宽 ，IPLC 几倍之类的标识
+[blpx]   如果用了上面的bl参数,对保留标识后的名称分组排序,如果没用上面的bl参数单独使用blpx则不起任何作用
+
 */
 
 const iar = $arguments;
 const { key, bl, nf, blpx, nx, blnx, one:numone, clear, flag:addflag } = iar;
-const jcname = iar.name == undefined ? "" : decodeURI(iar.name), FGF = iar.fgf == undefined ? " " : decodeURI(iar.fgf);
+const jcname = iar.name == undefined ? "" : decodeURI(iar.name),
+  FGF = iar.fgf == undefined ? " " : decodeURI(iar.fgf),
+  XHFGF = iar.sn == undefined ? " " : decodeURI(iar.sn);
 const inname =  iar.in === "cn" ? "cn" :  iar.in === "us" ? "us" :  iar.in === "quan" ? "quan" :  iar.gq === "gq" ? "gq" : "";
 function gl(arg) { switch (arg) { case "gq": return gq; case "us": return us; case "quan": return quan; default: return cn; }}
-function jxh(e){const n=e.reduce(((e,n)=>{const t=e.find((e=>e.name===n.name));if(t){t.count++;t.items.push({...n,name:`${n.name}${FGF}${t.count.toString().padStart(2,"0")}`})}else{e.push({name:n.name,count:1,items:[{...n,name:`${n.name}${FGF}01`}]})}return e}),[]);const t=n.flatMap((e=>e.items));e.splice(0,e.length,...t);return e}
+function jxh(e){const n=e.reduce(((e,n)=>{const t=e.find((e=>e.name===n.name));if(t){t.count++;t.items.push({...n,name:`${n.name}${XHFGF}${t.count.toString().padStart(2,"0")}`})}else{e.push({name:n.name,count:1,items:[{...n,name:`${n.name}${XHFGF}01`}]})}return e}),[]);const t=n.flatMap((e=>e.items));e.splice(0,e.length,...t);return e}
 function oneP(y){const groups = y.reduce((groups, proxy) => { const name = proxy.name.replace(/[^A-Za-z0-9\u00C0-\u017F\u4E00-\u9FFF]+\d+$/, ''); if (!groups[name]) { groups[name] = []; } groups[name].push(proxy);return groups; }, {});for(const name in groups) {if (groups[name].length === 1 && groups[name][0].name.endsWith('01')) {const proxy = groups[name][0];proxy.name = name;}};return y;}
 function gF(e){const n=e.toUpperCase().split("").map((e=>127397+e.charCodeAt()));return String.fromCodePoint(...n).replace(/🇹🇼/g,"🇨🇳")}
 function gReg(pn) { if (gq.some((name) => pn.includes(name))) { return "gq"; } else if (cn.some((name) => pn.includes(name))) { return "cn"; } else if (quan.some((name) => pn.includes(name))) { return "quan"; } else if (us.some((name) => pn.includes(name))) { return "us"; } else { return null; } } 
