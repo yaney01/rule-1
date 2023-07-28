@@ -1,5 +1,5 @@
 #!name = Bilibili
-#!desc = 测试: 去除动态综合页话题,最常访问,弹幕,青少年弹窗,播放页广告
+#!desc = 去除动态综合页话题,最常访问,弹幕,青少年弹窗,播放页广告
 #!openUrl = 
 #!author = MartinsKing、VirgilClyne、app2smile、RuCu6、Maasea、kokoryh、key
 #!homepage = 
@@ -23,6 +23,7 @@
 ^https?:\/\/manga\.bilibili\.com\/twirp\/comic\.v\d\.Comic\/(Flash|ListFlash|GetActivityTab) reject-dict
 
 [Script]
+# 保留我的页面 创作中心
 # 开屏广告 | 推荐页banner和广告 | 我的页面 | 1080P | 热搜 | 标签栏 | 下发皮肤
 http-response ^https?:\/\/app\.bilibili\.com\/x\/(v2\/(splash\/(list|show)|feed\/index|account\/(mine(\/ipad)?|myinfo\?)|search\/square)|resource\/show\/(tab\/v2|skin\?)) script-path=https://github.com/Keywos/rule/raw/main/JS/bjson.js, requires-body=true, timeout=10, tag=bilibili-json
 # 直播间推广

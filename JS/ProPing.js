@@ -1,3 +1,15 @@
+/*
+#!name=Ping CN CF 二合一面板
+#!desc=根据网络延迟生成柱状图
+#!system=ios
+
+[Script]
+# 如果一行放不下了可以把参数 num=7 改成6或者更小
+ProPing = type=generic,timeout=6,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/ProPing.js,argument=color=#80A0BF&icon=barometer&num=7
+
+[Panel]
+ProPing = script-name=ProPing,update-interval=120
+*/
 const cnurl = "http://connectivitycheck.platform.hicloud.com/generate_204";
 const cfurl = "http://cp.cloudflare.com/generate_204";
 let num = "7",
@@ -34,8 +46,8 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     const od = ptoG(n["CN"]);
     const op = ptoG(n["CF"]);
     $done({
-      title: `CN: ${d}    ➟    CF: ${e}`,
-      content: od + "." + op,
+      title: `CF: ${e}  ➟     CN: ${d}`,
+      content: op + " " + od,
       icon: icons,
       "icon-color": icolor,
     });

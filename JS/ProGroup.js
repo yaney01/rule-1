@@ -1,4 +1,4 @@
-/* 2023-07-19 01:31:03
+/* 2023-07-28 13:01:03
 作用: 
 · 如果策略组 节点变更 会重新缓存结果 重新取值
 · 如果有节点偶尔ping不通 那么大概率不会选中他 
@@ -85,6 +85,7 @@ class NodeStats {
     this.name = name;
     this.se = 0;
     this.sum = 0;
+	this.sumse = 0;
     this.count = 0;
     this.avg = 0;
     this.sek = 0;
@@ -96,10 +97,12 @@ class NodeStats {
         this.count++;
         const counts = this.count;
         this.sum += record.ms;
-        this.se += Math.floor(record.se / counts);
+        this.se = record.se;
+		this.sumse += record.se;
         const tmpAvg = Math.floor(this.sum / counts);
+		const seAvg = Math.floor( this.sumse / counts);
         this.avg = tmpAvg;
-        this.sek = reSpeed(this.se, tmpAvg);
+        this.sek = reSpeed(seAvg, tmpAvg);
       }
     }
   }
