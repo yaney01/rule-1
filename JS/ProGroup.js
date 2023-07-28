@@ -96,7 +96,8 @@ class NodeStats {
         this.count++;
         const counts = this.count;
         this.sum += record.ms;
-        this.se += Math.floor(record.se / counts);
+        this.se = record.se;
+        //this.se += Math.floor(record.se / counts);
         const tmpAvg = Math.floor(this.sum / counts);
         this.avg = tmpAvg;
         this.sek = reSpeed(this.se, tmpAvg);
