@@ -85,6 +85,7 @@ class NodeStats {
     this.name = name;
     this.se = 0;
     this.sum = 0;
+	this.sumse = 0;
     this.count = 0;
     this.avg = 0;
     this.sek = 0;
@@ -97,10 +98,11 @@ class NodeStats {
         const counts = this.count;
         this.sum += record.ms;
         this.se = record.se;
-        //this.se += Math.floor(record.se / counts);
+		this.sumse += record.se;
         const tmpAvg = Math.floor(this.sum / counts);
+		const seAvg = Math.floor( this.sumse / counts);
         this.avg = tmpAvg;
-        this.sek = reSpeed(this.se, tmpAvg);
+        this.sek = reSpeed(seAvg, tmpAvg);
       }
     }
   }
