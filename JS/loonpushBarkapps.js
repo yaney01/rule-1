@@ -34,9 +34,12 @@ Promise.all([
       if (readuuid.length > 40) {
         readuuid.splice(0, readuuid.length - 40);
       }
-      let uuidList = uuk.data.filter(function (item) {
-        return !readuuid.includes(item.uuid);
-      });
+      let uuidList;
+      if (typeof uuk !== 'undefined' && Array.isArray(uuk.data)) {
+        uuidList = uuk.data.filter(function (item) {
+          return !readuuid.includes(item.uuid);
+        });
+      } 
       let uuids = uuidList
         .filter(function (i) {
           return i.uuid !== undefined;
