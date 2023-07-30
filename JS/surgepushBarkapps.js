@@ -29,7 +29,7 @@ Promise.all([
                 origin: "https://m.gofans.cn",
               },},500,"get");
           $done({response: {status: 302,headers: {Location: uuapp.track_url}}}); 
-    } else if(key ===""){
+    } else if(key === ""){
       $done($notification.post("", "", "未填写key"));
     } else {
       const uuk = await tKey({url: "https://api.gofans.cn/v1/m/app_records?page=1&limit=10",
@@ -86,8 +86,8 @@ Promise.all([
             }
           }
     } catch (error) {
-      console.log(error.message)
-      $done($notification.post("", "", "错误,反馈@key"+ error.message));
+      console.log("[BarkPush] err: "+error.message)
+      $done($notification.post("", "", "Bark Push 错误,反馈@key"+ error.message));
     }
   })(),
 ]);

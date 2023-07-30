@@ -12,7 +12,6 @@ let url;if (typeof $request !== 'undefined' && $request.url)
 Promise.all([
   (async () => {
     try {
-    if(key !==""){
     if (/barkapp\.key\.com/.test(url)) {
             let spurl = url.split("&")[1];
           const uuapp = await tKey(
@@ -22,6 +21,8 @@ Promise.all([
                 origin: "https://m.gofans.cn",
               },},500,"get");
           $done({response: {status: 302,headers: {Location: uuapp.track_url}}}); 
+    } else if(key === ""){
+      $done($notification.post("", "", "未填写key"));
     } else {
       const uuk = await tKey({url: "https://api.gofans.cn/v1/m/app_records?page=1&limit=10",
           headers: {
@@ -76,11 +77,9 @@ Promise.all([
               $done()       
             }
           }
-        } else {
-      $done($notification.post("", "", "未填写key"));
-    } 
     } catch (error) {
-      $done($notification.post("", "", "错误,反馈@key"));
+      console.log("[Bark Push] err: "+error.message)
+      $done($notification.post("", "Bark Push 错误,反馈@key",error.message));
     }
   })(),
 ]);
