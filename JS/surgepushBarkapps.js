@@ -1,4 +1,4 @@
-/* 2023-06-19
+/* 2023-08-01 10:17:22
 @key 小白脸
 #!name=Barkapps
 #!desc= 利用Barkapp推送限免app，需要自己下载Bark并找到key填进argument
@@ -42,19 +42,21 @@ Promise.all([
       if (readuuid.length > 40) {
         readuuid.splice(0, readuuid.length - 40);
       }
-      let uuidList;
+      let uuidList,uuids;
       if (typeof uuk !== 'undefined' && Array.isArray(uuk.data)) {
         uuidList = uuk.data.filter(function (item) {
           return !readuuid.includes(item.uuid);
         });
-      }
-      let uuids = uuidList
+
+        uuids = uuidList
         .filter(function (i) {
           return i.uuid !== undefined;
         })
         .map(function (i) {
           return i.uuid;
         });
+      }
+      
     if (uuids && uuids.length) {
       readuuid.push(...uuids)
       let writeuuid = JSON.stringify(readuuid);

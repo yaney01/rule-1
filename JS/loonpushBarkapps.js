@@ -1,4 +1,4 @@
-/* 2023-06-19 19:55:39
+/* 2023-08-01 10:17:49
 @key 小白脸
 利用Barkapp推送限免app，需要自己下载Bark并找到key填进argument
 持久化缓存每次获取的列表，每个app只会推送一次，持久化数据位置: uuidkeys
@@ -34,19 +34,20 @@ Promise.all([
       if (readuuid.length > 40) {
         readuuid.splice(0, readuuid.length - 40);
       }
-      let uuidList;
-      if (typeof uuk !== 'undefined' && Array.isArray(uuk.data)) {
+    let uuidList,uuids;
+    if (typeof uuk !== 'undefined' && Array.isArray(uuk.data)) {
         uuidList = uuk.data.filter(function (item) {
           return !readuuid.includes(item.uuid);
         });
-      } 
-      let uuids = uuidList
+        
+        uuids = uuidList
         .filter(function (i) {
           return i.uuid !== undefined;
         })
         .map(function (i) {
           return i.uuid;
         });
+      }
     if (uuids && uuids.length) {
       readuuid.push(...uuids)
       let writeuuid = JSON.stringify(readuuid);
