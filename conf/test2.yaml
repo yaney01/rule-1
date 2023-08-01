@@ -1,5 +1,5 @@
 #Stash
-dns:
+dns: 
   default-nameserver:
   - 114.114.115.115
   - 119.28.28.28
