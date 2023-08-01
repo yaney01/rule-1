@@ -20,7 +20,7 @@ DOMAIN-SUFFIX,gstatic.com
 DOMAIN-SUFFIX,adobelogin.com
 DOMAIN-SUFFIX,adobe.io
 DOMAIN-SUFFIX,dlercloud.com
-# TG or ...
+# TG or ..
 DOMAIN-SUFFIX,t.me
 DOMAIN-SUFFIX,tdesktop.com
 DOMAIN-SUFFIX,telegra.ph
