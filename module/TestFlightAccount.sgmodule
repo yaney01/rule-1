@@ -1,6 +1,6 @@
 #!name=TestFlight账户管理
 #!desc=自动存储/合并多个TestFlight账户列表, 并可导出/分享TestFlight APP.
-# @NobyDa 原作者 
+# @NobyDa 原作者  https://github.com/NobyDa/Script/tree/master/TestFlight
 # @key 改写：传入 ',argument=false' 参数时修改tvOS通知为关闭点进去开关一下 Surge的通知以生效, 不传入参数时候不会修改
 [General]
 skip-proxy = %APPEND% iosapps.itunes.apple.com
