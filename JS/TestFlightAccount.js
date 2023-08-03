@@ -19,7 +19,7 @@ Surge4 添加脚本：
 
 Surge模块地址：
 @NobyDa 原地址：https://raw.githubusercontent.com/NobyDa/Script/master/Surge/Module/TestFlightAccount.sgmodule   仓库： https://github.com/NobyDa/Script/tree/master/TestFlight
-@key 改写：传入 ',argument=false' 参数时修改tvOS通知为关闭点进去开关一下 Surge的通知以生效, 不传入参数时候不会修改 https://github.com/Keywos/rule/raw/main/module/TestFlightAccount.sgmodule
+@key 改写：传入 ',argument=false' 参数时修改tvOS通知为关闭, 需要点进对应的软件的通知里开关一下任意一个通知选项 以生效(会有通知), 不传入参数时候不会修改 https://github.com/Keywos/rule/raw/main/module/TestFlightAccount.sgmodule
 
 #!name=TestFlight账户管理
 #!desc=自动存储/合并多个TestFlight账户列表, 并可导出/分享TestFlight APP.
