@@ -1,8 +1,10 @@
 #!name=Sub-Store Mock
 #!desc=此为额外模块: 需要搭配 SubStore 模块;  使用 Surge Mock 以提升加载速度，减少请求 @key
+# 2023-08-04 23:41:09 remove monaco-editor
 # 脚本操作移动到第一行 方便使用脚本
-# https://raw.githubusercontent.com/Keywos/rule/main/rename.js
-# https://raw.githubusercontent.com/Keywos/rule/main/cname.js
+# 本地重命名：https://raw.githubusercontent.com/Keywos/rule/main/rename.js
+# Ping清除无效节点：https://raw.githubusercontent.com/Keywos/rule/main/pname.js
+# Api去重、查询ISP等：https://raw.githubusercontent.com/Keywos/rule/main/cname.js
 
 [Map Local]
 
@@ -12,13 +14,10 @@
 ^https?:\/\/sub-store\.vercel\.app\/assets\/index\.[a-z0-9]{8}\.js data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/index.js" header="Content-Type: application/javascript; charset=utf-8"
 ^https?:\/\/sub-store\.vercel\.app\/assets\/@vueuse\/core\.[a-z0-9]{8}\.js data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/core.js" header="Content-Type: application/javascript; charset=utf-8"
 ^https?:\/\/sub-store\.vercel\.app\/assets\/@nutui\/nutui\.[a-z0-9]{8}\.js data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/nutui.js" header="Content-Type: application/javascript; charset=utf-8"
-^https?:\/\/sub-store\.vercel\.app\/assets\/monaco-editor\.[a-z0-9]{8}\.js data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/monaco-editor.js" header="Content-Type: application/javascript; charset=utf-8"
 # CSS
 ^https?:\/\/sub-store\.vercel\.app\/assets\/index\.[a-z0-9]{8}\.css data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/index.css" header="Content-Type: text/css; charset=utf-8"
-^https?:\/\/sub-store\.vercel\.app\/assets\/monaco-editor\.[a-z0-9]{8}\.css data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/monaco-editor.css" header="Content-Type: text/css; charset=utf-8"
 # JSON
 ^https?:\/\/sub-store\.vercel\.app\/manifest\.json data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/manifest.json" header="Content-Type: application/json; charset=utf-8"
-
 # PNG ICO SVG
 ^https?:\/\/sub-store\.vercel\.app\/144x144\.png data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/144x144.png" header="Content-Type: image/png"
 ^https?:\/\/sub-store\.vercel\.app\/[^14]\d{1,2}x\d{1,3}\.png data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/sub/144x144.png" header="Content-Type: image/png"
