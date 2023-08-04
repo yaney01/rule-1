@@ -60,7 +60,26 @@
     <link rel="mask-icon" href="/favicon.svg" color="#FFFFFF" />
     <meta id="theme__color" name="theme-color" content="#121212" />
     <link rel="manifest" href="/manifest.json" />
-    <script type="module" crossorigin src="/assets/index.83eeee8a.js"></script>
+    <!-- <script type="module" crossorigin src="/assets/index.83eeee8a.js"></script> -->
+    <script>
+      setTimeout(function () {
+        var script = document.createElement('script');
+        script.type = 'module';
+        script.crossOrigin = 'anonymous';
+        script.src = '/assets/index.80fcd0ab.js';
+        document.head.appendChild(script);
+      }, 100);
+    </script>
+      <style>
+        html {
+          background: #f2f2f2;
+        }
+        @media (prefers-color-scheme: dark) {
+          html {
+            background: #121212;
+          }
+        }
+      </style>
     <link rel="modulepreload" href="/assets/@nutui/nutui.bdb0ae93.js">
     <link rel="modulepreload" href="/assets/@vueuse/core.0b22d8d4.js">
     <link rel="modulepreload" href="/assets/monaco-editor.5df43bca.js">
