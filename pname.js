@@ -33,16 +33,18 @@ async function operator(e) {
   const ein = e.length;
   klog(`开始处理节点: ${ein} 个`);
   klog(`批处理节点数: ${bs} 个`);
-  let i = 0;
+  let i = 0, newnode = [];
   while (i < e.length) {
     const batch = e.slice(i, i + bs);
     await Promise.all(
       batch.map(async (pk) => {
         try {
           const OUTK = await OUTIA(pk);
+          const qcip = pk.server + OUTK.ip;
           flag && (pk.name = getflag(OUTK.loc) + " " + pk.name);
+          newnode.push(qcip)
           pk.Key = OUTK;
-          pk.qc = pk.server + OUTK.ip;
+          pk.qc = qcip
         } catch (err) {
           delog(err.message)
         }
@@ -50,6 +52,17 @@ async function operator(e) {
     );
     i += bs;
   }
+  if (ein > 3){
+    delog(newnode)
+    const allsame = newnode.every((value, index, arr) => value === arr[0]);
+    if(allsame){
+        klog(`未使用带指定节点功能的 SubStore`);
+        $notification.post('PNAME：点击以安装对应版本','未使用带指定节点功能的 SubStore','',{url: "https://github.com/Keywos/rule/raw/main/Sub-Store/Sub-Store.sgmodule",})
+        return e;
+    }
+  }
+  
+  
   e = removels(e);
   let eout = e.length;
   const endTime = new Date();
