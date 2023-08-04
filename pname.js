@@ -1,5 +1,6 @@
 /**
  * 日期：2023-08-04 17:29:02 仅支持Surge、Loon
+ * 注意: Surge 必须使用带走指定节点功能的substore否则脚本无效
  * 用法：Sub-Store 脚本操作里添加 此脚本链接 https://github.com/Keywos/rule/raw/main/pname.js#timeout=1000&bs=30
  * 作者：@Key
  * 功能：去除无效节点
