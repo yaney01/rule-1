@@ -49,8 +49,8 @@
 # 超时参数
 [timeout=]  当无任何节点缓存时测试节点HTTP延时允许的最大超时参数，超出允许范围则判定为无效节点，默认2000ms；
 [cd=]       当有缓存时，会先读取缓存，且对节点进行延时测试，直接输出结果；
-            当无缓存时，会对节点直接进行HTTP延时测试，默认460ms。节点延时超过所设定的值时会再次重试，累计两次，若再次超时则会判定为无效节点，并将结果写入缓存；
-            当设置[cd=]的值小于50时，则直接读取缓存；
+            当无缓存时，会对节点直接进行HTTP延时测试，默认0,可自定义。节点延时超过所设定的值时会再次重试，累计两次，若再次超时则会判定为无效节点，并将结果写入缓存；
+            当设置[cd=]的值等于0时，则直接读取缓存；
 
 # 其他参数
 [debug]     调试日志，普通用户不建议使用。
@@ -72,7 +72,7 @@ let FGF = iar.fgf == undefined ? " " : decodeURI(iar.fgf),FGFS = FGF,debug = iar
 const { yw, bl, iisp, yisp, yun, city, flag, game, yuan, sheng, offtz, snone: numone} = iar;
 const h = iar.h ? decodeURI(iar.h) : "",min = iar.min ? decodeURI(iar.min) : "",tzname = iar.tz ? decodeURI(iar.tz) : "",firstN = iar.name ? decodeURI(iar.name) : "";
 const XHFGF = iar.sn == undefined ? " " : decodeURI(iar.sn),{ isLoon: isLoon, isSurge: isSurge } = $substore.env, dns = iar.dnsjx,target = isLoon ? "Loon" : isSurge ? "Surge" : undefined,keypr= "peedtest";
-let cd = iar.cd ? iar.cd : 460, timeout = iar.timeout ? iar.timeout : 2000, writet = "", innum = 1728e5, loontrue = false, onen = false, Sue = false
+let cd = iar.cd ? iar.cd : 0, timeout = iar.timeout ? iar.timeout : 2000, writet = "", innum = 1728e5, loontrue = false, onen = false, Sue = false
 const keyp = "3.s",EXPIRATION_KEY = "sub-store-csr-expiration-time";
 if (min !== "") {
   Sue = true;
@@ -170,7 +170,7 @@ async function operator(e) {
       );
       o += 1;
     }
-    if (!onen && !offtz) $notification.post("CNAME", `开始处理节点: ${ein} 个 批处理数量: ${bs} 个`, "耐心等待, 请勿重复点击预览...");
+    if (!onen && !offtz) $notification.post("CNAME", `开始处理节点: ${ein} 个 批处理数量: ${bs} 个`, "请等待处理完毕后再次点击预览");
     let i = 0;
     while (i < e.length) {
       const batch = e.slice(i, i + bs);
@@ -311,7 +311,7 @@ async function operator(e) {
       klog(`处理进度${i}/${ein}`)
       if (!onen){
         if(!offtz && (ein > (i*2))){
-            if (i >= ((e.length / 3)|0) && i < ((e.length * 2 / 3)|0) && ein>i) {
+            if (i >= (e.length / 3) && i < (e.length * 2 / 3) && ein>i) {
                 $notification.post("CNAME", `处理进度${i}/${ein}`, "耐心等待, 请勿重复点击预览...");
             }
         }
