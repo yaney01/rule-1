@@ -1,9 +1,13 @@
 /**
  * 日期：2023-08-04 17:29:02 仅支持Surge、Loon
- * 用法：Sub-Store 脚本操作里添加 此脚本链接 https://github.com/Keywos/rule/raw/main/pname.js#timeout=1000
+ * 用法：Sub-Store 脚本操作里添加 此脚本链接 https://github.com/Keywos/rule/raw/main/pname.js#timeout=1000&bs=30
  * 作者：@Key
  * 功能：去除无效节点
  *
+ * 参数：
+ * [bs=]       批处理节点数
+ * [timeout=]  超时时间 单位 ms
+ * [flag]     加国旗
  */
 
 const $ = $substore;
