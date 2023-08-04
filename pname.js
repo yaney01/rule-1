@@ -42,7 +42,7 @@ async function operator(e) {
           const OUTK = await OUTIA(pk);
           const qcip = pk.server + OUTK.ip;
           flag && (pk.name = getflag(OUTK.loc) + " " + pk.name);
-          newnode.push(qcip)
+          newnode.push(OUTK.ip)
           pk.Key = OUTK;
           pk.qc = qcip
         } catch (err) {
