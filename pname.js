@@ -1,14 +1,17 @@
-/** 
- * 日期：2023-08-04 17:29:02 仅支持Surge、Loon 
+/**
+ * 日期：2023-08-04 17:29:02 仅支持Surge、Loon
  * 用法：Sub-Store 脚本操作里添加 此脚本链接 https://github.com/Keywos/rule/raw/main/pname.js#timeout=1000
  * 作者：@Key
  * 功能：去除无效节点
- * 
+ *
  */
 
 const $ = $substore;
 const iar = $arguments;
-let timeout = iar.timeout || 2000, flag = iar.flag ,debug = iar.debug;
+let timeout = iar.timeout || 2000,
+  flag = iar.flag,
+  debug = iar.debug,
+  bs = iar.bs || 20;
 const { isLoon: isLoon, isSurge: isSurge } = $substore.env,
   target = isLoon ? "Loon" : isSurge ? "Surge" : undefined;
 async function operator(e) {
@@ -45,7 +48,6 @@ async function operator(e) {
     }
     return e;
   }
-  let bs = iar.bs ? iar.bs : 20;
   const ein = e.length;
   klog(`开始处理节点: ${ein} 个`);
   klog(`批处理节点数: ${bs} 个`);
@@ -56,7 +58,7 @@ async function operator(e) {
       batch.map(async (pk) => {
         try {
           const OUTK = await OUTIA(pk);
-          flag && (pk.name = getflag(OUTK.loc)+" "+pk.name);
+          flag && (pk.name = getflag(OUTK.loc) + " " + pk.name);
           pk.Key = OUTK;
           pk.qc = pk.server + OUTK.ip;
         } catch (err) {
@@ -86,7 +88,8 @@ function sleep(e) {
   return new Promise((t) => setTimeout(t, e));
 }
 
-let apiRead = 0, apiw = 0;
+let apiRead = 0,
+  apiw = 0;
 const OUTKApi = new Map();
 async function OUTIA(e) {
   const t = getid(e);
