@@ -29,29 +29,6 @@ async function operator(e) {
     $.error(`No Loon or Surge`);
     return e;
   }
-  if (typeof scriptResourceCache === "undefined") {
-    klog(
-      "\nPNAME: SubStore 未更新 Version 2.14+,\n查看脚本说明\nhttps://github.com/Keywos/rule/raw/main/PNAME.js"
-    );
-    if (target == "Surge") {
-      $notification.post(
-        "PNAME Sub-Store 未更新 Version 2.14+",
-        "",
-        "请点击或查看klog查看脚本说明安装对应版本",
-        {
-          url: "https://github.com/Keywos/rule/raw/main/Sub-Store/Sub-Store.sgmodule",
-        }
-      );
-    } else if (target == "Loon") {
-      $notification.post(
-        "PNAME Sub-Store 未更新 Version 2.14+ ",
-        "",
-        "请点击安装插件, 或查看klog安装对应版本, 并关闭原本的substore",
-        "loon://import?plugin=https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Tool/Loon/Plugin/Sub-Store.plugin"
-      );
-    }
-    return e;
-  }
   const ein = e.length;
   klog(`开始处理节点: ${ein} 个`);
   klog(`批处理节点数: ${bs} 个`);
@@ -66,7 +43,7 @@ async function operator(e) {
           pk.Key = OUTK;
           pk.qc = pk.server + OUTK.ip;
         } catch (err) {
-          // console.log(err.message)
+          delog(err.message)
         }
       })
     );
@@ -92,12 +69,8 @@ function sleep(e) {
   return new Promise((t) => setTimeout(t, e));
 }
 
-let apiRead = 0,
-  apiw = 0;
-const OUTKApi = new Map();
+let apiRead = 0, apiw = 0;
 async function OUTIA(e) {
-  const t = getid(e);
-  if (OUTKApi.has(t)) return OUTKApi.get(t);
   const maxRE = 2;
   //https://cloudflare.com/cdn-cgi/trace
   const url = `https://cloudflare.com/cdn-cgi/trace`;
@@ -123,7 +96,6 @@ async function OUTIA(e) {
           }
           return acc;
         }, {});
-        scriptResourceCache.set(t, key);
         return key;
       } else {
         throw new Error(resdata.message);
@@ -146,7 +118,6 @@ async function OUTIA(e) {
       })
       .catch(reject);
   });
-  OUTKApi.set(t, resGet);
   return resGet;
 }
 
