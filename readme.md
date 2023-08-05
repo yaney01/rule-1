@@ -6,8 +6,7 @@
 ![](http://profile-counter.glitch.me/keywos/count.svg)
 ### 重命名脚本分为两个版本 ！
 ## [rename.js](https://keywos.cf/rename.js) 
-本地: 按原节点, 批量重命名, 速度最快
-* rename理论上支持所有支持SubStore的设备
+* 本地: 按原节点, 批量重命名, 速度最快 支持所有支持SubStore的设备
 ###  
 ## [cname.js](https://keywos.cf/cname.js) 
 * 联网:真实 入口查询 落地查询 去重并重命名 只支持
