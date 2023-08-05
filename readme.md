@@ -4,10 +4,10 @@
 * 未经允许禁用转载与传播,此库仅为个人备份
 
 ![](http://profile-counter.glitch.me/keywos/count.svg)
-### Sub-Store 脚本操作
+## Sub-Store 脚本操作
 ## [rename.js](https://keywos.cf/rename.js) 
 * 本地: 按原节点, 批量重命名, 速度最快 支持所有支持SubStore的设备
-###  
+
 ## [cname.js](https://keywos.cf/cname.js) 
 * 仅支持 `Loon`、 `Surge` 联网:真实 入口查询 落地查询 去重并重命名 
 
