@@ -90,7 +90,10 @@ const nlc =/邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流�
 // const valueArray = ["Game"];
 async function operator(e) {
   const startTime = new Date();
-  if (!isLoon || !isSurge){$.error(`No Loon or Surge`);return e;}
+  const support = isLoon || isSurge;
+  if (!support) {$.error(`No Loon or Surge`);
+    return e;
+  }
   if (e.length < 1) {$notification.post("CNAME","订阅无节点","");return e;}
   if (typeof scriptResourceCache === "undefined")return e;
   var bs = iar.bs ? iar.bs : 8;
