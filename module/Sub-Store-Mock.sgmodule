@@ -1,7 +1,9 @@
 #!name=Sub-Store Mock
-#!desc=此为额外模块: 需要搭配 SubStore 模块;  使用 Surge Mock 以提升加载速度，减少请求 @key
+#!desc=此为前端页面加速模块: 需要搭配 SubStore 模块使用; 利用 Mock 以提升加载速度，减少请求 @key
+
 # 2023-08-04 23:41:09 remove monaco-editor
 # 脚本操作移动到第一行 方便使用脚本
+
 # 本地重命名：https://raw.githubusercontent.com/Keywos/rule/main/rename.js
 # Ping清除无效节点：https://raw.githubusercontent.com/Keywos/rule/main/pname.js
 # Api去重、查询ISP等：https://raw.githubusercontent.com/Keywos/rule/main/cname.js
