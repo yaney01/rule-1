@@ -8,7 +8,7 @@
  * 参数：
  * [bs=]       批处理节点数
  * [timeout=]  超时时间 单位 ms
- * [flag]     加国旗
+ * [flag]      加国旗
  */
 
 const $ = $substore;

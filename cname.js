@@ -89,34 +89,18 @@ const nlc =/邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流�
 // const regexArray = [/\u6e38\u620f|game/i];
 // const valueArray = ["Game"];
 async function operator(e) {
-  if(e.length < 1) {
-    $notification.post("CNAME","订阅无节点","");
-    return e;}
-//   let cs = 0;
   const startTime = new Date();
-  const support = isLoon || isSurge;
-  if (!support) {$.error(`No Loon or Surge`);
-    return e;
-  }
-  if (typeof scriptResourceCache === "undefined") {
-    klog("\nNCNAME: SubStore 未更新 Version 2.14+,\n查看脚本说明\nhttps://github.com/Keywos/rule/raw/main/cname.js");
-    if (target == "Surge") {
-      $notification.post("NCNAME Sub-Store 未更新 Version 2.14+","","请点击或查看klog查看脚本说明安装对应版本",{url: "https://github.com/Keywos/rule/raw/main/Sub-Store/Sub-Store.sgmodule",});
-    } else if (target == "Loon") {
-      $notification.post("NCNAME Sub-Store 未更新 Version 2.14+ ","","请点击安装插件, 或查看klog安装对应版本, 并关闭原本的substore","loon://import?plugin=https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Tool/Loon/Plugin/Sub-Store.plugin");
-    }
-    return e;
-  }
+  if (!isLoon || !isSurge){$.error(`No Loon or Surge`);return e;}
+  if (e.length < 1) {$notification.post("CNAME","订阅无节点","");return e;}
+  if (typeof scriptResourceCache === "undefined")return e;
   var bs = iar.bs ? iar.bs : 8;
   const ein = e.length;
 /**
  * delog()  debug:boolean  console.log
  * klog()  console.log
  */
-
   klog(`开始处理节点: ${ein} 个`);
   klog(`批处理节点数: ${bs} 个`);
-
   klog(`设定api超时: ${zhTime(timeout)}`);
   klog(`有缓api超时: ${zhTime(cd)}`);
   e = e.filter((item) => !nlc.test(item.name));
@@ -142,7 +126,7 @@ async function operator(e) {
               const readt = scriptResourceCache.gettime(id);
               let nt = new Date().getTime();
               let timedPush = "";
-              if (target == "Loon") {
+              if (isLoon) {
                 let loontd = "";
                 const loonkkk={"1分钟":6e4,"5分钟":3e5,"10分钟":6e5,"30分钟":18e5,"1小时":36e5,"2小时":72e5,"3小时":108e5,"6小时":216e5,"12小时":432e5,"24小时":864e5,"48小时":1728e5,"72小时":2592e5,参数传入:"innums"};
                 intimed = $persistentStore.read("节点缓存有效期");
@@ -170,7 +154,7 @@ async function operator(e) {
       o += 1;
     }
     if (!onen && !offtz) $notification.post("CNAME", `开始处理节点: ${ein} 个 批处理数量: ${bs} 个`, "请等待处理完毕后再次点击预览");
-    let i = 0;
+    let i = 0,newnode = [];
     while (i < e.length) {
       const batch = e.slice(i, i + bs);
       await Promise.all(
@@ -300,6 +284,7 @@ async function operator(e) {
                 // delog(keyover)
             const overName = keyover.join("");
             // delog(overName)
+            newnode.push(outQuery);
             dns && (pk.server = inQcip);
             pk.name = overName;
             pk.qc = inQcip + outQuery;
@@ -315,6 +300,15 @@ async function operator(e) {
             }
         }
         await sleep(getRandom());
+      }
+    }
+    if (ein > 3 && isSurge){
+      delog(newnode)
+      const allsame = newnode.every((value, index, arr) => value === arr[0]);
+      if(allsame){
+          klog(`未使用带指定节点功能的 SubStore`);
+          $notification.post('PNAME：点击以安装对应版本','未使用带指定节点功能的 SubStore','',{url: "https://github.com/Keywos/rule/raw/main/Sub-Store/Sub-Store.sgmodule",})
+          return e;
       }
     }
     // cs++;
@@ -336,7 +330,7 @@ async function operator(e) {
   apiRead > 0 ? klog(`读取api缓存: ${apiRead} 个`) : null;
   apiw > 0 ? klog(`写入api缓存: ${apiw} 个`) : null;
   klog(`处理完后剩余: ${eout} 个`);
-  if (target == "Loon") {
+  if (isLoon) {
     klog("缓存过期时间: " + intimed + ", 还剩" + Pushtd.replace(/,|\n/g, ""));
   } else {
     klog("缓存过期时间: " +zhTime(TIMEDKEY) +", 还剩" +Pushtd.replace(/,|\n/g, ""));
