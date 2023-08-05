@@ -10,11 +10,11 @@
 * rename理论上支持所有支持SubStore的设备
 ###  
 ## [cname.js](https://keywos.cf/cname.js) 
-联网:真实 入口查询 落地查询 去重并重命名 只支持
+* 联网:真实 入口查询 落地查询 去重并重命名 只支持
 `Loon`、 `Surge`
 
 ## [pname.js](https://keywos.cf/pname.js) 
-联网:Ping去除无效节点 不改名 只支持
+* 联网:Ping去除无效节点 不改名 只支持
 `Loon`、 `Surge`
 
 
