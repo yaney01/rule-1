@@ -9,6 +9,7 @@
  * [bs=]       批处理节点数
  * [timeout=]  超时时间 单位 ms
  * [flag]      加国旗
+ * [pingsort]      根据延迟排序
  */
 
 const $ = $substore;
@@ -16,6 +17,7 @@ const iar = $arguments;
 let timeout = iar.timeout || 2000,
   flag = iar.flag,
   debug = iar.debug,
+  Sort = iar.pingsort,
   bs = iar.bs || 20;
 const { isLoon: isLoon, isSurge: isSurge } = $substore.env,
   target = isLoon ? "Loon" : isSurge ? "Surge" : undefined;
@@ -65,6 +67,7 @@ async function operator(e) {
   
   
   e = removels(e);
+  Sort && (e.slice().sort((a, b) => a.Key.tk - b.Key.tk));
   let eout = e.length;
   const endTime = new Date();
   const timeDiff = endTime.getTime() - startTime.getTime();
