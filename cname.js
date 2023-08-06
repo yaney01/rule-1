@@ -91,7 +91,9 @@ const nlc =/邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流�
 async function operator(e) {
   const startTime = new Date();
   const support = isLoon || isSurge;
-  if (!support) {$.error(`No Loon or Surge`);
+  if (!support) {
+  $.notify("No Loon or Surge")
+  $.error(`No Loon or Surge`);
     return e;
   }
   if (e.length < 1) {$notification.post("CNAME","订阅无节点","");return e;}

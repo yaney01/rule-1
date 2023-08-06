@@ -27,6 +27,7 @@ async function operator(e) {
   const startTime = new Date();
   const support = isLoon || isSurge;
   if (!support) {
+    $.notify("No Loon or Surge")
     $.error(`No Loon or Surge`);
     return e;
   }
