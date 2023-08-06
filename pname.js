@@ -9,7 +9,7 @@
  * [bs=]       批处理节点数
  * [timeout=]  超时时间 单位 ms
  * [flag]      加国旗
- * [px]        根据Ping延时排序
+ * [px]        根据 [Https Ping cloudflare] 延时排序
  */
 
 const $ = $substore;
