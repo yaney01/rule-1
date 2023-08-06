@@ -22,15 +22,15 @@ let timeout = iar.timeout || 2000,
 const { isLoon: isLoon, isSurge: isSurge } = $substore.env,
   target = isLoon ? "Loon" : isSurge ? "Surge" : undefined;
 async function operator(e) {
-  if (e.length < 1) {
-    $notification.post("PNAME", "订阅无节点", "");
-    return e;
-  }
   const startTime = new Date();
   const support = isLoon || isSurge;
   if (!support) {
     $.notify("No Loon or Surge")
     $.error(`No Loon or Surge`);
+    return e;
+  }
+  if (e.length < 1) {
+    $notification.post("PNAME", "订阅无节点", "");
     return e;
   }
   const ein = e.length;
@@ -64,11 +64,8 @@ async function operator(e) {
         return e;
     }
   }
-  
-  
   e = removels(e);
   Sort && (e.sort((a, b) => a.Key.tk - b.Key.tk));
-  console.log(e)
   let eout = e.length;
   const endTime = new Date();
   const timeDiff = endTime.getTime() - startTime.getTime();
