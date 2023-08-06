@@ -6,8 +6,8 @@
 force-http-engine-hosts = %APPEND% 59.111.*:0, iadmusicmatvideo.music.126.net
 
 [URL Rewrite]
-# surge-host
-^https?:\/\/httpdns.n.netease.com\/ - reject
+^https?:\/\/httpdns.n\.netease\.com - reject
+^https?:\/\/httpdns\.music\.163\.com - reject
 
 [Rule]
 DOMAIN,iadmusicmat.music.126.net,REJECT-NO-DROP
@@ -28,7 +28,7 @@ DOMAIN-SUFFIX,163jiasu.com,REJECT-NO-DROP
 ^https?:\/\/interface3?\.music\.163.com\/eapi\/(mlivestream\/entrance\/playpage|link\/(position\/show\/(strategy|resource)|scene\/show)) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
 
 # 黑胶弹窗｜会员试用
-^https?:\/\/interface3?\.music\.163.com\/eapi\/(ad|vipcenter\/tspopup\/get|vipauth\/app\/auth|music-vip-membership\/client\/vip\/info|zone\/songplay\/entry\/get) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
+^https?:\/\/interface3?\.music\.163.com\/eapi\/(vipcenter\/tspopup\/get|vipauth\/app\/auth|music-vip-membership\/client\/vip\/info|zone\/songplay\/entry\/get) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
 
 # 搜索页热搜卡片｜猜你喜欢｜我的应用下方提醒
 ^https?:\/\/interface3?\.music\.163.com\/w?e?api\/(search\/(chart|default|rcmd\/keyword|specialkeyword)|(resource-exposure\/|middle\/clientcfg\/config)|activity\/bonus\/playpage\/time\/query) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
@@ -36,12 +36,10 @@ DOMAIN-SUFFIX,163jiasu.com,REJECT-NO-DROP
 # 侧边栏
 ^https?:\/\/interface3?\.music\.163\.com\/eapi\/(side-bar\/mini-program\/music-service\/account|delivery\/batch-deliver) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
 
+^https?:\/\/(ipv4|interface3?)\.music\.163.com\/eapi\/ad data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
+
 [Header Rewrite]
-#摸鱼你偷呀(
-#^https?:\/\/interface3?\.music\.163\.com\/eapi\/(batch|ad) header-replace-regex cookie os=iPhone\sOS os=osx
-
-#^https?:\/\/interface3?\.music\.163\.com\/eapi\/(batch|ad) header-replace user-agent "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) NeteaseMusicDesktop/2.3.14.999"
-
 ^https?:\/\/interface3?\.music\.163\.com\/eapi\/batch header-replace-regex cookie appver=.+$ appver=2333
+
 [MITM]
-hostname = %APPEND% 59.111.*, 112.13.119.52, 117.147.199.59, interface*.music.163.com:0, httpdns.n.netease.com, *.163jiasu.com
+hostname = %APPEND% 59.111.*, 112.13.119.52, 117.147.199.59, interface*.music.163.com:0, httpdns.n.netease.com, *.163jiasu.com, ipv4.music.163.com
