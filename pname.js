@@ -1,5 +1,5 @@
 /**
- * 日期：2023-08-04 17:29:02 仅支持Surge、Loon
+ * 日期：2023-08-06 12:15:05 仅支持Surge、Loon
  * 注意: Surge 必须使用带 有参数 [ability=http-client-policy] 走指定节点功能的substore否则脚本无效 
  * 用法：Sub-Store 脚本操作里添加 此脚本链接 https://github.com/Keywos/rule/raw/main/pname.js#timeout=1000&bs=30
  * 作者：@Key
@@ -9,7 +9,7 @@
  * [bs=]       批处理节点数
  * [timeout=]  超时时间 单位 ms
  * [flag]      加国旗
- * [px]        根据延迟排序
+ * [px]        根据Ping延时排序
  */
 
 const $ = $substore;
