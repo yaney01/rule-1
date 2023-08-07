@@ -1,5 +1,5 @@
 #!name=Sub-Store Mock
-#!desc=前端页面加速模块: 提升加载速度/减少资源使用 需要搭配 SubStore 主程序使用 @key 
+#!desc=前端页面加速模块: 提升加载速度/减少资源使用/新主题 需要搭配 SubStore 主程序使用 @key 
 #!icon = https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/substore.png
 
 # 2023-08-05 11:18:28 Remove monaco-editor Re addAction
