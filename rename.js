@@ -7,7 +7,7 @@ rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数�
 --------------------------------
 
 # 主要参数
-[in=]    自动判断机场节点名类型(那种类型多就判断为那种)(优先匹配原节点国旗) !!! 如果不准的情况, 可以加参数指定 (cn ，us ，gq ，quan), 例如 in=cn 识别原节点的中文名
+[in=]    自动判断机场节点名类型(那种类型多就判断为那种)(优先匹配原节点中文) !!! 如果不准的情况, 可以加参数指定 (cn ，us ，gq ，quan), 例如 in=cn 识别原节点的中文名
 [out=]   输出节点名可选参数: (cn ，us ，gq ，quan) 对应：(中文，英文缩写 ，国旗 ，英文全称) 默认中文
 
 # 分隔符参数
@@ -48,10 +48,10 @@ const inname =
     : "";
 function gl(arg) {
   switch (arg) {
-    case "gq":
-      return gq;
     case "us":
       return us;
+    case "gq":
+      return gq;
     case "quan":
       return quan;
     default:
@@ -108,14 +108,14 @@ function gF(e) {
   return String.fromCodePoint(...n).replace(/🇹🇼/g, "🇨🇳");
 }
 function gReg(pn) {
-  if (gq.some((name) => pn.includes(name))) {
-    return "gq";
-  } else if (cn.some((name) => pn.includes(name))) {
+  if (cn.some((name) => pn.includes(name))) {
     return "cn";
   } else if (quan.some((name) => pn.includes(name))) {
     return "quan";
   } else if (us.some((name) => pn.includes(name))) {
     return "us";
+  } else if (gq.some((name) => pn.includes(name))) {
+    return "gq";
   } else {
     return null;
   }
