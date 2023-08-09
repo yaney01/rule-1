@@ -271,7 +271,7 @@ async function operator(e) {
             flag && (adflag = getflag(outUs));
             game && (OGame = /game|游戏/i.test(pk.name) ? (flag ? "🎮" : FGF+"Game") : OGame);
             if (bl){
-              const match = pk.name.match(/(倍率\D?((\d\.)?\d+)\D?)|((\d\.)?\d+)(倍|X|x|×)/);
+              const match = pk.name.match(/((倍率|X|x|×)\D?((\d\.)?\d+)\D?)|((\d\.)?\d+)(倍|X|x|×)/);
               if (match) {
               const matchVa = match[0].match(/(\d[\d.]*)/)[0];
                   if (matchVa !== "1") {
