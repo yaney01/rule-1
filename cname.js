@@ -275,7 +275,7 @@ async function operator(e) {
               if (match) {
               const matchVa = match[0].match(/(\d[\d.]*)/)[0];
                   if (matchVa !== "1") {
-                      nxx = FGF + matchVa + "X";
+                      nxx = XHFGF + matchVa + "X";
                   }
               }
             }
