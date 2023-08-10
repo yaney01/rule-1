@@ -1,5 +1,5 @@
 /** 
- * 更新日期：2023-07-22 17:41:30 仅支持Surge、Loon 
+ * 更新日期：2023-08-10 02:37:10 仅支持Surge、Loon 
  * 用法：Sub-Store Version 2.14+ 脚本操作里添加：默认48H缓存超时 可参数自定
  * 符号：🅳电信 🅻联通 🆈移动 🅶广电 🅲公司 🆉直连 🎮游戏
  * 作者：@Key @奶茶姐 @小一 @可莉
@@ -271,11 +271,11 @@ async function operator(e) {
             flag && (adflag = getflag(outUs));
             game && (OGame = /game|游戏/i.test(pk.name) ? (flag ? "🎮" : FGF+"Game") : OGame);
             if (bl){
-              const match = pk.name.match(/(倍率\D?((\d\.)?\d+)\D?)|((\d\.)?\d+)(倍|X|x|×)/);
+              const match = pk.name.match(/((倍率|X|x|×)\D?((\d\.)?\d+)\D?)|((\d\.)?\d+)(倍|X|x|×)/);
               if (match) {
               const matchVa = match[0].match(/(\d[\d.]*)/)[0];
                   if (matchVa !== "1") {
-                      nxx = FGF + matchVa + "X";
+                      nxx = XHFGF + matchVa + "X";
                   }
               }
             }
