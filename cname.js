@@ -307,17 +307,17 @@ async function operator(e) {
         await sleep(getRandom());
       }
     }
+    e = removels(e);
     if (ein > 3 && isSurge){
       delog(newnode)
       const allsame = newnode.every((value, index, arr) => value === arr[0]);
       if(allsame){
           klog(`未使用带指定节点功能的 SubStore`);
-          $notification.post('PNAME：点击以安装对应版本','未使用带指定节点功能的 SubStore','',{url: "https://github.com/Keywos/rule/raw/main/Sub-Store/Sub-Store.sgmodule",})
+          $notification.post('CNAME：点击以安装对应版本','未使用带指定节点功能的 SubStore','',{url: "https://github.com/Keywos/rule/raw/main/Sub-Store/Sub-Store.sgmodule",})
           return e;
       }
     }
     // cs++;
-    e = removels(e);
 //     rere = e.length < ein * 0.2 || false;
 //     (rere && cs === 1) && (cd = timeout,await sleep(50));
 //   } while (rere && cs < 2);
