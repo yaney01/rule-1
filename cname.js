@@ -308,7 +308,8 @@ async function operator(e) {
       }
     }
     e = removels(e);
-    if (ein > 3 && isSurge){
+    let eout = e.length;
+    if (eout > 2 && isSurge){
       delog(newnode)
       const allsame = newnode.every((value, index, arr) => value === arr[0]);
       if(allsame){
@@ -326,7 +327,6 @@ async function operator(e) {
   e = jxh(e);
   // if (firstN !== "") {e.forEach((pk) => {pk.name = firstN + " " + pk.name;});}
   numone && (e = onee(e));
-  let eout = e.length;
   const endTime = new Date();
   const timeDiff = endTime.getTime() - startTime.getTime();
   if (dns) {

@@ -55,7 +55,9 @@ async function operator(e) {
     );
     i += bs;
   }
-  if (ein > 3){
+  e = removels(e);
+  let eout = e.length;
+  if (eout > 2 && isSurge){
     delog(newnode)
     const allsame = newnode.every((value, index, arr) => value === arr[0]);
     if(allsame){
@@ -64,9 +66,7 @@ async function operator(e) {
         return e;
     }
   }
-  e = removels(e);
   Sort && (e.sort((a, b) => a.Key.tk - b.Key.tk));
-  let eout = e.length;
   const endTime = new Date();
   const timeDiff = endTime.getTime() - startTime.getTime();
   klog(`处理完后剩余: ${eout} 个`);
