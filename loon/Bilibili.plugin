@@ -8,9 +8,7 @@
 #!select = 去除动态综合页最常访问,开启,关闭
 #!select = 会员弹幕替换为普通弹幕,开启,关闭
 #!select = 去除交互式弹幕,开启,关闭
-#!select = 去除青少年弹窗,默认开启
-#!select = LOG,开启,关闭
-# 2023-06-04 17:51:29
+#!date = 2023-08-19 21:59:17
 [Rewrite]
 # IP请求、地理位置请求
 ^https?:\/\/app\.bilibili\.com\/x\/resource\/ip reject
