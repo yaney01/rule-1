@@ -6,7 +6,7 @@
 #!icon = https://gitlab.com/lodepuly/iconlibrary/-/raw/master/App_icon/120px/TikTok.png
 #!select = TikTok解锁地区,日本,韩国,英国,美国,台湾,香港,新加坡,法国,马来西亚,菲律宾,泰国,手动输入
 #!input = 手动输入地区代码[可选]
-
+#!date = 2023-08-19 22:00:03
 # 分流转自 https://github.com/ACL4SSR/ACL4SSR/blob/master/Clash/Ruleset/TikTok.list
 [Rule]
 DOMAIN-KEYWORD,tiktokcdn,PROXY
