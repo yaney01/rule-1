@@ -36,16 +36,9 @@ const { key, bl, nf, blpx, nx, blnx, one: numone, clear, flag: addflag } = iar;
 const jcname = iar.name == undefined ? "" : decodeURI(iar.name),
   FGF = iar.fgf == undefined ? " " : decodeURI(iar.fgf),
   XHFGF = iar.sn == undefined ? " " : decodeURI(iar.sn);
-const inname =
-  iar.in === "cn"
-    ? "cn"
-    : iar.in === "us"
-    ? "us"
-    : iar.in === "quan"
-    ? "quan"
-    : iar.gq === "gq"
-    ? "gq"
-    : "";
+const inname = iar.in === "cn" ? "cn"
+    : iar.in === "us" ? "us" : iar.in === "quan" ? "quan"
+    : iar.gq === "gq" ? "gq" : "";
 function gl(arg) {
   switch (arg) {
     case "us":
@@ -153,9 +146,9 @@ const rurekey = {
   "United States": /USA|Los Angeles|San Jose|Silicon Valley|Michigan/g,
   中国: /中國|回国|回國|国内|國內|华东|华西|华南|华北|华中|江苏|北京|上海|广州|深圳|杭州|徐州|青岛|宁波|镇江/g,
   澳大利亚: /澳洲|墨尔本|悉尼|土澳|(深|沪|呼|京|广|杭)澳/g,
-  德国: /(深|沪|呼|京|广|杭)德|法兰克福|滬德/g,
-  香港: /(深|沪|呼|京|广|杭)港/g,
-  日本: /(深|沪|呼|京|广|杭|中|辽)日|东京|大坂/g,
+  德国: /(深|沪|呼|京|广|杭)德(?!.*线)|法兰克福|滬德/g,
+  香港: /(深|沪|呼|京|广|杭)港(?!.*线)/g,
+  日本: /(深|沪|呼|京|广|杭|中|辽)日(?!.*线)|东京|大坂/g,
   新加坡: /狮城|(深|沪|呼|京|广|杭)新/g,
   美国: /(深|沪|呼|京|广|杭)美|波特兰|芝加哥|哥伦布|纽约|硅谷|俄勒冈|西雅图|芝加哥/g,
   "02": /洛杉矶/g,
@@ -166,7 +159,7 @@ const rurekey = {
   迪拜: /阿联酋|阿拉伯联合酋长国/g,
   孟加拉国: /孟加拉/g,
   捷克: /捷克共和国/g,
-  台湾: /新台|新北|台/g,
+  台湾: /新台|新北|台(?!.*线)/g,
   Taiwan: /Taipei/g,
   韩国: /春川|韩|首尔/g,
   Japan: /Tokyo|Osaka/g,
