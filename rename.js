@@ -15,7 +15,7 @@ rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数�
           [in=quan] 识别英文全称 
           如果加参数 in=flag 则识别国旗 脚本操作前面不要添加国旗操作 否则移除国旗后面脚本识别不到
           
-  [out=]   输出节点名可选参数: (cn或zh ，us或en ，gq或flag ，quan) 对应：(中文，英文缩写 ，国旗 ，英文全称) 默认中文 例如 [out=en] 或 out=us 输出英文缩写
+[out=]   输出节点名可选参数: (cn或zh ，us或en ，gq或flag ，quan) 对应：(中文，英文缩写 ，国旗 ，英文全称) 默认中文 例如 [out=en] 或 out=us 输出英文缩写
 
 # 分隔符参数
 [fgf=]   节点名前缀或国旗分隔符，默认为空格；
@@ -41,119 +41,14 @@ rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数�
 // const iar = {'in': 'cn', 'debug':true};
 const iar = $arguments;
 const { key, bl, nf, blpx, nx, blnx, debug, one: numone, clear, flag: addflag } = iar;
-const jcname = iar.name == undefined ? "" : decodeURI(iar.name),
-  FGF = iar.fgf == undefined ? " " : decodeURI(iar.fgf),
-  XHFGF = iar.sn == undefined ? " " : decodeURI(iar.sn);    
-
-const nameMap = {
-  cn: "cn",
-  zh: "cn",
-  us: "us",
-  en: "us",
-  quan: "quan",
-  gq: "gq",
-  flag: "gq",
-};
-
-const inname = nameMap[iar.in] || "";
-const outputName = nameMap[iar.out] || "";
-
-function getList(arg) {
-  switch (arg) {
-    case "us":
-      return us;
-    case "gq":
-      return gq;
-    case "quan":
-      return quan;
-    default:
-      return cn;
-  }
-}
-
-function jxh(e) {
-  const n = e.reduce((e, n) => {
-    const t = e.find((e) => e.name === n.name);
-    if (t) {
-      t.count++;
-      t.items.push({
-        ...n,
-        name: `${n.name}${XHFGF}${t.count.toString().padStart(2, "0")}`,
-      });
-    } else {
-      e.push({
-        name: n.name,
-        count: 1,
-        items: [{ ...n, name: `${n.name}${XHFGF}01` }],
-      });
-    }
-    return e;
-  }, []);
-  const t = n.flatMap((e) => e.items);
-  e.splice(0, e.length, ...t);
-  return e;
-}
-function oneP(y) {
-  const groups = y.reduce((groups, proxy) => {
-    const name = proxy.name.replace(
-      /[^A-Za-z0-9\u00C0-\u017F\u4E00-\u9FFF]+\d+$/,
-      ""
-    );
-    if (!groups[name]) {
-      groups[name] = [];
-    }
-    groups[name].push(proxy);
-    return groups;
-  }, {});
-  for (const name in groups) {
-    if (groups[name].length === 1 && groups[name][0].name.endsWith("01")) {
-      const proxy = groups[name][0];
-      proxy.name = name;
-    }
-  }
-  return y;
-}
-function gF(e) {
-  const n = e
-    .toUpperCase()
-    .split("")
-    .map((e) => 127397 + e.charCodeAt());
-  return String.fromCodePoint(...n).replace(/🇹🇼/g, "🇨🇳");
-}
-function gReg(pn) {
-  if (cn.some((name) => pn.includes(name))) {
-    return "cn";
-  } else if (quan.some((name) => pn.includes(name))) {
-    return "quan";
-  } else if (gq.some((name) => pn.includes(name))) {
-    return "gq";
-  } else if (us.some((name) => pn.includes(name))) {
-    return "us";
-  }  else {
-    return null;
-  }
-}
-function fampx(y) {
-  const wis = [];
-  const wnout = [];
-  for (const proxy of y) {
-    const fan = specialRegex.some((regex) => regex.test(proxy.name));
-    if (fan) {
-      wis.push(proxy);
-    } else {
-      wnout.push(proxy);
-    }
-  }
-  const sps = wis.map((proxy) =>
-    specialRegex.findIndex((regex) => regex.test(proxy.name))
-  );
-  wis.sort(
-    (a, b) =>
-      sps[wis.indexOf(a)] - sps[wis.indexOf(b)] || a.name.localeCompare(b.name)
-  );
-  wnout.sort((a, b) => y.indexOf(a) - y.indexOf(b));
-  return wnout.concat(wis);
-}
+const jcname = iar.name == undefined ? "" : decodeURI(iar.name), FGF = iar.fgf == undefined ? " " : decodeURI(iar.fgf), XHFGF = iar.sn == undefined ? " " : decodeURI(iar.sn);    
+const nameMap = { cn: "cn", zh: "cn", us: "us", en: "us", quan: "quan", gq: "gq", flag: "gq", }, inname = nameMap[iar.in] || "", outputName = nameMap[iar.out] || "";
+function getList(arg) { switch (arg) { case "us": return us; case "gq": return gq; case "quan": return quan; default: return cn; }};
+function jxh(e) { const n = e.reduce((e, n) => { const t = e.find((e) => e.name === n.name); if (t) { t.count++; t.items.push({ ...n, name: `${n.name}${XHFGF}${t.count.toString().padStart(2, "0")}`, }); } else { e.push({ name: n.name, count: 1, items: [{ ...n, name: `${n.name}${XHFGF}01` }], }); } return e; }, []); const t = n.flatMap((e) => e.items); e.splice(0, e.length, ...t); return e;};
+function oneP(y) {const groups = y.reduce((groups, proxy) => {const name = proxy.name.replace(/[^A-Za-z0-9\u00C0-\u017F\u4E00-\u9FFF]+\d+$/,"");if (!groups[name]) {groups[name] = [];}groups[name].push(proxy);return groups;}, {});for (const name in groups) {if (groups[name].length === 1 && groups[name][0].name.endsWith("01")) {const proxy = groups[name][0];}}return y;}
+function gF(e) {const n = e.toUpperCase().split("").map((e) => 127397 + e.charCodeAt());return String.fromCodePoint(...n).replace(/🇹🇼/g, "🇨🇳");};
+function fampx(y) { const wis = []; const wnout = []; for (const proxy of y) { const fan = specialRegex.some((regex) => regex.test(proxy.name)); if (fan) { wis.push(proxy); } else { wnout.push(proxy); } } const sps = wis.map((proxy) => specialRegex.findIndex((regex) => regex.test(proxy.name)) ); wis.sort( (a, b) => sps[wis.indexOf(a)] - sps[wis.indexOf(b)] || a.name.localeCompare(b.name) ); wnout.sort((a, b) => y.indexOf(a) - y.indexOf(b)); return wnout.concat(wis);};
+function gReg(pn) { if (cn.some((name) => pn.includes(name))) { return "cn"; } else if (quan.some((name) => pn.includes(name))) { return "quan"; } else if (gq.some((name) => pn.includes(name))) { return "gq"; } else if (us.some((name) => pn.includes(name))) { return "us"; } else { return null; }};
 const rurekey = {
   GB: /UK/g,
   "B-G-P": /BGP/g,
@@ -233,27 +128,16 @@ function operator(y) {
     acc[curr] = [outputList[index], 0];
     return acc;
   }, {});
-
-  if (clear) {
-    y = y.filter((res) => !nameclear.test(res.name));
-  }
-  if (nx) {
-    y = y.filter((res) => !res.name.match(namenx));
-  }
-  if (blnx) {
-    y = y.filter((res) => res.name.match(nameblnx));
-  }
-  if (key) {
-    y = y.filter((res) => res.name.match(keya) && res.name.match(/2|4|6|7/i));
-  }
+  clear && (y = y.filter((res) => !nameclear.test(res.name)));
+  nx && (y = y.filter((res) => !res.name.match(namenx)));
+  blnx && (y = y.filter((res) => res.name.match(nameblnx)));
+  key && (y = y.filter((res) => res.name.match(keya) && res.name.match(/2|4|6|7/i)));
   const delFgf = [];
   const newPr = [];
   y.forEach((res) => {
     let isFgf = false;
     const ikey = [];
-    if (!nf) {
-      ikey.push(jcname);
-    }
+    !nf && (ikey.push(jcname));
     for (const elem of Object.keys(ik)) {
       if (res.name.indexOf(elem) !== -1) {
         if (!isFgf) {
