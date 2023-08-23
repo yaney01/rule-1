@@ -40,7 +40,7 @@ const jcname = iar.name == undefined ? "" : decodeURI(iar.name),
   XHFGF = iar.sn == undefined ? " " : decodeURI(iar.sn);
 const inname = iar.in === "cn" ? "cn"
     : iar.in === "us" ? "us" : iar.in === "quan" ? "quan"
-    : iar.gq === "gq" ? "gq" : "";
+    : iar.in === "gq" ? "gq" : "";
 function gl(arg) {
   switch (arg) {
     case "us":
