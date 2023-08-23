@@ -42,7 +42,7 @@ DOMAIN,h-adashx.ut.taobao.com,REJECT
 #Loon 3.0.8
 ^https?:\/\/run\.api\.qyfxgd\.cn(:\d+)?\/api\/v\d\/advert\/config reject
 #大师兄
-^https?:\/\/sdk\.alibaba\.com\.ailbaba\.me\/(dsx|xgapp)\.php\/v\d\/(top_notice\?|version|advert\?position=[^2]+) reject
+^https?:\/\/sdk\.alibaba\.com\.ailbaba\.me\/(dsx|xgapp)\.php\/v\d\/(top_notice\?|app_config|search_hot|version|advert\?position=[^2]+) reject-dict
 
 #淘宝
 #^https:\/\/(heic|gw)\.alicdn\.com\/imgextra\/i\d\/.+-tps-(702-758|1125-1602)\.(heic|jpg|png) reject-dict
