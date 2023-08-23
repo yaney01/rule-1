@@ -2,15 +2,20 @@
 更新日期：2023-07-29 21:39:29
 说明: https://github.com/Keywos/rule/blob/main/readme.md
 用法：Sub-Store 脚本操作添加
-例如：https://raw.githubusercontent.com/Keywos/rule/main/rename.js#name=测试&flag&in=cn&out=quan
+
+例如：https://raw.githubusercontent.com/Keywos/rule/main/rename.js#name=测试&flag&in=flag&out=zh
 rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数使用"&"连接，参考上述地址为例使用参数。
---------------------------------
 
 # 主要参数
 [in=]    自动判断机场节点名类型(那种类型多就判断为那种)(优先匹配原节点中文) 
-          如果不准的情况, 可以加参数指定 (cn ，us ，gq ，quan), 例如 in=cn 识别原节点的中文名
-          如果加参数 in=gq 则识别国旗 脚本操作前面不要添加国旗操作 否则移除国旗后面脚本识别不到啊...
-[out=]   输出节点名可选参数: (cn ，us ，gq ，quan) 对应：(中文，英文缩写 ，国旗 ，英文全称) 默认中文
+          如果不准的情况, 可以加参数指定:
+          [in=zh] 或in=cn识别中文
+          [in=en] 或in=us 识别英文缩写
+          [in=flag] 或in=gq 识别国旗
+          [in=quan] 识别英文全称 
+          如果加参数 in=flag 则识别国旗 脚本操作前面不要添加国旗操作 否则移除国旗后面脚本识别不到
+          
+  [out=]   输出节点名可选参数: (cn或zh ，us或en ，gq或flag ，quan) 对应：(中文，英文缩写 ，国旗 ，英文全称) 默认中文 例如 [out=en] 或 out=us 输出英文缩写
 
 # 分隔符参数
 [fgf=]   节点名前缀或国旗分隔符，默认为空格；
@@ -33,18 +38,27 @@ rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数�
 
 */
 
+// const iar = {'in': 'cn', 'debug':true};
 const iar = $arguments;
 const { key, bl, nf, blpx, nx, blnx, debug, one: numone, clear, flag: addflag } = iar;
 const jcname = iar.name == undefined ? "" : decodeURI(iar.name),
   FGF = iar.fgf == undefined ? " " : decodeURI(iar.fgf),
   XHFGF = iar.sn == undefined ? " " : decodeURI(iar.sn);    
-const inname = {
+
+const nameMap = {
   cn: "cn",
+  zh: "cn",
   us: "us",
+  en: "us",
   quan: "quan",
   gq: "gq",
-}[iar.in] || "";
-function gl(arg) {
+  flag: "gq",
+};
+
+const inname = nameMap[iar.in] || "";
+const outputName = nameMap[iar.out] || "";
+
+function getList(arg) {
   switch (arg) {
     case "us":
       return us;
@@ -56,6 +70,7 @@ function gl(arg) {
       return cn;
   }
 }
+
 function jxh(e) {
   const n = e.reduce((e, n) => {
     const t = e.find((e) => e.name === n.name);
@@ -198,7 +213,7 @@ function operator(y) {
   });
 
   if (inname !== "") {
-    var inputList = gl(inname);
+    var inputList = getList(inname);
   } else {
     const inn = y
       .slice(0, 10)
@@ -210,9 +225,9 @@ function operator(y) {
     const rein = Object.entries(inn);
     rein.sort((a, b) => b[1] - a[1]);
     const regss = rein[0][0];
-    var inputList = gl(regss);
+    var inputList = getList(regss);
   }
-  var outputList = gl($arguments["out"]);
+  var outputList = getList(outputName);
 
   var ik = inputList.reduce((acc, curr, index) => {
     acc[curr] = [outputList[index], 0];
