@@ -1,5 +1,5 @@
 # Key update:2023
-DOMAIN,ulogs.umeng.com
+# DOMAIN,ulogs.umeng.com
 DOMAIN-SUFFIX,umsns.com 
 DOMAIN,app-measurement.com
 DOMAIN,adimg.uve.weibo.com
@@ -77,7 +77,7 @@ DOMAIN,api-access.pangolin-sdk-toutiao-b.com
 DOMAIN,nex.163.com
 DOMAIN-SUFFIX,gorgon.youdao.com
 #闲鱼
-DOMAIN,m.ykimg.com
+# DOMAIN,m.ykimg.com
 DOMAIN,iyes.youku.com
 DOMAIN,adashx.m.taobao.com
 DOMAIN,apoll.m.taobao.com

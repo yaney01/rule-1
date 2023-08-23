@@ -10,6 +10,9 @@ DOMAIN-SUFFIX,pos.baidu.com,REJECT
 DOMAIN-SUFFIX,statics.woozooo.com,REJECT
 DOMAIN,aid.m.taobao.com,REJECT
 DOMAIN,h-adashx.ut.taobao.com,REJECT
+DOMAIN-SUFFIX,m.ykimg.com,REJECT-DROP
+DOMAIN-SUFFIX,ulogs.umeng.com,REJECT-DROP
+
 [Rewrite]
 
 # 网易
