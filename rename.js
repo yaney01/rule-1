@@ -125,11 +125,11 @@ function gReg(pn) {
     return "cn";
   } else if (quan.some((name) => pn.includes(name))) {
     return "quan";
-  } else if (us.some((name) => pn.includes(name))) {
-    return "us";
   } else if (gq.some((name) => pn.includes(name))) {
     return "gq";
-  } else {
+  } else if (us.some((name) => pn.includes(name))) {
+    return "us";
+  }  else {
     return null;
   }
 }
