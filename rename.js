@@ -49,6 +49,7 @@ function oneP(e) { const t = e.reduce((e, t) => { const n = t.name.replace(/[^A-
 function gF(e) {const n = e.toUpperCase().split("").map((e) => 127397 + e.charCodeAt());return String.fromCodePoint(...n).replace(/🇹🇼/g, "🇨🇳");};
 function fampx(y) { const wis = []; const wnout = []; for (const proxy of y) { const fan = specialRegex.some((regex) => regex.test(proxy.name)); if (fan) { wis.push(proxy); } else { wnout.push(proxy); } } const sps = wis.map((proxy) => specialRegex.findIndex((regex) => regex.test(proxy.name)) ); wis.sort( (a, b) => sps[wis.indexOf(a)] - sps[wis.indexOf(b)] || a.name.localeCompare(b.name) ); wnout.sort((a, b) => y.indexOf(a) - y.indexOf(b)); return wnout.concat(wis);};
 function gReg(pn) { if (cn.some((name) => pn.includes(name))) { return "cn"; } else if (quan.some((name) => pn.includes(name))) { return "quan"; } else if (gq.some((name) => pn.includes(name))) { return "gq"; } else if (us.some((name) => pn.includes(name))) { return "us"; } else { return null; }};
+debug && (console.log(iar));
 const rurekey = {
   GB: /UK/g,
   "B-G-P": /BGP/g,
