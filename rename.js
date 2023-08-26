@@ -82,7 +82,7 @@ const rurekey = {
     "B-G-P": /BGP/g,
     "Russia Moscow": /Moscow/g,
     "Korea Chuncheon": /Chuncheon|Seoul/g,
-    "Hong Kong": /Hongkong|HongKong|HONG KONG/g,
+    "Hong Kong": /Hongkong|HONG KONG/gi,
     "United Kingdom London": /London|Great Britain/g,
     "Dubai United Arab Emirates": /United Arab Emirates/g,
     "Taiwan TW 台湾 🇹🇼": /(台|Tai\s?wan|TW).*?🇨🇳|🇨🇳.*?(台|Tai\s?wan|TW)/g,
@@ -113,6 +113,7 @@ const rurekey = {
     土耳其: /伊斯坦布尔/g,
     泰国: /泰國|曼谷/g,
     法国: /巴黎/g,
+    G: /\d\s?GB/gi,
   };
 function operator(pro) {
     const Allmap = {};
@@ -141,7 +142,8 @@ function operator(pro) {
         return shouldKeep;
         });
     };
-
+    
+    // 预处理 防止预判或遗漏
     pro.forEach((e) => {
         Object.keys(rurekey).forEach((ikey) => {
         if (rurekey[ikey].test(e.name)) {
