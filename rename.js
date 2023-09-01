@@ -25,7 +25,7 @@
  * [name=]  节点添加机场名称前缀；
  * [nf]     默认下面参数的name在最前面，如果加此参数，name在国旗之后
  *** 保留参数
- * 参数      [blkey=iplc+gpt+NF+IPLC] 用+号添加多个关键词 保留节点名的自定义字段 需要区分大小写!
+ * [blkey=iplc+gpt+NF+IPLC] 用+号添加多个关键词 保留节点名的自定义字段 需要区分大小写!
  * 例如      https://github.com/Keywos/rule/raw/main/rename-beta.js#flag&blkey=iplc+gpt+NF+IPLC
  * [blgd]   保留: 家宽 IPLC ˣ² 等
  * [bl]     正则匹配保留 [0.1x, x0.2, 6x ,3倍]等标识
