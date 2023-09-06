@@ -18,12 +18,8 @@ if (url.includes("interface/sdk/sdkad.php")) {
     if (e.statuses) {
       e.statuses = e.statuses.filter(
         (item) =>
-          !(
-            ["广告", "廣告", "热推", "熱推"].includes(item.mblogtypename) ||
-            item?.promotion?.type === "ad"
-          )
-      );
-    }
+          !(["广告", "廣告", "热推", "熱推"].includes(item.mblogtypename) || item?.promotion?.type === "ad"
+          ));}
   } else if (url.includes("ct=feed&a=trends")) {
     // 趋势页
     if (e.data?.order) {
@@ -40,9 +36,7 @@ if (url.includes("interface/sdk/sdkad.php")) {
       e.data.cards.forEach((card) => {
         card.items = card.items.filter(
           (item) => !["personal_vip", "personal_wallpaper"].includes(item.type)
-        );
-      });
-    }
+        );})}
   } else if (url.includes("a=get_searching_info")) {
     e = {
       data: {
@@ -52,6 +46,13 @@ if (url.includes("interface/sdk/sdkad.php")) {
       info: "",
       retcode: 0,
     };
+  } else if (url.includes("a=icon_center")) {
+    if (e.data[0].title === "单色") {
+      for (const i of e.data) {
+        for (const k of i.card) {
+          k.status = 1;
+          k.forbidden = 0;
+    }}};
   } else if (url.includes("a=open_app&auth")) {
     // 详情横幅
     if (e.data) {
