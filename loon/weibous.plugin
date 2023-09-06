@@ -12,8 +12,7 @@
 ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=hot_search_users reject-dict
 
 [Script]
-# 保留我的页面 创作中心
-# 开屏广告 | 推荐页banner和广告 | 我的页面 | 1080P | 热搜 | 标签栏 | 下发皮肤
+# 趋势页 | 开屏广告 | 用户中心 | 热搜置顶 | 我的页面 尊享专属 | 瀑布流去广告
 http-response ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?(ct=(feed&a=trends|user&a=get_searching_info)|a=(get_coopen_ads|user_center|search_topic|open_app&auth)) script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/weibous.js, requires-body=true, timeout=10, tag=WeiBoUS
 http-response ^https?:\/\/api\.weibo\.cn\/\d\/statuses\/.*timeline script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/weibous.js, requires-body=true, timeout=10, tag=WeiBoUS
 http-response ^https?:\/\/sdkapp\.uve\.weibo\.com\/interface\/sdk\/sdkad\.php script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/weibous.js, requires-body=true, timeout=10, tag=WeiBoUS
