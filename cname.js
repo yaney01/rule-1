@@ -1,6 +1,13 @@
 /** 
  * 更新日期：2023-08-10 02:37:10 仅支持Surge、Loon 
- * 用法：Sub-Store Version 2.14+ 脚本操作里添加：默认48H缓存超时 可参数自定
+ * 用法：Sub-Store Version 2.14+ 需要固定带 ability 参数版本  脚本操作里添加：默认48H缓存超时 可参数自定 
+ *
+ * 1. 官方默认版(目前不带 ability 参数, 不保证以后不会改动): 》https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Surge.sgmodule
+ *
+ * 2. 固定带 ability 参数版本,可能会爆内存, 如果需要使用指定节点功能 例如[加国旗脚本或者cname脚本] 请使用此带 ability 参数版本: https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Surge-ability.sgmodule
+ *
+ * 3. 固定不带 ability 参数版本：https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Surge-Noability.sgmodule
+ *
  * 符号：🅳电信 🅻联通 🆈移动 🅶广电 🅲公司 🆉直连 🎮游戏
  * 作者：@Key @奶茶姐 @小一 @可莉
  * 接口：入口查询[国内spapi 识别到国外为ip-api] 落地查询[ip-api]
