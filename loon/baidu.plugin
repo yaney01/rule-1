@@ -1,6 +1,6 @@
 #!name=Baidu 首页
 #!desc=纯净搜索 @key
-#!openUrl = 
+#!openUrl = https://m.baidu.com
 #!author = 
 #!homepage = 
 #!icon = https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/Baidu.png
