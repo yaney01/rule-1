@@ -12,13 +12,13 @@
  * - 无参数时的节点命名格式: "美国 01"
  * - 1. 官方默认版(目前不带 ability 参数, 不保证以后不会改动): 》https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Surge.sgmodule
  *
- * - 2. 固定带 ability 参数版本,可能会爆内存, 如果需要使用指定节点功能 例如 * - [加国旗脚本或者cname脚本] 请使用此带 ability 参数版本: https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Surge-ability.sgmodule
+ * - 2. 固定带 ability 参数版本,可能会爆内存, 如果需要使用指定节点功能 例如 [加国旗脚本或者cname脚本] 请使用此带 ability 参数版本: https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Surge-ability.sgmodule
  *
  * - 3. 固定不带 ability 参数版本：https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Surge-Noability.sgmodule
  *
  * - 参数必须以"#"开头，多个参数使用"&"连接，例如 https://github.com/Keywos/rule/raw/main/cname.js#city&iisp&name=Name
  * - 以下是此脚本支持的参数，必须以"#"开头，多个参数使用"&"连接，需要传入参数的话用 "=" 例如 "name=一元" 参考上述地址为例使用参数。
- * - 无参数时的节点命名格式: "美国 01"，如果 * - [入口IP或国家]或 * - [落地IP或国家]一样则为 "直连 德国 01" 
+ * - 无参数时的节点命名格式: "美国 01"，如果 [入口IP或国家]或 [落地IP或国家]一样则为 "直连 德国 01" 
  * - 首次运行或者在没有缓存的情况下会通知进度
  * 
  * 
@@ -26,7 +26,7 @@
  * - [iisp]      增加入口运营商或者直连标识；
  * - [city]      增加入口城市文字标识；
  * - [sheng]     增加入口省份文字标识；
- * - [yuan]      为境外入口添加真实的入口属地标识，当未配置此此参数时，则将境外入口统一标记为 * - [境外]，默认未配置此参数；
+ * - [yuan]      为境外入口添加真实的入口属地标识，当未配置此此参数时，则将境外入口统一标记为 [境外]，默认未配置此参数；
  * 
  * 落地参数
  * - [yisp]      显示落地详细运营商名称；
@@ -59,13 +59,13 @@
  * 
  * 超时参数
  * - [timeout=]  当无任何节点缓存时测试节点HTTP延时允许的最大超时参数，超出允许范围则判定为无效节点，默认2000ms；
- * - [cd=]       当有缓存时，会先读取缓存，直接输出结果；默认 * - [cd=]的值等于0，微直接读取缓存； 
+ * - [cd=]       当有缓存时，会先读取缓存，直接输出结果；默认 [cd=]的值等于0，微直接读取缓存； 
             当设为更高的值: 比如'460'则每次读缓存都会再次处理之前判定为超时的节点,超时为460ms
  *
  * 其他参数
  * - [debug]     调试日志，普通用户不建议使用。
- * - 异常：如遇问题，Loon可以进入 * - [配置]→ * - [持久化缓存]→ * - [删除指定数据]→输入Key  * - [sub-store-cached-script-resource]并删除缓存。
- * - Surge需要进入 * - [脚本编辑器]→左下角 * - [设置]→ * - [$persistentStore]   * - [sub-store-cached-script-resource]删除缓存数据。
+ * - 异常：如遇问题，Loon可以进入[配置]→[持久化缓存]→[删除指定数据]→输入Key [sub-store-cached-script-resource]并删除缓存。
+ * - Surge需要进入[脚本编辑器]→左下角[设置]→[$persistentStore]  [sub-store-cached-script-resource]删除缓存数据。
  */
 
 const SUB_STORE_SCHEMA = {
