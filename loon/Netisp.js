@@ -1,6 +1,6 @@
 /**
  * @key
- * 2023-09-19 03:29:57
+ * 2023-09-19 03:37:32
  * 此入口落地查询脚本 仅支持 Loon
  * 使用方法 长按节点选择 '入口落地查询'
  */
@@ -13,11 +13,9 @@ const scriptName = "入口落地查询";
     let nodeName = inputParams.node;
     let nodeIp = inputParams.nodeInfo.address;
     let LDTF = false,
-      SPTF = false,
-      IOTF = false,
-      DIR = false,
       INIPS = false,
-      INFailed = "";
+      INFailed = "",
+      ins = "";
     const LD = await tKey("http://ip-api.com/json/?lang=zh-CN", nodeName, 4000);
     if (LD.status === "success") {
       LDTF = true;
@@ -52,7 +50,7 @@ const scriptName = "入口落地查询";
       }
     }
     if (nodeIp == lquery) {
-      DIR = true;
+      ins = `<b><font>直连节点</font></b><br><br>`;
     } else {
       if (serverip === "v4") {
         console.log("v4");
@@ -62,7 +60,6 @@ const scriptName = "入口落地查询";
           1000
         );
         if (SP.data.country === "中国") {
-          SPTF = true;
           console.log("SP: " + JSON.stringify(SP.data, "", 2));
           var {
             country: scountry,
@@ -74,42 +71,7 @@ const scriptName = "入口落地查询";
             ip: sip,
           } = SP.data;
           var stk = SP.tk;
-        } else {
-          INFailed = "SP Api Failed: " + JSON.stringify(SP);
-          INIPS = true;
-          console.log(INFailed);
-        }
-      } else {
-        IOTF = true;
-        INIPS = true;
-        console.log("v6");
-      }
-    }
-    if (INIPS) {
-      const IO = await tKey(
-        `http://ip-api.com/json/${nodeIp}?lang=zh-CN`,
-        "",
-        2000
-      );
-      if (IO.status === "success") {
-        console.log("IO: " + JSON.stringify(IO, "", 2));
-        var {
-          country: sicountry,
-          city: sicity,
-          regionName: siregionName,
-          countryCode: sicountryCode,
-          isp: siisp,
-          query: siquery,
-        } = IO;
-        var sitk = IO.tk;
-      } else {
-        INFailed = "IPApi Failed: " + JSON.stringify(IO);
-        console.log(INFailed);
-      }
-    }
-    let ins = "";
-    if (SPTF) {
-      ins = `<b><font>入口ISP</font>:</b>
+          ins = `<b><font>入口ISP</font>:</b>
         <font>${sisp}</font><br><br>
       
         <b><font>入口国家</font>:</b>
@@ -120,23 +82,50 @@ const scriptName = "入口落地查询";
     
         <b><font>入口位置</font>:</b>
         <font>${sprovince} ${scity} ${sdistrict}</font><br><br>`;
-    } else if (DIR) {
-      ins = `<b><font>直连节点</font></b><br><br>`;
-    }
-    if (IOTF || INIPS) {
-      ins = `<b><font>入口国家&nbsp; ${sitk}ms</font>:</b>
-        <font>IPAPI:${sicountry}</font><br><br>
-    
-        <b><font>入口ISP</font>:</b>
-        <font>${siisp}</font><br><br>
-    
-        <b><font>入口IPAPI</font>:</b>
-        <font>${siquery}</font><br><br>
-    
-        <b><font>入口位置</font>:</b>
-        <font>${siregionName} ${sicity}</font><br><br>`;
-    } else {
-      ins = `<br>${INFailed}<br>`;
+        } else {
+          INFailed = "SP Api Failed: " + JSON.stringify(SP);
+          ins = `<br>${INFailed}<br>`;
+          INIPS = true;
+          console.log(INFailed);
+        }
+      } else {
+        INIPS = true;
+        console.log("v6");
+      }
+      if (INIPS) {
+        const IO = await tKey(
+          `http://ip-api.com/json/${nodeIp}?lang=zh-CN`,
+          "",
+          2000
+        );
+        if (IO.status === "success") {
+          console.log("IO: " + JSON.stringify(IO, "", 2));
+          var {
+            country: sicountry,
+            city: sicity,
+            regionName: siregionName,
+            countryCode: sicountryCode,
+            isp: siisp,
+            query: siquery,
+          } = IO;
+          var sitk = IO.tk;
+          ins = `<b><font>入口国家&nbsp; ${sitk}ms</font>:</b>
+          <font>IPAPI:${sicountry}</font><br><br>
+      
+          <b><font>入口ISP</font>:</b>
+          <font>${siisp}</font><br><br>
+      
+          <b><font>入口IPAPI</font>:</b>
+          <font>${siquery}</font><br><br>
+      
+          <b><font>入口位置</font>:</b>
+          <font>${siregionName} ${sicity}</font><br><br>`;
+        } else {
+          INFailed = "IPApi Failed: " + JSON.stringify(IO);
+          ins = `<br>${INFailed}<br>`;
+          console.log(INFailed);
+        }
+      }
     }
 
     let outs = "";
