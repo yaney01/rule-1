@@ -36,7 +36,7 @@ const scriptName = "入口落地查询";
     let serverip = serverTF(nodeIp);
     if (serverip === "domain") {
       const Ali = await tKey(
-        `http://223.5.5.5/resolve?name=www.taobao.com&type=A&short=1`,
+        `http://223.5.5.5/resolve?name=${nodeIp}&type=A&short=1`,
         "",
         500
       );
