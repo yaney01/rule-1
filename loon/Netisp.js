@@ -13,11 +13,12 @@ const scriptName = "入口落地查询";
     let nodeIp = inputParams.nodeInfo.address;
     let LDTF = false,
       SPTF = false,
-      IOTF = false;
+      IOTF = false,
+      DIR = false;
     const LD = await tKey("http://ip-api.com/json/?lang=zh-CN", nodeName, 4000);
     if (LD.status === "success") {
       LDTF = true;
-      console.log("LD: " + JSON.stringify(LD,'',2));
+      console.log("LD: " + JSON.stringify(LD, "", 2));
       var {
         country: lcountry,
         countryCode: lcountryCode,
@@ -44,58 +45,63 @@ const scriptName = "入口落地查询";
         nodeIp = Ali[0];
         serverip = serverTF(nodeIp);
       } else {
-        console.log("Ali Dns Failed: " + JSON.stringify(Ali,'',2));
+        console.log("Ali Dns Failed: " + JSON.stringify(Ali, "", 2));
       }
     }
-    if (serverip === "v4") {
-      console.log("v4");
-      const SP = await tKey(
-        `https://api-v3.speedtest.cn/ip?ip=${nodeIp}`,
-        "",
-        1000
-      );
-      if (SP.data) {
-        SPTF = true;
-        console.log("SP: " + JSON.stringify(SP.data,'',2));
-        var {
-          country: scountry,
-          city: scity,
-          province: sprovince,
-          district: sdistrict,
-          countryCode: scountryCode,
-          isp: sisp,
-          ip: sip,
-          tk: stk,
-        } = SP.data;
-        var stk = SP.tk;
+    if (nodeIp == lquery) {
+      DIR = ture;
+    } else {
+      if (serverip === "v4") {
+        console.log("v4");
+        const SP = await tKey(
+          `https://api-v3.speedtest.cn/ip?ip=${nodeIp}`,
+          "",
+          1000
+        );
+        if (SP.data.country === "中国") {
+          SPTF = true;
+          console.log("SP: " + JSON.stringify(SP.data, "", 2));
+          var {
+            country: scountry,
+            city: scity,
+            province: sprovince,
+            district: sdistrict,
+            countryCode: scountryCode,
+            isp: sisp,
+            ip: sip,
+            tk: stk,
+          } = SP.data;
+          var stk = SP.tk;
+        } else {
+          var INFailed = JSON.stringify(SP);
+          console.log("SP Api Failed: " + JSON.stringify(SP));
+        }
       } else {
-        var INFailed = JSON.stringify(SP);
-        console.log("SP Api Failed: " + JSON.stringify(SP));
-      }
-    } else if (serverip === "v6") {
-      IOTF = true;
-      console.log("v6");
-      const IO = await tKey(
-        `http://ip-api.com/json/${nodeIp}?lang=zh-CN`,
-        "",
-        2000
-      );
-      if (IO.status === "success") {
-        console.log("IO: " + JSON.stringify(IO,'',2));
-        var {
-          country: scountry,
-          city: scity,
-          regionName: sprovince,
-          countryCode: scountryCode,
-          isp: sisp,
-          query: sip,
-        } = IO.data;
-        var stk = IO.tk;
-      } else {
-        var INFailed = JSON.stringify(IO);
-        console.log("IPApi Failed: " + JSON.stringify(IO));
+        IOTF = true;
+        console.log("v6");
+        const IO = await tKey(
+          `http://ip-api.com/json/${nodeIp}?lang=zh-CN`,
+          "",
+          2000
+        );
+        if (IO.status === "success") {
+          console.log("IO: " + JSON.stringify(IO, "", 2));
+          var {
+            country: scountry,
+            city: scity,
+            regionName: sprovince,
+            countryCode: scountryCode,
+            isp: sisp,
+            query: sip,
+          } = IO.data;
+          var stk = IO.tk;
+        } else {
+          var INFailed = JSON.stringify(IO);
+          console.log("IPApi Failed: " + JSON.stringify(IO));
+        }
       }
     }
+
     let ins = "";
     if (SPTF) {
       ins = `<b><font>入口ISP</font>:</b>
@@ -109,7 +115,9 @@ const scriptName = "入口落地查询";
     
         <b><font>入口位置</font>:</b>
         <font>${sprovince} ${scity} ${sdistrict}</font><br><br>`;
-    } else if (IOTF || !SPTF) {
+    } else if (DIR) {
+      ins = `<b><font>直连节点</font></b><br><br>`;
+    } else if (IOTF) {
       ins = `<b><font>入口国家&nbsp; ${stk}ms</font>:</b>
         <font>IPAPI:${scountry}</font><br><br>
     
