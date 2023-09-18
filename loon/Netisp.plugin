@@ -1,0 +1,10 @@
+#!name = 入口落地查询
+#!desc = 查看目标节点的入口落地详细信息
+#!openUrl = 
+#!author = @key
+#!homepage = https://github.com/Keywos
+#!icon = https://raw.githubusercontent.com/Keywos/Qure/main/Speedtest.png
+#!date = 2023-09-19 01:20:27
+
+[Script]
+generic script-path = https://raw.githubusercontent.com/Keywos/rule/main/loon/Netisp.js, tag = 入口落地查询, img-url = network
