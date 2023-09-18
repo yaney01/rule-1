@@ -1,10 +1,10 @@
 /**
  * @key
- * 2023-09-19 02:01:05
+ * 2023-09-19 02:48:43
  * 此入口落地查询脚本 仅支持 Loon
  * 使用方法 长按节点选择 '入口落地查询'
  */
- 
+
 const scriptName = "入口落地查询";
 (async () => {
   try {
@@ -15,7 +15,8 @@ const scriptName = "入口落地查询";
     let LDTF = false,
       SPTF = false,
       IOTF = false,
-      DIR = false;
+      DIR = false,
+      INIPS = false;
     const LD = await tKey("http://ip-api.com/json/?lang=zh-CN", nodeName, 4000);
     if (LD.status === "success") {
       LDTF = true;
@@ -75,34 +76,37 @@ const scriptName = "入口落地查询";
           var stk = SP.tk;
         } else {
           var INFailed = JSON.stringify(SP);
+          INIPS = true;
           console.log("SP Api Failed: " + JSON.stringify(SP));
         }
       } else {
         IOTF = true;
+        INIPS = true;
         console.log("v6");
-        const IO = await tKey(
-          `http://ip-api.com/json/${nodeIp}?lang=zh-CN`,
-          "",
-          2000
-        );
-        if (IO.status === "success") {
-          console.log("IO: " + JSON.stringify(IO, "", 2));
-          var {
-            country: scountry,
-            city: scity,
-            regionName: sprovince,
-            countryCode: scountryCode,
-            isp: sisp,
-            query: sip,
-          } = IO.data;
-          var stk = IO.tk;
-        } else {
-          var INFailed = JSON.stringify(IO);
-          console.log("IPApi Failed: " + JSON.stringify(IO));
-        }
       }
     }
-
+    if (INIPS) {
+      const IO = await tKey(
+        `http://ip-api.com/json/${nodeIp}?lang=zh-CN`,
+        "",
+        2000
+      );
+      if (IO.status === "success") {
+        console.log("IO: " + JSON.stringify(IO, "", 2));
+        var {
+          country: scountry,
+          city: scity,
+          regionName: sprovince,
+          countryCode: scountryCode,
+          isp: sisp,
+          query: sip,
+        } = IO.data;
+        var stk = IO.tk;
+      } else {
+        var INFailed = JSON.stringify(IO);
+        console.log("IPApi Failed: " + JSON.stringify(IO));
+      }
+    }
     let ins = "";
     if (SPTF) {
       ins = `<b><font>入口ISP</font>:</b>
