@@ -94,14 +94,14 @@ const scriptName = "入口落地查询";
       if (IO.status === "success") {
         console.log("IO: " + JSON.stringify(IO, "", 2));
         var {
-          country: scountry,
-          city: scity,
-          regionName: sprovince,
-          countryCode: scountryCode,
-          isp: sisp,
-          query: sip,
+          country: sicountry,
+          city: sicity,
+          regionName: siprovince,
+          countryCode: sicountryCode,
+          isp: siisp,
+          query: siip,
         } = IO.data;
-        var stk = IO.tk;
+        var sitk = IO.tk;
       } else {
         var INFailed = JSON.stringify(IO);
         console.log("IPApi Failed: " + JSON.stringify(IO));
@@ -123,17 +123,17 @@ const scriptName = "入口落地查询";
     } else if (DIR) {
       ins = `<b><font>直连节点</font></b><br><br>`;
     } else if (IOTF) {
-      ins = `<b><font>入口国家&nbsp; ${stk}ms</font>:</b>
-        <font>IPAPI:${scountry}</font><br><br>
+      ins = `<b><font>入口国家&nbsp; ${sitk}ms</font>:</b>
+        <font>IPAPI:${sicountry}</font><br><br>
     
         <b><font>入口ISP</font>:</b>
-        <font>${sisp}</font><br><br>
+        <font>${siisp}</font><br><br>
     
         <b><font>入口IPAPI</font>:</b>
-        <font>${sip}</font><br><br>
+        <font>${siip}</font><br><br>
     
         <b><font>入口位置</font>:</b>
-        <font>${sprovince} ${scity}</font><br><br>`;
+        <font>${siprovince} ${sicity}</font><br><br>`;
     } else {
       ins = `<br>${INFailed}<br>`;
     }
