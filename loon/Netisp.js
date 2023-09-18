@@ -1,6 +1,6 @@
 /**
  * @key
- * 2023-09-19 02:55:46
+ * 2023-09-19 03:01:40
  * 此入口落地查询脚本 仅支持 Loon
  * 使用方法 长按节点选择 '入口落地查询'
  */
@@ -16,7 +16,8 @@ const scriptName = "入口落地查询";
       SPTF = false,
       IOTF = false,
       DIR = false,
-      INIPS = false;
+      INIPS = false,
+      INFailed = "";
     const LD = await tKey("http://ip-api.com/json/?lang=zh-CN", nodeName, 4000);
     if (LD.status === "success") {
       LDTF = true;
@@ -75,7 +76,7 @@ const scriptName = "入口落地查询";
           } = SP.data;
           var stk = SP.tk;
         } else {
-          var INFailed = JSON.stringify(SP);
+          INFailed = JSON.stringify(SP);
           INIPS = true;
           console.log("SP Api Failed: " + JSON.stringify(SP));
         }
@@ -103,7 +104,7 @@ const scriptName = "入口落地查询";
         } = IO.data;
         var sitk = IO.tk;
       } else {
-        var INFailed = JSON.stringify(IO);
+        INFailed = JSON.stringify(IO);
         console.log("IPApi Failed: " + JSON.stringify(IO));
       }
     }
