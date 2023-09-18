@@ -33,7 +33,7 @@ const scriptName = "入口落地查询";
         tk: ltk,
       } = LD;
     } else {
-      var LDFailed = JSON.stringify(LD);
+      var LDFailed = "LD: " + JSON.stringify(LD);
     }
 
     let serverip = serverTF(nodeIp);
@@ -75,9 +75,9 @@ const scriptName = "入口落地查询";
           } = SP.data;
           var stk = SP.tk;
         } else {
-          INFailed = JSON.stringify(SP);
+          INFailed = "SP Api Failed: " + JSON.stringify(SP);
           INIPS = true;
-          console.log("SP Api Failed: " + JSON.stringify(SP));
+          console.log(INFailed);
         }
       } else {
         IOTF = true;
@@ -103,8 +103,8 @@ const scriptName = "入口落地查询";
         } = IO;
         var sitk = IO.tk;
       } else {
-        INFailed = JSON.stringify(IO);
-        console.log("IPApi Failed: " + JSON.stringify(IO));
+        INFailed = "IPApi Failed: " + JSON.stringify(IO);
+        console.log(INFailed);
       }
     }
     let ins = "";
