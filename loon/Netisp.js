@@ -1,6 +1,6 @@
 /**
  * @key
- * 2023-09-19 03:37:32
+ * 2023-09-19 03:41:49
  * 此入口落地查询脚本 仅支持 Loon
  * 使用方法 长按节点选择 '入口落地查询'
  */
@@ -109,8 +109,8 @@ const scriptName = "入口落地查询";
             query: siquery,
           } = IO;
           var sitk = IO.tk;
-          ins = `<b><font>入口国家&nbsp; ${sitk}ms</font>:</b>
-          <font>IPAPI:${sicountry}</font><br><br>
+          ins = `<b><font>入口国家</font>:</b>
+          <font>${sicountry}&nbsp; ${sitk}ms</font><br><br>
       
           <b><font>入口ISP</font>:</b>
           <font>${siisp}</font><br><br>
