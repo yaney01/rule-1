@@ -1,6 +1,6 @@
 /**
  * @key
- * 2023-09-19 03:19:29
+ * 2023-09-19 03:29:57
  * 此入口落地查询脚本 仅支持 Loon
  * 使用方法 长按节点选择 '入口落地查询'
  */
@@ -122,7 +122,8 @@ const scriptName = "入口落地查询";
         <font>${sprovince} ${scity} ${sdistrict}</font><br><br>`;
     } else if (DIR) {
       ins = `<b><font>直连节点</font></b><br><br>`;
-    } else if (IOTF) {
+    }
+    if (IOTF || INIPS) {
       ins = `<b><font>入口国家&nbsp; ${sitk}ms</font>:</b>
         <font>IPAPI:${sicountry}</font><br><br>
     
