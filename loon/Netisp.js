@@ -16,7 +16,7 @@ const scriptName = "入口落地查询";
       INIPS = false,
       INFailed = "",
       ins = "";
-    const LD = await tKey("http://ip-api.com/json/?lang=zh-CN", nodeName, 4000);
+    const LD = await tKey("http://ip-api.com/json/?lang=zh-CN", nodeName, 5000);
     if (LD.status === "success") {
       LDTF = true;
       console.log("LD: " + JSON.stringify(LD, "", 2));
@@ -39,7 +39,7 @@ const scriptName = "入口落地查询";
       const Ali = await tKey(
         `http://223.5.5.5/resolve?name=${nodeIp}&type=A&short=1`,
         "",
-        500
+        1000
       );
       if (Ali.length > 0) {
         console.log("Ali inIp: " + Ali[0]);
@@ -57,7 +57,7 @@ const scriptName = "入口落地查询";
         const SP = await tKey(
           `https://api-v3.speedtest.cn/ip?ip=${nodeIp}`,
           "",
-          1000
+          2000
         );
         if (SP.data.country === "中国") {
           console.log("SP: " + JSON.stringify(SP.data, "", 2));
@@ -96,7 +96,7 @@ const scriptName = "入口落地查询";
         const IO = await tKey(
           `http://ip-api.com/json/${nodeIp}?lang=zh-CN`,
           "",
-          2000
+          5000
         );
         if (IO.status === "success") {
           console.log("IO: " + JSON.stringify(IO, "", 2));
