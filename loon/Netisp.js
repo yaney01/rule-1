@@ -49,7 +49,7 @@ const scriptName = "入口落地查询";
       }
     }
     if (nodeIp == lquery) {
-      DIR = ture;
+      DIR = true;
     } else {
       if (serverip === "v4") {
         console.log("v4");
