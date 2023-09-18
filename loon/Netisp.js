@@ -1,6 +1,6 @@
 /**
  * @key
- * 2023-09-19 03:01:40
+ * 2023-09-19 03:19:29
  * 此入口落地查询脚本 仅支持 Loon
  * 使用方法 长按节点选择 '入口落地查询'
  */
@@ -72,7 +72,6 @@ const scriptName = "入口落地查询";
             countryCode: scountryCode,
             isp: sisp,
             ip: sip,
-            tk: stk,
           } = SP.data;
           var stk = SP.tk;
         } else {
@@ -97,11 +96,11 @@ const scriptName = "入口落地查询";
         var {
           country: sicountry,
           city: sicity,
-          regionName: siprovince,
+          regionName: siregionName,
           countryCode: sicountryCode,
           isp: siisp,
-          query: siip,
-        } = IO.data;
+          query: siquery,
+        } = IO;
         var sitk = IO.tk;
       } else {
         INFailed = JSON.stringify(IO);
@@ -131,10 +130,10 @@ const scriptName = "入口落地查询";
         <font>${siisp}</font><br><br>
     
         <b><font>入口IPAPI</font>:</b>
-        <font>${siip}</font><br><br>
+        <font>${siquery}</font><br><br>
     
         <b><font>入口位置</font>:</b>
-        <font>${siprovince} ${sicity}</font><br><br>`;
+        <font>${siregionName} ${sicity}</font><br><br>`;
     } else {
       ins = `<br>${INFailed}<br>`;
     }
