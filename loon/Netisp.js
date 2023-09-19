@@ -1,6 +1,6 @@
 /**
  * @key
- * 2023-09-19 03:41:49
+ * 2023-09-19 19:17:50
  * 此入口落地查询脚本 仅支持 Loon
  * 使用方法 长按节点选择 '入口落地查询'
  */
@@ -17,7 +17,7 @@ const scriptName = "入口落地查询";
       INFailed = "",
       ins = "";
     const LD = await tKey("http://ip-api.com/json/?lang=zh-CN", nodeName, 5000);
-    if (LD.status === "success") {
+    if (LD?.status === "success") {
       LDTF = true;
       console.log("LD: " + JSON.stringify(LD, "", 2));
       var {
@@ -41,7 +41,7 @@ const scriptName = "入口落地查询";
         "",
         1000
       );
-      if (Ali.length > 0) {
+      if (Ali?.length > 0) {
         console.log("Ali inIp: " + Ali[0]);
         nodeIp = Ali[0];
         serverip = serverTF(nodeIp);
@@ -59,7 +59,7 @@ const scriptName = "入口落地查询";
           "",
           2000
         );
-        if (SP.data.country === "中国") {
+        if (SP?.data?.country === "中国") {
           console.log("SP: " + JSON.stringify(SP.data, "", 2));
           var {
             country: scountry,
@@ -84,7 +84,7 @@ const scriptName = "入口落地查询";
         <font>${sprovince} ${scity} ${sdistrict}</font><br><br>`;
         } else {
           INFailed = "SP Api Failed: " + JSON.stringify(SP);
-          ins = `<br>${INFailed}<br>`;
+          ins = `<br>${INFailed}<br><br>`;
           INIPS = true;
           console.log(INFailed);
         }
@@ -98,7 +98,7 @@ const scriptName = "入口落地查询";
           "",
           5000
         );
-        if (IO.status === "success") {
+        if (IO?.status === "success") {
           console.log("IO: " + JSON.stringify(IO, "", 2));
           var {
             country: sicountry,
@@ -122,7 +122,7 @@ const scriptName = "入口落地查询";
           <font>${siregionName} ${sicity}</font><br><br>`;
         } else {
           INFailed = "IPApi Failed: " + JSON.stringify(IO);
-          ins = `<br>${INFailed}<br>`;
+          ins = `<br>${INFailed}<br><br>`;
           console.log(INFailed);
         }
       }
@@ -145,7 +145,7 @@ const scriptName = "入口落地查询";
         <b><font>落地ASN</font>:</b>
         <font>${las}</font><br>`;
     } else {
-      outs = `<br>${LDFailed}<br>`;
+      outs = `<br>${LDFailed}<br><br>`;
     }
 
     let message = `<p 
