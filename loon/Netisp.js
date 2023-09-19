@@ -155,7 +155,7 @@ const scriptName = "入口落地查询";
     font-weight: thin">
     <br>-------------------------------<br><br>
     ${ins}${outs}
-    <br>-------------------------------<br>
+    <br>-------------------------------<br><br>
     <b>节点</b>  ➟  ${nodeName} <br>
     <b>设备</b>  ➟ ${loon[1]} ${loon[2]}</p>`;
     $done({ title: scriptName, htmlMessage: message });
