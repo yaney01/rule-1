@@ -1,6 +1,6 @@
 /**
  * @key
- * 2023-09-19 20:34:33
+ * 2023-09-19 20:42:25
  * 此入口落地查询脚本 仅支持 Loon
  * 使用方法 长按节点选择 '入口落地查询'
  */
@@ -39,7 +39,7 @@ const scriptName = "入口落地查询";
     } else {
       var LDFailed = "LD: " + JSON.stringify(LD);
     }
-    let cfw = `⟦\x20<font\x20style=\x22text-decoration:line-through;\x22>\u9632\u706b\u5899</font>\x20⟧`;
+    let cfw = `⟦\x20\u4e2d\u8f6c\u0020<font\x20style=\x22text-decoration:line-through;\x22>\u9632\u706b\u5899</font>\x20⟧`;
     let serverip = serverTF(nodeIp);
     if (serverip === "domain") {
       const Ali = await tKey(
