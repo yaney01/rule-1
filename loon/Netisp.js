@@ -41,7 +41,7 @@ const scriptName = "入口落地查询";
       outs = `<b><font>落地国家</font>:</b>
         <font>${getflag(countryCode)}${country}&nbsp; ${tk}ms</font><br><br>
     
-        <b><font>落地国家</font>:</b>
+        <b><font>落地地区</font>:</b>
         <font>${countryCode} ${regionName} ${city}</font><br><br>
         
         <b><font>落地IP地址</font>:</b>
