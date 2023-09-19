@@ -1,5 +1,5 @@
 /**
- * @key
+ * @key 0
  * 2023-09-19 19:17:50
  * 此入口落地查询脚本 仅支持 Loon
  * 使用方法 长按节点选择 '入口落地查询'
@@ -9,6 +9,8 @@ const scriptName = "入口落地查询";
 (async () => {
   try {
     const loon = $loon.split(" ");
+    let timein = parseInt($persistentStore.read("入口查询超时时间ms") ?? 2000)
+    let timei = parseInt($persistentStore.read("落地查询超时时间ms") ?? 5000)
     let inputParams = $environment.params;
     let nodeName = inputParams.node;
     let nodeIp = inputParams.nodeInfo.address;
@@ -16,7 +18,7 @@ const scriptName = "入口落地查询";
       INIPS = false,
       INFailed = "",
       ins = "";
-    const LD = await tKey("http://ip-api.com/json/?lang=zh-CN", nodeName, 5000);
+    const LD = await tKey("http://ip-api.com/json/?lang=zh-CN", nodeName, timei);
     if (LD?.status === "success") {
       LDTF = true;
       console.log("LD: " + JSON.stringify(LD, "", 2));
@@ -33,13 +35,13 @@ const scriptName = "入口落地查询";
     } else {
       var LDFailed = "LD: " + JSON.stringify(LD);
     }
-
+    let cfw = `⟦\x20<font\x20style=\x22text-decoration:line-through;\x22>\u9632\u706b\u5899</font>\x20⟧`;
     let serverip = serverTF(nodeIp);
     if (serverip === "domain") {
       const Ali = await tKey(
         `http://223.5.5.5/resolve?name=${nodeIp}&type=A&short=1`,
         "",
-        1000
+        timein
       );
       if (Ali?.length > 0) {
         console.log("Ali inIp: " + Ali[0]);
@@ -51,13 +53,14 @@ const scriptName = "入口落地查询";
     }
     if (nodeIp == lquery) {
       ins = `<b><font>直连节点</font></b><br><br>`;
+      cfw = `⟦\x20\u9632\u706b\u5899\x20⟧`;
     } else {
       if (serverip === "v4") {
         console.log("v4");
         const SP = await tKey(
           `https://api-v3.speedtest.cn/ip?ip=${nodeIp}`,
           "",
-          2000
+          timein
         );
         if (SP?.data?.country === "中国") {
           console.log("SP: " + JSON.stringify(SP.data, "", 2));
@@ -71,6 +74,7 @@ const scriptName = "入口落地查询";
             ip: sip,
           } = SP.data;
           var stk = SP.tk;
+          scountryCode !== "CN" && (cfw = `⟦\x20\u9632\u706b\u5899\x20⟧`);
           ins = `<b><font>入口ISP</font>:</b>
         <font>${sisp}</font><br><br>
       
@@ -84,7 +88,7 @@ const scriptName = "入口落地查询";
         <font>${sprovince} ${scity} ${sdistrict}</font><br><br>`;
         } else {
           INFailed = "SP Api Failed: " + JSON.stringify(SP);
-          ins = `<br>${INFailed}<br><br>`;
+          ins = `<br>SPFailed 查询超时<br><br>`;
           INIPS = true;
           console.log(INFailed);
         }
@@ -96,7 +100,7 @@ const scriptName = "入口落地查询";
         const IO = await tKey(
           `http://ip-api.com/json/${nodeIp}?lang=zh-CN`,
           "",
-          5000
+          timei
         );
         if (IO?.status === "success") {
           console.log("IO: " + JSON.stringify(IO, "", 2));
@@ -109,8 +113,11 @@ const scriptName = "入口落地查询";
             query: siquery,
           } = IO;
           var sitk = IO.tk;
+          sicountryCode !== "CN" && (cfw = `⟦\x20\u9632\u706b\u5899\x20⟧`);
           ins = `<b><font>入口国家</font>:</b>
-          <font>${sicountry}&nbsp; ${sitk}ms</font><br><br>
+          <font>${getflag(
+            sicountryCode
+          )}${sicountry}&nbsp; ${sitk}ms</font><br><br>
       
           <b><font>入口ISP</font>:</b>
           <font>${siisp}</font><br><br>
@@ -122,7 +129,7 @@ const scriptName = "入口落地查询";
           <font>${siregionName} ${sicity}</font><br><br>`;
         } else {
           INFailed = "IPApi Failed: " + JSON.stringify(IO);
-          ins = `<br>${INFailed}<br><br>`;
+          ins = `<br>INFailed 查询超时<br><br>`;
           console.log(INFailed);
         }
       }
@@ -145,7 +152,8 @@ const scriptName = "入口落地查询";
         <b><font>落地ASN</font>:</b>
         <font>${las}</font><br>`;
     } else {
-      outs = `<br>${LDFailed}<br><br>`;
+      outs = `<br>LDFailed 查询超时<br><br>`;
+      console.log(LDFailed);
     }
 
     let message = `<p 
@@ -154,7 +162,11 @@ const scriptName = "入口落地查询";
     font-size: large; 
     font-weight: thin">
     <br>-------------------------------<br><br>
-    ${ins}${outs}
+    ${ins}
+    -------------------<br>
+    <b><font>${cfw}</font></b>
+    <br>-------------------<br><br>
+    ${outs}
     <br>-------------------------------<br><br>
     <b>节点</b>  ➟  ${nodeName} <br>
     <b>设备</b>  ➟ ${loon[1]} ${loon[2]}</p>`;
