@@ -1,6 +1,6 @@
 /**
- * @key 0
- * 2023-09-19 19:17:50
+ * @key
+ * 2023-09-19 20:34:33
  * 此入口落地查询脚本 仅支持 Loon
  * 使用方法 长按节点选择 '入口落地查询'
  */
@@ -9,8 +9,8 @@ const scriptName = "入口落地查询";
 (async () => {
   try {
     const loon = $loon.split(" ");
-    let timein = parseInt($persistentStore.read("入口查询超时时间ms") ?? 2000)
-    let timei = parseInt($persistentStore.read("落地查询超时时间ms") ?? 5000)
+    let timein = parseInt($persistentStore.read("入口查询超时时间ms") ?? 2000);
+    let timei = parseInt($persistentStore.read("落地查询超时时间ms") ?? 5000);
     let inputParams = $environment.params;
     let nodeName = inputParams.node;
     let nodeIp = inputParams.nodeInfo.address;
@@ -18,7 +18,11 @@ const scriptName = "入口落地查询";
       INIPS = false,
       INFailed = "",
       ins = "";
-    const LD = await tKey("http://ip-api.com/json/?lang=zh-CN", nodeName, timei);
+    const LD = await tKey(
+      "http://ip-api.com/json/?lang=zh-CN",
+      nodeName,
+      timei
+    );
     if (LD?.status === "success") {
       LDTF = true;
       console.log("LD: " + JSON.stringify(LD, "", 2));
@@ -52,8 +56,31 @@ const scriptName = "入口落地查询";
       }
     }
     if (nodeIp == lquery) {
-      ins = `<b><font>直连节点</font></b><br><br>`;
-      cfw = `⟦\x20\u9632\u706b\u5899\x20⟧`;
+      cfw = `⟦\x20\u76f4\u8fde\u0020\u9632\u706b\u5899\x20⟧`;
+      const LO = await tKey(
+        "https://api.live.bilibili.com/ip_service/v1/ip_service/get_ip_addr",
+        "",
+        timein
+      );
+      if (LO.code === 0) {
+        let { addr: ip, province: sh, city, isp ,country} = LO.data,
+          tk = LO.tk;
+        isp = isp.replace(/.*广电.*/g, "广电");
+        ins = `<b><font>本机入口</font>:</b>
+        <font>${isp}</font><br><br>
+      
+        <b><font>本机国家</font>:</b>
+        <font>${country}&nbsp; ${tk}ms</font><br><br>
+ 
+        <b><font>本机IP</font>:</b>
+        <font>${ip}</font><br><br>
+    
+        <b><font>本机位置</font>:</b>
+        <font>${sh} ${city} </font><br><br>`;
+      } else {
+        console.log("BIli api Failed: " + JSON.stringify(LO, "", 2));
+        ins = `<br>BIli Api Failed 查询超时<br><br>`;
+      }
     } else {
       if (serverip === "v4") {
         console.log("v4");
