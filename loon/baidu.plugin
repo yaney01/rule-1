@@ -1,8 +1,8 @@
 #!name=Baidu 首页
 #!desc=纯净搜索 @key
 #!openUrl = https://m.baidu.com
-#!author = 
-#!homepage = 
+#!author = @Key
+#!homepage = https://github.com/Keywos
 #!icon = https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/Baidu.png
 #!date = 2023-09-12 18:19:14
 

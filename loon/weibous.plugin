@@ -1,8 +1,8 @@
 #!name = 微博国际版
-#!desc = @key @kokoryh
+#!desc = 去除信息流等广告
 #!openUrl = 
-#!author = 
-#!homepage = 
+#!author = @key @kokoryh
+#!homepage = https://github.com/Keywos
 #!icon = https://github.com/Keywos/rule/raw/main/tv/app/144px/weibous.png
 #!date = 2023-09-06 17:07:45
 

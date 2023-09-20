@@ -1,13 +1,12 @@
 #!name = 网易云音乐
-#!desc = 网易云测试
+#!desc = 网易云音乐去广告
 #!openUrl = 
-#!author = 
-#!homepage = 
+#!author = @key
+#!homepage = https://github.com/Keywos
 #!icon = https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/Netease.png
 #https://raw.githubusercontent.com/LimeAroma/Loon/main/Plugin/NeteaseCloudMusic_remove_ads.plugin
+#!date = 2023-09-20 15:18:17
 
-#[General]
-#force-http-engine-hosts = 59.111.*:0
 
 [MITM]
 hostname = interface.music.163.com, interface3.music.163.com,ipv4.music.163.com

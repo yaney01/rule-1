@@ -1,7 +1,9 @@
 #!name=百度输入法去广告
 #!desc=过滤广告，替换个人主页随机图。
-#!author = Keywos
+#!author = @Key
+#!homepage = https://github.com/Keywos
 #!icon = https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/Baidu_srf.png
+#!date = 2023-09-20 15:18:17
 [Rewrite]
 # 百度输入法开屏
 ^https?:\/\/mime\.baidu\.com\/v5\/start_screen_ads/list reject-dict

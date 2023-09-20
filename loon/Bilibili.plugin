@@ -2,7 +2,7 @@
 #!desc = 去除动态综合页话题,最常访问,弹幕,青少年弹窗,播放页广告
 #!openUrl = 
 #!author = MartinsKing、VirgilClyne、app2smile、RuCu6、Maasea、kokoryh、key
-#!homepage = 
+#!homepage = https://github.com/Keywos
 #!icon = https://github.com/Keywos/rule/raw/main/tv/app/144px/Bilibili.png
 #!select = 去除动态综合页热门话题,开启,关闭
 #!select = 去除动态综合页最常访问,开启,关闭
