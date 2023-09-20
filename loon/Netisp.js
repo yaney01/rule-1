@@ -174,7 +174,7 @@ const scriptName = "入口落地查询";
       htmlMessage: error.message + "<br><br> 查询失败 反馈@Key",
     });
   } finally {
-    $done({ title: scriptName, htmlMessage: message });
+    $done({ title: scriptName, htmlMessage: 'See Log' });
   }
 })();
 function serverTF(t){if(/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(t)){return"v4"}else if(/^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$/.test(t)){return"v6"}else{return"domain"}}
