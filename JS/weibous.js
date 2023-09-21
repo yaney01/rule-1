@@ -35,7 +35,7 @@ if (url.includes("interface/sdk/sdkad.php")) {
     if (e?.data?.cards) {
       e.data.cards.forEach((card) => {
         card.items = card.items.filter(
-          (item) => !["personal_vip", "personal_wallpaper"].includes(item.type)
+          (item) => !["personal_vip", "personal_wallpaper", "personal_feedback", "personal_topic"].includes(item.type)
         );})}
   } else if (url.includes("a=get_searching_info")) {
     e = {
