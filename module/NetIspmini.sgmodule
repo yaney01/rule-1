@@ -1,5 +1,5 @@
 #!name=NetISP 面板
-#!desc=可在工具>脚本编辑器>左下角齿轮图标>$persistentStore找到 KeyNetisp 中更改是否在面板中更改图标或其他参数
+#!desc=可在工具>脚本编辑器>左下角齿轮图标>$persistentStore找到 KeyNetisp 中更改是否在面板中更改图标或其他参数/隐藏IP段
 #!system=ios
 
 [Script]
