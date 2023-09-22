@@ -11,6 +11,7 @@ const scriptName = "入口落地查询";
     const loon = $loon.split(" ");
     let timein = parseInt($persistentStore.read("入口查询超时时间ms") ?? 2000),
       timei = parseInt($persistentStore.read("落地查询超时时间ms") ?? 5000),
+      hideIP = $persistentStore.read("是否隐藏真实IP") !== "隐藏",
       inputParams = $environment.params,nodeName = inputParams.node,nodeIp = inputParams.nodeInfo.address,
       INIPS = false, INFailed = "", ins = "", outs = "", serverip = serverTF(nodeIp),
       cfw = `⟦\x20\u4e2d\u8f6c\u0020<font\x20style=\x22text-decoration:line-through;\x22>\u9632\u706b\u5899</font>\x20⟧`;
@@ -37,6 +38,7 @@ const scriptName = "入口落地查询";
       LDTF = true;
       console.log("LD: " + JSON.stringify(LD, "", 2));
       let { country, countryCode, regionName, city, query, isp, as, tk } = LD;
+      hideIP && (query = query.slice(0,6)+"∗∗∗∗∗");
       var lquery = query;
       outs = `<b><font>落地国家</font>:</b>
         <font>${getflag(countryCode)}${country}&nbsp; ${tk}ms</font><br><br>
@@ -67,6 +69,7 @@ const scriptName = "入口落地查询";
       if (LO.code === 0) {
         let { addr, province, city, isp, country } = LO.data,
           tk = LO.tk;
+        hideIP && (addr = addr.slice(0,6)+"∗∗∗∗∗");
         province == city && (province = "");
         country == "中国" && (country = "🇨🇳中国");
         isp = isp.replace(/.*广电.*/g, "广电");
@@ -98,6 +101,7 @@ const scriptName = "入口落地查询";
           let { country, city, province, district, countryCode, isp, ip } =
               SP.data,
             tk = SP.tk;
+          hideIP && (ip = ip.slice(0,6)+"∗∗∗∗∗");
           city == district && (city = "");
           countryCode !== "CN" && (cfw = `⟦\x20\u9632\u706b\u5899\x20⟧`);
           ins = `<b><font>入口ISP</font>:</b>
@@ -131,6 +135,7 @@ const scriptName = "入口落地查询";
           console.log("IO: " + JSON.stringify(IO, "", 2));
           let { country, city, regionName, countryCode, isp, query } = IO,
             tk = IO.tk;
+          hideIP && (query = query.slice(0,6)+"∗∗∗∗∗");
           regionName == city && (city = "");
           countryCode !== "CN" && (cfw = `⟦\x20\u9632\u706b\u5899\x20⟧`);
           ins = `<b><font>入口国家</font>:</b>
