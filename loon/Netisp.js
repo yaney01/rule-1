@@ -11,7 +11,7 @@ const scriptName = "入口落地查询";
     const loon = $loon.split(" ");
     let timein = parseInt($persistentStore.read("入口查询超时时间ms") ?? 2000),
       timei = parseInt($persistentStore.read("落地查询超时时间ms") ?? 5000),
-      hideIP = $persistentStore.read("是否隐藏真实IP") !== "隐藏" || true;
+      hideIP = $persistentStore.read("是否隐藏真实IP") === "隐藏";
       inputParams = $environment.params,nodeName = inputParams.node,nodeIp = inputParams.nodeInfo.address,
       INIPS = false, INFailed = "", ins = "", outs = "", serverip = serverTF(nodeIp),
       cfw = `⟦\x20\u4e2d\u8f6c\u0020<font\x20style=\x22text-decoration:line-through;\x22>\u9632\u706b\u5899</font>\x20⟧`;
