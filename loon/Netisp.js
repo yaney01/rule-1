@@ -38,7 +38,7 @@ const scriptName = "入口落地查询";
       LDTF = true;
       console.log("LD: " + JSON.stringify(LD, "", 2));
       let { country, countryCode, regionName, city, query, isp, as, tk } = LD;
-      hideIP && (query = query.slice(0,6)+"∗∗∗∗∗");
+      hideIP && (query = HIP(query));
       var lquery = query;
       outs = `<b><font>落地国家</font>:</b>
         <font>${getflag(countryCode)}${country}&nbsp; ${tk}ms</font><br><br>
@@ -69,7 +69,7 @@ const scriptName = "入口落地查询";
       if (LO.code === 0) {
         let { addr, province, city, isp, country } = LO.data,
           tk = LO.tk;
-        hideIP && (addr = addr.slice(0,6)+"∗∗∗∗∗");
+        hideIP && (addr = HIP(addr));
         province == city && (province = "");
         country == "中国" && (country = "🇨🇳中国");
         isp = isp.replace(/.*广电.*/g, "广电");
@@ -101,7 +101,7 @@ const scriptName = "入口落地查询";
           let { country, city, province, district, countryCode, isp, ip } =
               SP.data,
             tk = SP.tk;
-          hideIP && (ip = ip.slice(0,6)+"∗∗∗∗∗");
+          hideIP && (ip = HIP(ip));
           city == district && (city = "");
           countryCode !== "CN" && (cfw = `⟦\x20\u9632\u706b\u5899\x20⟧`);
           ins = `<b><font>入口ISP</font>:</b>
@@ -135,7 +135,7 @@ const scriptName = "入口落地查询";
           console.log("IO: " + JSON.stringify(IO, "", 2));
           let { country, city, regionName, countryCode, isp, query } = IO,
             tk = IO.tk;
-          hideIP && (query = query.slice(0,6)+"∗∗∗∗∗");
+          hideIP && (query = HIP(query));
           regionName == city && (city = "");
           countryCode !== "CN" && (cfw = `⟦\x20\u9632\u706b\u5899\x20⟧`);
           ins = `<b><font>入口国家</font>:</b>
@@ -182,6 +182,7 @@ const scriptName = "入口落地查询";
     $done({ title: scriptName, htmlMessage: 'See Log' });
   }
 })();
+function HIP(ip) {return ip.replace(/(\w{1,4})(\.|\:)(\w{1,4})$/,(_, x, y, z) => `${"*".repeat(x.length)}.${"*".repeat(z.length)}`);}
 function serverTF(t){if(/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(t)){return"v4"}else if(/^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$/.test(t)){return"v6"}else{return"domain"}}
 function getflag(t){const n=t.toUpperCase().split("").map((t=>127397+t.charCodeAt()));return String.fromCodePoint(...n).replace(/🇹🇼/g,"🇨🇳")}
 async function tKey(t,e,o){let r=1,s=1;const i=new Promise(((i,l)=>{const a=async f=>{try{const r=await Promise.race([new Promise(((n,o)=>{let r=Date.now();$httpClient.get({url:t,node:e},((t,e,s)=>{if(t){o(t)}else{let t=Date.now()-r;let o=e.status;switch(o){case 200:let o=e.headers["Content-Type"];switch(true){case o.includes("application/json"):let e=JSON.parse(s);e.tk=t;n(e);break;case o.includes("text/html"):n("text/html");break;case o.includes("text/plain"):let r=s.split("\n");let i=r.reduce(((n,e)=>{let[o,r]=e.split("=");n[o]=r;n.tk=t;return n}),{});n(i);break;case o.includes("image/svg+xml"):n("image/svg+xml");break;default:n("未知");break}break;case 204:let r={tk:t};n(r);break;default:n("nokey");break}}}))})),new Promise(((t,n)=>{setTimeout((()=>n(new Error("timeout"))),o)}))]);if(r){i(r)}else{i("超时");l(new Error(n.message))}}catch(t){if(f<r){s++;a(f+1)}else{i("检测失败, 重试次数"+s);l(t)}}};a(0)}));return i}
