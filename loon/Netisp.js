@@ -40,7 +40,7 @@ const scriptName = "入口落地查询";
       let { country, countryCode, regionName, city, query, isp, as, tk } = LD;
       hideIP && (query = HIP(query));
       var lquery = query;
-      outs = `<b><font>落地国家</font>:</b>
+      outs = `<b><font>落地位置</font>:</b>
         <font>${getflag(countryCode)}${country}&nbsp; ${tk}ms</font><br><br>
     
         <b><font>落地地区</font>:</b>
@@ -107,13 +107,13 @@ const scriptName = "入口落地查询";
           ins = `<b><font>入口ISP</font>:</b>
         <font>${isp}</font><br><br>
       
-        <b><font>入口国家</font>:</b>
+        <b><font>入口位置</font>:</b>
         <font>${getflag(countryCode)}${country}&nbsp; ${tk}ms</font><br><br>
  
         <b><font>入口CNAPI</font>:</b>
         <font>${ip}</font><br><br>
     
-        <b><font>入口位置</font>:</b>
+        <b><font>入口地区</font>:</b>
         <font>${province} ${city} ${district}</font><br><br>`;
         } else {
           INFailed = "SP Api Failed: " + JSON.stringify(SP);
@@ -138,7 +138,7 @@ const scriptName = "入口落地查询";
           hideIP && (query = HIP(query));
           regionName == city && (city = "");
           countryCode !== "CN" && (cfw = `⟦\x20\u9632\u706b\u5899\x20⟧`);
-          ins = `<b><font>入口国家</font>:</b>
+          ins = `<b><font>入口位置</font>:</b>
           <font>${getflag(countryCode)}${country}&nbsp; ${tk}ms</font><br><br>
       
           <b><font>入口ISP</font>:</b>
@@ -147,7 +147,7 @@ const scriptName = "入口落地查询";
           <b><font>入口IPAPI</font>:</b>
           <font>${query}</font><br><br>
       
-          <b><font>入口位置</font>:</b>
+          <b><font>入口地区</font>:</b>
           <font>${regionName} ${city}</font><br><br>`;
         } else {
           INFailed = "IPApi Failed: " + JSON.stringify(IO);
