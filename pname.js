@@ -62,7 +62,7 @@ async function operator(e) {
     const allsame = newnode.every((value, index, arr) => value === arr[0]);
     if(allsame){
         klog(`未使用带指定节点功能的 SubStore`);
-        $notification.post('PNAME：点击以安装对应版本','未使用带指定节点功能的 SubStore，或所有节点落地IP相同','',{url: "https://github.com/Keywos/rule/raw/main/Sub-Store/Sub-Store.sgmodule",})
+        $notification.post('PNAME：点击以安装对应版本','未使用带指定节点功能的 SubStore，或所有节点落地IP相同','',{url: "https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Surge-ability.sgmodule",})
         return e;
     }
   }
