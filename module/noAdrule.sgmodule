@@ -9,10 +9,6 @@ tcp-connection = true
 # 爱思开屏
 ^https?:\/\/list-app-m\.i4\.cn\/getopfstadinfo\.xhtml - reject
 
-# 网易邮箱大师
-^https?:\/\/appconf\.mail\.163\.com\/mmad\/get\.do - reject
-^http?:\/\/analytics\.163\.com\/ntes - reject
-
 # qq邮箱开屏 rescdn.qqmail.com
 ^https:\/\/rescdn\.qqmail\.com\/qqmail\/images\/.+\.(png|jpg)$ - reject
 
@@ -31,7 +27,7 @@ tcp-connection = true
 # 微信公众号底部 mp.weixin.qq.com
 ^https?:\/\/mp\.weixin\.qq\.com\/mp\/getappmsgad data="https://raw.githubusercontent.com/Keywos/rule/main/mocks//WeChat.json"
 
-# 网易邮箱大师开屏 analytics.163.com, appconf.mail.163.com
+# 网易邮箱大师开屏 appconf.mail.163.com
 ^https?:\/\/appconf\.mail\.163\.com\/mmad\/ data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/reject-200.txt"
 
 # 招商银行开屏 webappcfg.paas.cmbchina.com
@@ -48,4 +44,4 @@ it之家 = type=http-response,pattern=^https:\/\/napi\.ithome\.com\/api\/(news\/
 
 [MITM]
 h2 = true
-hostname = %APPEND% client.app.coc.10086.cn, list-app-m.i4.cn, search-app-m.i4.cn, mp.weixin.qq.com, webappcfg.paas.cmbchina.com, rescdn.qqmail.com, us.l.qq.com, napi.ithome.com, api.zuihuimai.com, dat.ruanmei.com
+hostname = %APPEND% client.app.coc.10086.cn, list-app-m.i4.cn, search-app-m.i4.cn, mp.weixin.qq.com, webappcfg.paas.cmbchina.com, rescdn.qqmail.com, us.l.qq.com, napi.ithome.com, api.zuihuimai.com, dat.ruanmei.com,appconf.mail.163.com
