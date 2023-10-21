@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "interval": 2000,
+  "interval": 999999999,
   "id": "65313ba218edd12649a73027",
   "activities": [
     {
