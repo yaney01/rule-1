@@ -1,6 +1,6 @@
 /**
  * @key
- * 2023-09-19 20:42:25
+ * 2023-10-23 19:17:25
  * 此入口落地查询脚本 仅支持 Loon
  * 使用方法 长按节点选择 '入口落地查询'
  */
@@ -101,7 +101,7 @@ const scriptName = "入口落地查询";
           let { country, city, province, district, countryCode, isp, ip } =
               SP.data,
             tk = SP.tk;
-          hideIP && (ip = HIP(ip));
+          hideIP && (nodeIp = HIP(nodeIp));
           city == district && (city = "");
           countryCode !== "CN" && (cfw = `⟦\x20\u9632\u706b\u5899\x20⟧`);
           ins = `<b><font>入口ISP</font>:</b>
@@ -111,7 +111,7 @@ const scriptName = "入口落地查询";
         <font>${getflag(countryCode)}${country}&nbsp; ${tk}ms</font><br><br>
  
         <b><font>入口CNAPI</font>:</b>
-        <font>${ip}</font><br><br>
+        <font>${nodeIp}</font><br><br>
     
         <b><font>入口地区</font>:</b>
         <font>${province} ${city} ${district}</font><br><br>`;
