@@ -19,6 +19,19 @@ tcp-connection = true
 ^https?:\/\/api\.zuihuimai\.com\/static\/.*\/hongbao - reject
 ^https?:\/\/dat\.ruanmei\.com\/ithome\/money\/acd\.json$ - reject
 
+[Rule]
+# 网易邮箱
+DOMAIN-SUFFIX,sdk.e.qq.com,REJECT-NO-DROP
+DOMAIN-SUFFIX,gorgon.youdao.com,REJECT-NO-DROP
+DOMAIN-SUFFIX,nex.163.com,REJECT-NO-DROP
+DOMAIN-SUFFIX,mi.gdt.qq.com,REJECT-NO-DROP
+# 酷安
+DOMAIN-KEYWORD,.pangolin-sdk-toutiao,REJECT-NO-DROP
+DOMAIN-SUFFIX,ulogs.umengcloud.com,REJECT-NO-DROP
+DOMAIN-SUFFIX,toblog.ctobsnssdk.com,REJECT-NO-DROP
+DOMAIN-SUFFIX,adashbc.ut.taobao.com,REJECT-NO-DROP
+DOMAIN-SUFFIX,adashxgc.ut.taobao.com,REJECT-NO-DROP
+DOMAIN-SUFFIX,gromore.pangolin-sdk-toutiao.com,REJECT-NO-DROP
 
 [Map Local]
 # 中国移动开屏 client.app.coc.10086.cn
