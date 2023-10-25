@@ -6,6 +6,7 @@ if (url.includes("poplayer.template.alibaba.com")) {
   i.enable = false;
   i.props = [];
   i.mainRes = { images: [] };
+  
   i.configData.pages = [];
   i.configData.env.bgAlpha = "0";
   i.configData.env.displayDelayMs = 0;

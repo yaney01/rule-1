@@ -18,7 +18,7 @@
 
 [Script]
 # 开屏广告 | 推荐页banner和广告 | 我的页面 | 1080P | 热搜 | 标签栏 | 下发皮肤
-bili-jsons = type=http-response,pattern=^https?:\/\/app\.bilibili\.com\/x\/(v2\/(splash\/(list|show)|feed\/index|account\/(mine(\/ipad)?|myinfo\?)|search\/square)|resource\/show\/(tab\/v2|skin\?)),requires-body=1,script-update-interval=-1,script-path=https://github.com/Keywos/rule/raw/main/JS/bjson.js
+bili-jsons = type=http-response,pattern=^https?:\/\/app\.bilibili\.com\/x\/(v2\/(splash\/(list|show|brand)|feed\/index|account\/(mine(\/ipad)?|myinfo\?)|search\/square)|resource\/show\/(tab\/v2|skin\?)),requires-body=1,script-update-interval=-1,script-path=https://github.com/Keywos/rule/raw/main/JS/bjson.js
 # 直播间推广
 bili-lives = type=http-response,pattern=^https?:\/\/api\.live\.bilibili\.com\/xlive\/app-room\/v1\/index\/getInfoByRoom,requires-body=1,script-update-interval=-1,script-path=https://github.com/Keywos/rule/raw/main/JS/bjson.js
 # 番剧页 & 观影页广告
