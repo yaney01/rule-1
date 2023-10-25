@@ -2,67 +2,7 @@
 const url = $request.url;
 if (!$response.body) $done({});
 let i = JSON.parse($response.body);
-if (url.includes("/splash/brand/config")) {
-  let newObj = {
-    id: 96,
-    thumb: "https://raw.githubusercontent.com/Keywos/rule/main/mocks/bili.jpg",
-    thumb_hash: "307bc0ec654eae55e81eae788f8675e6",
-    thumb_size: 61498,
-    logo_url: "https://raw.githubusercontent.com/Keywos/rule/main/mocks/bililogo.png",
-    logo_hash: "87f2da855046aa0a69a375f1c4c7e3b5",
-    logo_size: 23686,
-    mode: "full",
-    thumb_name: "Bilibili Key",
-    source: "brand",
-    show_logo: true,
-  };
-  i.data.tabs.forEach((png) => {
-    if ("source" in png) {
-      for (let i in png) {
-        if (png[i] === "brand") {
-          png.sections[0].list.unshift(newObj);
-          break;
-        }
-      }
-    }
-  });
-} else if (url.includes("/x/resource/peak/download")) {
-  let newRes = {
-    task_id: "307bc0ec654eae55e81eae788f8675e6",
-    file_name: "bili.png",
-    type: "thumb",
-    url: "https://raw.githubusercontent.com/Keywos/rule/main/mocks/bili.jpg",
-    hash: "307bc0ec654eae55e81eae788f8675e6",
-    size: 61498,
-    expect_dw: 0,
-    effect_time: 1982481535,
-    expire_time: 1982481535,
-    priority: 0,
-    extra: "",
-  };
-  let newLogo = {
-    task_id: "87f2da855046aa0a69a375f1c4c7e3b5",
-    file_name: "bililogo.png",
-    type: "logo",
-    url: "https://raw.githubusercontent.com/Keywos/rule/main/mocks/bililogo.png",
-    hash: "87f2da855046aa0a69a375f1c4c7e3b5",
-    size: 23686,
-    expect_dw: 0,
-    effect_time: 1982481535,
-    expire_time: 1982481535,
-    priority: 0,
-    extra: "",
-  };
-  i.data.resource.forEach((i) => {
-    for (let l in i) {
-      if (i[l] === "brand_splash") {
-        i.list.unshift(newRes);
-        i.list.unshift(newLogo);
-        break;
-      }
-    }
-  });
-} else if (url.includes("/x/v2/splash")) {
+if (url.includes("/x/v2/splash")) {
   const k = ["account", "event_list", "preload", "show"];
   if (i.data) {
     k.forEach((it) => {
