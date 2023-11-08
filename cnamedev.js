@@ -328,6 +328,11 @@ async function operator(e = [], targetPlatform, env) {
             }
             let btip = true;
             if (!xy || yisp || yw ||  flag) {
+              if (!support) {
+                $.notify("No Loon or Surge")
+                $.error(`No Loon or Surge`);
+                  return e;
+                }
               const outip = await OUTIA(pk);
               let {country:outUsq, countryCode:outUs, city:outCity, query:outQuery, isp:outisp} = outip;//落地
               if (yisp) {
