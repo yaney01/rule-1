@@ -229,7 +229,7 @@ async function operator(e = [], targetPlatform, env) {
   const tzname = env.source[e[0].subName].name;
   const startTime = new Date();
   const support = isLoon || isSurge;
-  if (xy) {
+  if (!xy) {
     if (!support) {
       $.notify("No Loon or Surge")
       $.error(`No Loon or Surge`);
