@@ -229,14 +229,16 @@ async function operator(e = [], targetPlatform, env) {
   const tzname = env.source[e[0].subName].name;
   const startTime = new Date();
   const support = isLoon || isSurge;
-  if (!support) {
-  $.notify("No Loon or Surge")
-  $.error(`No Loon or Surge`);
-    return e;
+  if (xy) {
+    if (!support) {
+      $.notify("No Loon or Surge")
+      $.error(`No Loon or Surge`);
+        return e;
+      }
   }
   function klog(...arg) {
     console.log('[CNAME] ' + tzname +" : "+ arg);
-}
+  }
   if (e.length < 1) {$.notify("订阅: "+tzname,"订阅无节点","");return e;}
   if (typeof scriptResourceCache === "undefined")return e;
   var bs = iar.bs ? iar.bs : 8;
