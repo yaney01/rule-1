@@ -31,7 +31,7 @@
  * 落地参数
  * - [yisp]      显示落地详细运营商名称；
  * - [yw]        落地归属地使用英文缩写标识，不建议与其他入口参数配合使用，因为其他参数API没有返回英文；
- * 
+ * - [xy]        此参数关闭落地查询，仅查询入口；开启 yisp || yw || flag 参数后 xy 参数无效
  * 图标参数
  * - [game]      增加游戏节点标识；
  * - [flag]      增加国家或地区的旗帜标识，默认无此参数；
@@ -45,7 +45,7 @@
  * 
  * 通知参数
  * - [offtz]     关闭脚本通知；
- * - [tz=]       为推送通知时添加机场名称；
+ * // - [tz=]       为推送通知时添加机场名称；
  * 
  * 解析参数
  * - [dnsjx]     将节点域名解析为IP，普通用户不建议使用；
@@ -79,6 +79,11 @@ const SUB_STORE_SCHEMA = {
     flag: {
       datatype: "boolean",
       description: "增加国家或地区的旗帜标识，默认无此参数",
+      defaultValue: false,
+    },
+    xy: {
+      datatype: "boolean",
+      description: "关闭落地查询，仅查询入口；开启 yisp || yw || flag 参数后 xy 参数无效",
       defaultValue: false,
     },
     iisp: {
@@ -158,11 +163,11 @@ const SUB_STORE_SCHEMA = {
       description: "为节点添加机场名称前缀",
       defaultValue: "",
     },
-    tz: {
-      datatype: "string",
-      description: "为推送通知时添加机场名称",
-      defaultValue: "",
-    },
+    // tz: {
+    //   datatype: "string",
+    //   description: "为推送通知时添加机场名称",
+    //   defaultValue: "",
+    // },
     timeout: {
       datatype: "number",
       description:
@@ -200,8 +205,8 @@ const SUB_STORE_SCHEMA = {
 const $ = $substore;
 const iar = $arguments;
 let FGF = iar.fgf == undefined ? " " : decodeURI(iar.fgf),FGFS = FGF,debug = iar.debug;
-const { yw, bl, iisp, yisp, yun, city, flag, game, yuan, sheng, offtz, snone: numone} = iar;
-const h = iar.h ? decodeURI(iar.h) : "",min = iar.min ? decodeURI(iar.min) : "",tzname = iar.tz ? decodeURI(iar.tz) : "",firstN = iar.name ? decodeURI(iar.name) : "";
+const { yw, bl, iisp, xy,  yisp, yun, city, flag, game, yuan, sheng, offtz, snone: numone} = iar;
+const h = iar.h ? decodeURI(iar.h) : "",min = iar.min ? decodeURI(iar.min) : "",firstN = iar.name ? decodeURI(iar.name) : "";
 const XHFGF = iar.sn == undefined ? " " : decodeURI(iar.sn),{ isLoon: isLoon, isSurge: isSurge } = $substore.env, dns = iar.dnsjx,target = isLoon ? "Loon" : isSurge ? "Surge" : undefined,keypr= "peedtest";
 let cd = iar.cd ? iar.cd : 0, timeout = iar.timeout ? iar.timeout : 2000, writet = "", innum = 1728e5, loontrue = false, onen = false, Sue = false
 const keyp = "3.s",EXPIRATION_KEY = "sub-store-csr-expiration-time";
@@ -220,7 +225,8 @@ let TIMEDKEY = $persistentStore.read(EXPIRATION_KEY);
 const nlc =/邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|禁止|下次|使用|版本|官址|备用|到期|过期|已用|国内|国际|国外|联系|邮箱|工单|贩卖|倒卖|防止|(\b(USE|USED|TOTAL|EXPIRE|EMAIL)\b)|\d\s?g/i;
 // const regexArray = [/\u6e38\u620f|game/i];
 // const valueArray = ["Game"];
-async function operator(e) {
+async function operator(e = [], targetPlatform, env) {
+  const tzname = env.source[e[0].subName].name;
   const startTime = new Date();
   const support = isLoon || isSurge;
   if (!support) {
@@ -228,14 +234,14 @@ async function operator(e) {
   $.error(`No Loon or Surge`);
     return e;
   }
-  if (e.length < 1) {$notification.post("CNAME","订阅无节点","");return e;}
+  function klog(...arg) {
+    console.log('[CNAME] ' + tzname +" : "+ arg);
+}
+  if (e.length < 1) {$notification.post("订阅: "+tzname,"订阅无节点","");return e;}
   if (typeof scriptResourceCache === "undefined")return e;
   var bs = iar.bs ? iar.bs : 8;
   const ein = e.length;
-/**
- * delog()  debug:boolean  console.log
- * klog()  console.log
- */
+
   klog(`开始处理节点: ${ein} 个`);
   klog(`批处理节点数: ${bs} 个`);
   klog(`设定api超时: ${zhTime(timeout)}`);
@@ -290,7 +296,7 @@ async function operator(e) {
       );
       o += 1;
     }
-    if (!onen && !offtz) $notification.post("CNAME", `开始处理节点: ${ein} 个 批处理数量: ${bs} 个`, "请等待处理完毕后再次点击预览");
+    if (!onen && !offtz) $notification.post("订阅: "+tzname, `开始处理节点: ${ein} 个 批处理数量: ${bs} 个`, "请等待处理完毕后再次点击预览");
     let i = 0,newnode = [];
     while (i < e.length) {
       const batch = e.slice(i, i + bs);
@@ -318,19 +324,25 @@ async function operator(e) {
                 }
                 break;
             }
+            yw
+            let btip = false;
+            if (!xy || yisp || yw ||  flag) {
+              const outip = await OUTIA(pk);
+              let {country:outUsq, countryCode:outUs, city:outCity, query:outQuery, isp:outisp} = outip;//落地
+              if (yisp) {
+                  yuanisp = FGFS+outisp
+              };
+              debug && (pk.keyoutld = outip);
+              delog("落地信息 " + JSON.stringify(outip))
+  
+              luodi = (outUsq === "中国") ? outCity : (yw ? outUs : outUsq);
+              btip = outQuery !== inServer
+            } else {
+              outQuery = "";
+            }
 
-            const outip = await OUTIA(pk);
-            let {country:outUsq, countryCode:outUs, city:outCity, query:outQuery, isp:outisp} = outip;//落地
-            if (yisp) {
-                yuanisp = FGFS+outisp
-            };
-            debug && (pk.keyoutld = outip);
-            delog("落地信息 " + JSON.stringify(outip))
 
-            luodi = (outUsq === "中国") ? outCity : (yw ? outUs : outUsq);
-            let btip = outQuery !== inServer
-
-            if (btip) {
+            if (btip || xy) {
               if (!isNoAli || v4) {
                 const spkey = await SPEC(inServer);//入口国内api查询
                 let {country:inSpCn,regionName:inSpSheng,city:inSpCity,isp:inSpIsp,ip:inSpIp} = spkey;//入口speedapi
@@ -419,7 +431,9 @@ async function operator(e) {
                 firstN, Oispflag,Osh,Oct,Oisp,zhi,FGF,adflag,luodi,OGame,nxx,yuanisp
                 ).filter(ki => ki !== "");
                 // delog(keyover)
-            const overName = keyover.join("");
+            let overName = keyover.join("");
+
+            xy && (overName = pk.name +FGF+ overName);
             // delog(overName)
             newnode.push(outQuery);
             dns && (pk.server = inQcip);
@@ -433,7 +447,7 @@ async function operator(e) {
       if (!onen){
         if(!offtz && (ein > (i*2))){
             if (i >= (e.length / 3) && i < (e.length * 2 / 3) && ein>i) {
-                $notification.post("CNAME", `处理进度${i}/${ein}`, "耐心等待, 请勿重复点击预览...");
+                $notification.post("订阅: "+tzname, `处理进度${i}/${ein}`, "耐心等待, 请勿重复点击预览...");
             }
         }
         await sleep(getRandom());
@@ -477,7 +491,7 @@ async function operator(e) {
   const writeklog = apiw ? `写入缓存:${apiw}, ` : "";
   const Push = (eout === ein && eout === 0) ? "" : (eout === ein ? "全部通过测试, " : "去除无效节点后有" + eout + "个, ");
   if (!offtz) {$notification.post(
-      `${tzname}共${ein}个节点`,
+      `订阅: ${tzname} 共${ein}个节点`,
       "",
       `${writeklog}${readklog}${Pushtd}${Push}用时:${zhTime(timeDiff)}`
       );}
@@ -710,13 +724,11 @@ function getRandom() {
 }
 function delog(...arg) {
     if(debug){
-        console.log('[CNAME] '+arg);
+        console.log('[CNAME] :' + arg);
     } 
 }
 
-function klog(...arg) {
-    console.log('[CNAME] '+ arg);
-}
+
 
 function removels(e) {
   const t = new Set();
