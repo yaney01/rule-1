@@ -213,15 +213,15 @@ const keyp = "3.s",EXPIRATION_KEY = "sub-store-csr-expiration-time";
 if (min !== "") {
   Sue = true;
   innum = parseInt(min, 10) * 6e4;
-  writet = $persistentStore.write(JSON.stringify(innum), EXPIRATION_KEY);
+  writet = $.write(JSON.stringify(innum), EXPIRATION_KEY);
 } else if (h !== "") {
   Sue = true;
   innum = parseInt(h, 10) * 36e5;
-  writet = $persistentStore.write(JSON.stringify(innum), EXPIRATION_KEY);
+  writet = $.write(JSON.stringify(innum), EXPIRATION_KEY);
 } else {
-  writet = $persistentStore.write(JSON.stringify(innum), EXPIRATION_KEY);
+  writet = $.write(JSON.stringify(innum), EXPIRATION_KEY);
 }
-let TIMEDKEY = $persistentStore.read(EXPIRATION_KEY);
+let TIMEDKEY = $.read(EXPIRATION_KEY);
 const nlc =/邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|禁止|下次|使用|版本|官址|备用|到期|过期|已用|国内|国际|国外|联系|邮箱|工单|贩卖|倒卖|防止|(\b(USE|USED|TOTAL|EXPIRE|EMAIL)\b)|\d\s?g/i;
 // const regexArray = [/\u6e38\u620f|game/i];
 // const valueArray = ["Game"];
@@ -237,7 +237,7 @@ async function operator(e = [], targetPlatform, env) {
   function klog(...arg) {
     console.log('[CNAME] ' + tzname +" : "+ arg);
 }
-  if (e.length < 1) {$notification.post("订阅: "+tzname,"订阅无节点","");return e;}
+  if (e.length < 1) {$.notify("订阅: "+tzname,"订阅无节点","");return e;}
   if (typeof scriptResourceCache === "undefined")return e;
   var bs = iar.bs ? iar.bs : 8;
   const ein = e.length;
@@ -272,7 +272,7 @@ async function operator(e = [], targetPlatform, env) {
               if (isLoon) {
                 let loontd = "";
                 const loonkkk={"1分钟":6e4,"5分钟":3e5,"10分钟":6e5,"30分钟":18e5,"1小时":36e5,"2小时":72e5,"3小时":108e5,"6小时":216e5,"12小时":432e5,"24小时":864e5,"48小时":1728e5,"72小时":2592e5,参数传入:"innums"};
-                intimed = $persistentStore.read("节点缓存有效期");
+                intimed = $.read("节点缓存有效期");
                 loontd = loonkkk[intimed] || 1728e5;
                 if (loontd == "innums") {
                   loontd = innum;
@@ -296,7 +296,7 @@ async function operator(e = [], targetPlatform, env) {
       );
       o += 1;
     }
-    if (!onen && !offtz) $notification.post("订阅: "+tzname, `开始处理节点: ${ein} 个 批处理数量: ${bs} 个`, "请等待处理完毕后再次点击预览");
+    if (!onen && !offtz) $.notify("订阅: "+tzname, `开始处理节点: ${ein} 个 批处理数量: ${bs} 个`, "请等待处理完毕后再次点击预览");
     let i = 0,newnode = [];
     while (i < e.length) {
       const batch = e.slice(i, i + bs);
@@ -324,8 +324,7 @@ async function operator(e = [], targetPlatform, env) {
                 }
                 break;
             }
-            yw
-            let btip = false;
+            let btip = true;
             if (!xy || yisp || yw ||  flag) {
               const outip = await OUTIA(pk);
               let {country:outUsq, countryCode:outUs, city:outCity, query:outQuery, isp:outisp} = outip;//落地
@@ -338,9 +337,9 @@ async function operator(e = [], targetPlatform, env) {
               luodi = (outUsq === "中国") ? outCity : (yw ? outUs : outUsq);
               btip = outQuery !== inServer
             } else {
-              outQuery = "";
+              var outQuery = "";
             }
-
+            
 
             if (btip || xy) {
               if (!isNoAli || v4) {
@@ -439,7 +438,8 @@ async function operator(e = [], targetPlatform, env) {
             dns && (pk.server = inQcip);
             pk.name = overName;
             pk.qc = inQcip + outQuery;
-          } catch (err) {}
+            
+          } catch (err) {console.log(err.message)}
         })
       );
       i += bs;
@@ -447,7 +447,7 @@ async function operator(e = [], targetPlatform, env) {
       if (!onen){
         if(!offtz && (ein > (i*2))){
             if (i >= (e.length / 3) && i < (e.length * 2 / 3) && ein>i) {
-                $notification.post("订阅: "+tzname, `处理进度${i}/${ein}`, "耐心等待, 请勿重复点击预览...");
+                $.notify("订阅: "+tzname, `处理进度${i}/${ein}`, "耐心等待, 请勿重复点击预览...");
             }
         }
         await sleep(getRandom());
@@ -460,7 +460,7 @@ async function operator(e = [], targetPlatform, env) {
       const allsame = newnode.every((value, index, arr) => value === arr[0]);
       if(allsame){
           klog(`未使用带指定节点功能的 SubStore`);
-          $notification.post('CNAME：点击以安装对应版本','未使用带指定节点功能的 SubStore，或所有节点落地IP相同','',{url: "https://github.com/Keywos/rule/raw/main/Sub-Store/Sub-Store.sgmodule",})
+          $.notify('CNAME：点击以安装对应版本','未使用带指定节点功能的 SubStore，或所有节点落地IP相同','',{url: "https://github.com/Keywos/rule/raw/main/Sub-Store/Sub-Store.sgmodule",})
           return e;
       }
     }
@@ -469,7 +469,7 @@ async function operator(e = [], targetPlatform, env) {
 //     (rere && cs === 1) && (cd = timeout,await sleep(50));
 //   } while (rere && cs < 2);
 //   cs < 3 && (klog("任务执行次数: " + cs));
-  e = removeqc(e);
+  !xy && (e = removeqc(e));
   e = jxh(e);
   // if (firstN !== "") {e.forEach((pk) => {pk.name = firstN + " " + pk.name;});}
   numone && (e = onee(e));
@@ -490,7 +490,7 @@ async function operator(e = [], targetPlatform, env) {
   const readklog = apiRead ? `读取缓存:${apiRead} ` : "";
   const writeklog = apiw ? `写入缓存:${apiw}, ` : "";
   const Push = (eout === ein && eout === 0) ? "" : (eout === ein ? "全部通过测试, " : "去除无效节点后有" + eout + "个, ");
-  if (!offtz) {$notification.post(
+  if (!offtz) {$.notify(
       `订阅: ${tzname} 共${ein}个节点`,
       "",
       `${writeklog}${readklog}${Pushtd}${Push}用时:${zhTime(timeDiff)}`
