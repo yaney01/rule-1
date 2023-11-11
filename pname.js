@@ -20,8 +20,9 @@ let timeout = iar.timeout || 2000,
   Sort = iar.px,
   bs = iar.bs || 20;
 const { isLoon: isLoon, isSurge: isSurge } = $substore.env,
-  target = isLoon ? "Loon" : isSurge ? "Surge" : undefined;
-async function operator(e) {
+  target = isLoon ? "Loon" : isSurge ? "Surge" : undefined;    
+async function operator(e = [], targetPlatform, env) {
+  const tzname = env.source[e[0].subName].name;
   const startTime = new Date();
   const support = isLoon || isSurge;
   if (!support) {

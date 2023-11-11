@@ -447,7 +447,7 @@ async function operator(e = [], targetPlatform, env) {
                 // delog(keyover)
             let overName = keyover.join("");
 
-            xy && (overName = pk.name +FGF+ iflag +overName);
+            xy && (overName = iflag +overName +FGF+ pk.name);
             // delog(overName)
             newnode.push(outQuery);
             dns && (pk.server = inQcip);
