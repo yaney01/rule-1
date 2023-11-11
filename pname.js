@@ -31,8 +31,11 @@ async function operator(e = [], targetPlatform, env) {
     return e;
   }
   if (e.length < 1) {
-    $notification.post("PNAME", "订阅无节点", "");
+    $notification.post("PNAME:"+tzname, "订阅无节点", "");
     return e;
+  }
+  function klog(...arg) {
+    console.log("[PNAME] "+tzname+ " " + arg);
   }
   const ein = e.length;
   klog(`开始处理节点: ${ein} 个`);
@@ -63,7 +66,7 @@ async function operator(e = [], targetPlatform, env) {
     const allsame = newnode.every((value, index, arr) => value === arr[0]);
     if(allsame){
         klog(`未使用带指定节点功能的 SubStore`);
-        $notification.post('PNAME：点击以安装对应版本','未使用带指定节点功能的 SubStore，或所有节点落地IP相同','',{url: "https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Surge-ability.sgmodule",})
+        $notification.post('PNAME：点击以安装对应版本'+tzname,'未使用带指定节点功能的 SubStore，或所有节点落地IP相同','',{url: "https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Surge-ability.sgmodule",})
         return e;
     }
   }
@@ -148,9 +151,6 @@ function delog(...arg) {
   }
 }
 
-function klog(...arg) {
-  console.log("[PNAME] " + arg);
-}
 
 function removels(e) {
   const t = new Set();
