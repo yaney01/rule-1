@@ -38,7 +38,7 @@
 
 
 // const inArg = { 'bl':true, 'blgd':true, 'blkey':'iplc+gpt+NF+IPLC', 'flag':true };
-const inArg = $arguments; console.log(inArg)
+const inArg = $arguments;// console.log(inArg)
 const 
 nx = inArg.nx || false,
 bl = inArg.bl || false,
