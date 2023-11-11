@@ -468,7 +468,7 @@ async function operator(e = [], targetPlatform, env) {
         await sleep(getRandom());
       }
     }
-    e = removels(e);
+    !xy && (e = removels(e));
     let eout = e.length;
     if (eout > 2 && isSurge){
       delog(newnode)
