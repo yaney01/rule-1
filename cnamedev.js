@@ -27,6 +27,7 @@
  * - [city]      增加入口城市文字标识；
  * - [sheng]     增加入口省份文字标识；
  * - [yuan]      为境外入口添加真实的入口属地标识，当未配置此此参数时，则将境外入口统一标记为 [境外]，默认未配置此参数；
+ * - [inflag]    增加入口国旗
  * 
  * 落地参数
  * - [yisp]      显示落地详细运营商名称；
@@ -78,7 +79,12 @@ const SUB_STORE_SCHEMA = {
   params: {
     flag: {
       datatype: "boolean",
-      description: "增加国家或地区的旗帜标识，默认无此参数",
+      description: "增加落地国家或地区的旗帜标识，默认无此参数",
+      defaultValue: false,
+    },
+    inflag:{
+      datatype: "boolean",
+      description: "增加入口国家或地区的旗帜标识，默认无此参数",
       defaultValue: false,
     },
     xy: {
@@ -205,7 +211,7 @@ const SUB_STORE_SCHEMA = {
 const $ = $substore;
 const iar = $arguments;
 let FGF = iar.fgf == undefined ? " " : decodeURI(iar.fgf),FGFS = FGF,debug = iar.debug;
-const { yw, bl, iisp, xy,  yisp, yun, city, flag, game, yuan, sheng, offtz, snone: numone} = iar;
+const { yw, bl, iisp, xy,  yisp, yun, city, flag, inflag, game, yuan, sheng, offtz, snone: numone} = iar;
 const h = iar.h ? decodeURI(iar.h) : "",min = iar.min ? decodeURI(iar.min) : "",firstN = iar.name ? decodeURI(iar.name) : "";
 const XHFGF = iar.sn == undefined ? " " : decodeURI(iar.sn),{ isLoon: isLoon, isSurge: isSurge } = $substore.env, dns = iar.dnsjx,target = isLoon ? "Loon" : isSurge ? "Surge" : undefined,keypr= "peedtest";
 let cd = iar.cd ? iar.cd : 0, timeout = iar.timeout ? iar.timeout : 2000, writet = "", innum = 1728e5, loontrue = false, onen = false, Sue = false
@@ -249,7 +255,7 @@ async function operator(e = [], targetPlatform, env) {
   klog(`设定api超时: ${zhTime(timeout)}`);
   klog(`有缓api超时: ${zhTime(cd)}`);
   e = e.filter((item) => !nlc.test(item.name));
-  let o = 0,Pushtd = "",intimed = "",stops = false,rere=false;
+  let o = 0,Pushtd = "",intimed = "",stops = false,rere=false,iflag="";
   //   do {
     while (o < e.length && !stops) {
       const batchs = e.slice(o, o + 1);
@@ -330,7 +336,7 @@ async function operator(e = [], targetPlatform, env) {
             if (!xy || yisp || yw ||  flag) {
               if (!support) {
                 $.notify("No Loon or Surge")
-                $.error(`No Loon or Surge`);
+                $.error(`No Loon or Surge, 开启 yisp || yw || flag 参数后 xy 参数无效`);
                   return e;
                 }
               const outip = await OUTIA(pk);
@@ -351,8 +357,9 @@ async function operator(e = [], targetPlatform, env) {
             if (btip || xy) {
               if (!isNoAli || v4) {
                 const spkey = await SPEC(inServer);//入口国内api查询
-                let {country:inSpCn,regionName:inSpSheng,city:inSpCity,isp:inSpIsp,ip:inSpIp} = spkey;//入口speedapi
-
+                let {country:inSpCn,regionName:inSpSheng,city:inSpCity,isp:inSpIsp,ip:inSpIp,countryCode:inCode} = spkey;//入口speedapi
+                
+                inflag && (iflag = getflag(inCode));
                 debug && (pk.keyinsp = spkey);
                 isCN = inSpCn === "中国";
 
@@ -382,7 +389,8 @@ async function operator(e = [], targetPlatform, env) {
 
               if (isNoAli || v6 || !isCN) {
                     const inip = await INIA(Yserver);//ipapi入口
-                    let {country: inUsq, city: inCity, query: inQuery, regionName: inIpSh} = inip;
+                    let {country: inUsq, city: inCity, query: inQuery, regionName: inIpSh, countryCode:inaCode} = inip;
+                    inflag && (iflag = getflag(inaCode));
                     debug && (pk.keyinipapi = inip);
                     delog("ipapi入口 " + JSON.stringify(inip));
                     inQcip = inQuery; //去重ip
@@ -417,7 +425,7 @@ async function operator(e = [], targetPlatform, env) {
               flag && (Oispflag = "🆉");
               (sheng || city || iisp) && (zhi  = "直连");
             }
-
+         
             flag && (adflag = getflag(outUs));
             game && (OGame = /game|游戏/i.test(pk.name) ? (flag ? "🎮" : FGF+"Game") : OGame);
             if (bl){
@@ -431,7 +439,7 @@ async function operator(e = [], targetPlatform, env) {
             }
             
             // regexArray.forEach((regex, index) => {if (regex.test(pk.name)) {rename = valueArray[index];}});
-            (!iisp && !city && !sheng) && (Oispflag = "",FGF ="");
+            (!iisp && !city && !sheng && !xy && !inflag) && (Oispflag = "",FGF ="");
 
             keyover = keyover.concat(
                 firstN, Oispflag,Osh,Oct,Oisp,zhi,FGF,adflag,luodi,OGame,nxx,yuanisp
@@ -439,7 +447,7 @@ async function operator(e = [], targetPlatform, env) {
                 // delog(keyover)
             let overName = keyover.join("");
 
-            xy && (overName = pk.name +FGF+ overName);
+            xy && (overName = pk.name +FGF+ iflag +overName);
             // delog(overName)
             newnode.push(outQuery);
             dns && (pk.server = inQcip);
@@ -646,8 +654,8 @@ async function SPEC(e) {
       const resdata = JSON.parse(response.body);
       delog(resdata);
       if (resdata.data) {
-        const { country: e, province: o, city: r, isp: i, ip: c } = resdata.data;
-        const a = { country: e, regionName: o, city: r, isp: i, ip: c };
+        const { country: e, province: o, city: r, isp: i, ip: c ,countryCode:k} = resdata.data;
+        const a = { country: e, regionName: o, city: r, isp: i, ip: c ,countryCode :k};
         delog("写入");
         scriptResourceCache.set(n, a);
         return a;
@@ -686,7 +694,7 @@ async function INIA(e) {
    if (cached) return cached;
    
    const maxRE = 2;
-   const url = `http://ip-api.com/json/${e}?lang=zh-CN&fields=status,message,country,city,query,regionName`;
+   const url = `http://ip-api.com/json/${e}?lang=zh-CN&fields=status,message,country,city,query,regionName,countryCode`;
    const getHttp = async (reTry) => {
        try {
          delog(url)

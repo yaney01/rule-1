@@ -1,122 +1,261 @@
-/** 
- * 更新日期：2023-08-10 02:37:10 仅支持Surge、Loon 
- * 用法：Sub-Store Version 2.14+ 需要固定带 ability 参数版本  脚本操作里添加：默认48H缓存超时 可参数自定 
- *
- * 1. 官方默认版(目前不带 ability 参数, 不保证以后不会改动): 》https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Surge.sgmodule
- *
- * 2. 固定带 ability 参数版本,可能会爆内存, 如果需要使用指定节点功能 例如[加国旗脚本或者cname脚本] 请使用此带 ability 参数版本: https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Surge-ability.sgmodule
- *
- * 3. 固定不带 ability 参数版本：https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Surge-Noability.sgmodule
- *
- * 符号：🅳电信 🅻联通 🆈移动 🅶广电 🅲公司 🆉直连 🎮游戏
- * 作者：@Key @奶茶姐 @小一 @可莉
- * 接口：入口查询[国内spapi 识别到国外为ip-api] 落地查询[ip-api]
- * 功能：根据接口返回的真实结果，重新对节点命名。添加入口城市、落地国家或地区、国内运营商信息，并对这些数据做持久化缓存（48小时有效期），减少API请求次数，提高运行效率。
- * 
- * 参数必须以"#"开头，多个参数使用"&"连接，例如 https://github.com/Keywos/rule/raw/main/cname.js#city&iisp&name=Name
- * 以下是此脚本支持的参数，必须以"#"开头，多个参数使用"&"连接，需要传入参数的话用 "=" 例如 "name=一元" 参考上述地址为例使用参数。
- * 无参数时的节点命名格式: "美国 01"，如果[入口IP或国家]或[落地IP或国家]一样则为 "直连 德国 01" 
- * 首次运行或者在没有缓存的情况下会通知进度
-
-# 入口参数
-[iisp]      增加入口运营商或者直连标识；
-[city]      增加入口城市文字标识；
-[sheng]     增加入口省份文字标识；
-[yuan]      为境外入口添加真实的入口属地标识，当未配置此此参数时，则将境外入口统一标记为[境外]，默认未配置此参数；
-
-# 落地参数
-[yisp]      显示落地详细运营商名称；
-[yw]        落地归属地使用英文缩写标识，不建议与其他入口参数配合使用，因为其他参数API没有返回英文；
-
-# 图标参数
-[game]      增加游戏节点标识；
-[flag]      增加国家或地区的旗帜标识，默认无此参数；
-[bl]        保留倍率标识；
-[snone]     清理某地区内只有一个节点的序号；
-
-# 分隔符参数
-[fgf=]      设置入口和落地之间的分隔符，默认为空格；
-[sn=]       设置国家与序号之间的分隔符，默认为空格；
-[name=]     为节点添加机场名称前缀；
-
-# 通知参数
-[offtz]     关闭脚本通知；
-[tz=]       为推送通知时添加机场名称；
-
-# 解析参数
-[dnsjx]     将节点域名解析为IP，普通用户不建议使用；
-
-# 逻辑参数
-[bs=]       批处理节点数建议10个左右，如果经常读不到节点建议减小批处理个数；
-
-# 缓存参数
-[h=]        节点缓存有效期，单位小时，时间参数只能二选一，Loon用户不需填写要此参数，请进入Sub-Store插件的配置界面自定义缓存有效期；
-[min=]      节点缓存有效期，单位分钟，时间参数只能二选一，Loon用户不需填写要此参数，请进入Sub-Store插件的配置界面自定义缓存有效期；
-
-# 超时参数
-[timeout=]  当无任何节点缓存时测试节点HTTP延时允许的最大超时参数，超出允许范围则判定为无效节点，默认2000ms；
-[cd=]       当有缓存时，会先读取缓存，直接输出结果；默认[cd=]的值等于0，微直接读取缓存； 
-            当设为更高的值: 比如'460'则每次读缓存都会再次处理之前判定为超时的节点,超时为460ms
-
-# 其他参数
-[debug]     调试日志，普通用户不建议使用。
-
-异常：如遇问题，Loon可以进入[配置]→[持久化缓存]→[删除指定数据]→输入Key [sub-store-cached-script-resource]并删除缓存。
-Surge需要进入[脚本编辑器]→左下角[设置]→[$persistentStore]  [sub-store-cached-script-resource]删除缓存数据。
- */
-
 /**
- * 已更新: 2023-07-22 :https://github.com/sub-store-org/Sub-Store
- * Surge: https://github.com/Keywos/rule/raw/main/Sub-Store/Sub-Store.sgmodule
- * Loon: https://github.com/Keywos/rule/raw/main/Sub-Store/Sub-Store.plugin
- * 可莉版本 Loon: https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Tool/Loon/Plugin/Sub-Store.plugin
+ * @Sub-Store-Page
+ * CNAME 接口查询去重/重命名 2023-11-11 18:26:08
+ * - 入口查询[国内spapi 识别到国外为ip-api] 落地查询[ip-api]
+ * - 根据接口返回的真实结果，重新对节点命名。
+ * - 添加入口城市、落地国家或地区、国内运营商信息，并对这些数据做持久化缓存（48小时有效期），减少API请求次数，提高运行效率。
+ * - 仅兼容 Surge, Loon 客户端。
+ * - Surge 需要固定带 ability 参数版本。
+ * 特别说明：
+ * - 符号：🅳电信 🅻联通 🆈移动 🅶广电 🅲公司 🆉直连 🎮游戏
+ * - 首次运行或者在没有缓存的情况下会通知进度
+ * - 无参数时的节点命名格式: "美国 01"
+ * - 1. 官方默认版(目前不带 ability 参数, 不保证以后不会改动): 》https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Surge.sgmodule
+ *
+ * - 2. 固定带 ability 参数版本,可能会爆内存, 如果需要使用指定节点功能 例如 [加国旗脚本或者cname脚本] 请使用此带 ability 参数版本: https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Surge-ability.sgmodule
+ *
+ * - 3. 固定不带 ability 参数版本：https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Surge-Noability.sgmodule
+ *
+ * - 参数必须以"#"开头，多个参数使用"&"连接，例如 https://github.com/Keywos/rule/raw/main/cname.js#city&iisp&name=Name
+ * - 以下是此脚本支持的参数，必须以"#"开头，多个参数使用"&"连接，需要传入参数的话用 "=" 例如 "name=一元" 参考上述地址为例使用参数。
+ * - 无参数时的节点命名格式: "美国 01"，如果 [入口IP或国家]或 [落地IP或国家]一样则为 "直连 德国 01" 
+ * - 首次运行或者在没有缓存的情况下会通知进度
+ * 
+ * 
+ * 入口参数
+ * - [iisp]      增加入口运营商或者直连标识；
+ * - [city]      增加入口城市文字标识；
+ * - [sheng]     增加入口省份文字标识；
+ * - [yuan]      为境外入口添加真实的入口属地标识，当未配置此此参数时，则将境外入口统一标记为 [境外]，默认未配置此参数；
+ * - [inflag]    增加入口国旗
+ * 
+ * 落地参数
+ * - [yisp]      显示落地详细运营商名称；
+ * - [yw]        落地归属地使用英文缩写标识，不建议与其他入口参数配合使用，因为其他参数API没有返回英文；
+ * - [xy]        此参数关闭落地查询，仅查询入口；开启 yisp || yw || flag 参数后 xy 参数无效
+ * 
+ * 图标参数
+ * - [game]      增加游戏节点标识；
+ * - [flag]      增加国家或地区的旗帜标识，默认无此参数；
+ * - [bl]        保留倍率标识；
+ * - [snone]     清理某地区内只有一个节点的序号；
+ * 
+ * 分隔符参数
+ * - [fgf=]      设置入口和落地之间的分隔符，默认为空格；
+ * - [sn=]       设置国家与序号之间的分隔符，默认为空格；
+ * - [name=]     为节点添加机场名称前缀；
+ * 
+ * 通知参数
+ * - [offtz]     关闭脚本通知；
+ * 
+ * 解析参数
+ * - [dnsjx]     将节点域名解析为IP，普通用户不建议使用；
+ * 
+ * 逻辑参数
+ * - [bs=]       批处理节点数建议10个左右，如果经常读不到节点建议减小批处理个数；
+ * 
+ * 缓存参数
+ * - [h=]        节点缓存有效期，单位小时，时间参数只能二选一，Loon用户不需填写要此参数，请进入Sub-Store插件的配置界面自定义缓存有效期；
+ * - [min=]      节点缓存有效期，单位分钟，时间参数只能二选一，Loon用户不需填写要此参数，请进入Sub-Store插件的配置界面自定义缓存有效期；
+ * 
+ * 超时参数
+ * - [timeout=]  当无任何节点缓存时测试节点HTTP延时允许的最大超时参数，超出允许范围则判定为无效节点，默认2000ms；
+ * - [cd=]       当有缓存时，会先读取缓存，直接输出结果；默认 [cd=]的值等于0，微直接读取缓存； 
+            当设为更高的值: 比如'460'则每次读缓存都会再次处理之前判定为超时的节点,超时为460ms
+ *
+ * 其他参数
+ * - [debug]     调试日志，普通用户不建议使用。
+ * - 异常：如遇问题，Loon可以进入[配置]→[持久化缓存]→[删除指定数据]→输入Key [sub-store-cached-script-resource]并删除缓存。
+ * - Surge需要进入[脚本编辑器]→左下角[设置]→[$persistentStore]  [sub-store-cached-script-resource]删除缓存数据。
  */
+
+const SUB_STORE_SCHEMA = {
+  title: "CNAME",
+  description: "根据接口返回的真实结果，重新对节点命名/去重。 如：入口/落地详细地区信息",
+  scope: ["Surge", "Loon"],
+  author: "@Key @奶茶姐 @小一 @可莉",
+  updateTime: "2023-11-11 18:26:00",
+  version: "1.2.2",
+  params: {
+    flag: {
+      datatype: "boolean",
+      description: "增加落地国家或地区的旗帜标识，默认无此参数",
+      defaultValue: false,
+    },
+    inflag:{
+      datatype: "boolean",
+      description: "增加入口国家或地区的旗帜标识，默认无此参数",
+      defaultValue: false,
+    },
+    xy: {
+      datatype: "boolean",
+      description: "关闭落地查询，仅查询入口；开启 yisp || yw || flag 参数后 xy 参数无效",
+      defaultValue: false,
+    },
+    iisp: {
+      datatype: "boolean",
+      description: "增加入口运营商或者直连标识",
+      defaultValue: false,
+    },
+    city: {
+      datatype: "boolean",
+      description: "增加入口城市文字标识",
+      defaultValue: false,
+    },
+    sheng: {
+      datatype: "boolean",
+      description: "增加入口省份文字标识",
+      defaultValue: false,
+    },
+    yuan: {
+      datatype: "boolean",
+      description:
+        "为境外入口添加真实的入口属地标识，当未配置此此参数时，则将境外入口统一标记为[境外]，默认未配置此参数",
+      defaultValue: false,
+    },
+    yisp: {
+      datatype: "boolean",
+      description: "显示落地详细运营商名称",
+      defaultValue: false,
+    },
+    yw: {
+      datatype: "boolean",
+      description:
+        "落地归属地使用英文缩写标识，不建议与其他入口参数配合使用，因为其他参数API没有返回英文",
+      defaultValue: false,
+    },
+    game: {
+      datatype: "boolean",
+      description: "增加游戏节点标识",
+      defaultValue: false,
+    },
+    bl: {
+      datatype: "boolean",
+      description: "保留倍率标识",
+      defaultValue: false,
+    },
+    snone: {
+      datatype: "boolean",
+      description: "清理某地区内只有一个节点的序号",
+      defaultValue: false,
+    },
+    offtz: {
+      datatype: "boolean",
+      description: "关闭脚本通知",
+      defaultValue: false,
+    },
+    dnsjx: {
+      datatype: "boolean",
+      description: "将节点域名解析为IP, 普通用户不建议使用",
+      defaultValue: false,
+    },
+    debug: {
+      datatype: "boolean",
+      description: "调试日志，普通用户不建议使用",
+      defaultValue: false,
+    },
+    fgf: {
+      datatype: "string",
+      description: "设置入口和落地之间的分隔符，默认为空格",
+      defaultValue: " ",
+    },
+    sn: {
+      datatype: "string",
+      description: "设置国家与序号之间的分隔符，默认为空格",
+      defaultValue: " ",
+    },
+    name: {
+      datatype: "string",
+      description: "为节点添加机场名称前缀",
+      defaultValue: "",
+    },
+    // tz: {
+    //   datatype: "string",
+    //   description: "为推送通知时添加机场名称",
+    //   defaultValue: "",
+    // },
+    timeout: {
+      datatype: "number",
+      description:
+        "当无任何节点缓存时测试节点HTTP延时允许的最大超时参数，超出允许范围则判定为无效节点，默认2000ms",
+      defaultValue: 2000,
+    },
+    cd: {
+      datatype: "number",
+      description:
+        "当有缓存时，会先读取缓存，直接输出结果；默认[cd=]的值等于0，微直接读取缓存； 当设为更高的值: 比如'460'则每次读缓存都会再次处理之前判定为超时的节点,超时为460ms",
+      defaultValue: 0,
+    },
+    bs: {
+      datatype: "number",
+      description:
+        "批处理节点数建议10个左右，如果经常读不到节点建议减小批处理个数",
+      defaultValue: 10,
+    },
+    h: {
+      datatype: "number",
+      description:
+        "节点缓存有效期，单位小时，时间参数只能二选一，Loon用户不需填写要此参数，请进入Sub-Store插件的配置界面自定义缓存有效期",
+      defaultValue: "",
+    },
+    min: {
+      datatype: "number",
+      description:
+        "节点缓存有效期，单位分钟，时间参数只能二选一，Loon用户不需填写要此参数，请进入Sub-Store插件的配置界面自定义缓存有效期",
+      defaultValue: "",
+    },
+  },
+};
+
 
 const $ = $substore;
 const iar = $arguments;
 let FGF = iar.fgf == undefined ? " " : decodeURI(iar.fgf),FGFS = FGF,debug = iar.debug;
-const { yw, bl, iisp, yisp, yun, city, flag, game, yuan, sheng, offtz, snone: numone} = iar;
-const h = iar.h ? decodeURI(iar.h) : "",min = iar.min ? decodeURI(iar.min) : "",tzname = iar.tz ? decodeURI(iar.tz) : "",firstN = iar.name ? decodeURI(iar.name) : "";
+const { yw, bl, iisp, xy,  yisp, yun, city, flag, inflag, game, yuan, sheng, offtz, snone: numone} = iar;
+const h = iar.h ? decodeURI(iar.h) : "",min = iar.min ? decodeURI(iar.min) : "",firstN = iar.name ? decodeURI(iar.name) : "";
 const XHFGF = iar.sn == undefined ? " " : decodeURI(iar.sn),{ isLoon: isLoon, isSurge: isSurge } = $substore.env, dns = iar.dnsjx,target = isLoon ? "Loon" : isSurge ? "Surge" : undefined,keypr= "peedtest";
 let cd = iar.cd ? iar.cd : 0, timeout = iar.timeout ? iar.timeout : 2000, writet = "", innum = 1728e5, loontrue = false, onen = false, Sue = false
 const keyp = "3.s",EXPIRATION_KEY = "sub-store-csr-expiration-time";
 if (min !== "") {
   Sue = true;
   innum = parseInt(min, 10) * 6e4;
-  writet = $persistentStore.write(JSON.stringify(innum), EXPIRATION_KEY);
+  writet = $.write(JSON.stringify(innum), EXPIRATION_KEY);
 } else if (h !== "") {
   Sue = true;
   innum = parseInt(h, 10) * 36e5;
-  writet = $persistentStore.write(JSON.stringify(innum), EXPIRATION_KEY);
+  writet = $.write(JSON.stringify(innum), EXPIRATION_KEY);
 } else {
-  writet = $persistentStore.write(JSON.stringify(innum), EXPIRATION_KEY);
+  writet = $.write(JSON.stringify(innum), EXPIRATION_KEY);
 }
-let TIMEDKEY = $persistentStore.read(EXPIRATION_KEY);
+let TIMEDKEY = $.read(EXPIRATION_KEY);
 const nlc =/邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|禁止|下次|使用|版本|官址|备用|到期|过期|已用|国内|国际|国外|联系|邮箱|工单|贩卖|倒卖|防止|(\b(USE|USED|TOTAL|EXPIRE|EMAIL)\b)|\d\s?g/i;
 // const regexArray = [/\u6e38\u620f|game/i];
 // const valueArray = ["Game"];
-async function operator(e) {
+async function operator(e = [], targetPlatform, env) {
+  const tzname = env.source[e[0].subName].name;
   const startTime = new Date();
   const support = isLoon || isSurge;
-  if (!support) {
-  $.notify("No Loon or Surge")
-  $.error(`No Loon or Surge`);
-    return e;
+  if (!xy) {
+    if (!support) {
+      $.notify("No Loon or Surge")
+      $.error(`No Loon or Surge`);
+        return e;
+      }
   }
-  if (e.length < 1) {$notification.post("CNAME","订阅无节点","");return e;}
+  function klog(...arg) {
+    console.log('[CNAME] ' + tzname +" : "+ arg);
+  }
+  if (e.length < 1) {$.notify("订阅: "+tzname,"订阅无节点","");return e;}
   if (typeof scriptResourceCache === "undefined")return e;
   var bs = iar.bs ? iar.bs : 8;
   const ein = e.length;
-/**
- * delog()  debug:boolean  console.log
- * klog()  console.log
- */
+
   klog(`开始处理节点: ${ein} 个`);
   klog(`批处理节点数: ${bs} 个`);
   klog(`设定api超时: ${zhTime(timeout)}`);
   klog(`有缓api超时: ${zhTime(cd)}`);
   e = e.filter((item) => !nlc.test(item.name));
-  let o = 0,Pushtd = "",intimed = "",stops = false,rere=false;
+  let o = 0,Pushtd = "",intimed = "",stops = false,rere=false,iflag="";
   //   do {
     while (o < e.length && !stops) {
       const batchs = e.slice(o, o + 1);
@@ -141,7 +280,7 @@ async function operator(e) {
               if (isLoon) {
                 let loontd = "";
                 const loonkkk={"1分钟":6e4,"5分钟":3e5,"10分钟":6e5,"30分钟":18e5,"1小时":36e5,"2小时":72e5,"3小时":108e5,"6小时":216e5,"12小时":432e5,"24小时":864e5,"48小时":1728e5,"72小时":2592e5,参数传入:"innums"};
-                intimed = $persistentStore.read("节点缓存有效期");
+                intimed = $.read("节点缓存有效期");
                 loontd = loonkkk[intimed] || 1728e5;
                 if (loontd == "innums") {
                   loontd = innum;
@@ -165,7 +304,7 @@ async function operator(e) {
       );
       o += 1;
     }
-    if (!onen && !offtz) $notification.post("CNAME", `开始处理节点: ${ein} 个 批处理数量: ${bs} 个`, "请等待处理完毕后再次点击预览");
+    if (!onen && !offtz) $.notify("订阅: "+tzname, `开始处理节点: ${ein} 个 批处理数量: ${bs} 个`, "请等待处理完毕后再次点击预览");
     let i = 0,newnode = [];
     while (i < e.length) {
       const batch = e.slice(i, i + bs);
@@ -173,8 +312,8 @@ async function operator(e) {
         batch.map(async (pk) => {
           try {
             let keyover = [], Yserver = pk.server,luodi = "",inQcip = "",nxx = "",adflag = "",
-             OGame="",Oisp="",Oispflag="",Osh="", Oct="",zhi = "",yuanisp ="",
-             isCN = false,v4 = false, v6 = false, isNoAli = false;
+              OGame="",Oisp="",Oispflag="",Osh="", Oct="",zhi = "",yuanisp ="",
+              isCN = false,v4 = false, v6 = false, isNoAli = false;
             const inServer = await AliD(Yserver);
             delog(inServer)
             switch (inServer) { // 入口 server
@@ -193,23 +332,34 @@ async function operator(e) {
                 }
                 break;
             }
+            let btip = true;
+            if (!xy || yisp || yw ||  flag) {
+              if (!support) {
+                $.notify("No Loon or Surge")
+                $.error(`No Loon or Surge, 开启 yisp || yw || flag 参数后 xy 参数无效`);
+                  return e;
+                }
+              const outip = await OUTIA(pk);
+              let {country:outUsq, countryCode:outUs, city:outCity, query:outQuery, isp:outisp} = outip;//落地
+              if (yisp) {
+                  yuanisp = FGFS+outisp
+              };
+              debug && (pk.keyoutld = outip);
+              delog("落地信息 " + JSON.stringify(outip))
+  
+              luodi = (outUsq === "中国") ? outCity : (yw ? outUs : outUsq);
+              btip = outQuery !== inServer
+            } else {
+              var outQuery = "";
+            }
+            
 
-            const outip = await OUTIA(pk);
-            let {country:outUsq, countryCode:outUs, city:outCity, query:outQuery, isp:outisp} = outip;//落地
-            if (yisp) {
-                yuanisp = FGFS+outisp
-            };
-            debug && (pk.keyoutld = outip);
-            delog("落地信息 " + JSON.stringify(outip))
-
-            luodi = (outUsq === "中国") ? outCity : (yw ? outUs : outUsq);
-            let btip = outQuery !== inServer
-
-            if (btip) {
+            if (btip || xy) {
               if (!isNoAli || v4) {
                 const spkey = await SPEC(inServer);//入口国内api查询
-                let {country:inSpCn,regionName:inSpSheng,city:inSpCity,isp:inSpIsp,ip:inSpIp} = spkey;//入口speedapi
-
+                let {country:inSpCn,regionName:inSpSheng,city:inSpCity,isp:inSpIsp,ip:inSpIp,countryCode:inCode} = spkey;//入口speedapi
+                
+                inflag && (iflag = getflag(inCode));
                 debug && (pk.keyinsp = spkey);
                 isCN = inSpCn === "中国";
 
@@ -239,7 +389,8 @@ async function operator(e) {
 
               if (isNoAli || v6 || !isCN) {
                     const inip = await INIA(Yserver);//ipapi入口
-                    let {country: inUsq, city: inCity, query: inQuery, regionName: inIpSh} = inip;
+                    let {country: inUsq, city: inCity, query: inQuery, regionName: inIpSh, countryCode:inaCode} = inip;
+                    inflag && (iflag = getflag(inaCode));
                     debug && (pk.keyinipapi = inip);
                     delog("ipapi入口 " + JSON.stringify(inip));
                     inQcip = inQuery; //去重ip
@@ -274,7 +425,7 @@ async function operator(e) {
               flag && (Oispflag = "🆉");
               (sheng || city || iisp) && (zhi  = "直连");
             }
-
+          
             flag && (adflag = getflag(outUs));
             game && (OGame = /game|游戏/i.test(pk.name) ? (flag ? "🎮" : FGF+"Game") : OGame);
             if (bl){
@@ -288,19 +439,22 @@ async function operator(e) {
             }
             
             // regexArray.forEach((regex, index) => {if (regex.test(pk.name)) {rename = valueArray[index];}});
-            (!iisp && !city && !sheng) && (Oispflag = "",FGF ="");
+            (!iisp && !city && !sheng && !xy && !inflag) && (Oispflag = "",FGF ="");
 
             keyover = keyover.concat(
                 firstN, Oispflag,Osh,Oct,Oisp,zhi,FGF,adflag,luodi,OGame,nxx,yuanisp
                 ).filter(ki => ki !== "");
                 // delog(keyover)
-            const overName = keyover.join("");
+            let overName = keyover.join("");
+
+            xy && (overName = pk.name +FGF+ iflag +overName);
             // delog(overName)
             newnode.push(outQuery);
             dns && (pk.server = inQcip);
             pk.name = overName;
             pk.qc = inQcip + outQuery;
-          } catch (err) {}
+            
+          } catch (err) {console.log(err.message)}
         })
       );
       i += bs;
@@ -308,7 +462,7 @@ async function operator(e) {
       if (!onen){
         if(!offtz && (ein > (i*2))){
             if (i >= (e.length / 3) && i < (e.length * 2 / 3) && ein>i) {
-                $notification.post("CNAME", `处理进度${i}/${ein}`, "耐心等待, 请勿重复点击预览...");
+                $.notify("订阅: "+tzname, `处理进度${i}/${ein}`, "耐心等待, 请勿重复点击预览...");
             }
         }
         await sleep(getRandom());
@@ -321,7 +475,7 @@ async function operator(e) {
       const allsame = newnode.every((value, index, arr) => value === arr[0]);
       if(allsame){
           klog(`未使用带指定节点功能的 SubStore`);
-          $notification.post('CNAME：点击以安装对应版本','未使用带指定节点功能的 SubStore，或所有节点落地IP相同','',{url: "https://github.com/Keywos/rule/raw/main/Sub-Store/Sub-Store.sgmodule",})
+          $.notify('CNAME：点击以安装对应版本','未使用带指定节点功能的 SubStore，或所有节点落地IP相同','',{url: "https://github.com/Keywos/rule/raw/main/Sub-Store/Sub-Store.sgmodule",})
           return e;
       }
     }
@@ -330,7 +484,7 @@ async function operator(e) {
 //     (rere && cs === 1) && (cd = timeout,await sleep(50));
 //   } while (rere && cs < 2);
 //   cs < 3 && (klog("任务执行次数: " + cs));
-  e = removeqc(e);
+  !xy && (e = removeqc(e));
   e = jxh(e);
   // if (firstN !== "") {e.forEach((pk) => {pk.name = firstN + " " + pk.name;});}
   numone && (e = onee(e));
@@ -351,8 +505,8 @@ async function operator(e) {
   const readklog = apiRead ? `读取缓存:${apiRead} ` : "";
   const writeklog = apiw ? `写入缓存:${apiw}, ` : "";
   const Push = (eout === ein && eout === 0) ? "" : (eout === ein ? "全部通过测试, " : "去除无效节点后有" + eout + "个, ");
-  if (!offtz) {$notification.post(
-      `${tzname}共${ein}个节点`,
+  if (!offtz) {$.notify(
+      `订阅: ${tzname} 共${ein}个节点`,
       "",
       `${writeklog}${readklog}${Pushtd}${Push}用时:${zhTime(timeDiff)}`
       );}
@@ -500,8 +654,8 @@ async function SPEC(e) {
       const resdata = JSON.parse(response.body);
       delog(resdata);
       if (resdata.data) {
-        const { country: e, province: o, city: r, isp: i, ip: c } = resdata.data;
-        const a = { country: e, regionName: o, city: r, isp: i, ip: c };
+        const { country: e, province: o, city: r, isp: i, ip: c ,countryCode:k} = resdata.data;
+        const a = { country: e, regionName: o, city: r, isp: i, ip: c ,countryCode :k};
         delog("写入");
         scriptResourceCache.set(n, a);
         return a;
@@ -533,47 +687,47 @@ async function SPEC(e) {
 
 const inipApi = new Map();
 async function INIA(e) {
-   const t = getinid(e);
-   if (inipApi.has(t)) return inipApi.get(t);
-   
-   const cached = scriptResourceCache.get(t);
-   if (cached) return cached;
-   
-   const maxRE = 2;
-   const url = `http://ip-api.com/json/${e}?lang=zh-CN&fields=status,message,country,city,query,regionName`;
-   const getHttp = async (reTry) => {
-       try {
-         delog(url)
-           const response = await Promise.race([
-             $.http.get({ url:url }),
-             new Promise((_, reject) => setTimeout(() => reject(new Error("message")), timeout))
-           ]);
-           const data = JSON.parse(response.body);
-           if (data.status === "success") {
-             scriptResourceCache.set(t, data);
-             return data;
-           } else {
-             throw new Error(resdata.message);
-           }
-         } catch (error) {
-           if (reTry < maxRE) {
-             await sleep(getRandom());
-             delog(e+"-> [inipApi超时查询次数] "+reTry)
-             return getHttp(reTry + 1);
-           } else {
-             throw error;
-           }
-         }
-       };
-       const resGet = new Promise((resolve, reject) => {
-         if (cd < 1 && onen) return resGet;
-         
-         getHttp(1)
-           .then((data) => {
-             resolve(data);
-           })
-           .catch(reject);  
-       });
+    const t = getinid(e);
+    if (inipApi.has(t)) return inipApi.get(t);
+    
+    const cached = scriptResourceCache.get(t);
+    if (cached) return cached;
+    
+    const maxRE = 2;
+    const url = `http://ip-api.com/json/${e}?lang=zh-CN&fields=status,message,country,city,query,regionName,countryCode`;
+    const getHttp = async (reTry) => {
+        try {
+          delog(url)
+            const response = await Promise.race([
+              $.http.get({ url:url }),
+              new Promise((_, reject) => setTimeout(() => reject(new Error("message")), timeout))
+            ]);
+            const data = JSON.parse(response.body);
+            if (data.status === "success") {
+              scriptResourceCache.set(t, data);
+              return data;
+            } else {
+              throw new Error(resdata.message);
+            }
+          } catch (error) {
+            if (reTry < maxRE) {
+              await sleep(getRandom());
+              delog(e+"-> [inipApi超时查询次数] "+reTry)
+              return getHttp(reTry + 1);
+            } else {
+              throw error;
+            }
+          }
+        };
+        const resGet = new Promise((resolve, reject) => {
+          if (cd < 1 && onen) return resGet;
+          
+          getHttp(1)
+            .then((data) => {
+              resolve(data);
+            })
+            .catch(reject);  
+        });
     inipApi.set(t, resGet);
     return resGet; 
 }
@@ -585,13 +739,11 @@ function getRandom() {
 }
 function delog(...arg) {
     if(debug){
-        console.log('[CNAME] '+arg);
+        console.log('[CNAME] :' + arg);
     } 
 }
 
-function klog(...arg) {
-    console.log('[CNAME] '+ arg);
-}
+
 
 function removels(e) {
   const t = new Set();
