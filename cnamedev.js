@@ -339,8 +339,8 @@ async function operator(e = [], targetPlatform, env) {
                 }
                 break;
             }
-            let btip = true;
-            if (!xy || yisp || yw ||  flag) {
+            let btip = true,outu="";
+            if (!xy || yisp || yw || flag) {
               if (!support) {
                 $.notify("No Loon or Surge")
                 $.error(`No Loon or Surge, 开启 yisp || yw || flag 参数后 xy 参数无效`);
@@ -353,7 +353,7 @@ async function operator(e = [], targetPlatform, env) {
               };
               debug && (pk.keyoutld = outip);
               delog("落地信息 " + JSON.stringify(outip))
-  
+              outu = outUs;
               luodi = (outUsq === "中国") ? outCity : (yw ? outUs : outUsq);
               btip = outQuery !== inServer
             } else {
@@ -433,7 +433,7 @@ async function operator(e = [], targetPlatform, env) {
               (sheng || city || iisp) && (zhi  = "直连");
             }
           
-            flag && (adflag = getflag(outUs));
+            flag && (adflag = getflag(outu));
             game && (OGame = /game|游戏/i.test(pk.name) ? (flag ? "🎮" : FGF+"Game") : OGame);
             if (bl){
               const match = pk.name.match(/((倍率|X|x|×)\D?((\d\.)?\d+)\D?)|((\d\.)?\d+)(倍|X|x|×)/);
