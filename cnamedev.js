@@ -229,8 +229,6 @@ if (min !== "") {
 }
 let TIMEDKEY = $.read(EXPIRATION_KEY);
 const nlc =/邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|禁止|下次|使用|版本|官址|备用|到期|过期|已用|国内|国际|国外|联系|邮箱|工单|贩卖|倒卖|防止|(\b(USE|USED|TOTAL|EXPIRE|EMAIL)\b)|\d\s?g/i;
-// const regexArray = [/\u6e38\u620f|game/i];
-// const valueArray = ["Game"];
 async function operator(e = [], targetPlatform, env) {
   let tzname = "",subcoll = "";
   if (env?.source?.[e?.[0]?.subName]) {
@@ -360,12 +358,10 @@ async function operator(e = [], targetPlatform, env) {
               var outQuery = "";
             }
             
-
             if (btip || xy) {
               if (!isNoAli || v4) {
                 const spkey = await SPEC(inServer);//入口国内api查询
-                let {country:inSpCn,regionName:inSpSheng,city:inSpCity,isp:inSpIsp,ip:inSpIp,countryCode:inCode} = spkey;//入口speedapi
-                
+                let {country:inSpCn,regionName:inSpSheng,city:inSpCity,isp:inSpIsp,ip:inSpIp,countryCode:inCode} = spkey;
                 inflag && (iflag = getflag(inCode));
                 debug && (pk.keyinsp = spkey);
                 isCN = inSpCn === "中国";
@@ -393,7 +389,6 @@ async function operator(e = [], targetPlatform, env) {
 
                 }    
               }    
-
               if (isNoAli || v6 || !isCN) {
                     const inip = await INIA(Yserver);//ipapi入口
                     let {country: inUsq, city: inCity, query: inQuery, regionName: inIpSh, countryCode:inaCode} = inip;
@@ -432,7 +427,6 @@ async function operator(e = [], targetPlatform, env) {
               flag && (Oispflag = "🆉");
               (sheng || city || iisp) && (zhi  = "直连");
             }
-          
             flag && (adflag = getflag(outu));
             game && (OGame = /game|游戏/i.test(pk.name) ? (flag ? "🎮" : FGF+"Game") : OGame);
             if (bl){
@@ -444,23 +438,18 @@ async function operator(e = [], targetPlatform, env) {
                   }
               }
             }
-            
-            // regexArray.forEach((regex, index) => {if (regex.test(pk.name)) {rename = valueArray[index];}});
             (!iisp && !city && !sheng && !xy && !inflag) && (Oispflag = "",FGF ="");
-
             keyover = keyover.concat(
                 firstN, Oispflag,Osh,Oct,Oisp,zhi,FGF,adflag,luodi,OGame,nxx,yuanisp
                 ).filter(ki => ki !== "");
                 // delog(keyover)
             let overName = keyover.join("");
-
             xy && (overName = iflag +overName +FGF+ pk.name);
             // delog(overName)
             newnode.push(outQuery);
             dns && (pk.server = inQcip);
             pk.name = overName;
             pk.qc = inQcip + outQuery;
-            
           } catch (err) {console.log(err.message)}
         })
       );
@@ -486,11 +475,6 @@ async function operator(e = [], targetPlatform, env) {
           return e;
       }
     }
-    // cs++;
-//     rere = e.length < ein * 0.2 || false;
-//     (rere && cs === 1) && (cd = timeout,await sleep(50));
-//   } while (rere && cs < 2);
-//   cs < 3 && (klog("任务执行次数: " + cs));
   !xy && (e = removeqc(e));
   e = jxh(e);
   // if (firstN !== "") {e.forEach((pk) => {pk.name = firstN + " " + pk.name;});}
