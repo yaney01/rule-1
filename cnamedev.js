@@ -233,16 +233,13 @@ const nlc =/邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流�
 // const valueArray = ["Game"];
 async function operator(e = [], targetPlatform, env) {
   let tzname = "",subcoll = "";
-  if (env.source){
-    if (e[0] && Array.isArray(e[0]) && e[0].subName && env.source[e[0].subName]) {
-      tzname = env.source[e[0].subName].name;
-      subcoll = "单个订阅 ";
-    } else if (env.source._collection.name){
-      tzname = env.source._collection.name;
-      subcoll = "组合订阅 ";
-    }
+  if (env?.source?.[e?.[0]?.subName]) {
+    tzname = env.source[e[0].subName].name;
+    subcoll = "单个订阅 ";
+  } else if (env?.source?._collection?.name){
+    tzname = env.source._collection.name;
+    subcoll = "组合订阅 ";
   }
-  
   const startTime = new Date();
   const support = isLoon || isSurge;
   if (!xy) {

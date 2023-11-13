@@ -23,14 +23,12 @@ const { isLoon: isLoon, isSurge: isSurge } = $substore.env,
   target = isLoon ? "Loon" : isSurge ? "Surge" : undefined;    
 async function operator(e = [], targetPlatform, env) {
   let tzname = "",subcoll = "";
-  if (env.source){
-    if (e[0] && Array.isArray(e[0]) && e[0].subName && env.source[e[0].subName]) {
-      tzname = env.source[e[0].subName].name;
-      subcoll = "单个订阅 ";
-    } else if (env.source._collection.name){
-      tzname = env.source._collection.name;
-      subcoll = "组合订阅 ";
-    }
+  if (env?.source?.[e?.[0]?.subName]) {
+    tzname = env.source[e[0].subName].name;
+    subcoll = "单个订阅 ";
+  } else if (env?.source?._collection?.name){
+    tzname = env.source._collection.name;
+    subcoll = "组合订阅 ";
   }
 
   const startTime = new Date();
