@@ -232,7 +232,16 @@ const nlc =/邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流�
 // const regexArray = [/\u6e38\u620f|game/i];
 // const valueArray = ["Game"];
 async function operator(e = [], targetPlatform, env) {
-  const tzname = env.source[e[0].subName].name;
+  let tzname = "",subcoll = "";
+  if (env.source){
+    if (env.source[e[0].subName].name){
+      tzname = env.source[e[0].subName].name;
+      subcoll = "单个订阅 ";
+    } else if (env.source._collection.name){
+      tzname = env.source._collection.name;
+      subcoll = "组合订阅 ";
+    }
+  }
   const startTime = new Date();
   const support = isLoon || isSurge;
   if (!xy) {
@@ -243,9 +252,9 @@ async function operator(e = [], targetPlatform, env) {
       }
   }
   function klog(...arg) {
-    console.log('[CNAME] ' + tzname +" : "+ arg);
+    console.log('[CNAME] ' +subcoll+ tzname +" : "+ arg);
   }
-  if (e.length < 1) {$.notify("订阅: "+tzname,"订阅无节点","");return e;}
+  if (e.length < 1) {$.notify(subcoll +tzname,"订阅无节点","");return e;}
   if (typeof scriptResourceCache === "undefined")return e;
   var bs = iar.bs ? iar.bs : 8;
   const ein = e.length;
@@ -304,7 +313,7 @@ async function operator(e = [], targetPlatform, env) {
       );
       o += 1;
     }
-    if (!onen && !offtz) $.notify("订阅: "+tzname, `开始处理节点: ${ein} 个 批处理数量: ${bs} 个`, "请等待处理完毕后再次点击预览");
+    if (!onen && !offtz) $.notify(subcoll+tzname, `开始处理节点: ${ein} 个 批处理数量: ${bs} 个`, "请等待处理完毕后再次点击预览");
     let i = 0,newnode = [];
     while (i < e.length) {
       const batch = e.slice(i, i + bs);
@@ -462,7 +471,7 @@ async function operator(e = [], targetPlatform, env) {
       if (!onen){
         if(!offtz && (ein > (i*2))){
             if (i >= (e.length / 3) && i < (e.length * 2 / 3) && ein>i) {
-                $.notify("订阅: "+tzname, `处理进度${i}/${ein}`, "耐心等待, 请勿重复点击预览...");
+                $.notify(subcoll+tzname, `处理进度${i}/${ein}`, "耐心等待, 请勿重复点击预览...");
             }
         }
         await sleep(getRandom());
@@ -506,7 +515,7 @@ async function operator(e = [], targetPlatform, env) {
   const writeklog = apiw ? `写入缓存:${apiw}, ` : "";
   const Push = (eout === ein && eout === 0) ? "" : (eout === ein ? "全部通过测试, " : "去除无效节点后有" + eout + "个, ");
   if (!offtz) {$.notify(
-      `订阅: ${tzname} 共${ein}个节点`,
+      `${subcoll}${tzname} 共${ein}个节点`,
       "",
       `${writeklog}${readklog}${Pushtd}${Push}用时:${zhTime(timeDiff)}`
       );}

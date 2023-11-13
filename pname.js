@@ -22,7 +22,17 @@ let timeout = iar.timeout || 2000,
 const { isLoon: isLoon, isSurge: isSurge } = $substore.env,
   target = isLoon ? "Loon" : isSurge ? "Surge" : undefined;    
 async function operator(e = [], targetPlatform, env) {
-  const tzname = env.source[e[0].subName].name;
+  let tzname = "",subcoll = "";
+  if (env.source){
+    if (env.source[e[0].subName].name){
+      tzname = env.source[e[0].subName].name;
+      subcoll = "单个订阅 ";
+    } else if (env.source._collection.name){
+      tzname = env.source._collection.name;
+      subcoll = "组合订阅 ";
+    }
+  }
+
   const startTime = new Date();
   const support = isLoon || isSurge;
   if (!support) {
@@ -31,11 +41,11 @@ async function operator(e = [], targetPlatform, env) {
     return e;
   }
   if (e.length < 1) {
-    $notification.post("PNAME:"+tzname, "订阅无节点", "");
+    $notification.post("PNAME:"+subcoll+tzname, "订阅无节点", "");
     return e;
   }
   function klog(...arg) {
-    console.log("[PNAME] "+tzname+ " " + arg);
+    console.log("[PNAME] "+subcoll+tzname+ " " + arg);
   }
   const ein = e.length;
   klog(`开始处理节点: ${ein} 个`);
@@ -66,7 +76,7 @@ async function operator(e = [], targetPlatform, env) {
     const allsame = newnode.every((value, index, arr) => value === arr[0]);
     if(allsame){
         klog(`未使用带指定节点功能的 SubStore`);
-        $notification.post('PNAME：点击以安装对应版本'+tzname,'未使用带指定节点功能的 SubStore，或所有节点落地IP相同','',{url: "https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Surge-ability.sgmodule",})
+        $notification.post('PNAME：点击以安装对应版本'+subcoll+tzname,'未使用带指定节点功能的 SubStore，或所有节点落地IP相同','',{url: "https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Surge-ability.sgmodule",})
         return e;
     }
   }
