@@ -240,7 +240,6 @@ async function operator(e = [], targetPlatform, env) {
     tzname = env.source._collection.name;
     subcoll = "组合订阅 ";
   }
-  
   const startTime = new Date();
   const support = isLoon || isSurge;
   if (!xy) {
@@ -482,7 +481,7 @@ async function operator(e = [], targetPlatform, env) {
       delog(newnode)
       const allsame = newnode.every((value, index, arr) => value === arr[0]);
       if(allsame){
-          klog(`未使用带指定节点功能的 SubStore`);
+          klog(`未使用带指定节点功能的 SubStore, 或所有节点落地IP相同`);
           $.notify('CNAME：点击以安装对应版本','未使用带指定节点功能的 SubStore，或所有节点落地IP相同','',{url: "https://github.com/Keywos/rule/raw/main/Sub-Store/Sub-Store.sgmodule",})
           return e;
       }
