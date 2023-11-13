@@ -215,7 +215,7 @@ const { yw, bl, iisp, xy,  yisp, yun, city, flag, inflag, game, yuan, sheng, off
 const h = iar.h ? decodeURI(iar.h) : "",min = iar.min ? decodeURI(iar.min) : "",firstN = iar.name ? decodeURI(iar.name) : "";
 const XHFGF = iar.sn == undefined ? " " : decodeURI(iar.sn),{ isLoon: isLoon, isSurge: isSurge } = $substore.env, dns = iar.dnsjx,target = isLoon ? "Loon" : isSurge ? "Surge" : undefined,keypr= "peedtest";
 let cd = iar.cd ? iar.cd : 0, timeout = iar.timeout ? iar.timeout : 2000, writet = "", innum = 1728e5, loontrue = false, onen = false, Sue = false
-const keyp = "3.s",EXPIRATION_KEY = "sub-store-csr-expiration-time";
+const keyp = "3.s",EXPIRATION_KEY = "#sub-store-csr-expiration-time";
 if (min !== "") {
   Sue = true;
   innum = parseInt(min, 10) * 6e4;
@@ -285,7 +285,7 @@ async function operator(e = [], targetPlatform, env) {
               if (isLoon) {
                 let loontd = "";
                 const loonkkk={"1分钟":6e4,"5分钟":3e5,"10分钟":6e5,"30分钟":18e5,"1小时":36e5,"2小时":72e5,"3小时":108e5,"6小时":216e5,"12小时":432e5,"24小时":864e5,"48小时":1728e5,"72小时":2592e5,参数传入:"innums"};
-                intimed = $.read("节点缓存有效期");
+                intimed = $.read("#节点缓存有效期");
                 loontd = loonkkk[intimed] || 1728e5;
                 if (loontd == "innums") {
                   loontd = innum;
