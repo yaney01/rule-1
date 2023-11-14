@@ -228,7 +228,6 @@ if (min !== "") {
   writet = $.write(JSON.stringify(innum), EXPIRATION_KEY);
 }
 let TIMEDKEY = $.read(EXPIRATION_KEY);
-const nlc =/邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|禁止|下次|使用|版本|官址|备用|到期|过期|已用|国内|国际|国外|联系|邮箱|工单|贩卖|倒卖|防止|(\b(USE|USED|TOTAL|EXPIRE|EMAIL)\b)|\d\s?g/i;
 async function operator(e = [], targetPlatform, env) {
   let tzname = "",subcoll = "";
   if (env?.source?.[e?.[0]?.subName]) {
@@ -259,7 +258,7 @@ async function operator(e = [], targetPlatform, env) {
   klog(`批处理节点数: ${bs} 个`);
   klog(`设定api超时: ${zhTime(timeout)}`);
   klog(`有缓api超时: ${zhTime(cd)}`);
-  e = e.filter((item) => !nlc.test(item.name));
+  // e = e.filter((item) => !nlc.test(item.name));
   let o = 0,Pushtd = "",intimed = "",stops = false,rere=false,iflag="";
   //   do {
     while (o < e.length && !stops) {
