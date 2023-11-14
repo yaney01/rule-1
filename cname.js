@@ -467,7 +467,7 @@ async function operator(e = [], targetPlatform, env) {
     }
     !xy && (e = removels(e));
     let eout = e.length;
-    if (eout > 2 && isSurge){
+    if (eout > 3 && isSurge){
       delog(newnode)
       const allsame = newnode.every((value, index, arr) => value === arr[0]);
       if(allsame){
