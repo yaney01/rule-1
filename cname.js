@@ -449,6 +449,7 @@ async function operator(e = [], targetPlatform, env) {
             newnode.push(outips);
             dns && (pk.server = inQcip);
             pk.name = overName;
+            inflag && (pk.name = iflag + overName);
             pk.qc = inQcip + outips;
           } catch (err) {console.log(err.message)}
         })
