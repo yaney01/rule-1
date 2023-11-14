@@ -1,6 +1,6 @@
 /**
  * @Sub-Store-Page
- * CNAME 接口查询去重/重命名 2023-11-11 18:26:08
+ * CNAME 接口查询去重/重命名 2023-11-14 22:45:47
  * - 入口查询[国内spapi 识别到国外为ip-api] 落地查询[ip-api]
  * - 根据接口返回的真实结果，重新对节点命名。
  * - 添加入口城市、落地国家或地区、国内运营商信息，并对这些数据做持久化缓存（48小时有效期），减少API请求次数，提高运行效率。
@@ -337,7 +337,7 @@ async function operator(e = [], targetPlatform, env) {
                 }
                 break;
             }
-            let btip = true,outu="";
+            let btip = true,outu="",outips="";
             if (!xy || yisp || yw || flag) {
               if (!support) {
                 $.notify("No Loon or Surge")
@@ -352,6 +352,7 @@ async function operator(e = [], targetPlatform, env) {
               debug && (pk.keyoutld = outip);
               delog("落地信息 " + JSON.stringify(outip))
               outu = outUs;
+              outips = outQuery;
               luodi = (outUsq === "中国") ? outCity : (yw ? outUs : outUsq);
               btip = outQuery !== inServer
             } else {
@@ -411,7 +412,7 @@ async function operator(e = [], targetPlatform, env) {
                         flag && (Oispflag = "🅲");
 
                     } else {
-                        if(inQuery === outQuery){
+                        if(inQuery === outips){
                             flag && (Oispflag = "🆉");
                             (sheng || city || iisp) && (zhi  = "直连");
                         } else if (yuan){
@@ -446,10 +447,10 @@ async function operator(e = [], targetPlatform, env) {
             let overName = keyover.join("");
             xy && (overName = iflag +overName +FGF+ pk.name);
             // delog(overName)
-            newnode.push(outQuery);
+            newnode.push(outips);
             dns && (pk.server = inQcip);
             pk.name = overName;
-            pk.qc = inQcip + outQuery;
+            pk.qc = inQcip + outips;
           } catch (err) {console.log(err.message)}
         })
       );
