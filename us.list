@@ -167,7 +167,6 @@ DOMAIN-SUFFIX,feedx.net
 DOMAIN-SUFFIX,rssfeed.today
 DOMAIN-SUFFIX,nicegram.app
 DOMAIN-SUFFIX,mudvod.tv 
-DOMAIN-SUFFIX,my.freenom.com
 DOMAIN-SUFFIX,macbl.com
 DOMAIN-SUFFIX,misakaf.org
 DOMAIN-SUFFIX,poloemby.xyz
@@ -185,3 +184,7 @@ DOMAIN-SUFFIX,twitter.com
 DOMAIN-SUFFIX,twitter.jp
 DOMAIN-SUFFIX,vine.co
 DOMAIN-KEYWORD,twitter
+
+DOMAIN-SUFFIX,pages.dev
+DOMAIN-SUFFIX,freenom.com
+DOMAIN-SUFFIX,onrender.com
