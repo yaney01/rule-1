@@ -484,7 +484,7 @@ async function operator(e = [], targetPlatform, env) {
       timeout = rawtime;
       onen = false;
       spMap.clear();alMap.clear();iaMap.clear();oaMap.clear();
-      klog(`重试中`);
+      klog(`重试中...`);
     } else {
       retryi = 2;
     }
@@ -502,6 +502,24 @@ async function operator(e = [], targetPlatform, env) {
   apiRead > 0 ? klog(`读取api缓存: ${apiRead} 个`) : null;
   apiw > 0 ? klog(`写入api缓存: ${apiw} 个`) : null;
   klog(`处理完后剩余: ${eout} 个`);
+  const Nullv ='#SubStoreNullvalue';
+  if (eout === 0 && ein !== 0){
+    let Nullvi = parseInt($.read(Nullv), 10);
+    if (isNaN(Nullvi)) {
+      klog(`错误1次, 3次后将清理所有节点缓存`);
+      $.write("0", Nullv);
+    } else {
+      Nullvi += 1;
+      klog(`错误${Nullvi}次, 3次后将清理所有节点缓存`);
+      $.write(Nullvi.toString(), Nullv);
+    }
+    if (Nullvi > 3) {
+      $.write(null, "#sub-store-cached-script-resource");
+      klog(`错误${Nullvi}次, 已清理所有节点缓存`);
+      Nullvi = 0;
+      $.write(Nullvi.toString(), Nullv);
+    }
+  }
   if (isLoon) {
     klog("缓存过期时间: " + intimed + ", 还剩" + Pushtd.replace(/,|\n/g, ""));
   } else {
