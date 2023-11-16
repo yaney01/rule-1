@@ -1,6 +1,7 @@
 DOMAIN,challenges.cloudflare.com
 DOMAIN,cdn.auth0.com
 DOMAIN,api.statsig.com
+DOMAIN,cdn.oaistatic.com
 DOMAIN-SUFFIX,ai.com
 DOMAIN-SUFFIX,openai.com
 DOMAIN-SUFFIX,identrust.com
