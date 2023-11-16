@@ -1,6 +1,6 @@
 /**
  * @Sub-Store-Page
- * CNAME 接口查询去重/重命名 2023-11-16 19:38:36
+ * CNAME 接口查询去重/重命名 2023-11-16 20:34:03
  * - 入口查询[国内spapi 识别到国外为ip-api] 落地查询[ip-api]
  * - 根据接口返回的真实结果，重新对节点命名。
  * - 添加入口城市、落地国家或地区、国内运营商信息，并对这些数据做持久化缓存（48小时有效期），减少API请求次数，提高运行效率。
@@ -457,7 +457,6 @@ async function operator(e = [], targetPlatform, env) {
             };
         })
       );
-      if (breaki && isone === 1) break;
       i += bs;
       klog(`处理进度${i}/${ein}`)
       if (!onen){
