@@ -169,11 +169,6 @@ const SUB_STORE_SCHEMA = {
       description: "为节点添加机场名称前缀",
       defaultValue: "",
     },
-    // tz: {
-    //   datatype: "string",
-    //   description: "为推送通知时添加机场名称",
-    //   defaultValue: "",
-    // },
     timeout: {
       datatype: "number",
       description:
