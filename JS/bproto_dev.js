@@ -223,7 +223,7 @@ let Hot_topics=true, Most_visited=false, colorfulDms=false, commandDms=true;
             break;
     };
 })()
-	.catch((e) => console.log(e.message))
+	.catch((e) => console.log(e.message+JSON.stringify(url)))
 	.finally(() => {
 		switch ($response) {
 			default: { // 有回复数据，返回回复数据
