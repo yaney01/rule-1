@@ -9,8 +9,7 @@ hostname = %APPEND% *.zijieapi.com, aweme.snssdk.com
 // https://tnc11-aliec2.zijieapi.com/get_domains/v5/?
  */
 
-let i = JSON.parse($response.body),
-  url = $request.url;
+let url = $request.url;
 const TabArr = ["同城", "经验", "热点", "商城"];
 
 if (/(tnc|dm).+\.[^\/]+\.com\/\w+\/v\d\/\?/.test(url)) {
@@ -21,6 +20,7 @@ if (/(tnc|dm).+\.[^\/]+\.com\/\w+\/v\d\/\?/.test(url)) {
   };
   $done({ response });
 } else if (/aweme\.snssdk\.com\/aweme\/homepage\/render/.test(url)) {
+  var i = JSON.parse($response.body);
   if (i?.data?.tab_list) {
     i.data.tab_list.forEach((tab, index) => {
       if (tab.tab_type === "homepage_publish") {
@@ -35,5 +35,6 @@ if (/(tnc|dm).+\.[^\/]+\.com\/\w+\/v\d\/\?/.test(url)) {
       }
     });
   }
-}
-$done({ body: JSON.stringify(i) });
+  $done({ body: JSON.stringify(i) });
+} else {$done()}
+
