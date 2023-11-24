@@ -114,6 +114,7 @@ const rurekey = {
     泰国: /泰國|曼谷/g,
     法国: /巴黎/g,
     G: /\d\s?GB/gi,
+    Esnc: /esnc/gi
   };
 function operator(pro) {
     const Allmap = {};
