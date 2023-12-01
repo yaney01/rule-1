@@ -27,7 +27,7 @@ DOMAIN-SUFFIX,nex.163.com,REJECT-NO-DROP
 DOMAIN-SUFFIX,mi.gdt.qq.com,REJECT-NO-DROP
 # 酷安
 DOMAIN-KEYWORD,.pangolin-sdk-toutiao,REJECT-NO-DROP
-DOMAIN-SUFFIX,ulogs.umengcloud.com,REJECT-NO-DROP
+DOMAIN-SUFFIX,ulogs.umengcloud.com,REJECT-DROP
 DOMAIN-SUFFIX,toblog.ctobsnssdk.com,REJECT-NO-DROP
 DOMAIN-SUFFIX,adashbc.ut.taobao.com,REJECT-NO-DROP
 DOMAIN-SUFFIX,adashxgc.ut.taobao.com,REJECT-NO-DROP
