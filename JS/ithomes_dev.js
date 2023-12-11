@@ -27,7 +27,7 @@ if (i?.data?.list) {
     return (
       !FeedTypes.includes(item.feedType) ||
       item.feedContent.smallTags[0]?.text === null ||
-      !item.feedContent.smallTags[0].text.includes("广告")
+      !item.feedContent.smallTags[0]?.text.includes("广告")
     );
   });
 }
