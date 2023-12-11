@@ -7,7 +7,7 @@ if (isLoon) {
   lbt = $persistentStore.read("去除整个轮播图") === "开启";
   zd = $persistentStore.read("去除置顶") === "开启";
 }
-let FeedTypes = [10000];
+let FeedTypes = [];
 
 let i = JSON.parse($response.body);
 if (i?.data?.list) {
