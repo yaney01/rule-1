@@ -27,11 +27,10 @@ if (i?.data?.list) {
   zd && FeedTypes.push(10003); //置顶
   i.data.list = i.data.list.filter((item) => {
     return (
-      !FeedTypes.includes(item.feedType) ||
-      (item.feedContent.smallTags &&
-        !item.feedContent.smallTags[0].text.includes("广告"))
+      !FeedTypes.includes(item.feedType) &&
+      !item.feedContent.smallTags?.[0].text.includes("广告")
     );
   });
 }
-console.log(FeedTypes)
+console.log(FeedTypes);
 $done({ body: JSON.stringify(i) });
