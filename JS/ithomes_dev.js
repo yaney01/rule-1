@@ -1,5 +1,7 @@
 const isLoon = typeof $loon !== "undefined";
-let lbt = true, zd = true, lbtAd = true;
+let lbt = true,
+  zd = true,
+  lbtAd = true;
 if (isLoon) {
   lbtAd = $persistentStore.read("去除轮播图广告") === "开启";
   lbt = $persistentStore.read("去除整个轮播图") === "开启";
@@ -26,7 +28,8 @@ if (i?.data?.list) {
   i.data.list = i.data.list.filter((item) => {
     return (
       !FeedTypes.includes(item.feedType) ||
-      !item.feedContent.smallTags?.[0].text.includes("广告")
+      (item.feedContent.smallTags &&
+        !item.feedContent.smallTags[0].text.includes("广告"))
     );
   });
 }
