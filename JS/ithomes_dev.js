@@ -26,8 +26,7 @@ if (i?.data?.list) {
   i.data.list = i.data.list.filter((item) => {
     return (
       !FeedTypes.includes(item.feedType) ||
-      item.feedContent.smallTags[0]?.text === null ||
-      !item.feedContent.smallTags[0]?.text.includes("广告")
+      !item.feedContent.smallTags?.[0].text.includes("广告")
     );
   });
 }
