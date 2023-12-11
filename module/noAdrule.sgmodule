@@ -43,6 +43,7 @@ DOMAIN-SUFFIX,gromore.pangolin-sdk-toutiao.com,REJECT-NO-DROP
 # 网易邮箱大师开屏 appconf.mail.163.com
 ^https?:\/\/appconf\.mail\.163\.com\/mmad\/ data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/reject-200.txt"
 ^https?:\/\/mail\.163\.com\/smflow\/(config|get)\.do data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/reject-dict.json"
+^https?:\/\/iad\.g\.163\.com\/ma\/ad data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/reject-dict.json"
 
 ^https?:\/\/mobads\.baidu\.com\/cpro\/ui\/mads\.php\? data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/reject-dict.json"
 
