@@ -33,5 +33,5 @@ if (i?.data?.list) {
     );
   });
 }
-
+console.log(FeedTypes)
 $done({ body: JSON.stringify(i) });
