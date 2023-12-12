@@ -4,9 +4,10 @@
 #!author = @Key
 #!homepage = https://github.com/Keywos
 #!icon = https://github.com/Keywos/rule/raw/main/tv/app/144px/ithome.png
-#!select = 去除轮播图,开启,关闭
+#!select = 去除轮播图广告,开启,关闭
+#!select = 去除整个轮播图,开启,关闭
 #!select = 去除置顶,开启,关闭
-#!date = 2023-09-20 15:18:17
+#!date = 2023-12-11 19:43:55
 
 [Rewrite]
 ^https?:\/\/api\.zuihuimai\.com\/static\/.*\/hongbao reject
