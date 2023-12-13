@@ -11,9 +11,10 @@ let result = {}, urlArray = [], ReqLength = 0, newUrlArray = "", KillNum="";
     await httpAPI("/v1/dns/flush", "POST");
     // 原本出站规则
     const beforeMode = (await httpAPI()).mode; 
-    const newMode = { direct: "rule", proxy: "rule", rule: "direct"};
+    const newMode = { direct: "proxy", proxy: "direct", rule: "proxy"};
     // 切换出站利用surge杀死所有活跃连接
     await httpAPI(undefined, "POST", { mode: `${newMode[beforeMode]}` });
+    await httpAPI(undefined, "POST", { mode: `${newMode[newMode[beforeMode]]}` });
     // 切换原本出站规则
     await httpAPI(undefined, "POST", { mode: `${beforeMode}` }); 
     if ((await httpAPI()).mode != beforeMode) {
