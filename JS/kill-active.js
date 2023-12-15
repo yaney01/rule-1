@@ -1,62 +1,63 @@
 // 改自 https://raw.githubusercontent.com/xream/scripts/main/surge/modules/kill-active-requests/index.sgmodule
-let result = {}, aid = [], le = 0;
-const noPanel = typeof $input == "undefined";
+const NoPanel = typeof $input == "undefined";
+let result = {}, urlArray = [], ReqLength = 0, newUrlArray = "", KillNum="";
 !(async () => {
   const { requests = [] } = (await httpAPI("/v1/requests/active", "GET")) || {};
-  for await (const { id, URL } of requests) {
-    if (noPanel) {
-      aid.push(URL);
-    } else {
+  ReqLength = Math.max(requests.length - 1, 0);
+  KillNum = "打断活跃请求数: " + ReqLength;
+  console.log(KillNum);
+  
+  if (ReqLength != 0) {
+    await httpAPI("/v1/dns/flush", "POST");
+    // 原本出站规则
+    const beforeMode = (await httpAPI()).mode; 
+    const newMode = { direct: "proxy", proxy: "direct", rule: "proxy"};
+    // 切换出站利用surge杀死所有活跃连接
+    await httpAPI(undefined, "POST", { mode: `${newMode[beforeMode]}` });
+    await httpAPI(undefined, "POST", { mode: `${newMode[newMode[beforeMode]]}` });
+    // 切换原本出站规则
+    await httpAPI(undefined, "POST", { mode: `${beforeMode}` }); 
+    if ((await httpAPI()).mode != beforeMode) {
+      await httpAPI(undefined, "POST", { mode: `${beforeMode}` });
+    }
+  }
+
+  for await (const { URL } of requests) {
+    // 太多请求容易卡住
+    //await httpAPI("/v1/requests/kill", "POST", { id }); 
+    if (NoPanel) { 
+      // 通知
+      urlArray.push(URL);
+    } else { 
+      // 面板
       const domain = URL.match(/\.([^:/]+)\./)[1] ?? "";
-      aid.push(domain.replace(/\.(com|net)$/, ""));
+      urlArray.push(domain.replace(/\.(com|net)$/, ""));
       console.log(URL);
     }
-    await httpAPI("/v1/requests/kill", "POST", { id });
   }
-  le = Math.max(requests.length - 1, 0);
-  let xc = "";
-  if (noPanel) {
-    xc = aid.slice(0, -1).join("\n");
-  } else {
-    xc = le === 0 ? "无活跃请求" : aid.slice(0, -1).join(", ");
-  }
-  result = {
-    title: "打断活跃请求数: " + le,
-    content: xc,
-    icon: "xmark.circle",
-    "icon-color": "#C5424A",
-  };
 
-  if (noPanel) {
-    let x = result.content;
-    $notification.post(result.title, "", x);
-    le != 0 && console.log("\n\n" + x + "\n");
+  if (NoPanel) {
+    newUrlArray = urlArray.slice(0, -1).join("\n");
+    $notification.post(KillNum, "", newUrlArray);
+    ReqLength != 0 && console.log("\n\n" + newUrlArray + "\n");
+  } else {
+    newUrlArray = ReqLength === 0 ? "无活跃请求" : urlArray.slice(0, -1).join(", ");
   }
-})()
-  .catch((e) => {
-    console.log(e);
-  })
-  .finally(() => {
-    $done(result);
+
+  $done({
+    title: KillNum,
+    content: newUrlArray,
+    icon: "xmark.circle", "icon-color": "#C5424A",
   });
 
-function httpAPI(path = "", method = "POST", body = null) {
-  return new Promise((resolve, reject) => {
-    const tPr = new Promise((_, reject) => {
-      setTimeout(() => {
-        reject("");
-        resolve("");
-      }, 500);
+})()
+  .catch((e) => {console.log(e)})
+  .finally(() => {$done(result)});
+
+function httpAPI(path = "/v1/outbound", method = "GET", body = null) {
+  return new Promise((resolve) => {
+    $httpAPI(method, path, body, (result) => {
+      resolve(result);
     });
-    const reqPr = new Promise((resolve) => {
-      $httpAPI(method, path, body, resolve);
-    });
-    Promise.race([reqPr, tPr])
-      .then((result) => {
-        resolve(result);
-      })
-      .catch((error) => {
-        reject(error);
-      });
   });
 }

@@ -3,7 +3,7 @@
 #!openUrl = https://github.com/Keywos
 #!author = 可莉🅥 Key
 #!homepage = 
-#!icon = https://gitlab.com/lodepuly/iconlibrary/-/raw/master/App_icon/120px/TikTok.png
+#!icon = https://gitlab.com/lodepuly/iconlibrary/-/raw/main/App_icon/120px/TikTok.png
 #!select = TikTok解锁地区,日本,韩国,英国,美国,台湾,香港,新加坡,法国,马来西亚,菲律宾,泰国,手动输入
 #!input = 手动输入地区代码[可选]
 #!date = 2023-08-19 22:00:03
@@ -26,4 +26,4 @@ hostname = *.byteoversea.com, *.tik-tokapi.com, *.tiktokv.com
 [Script]
 http-request ^https?:\/\/((tnc|dm).+\.[^\/]+\.com\/\w+\/v\d\/\?|.+\.(byteoversea|tiktokv).com\/.+(_region=CN&|&mcc_mnc=4)) script-path=https://raw.githubusercontent.com/Keywos/rule/main/loon/tk.js, timeout=20, tag=TikTok
 
-http-response https?:\/\/.*\.tiktokv\.com\/aweme\/v\d\/(feed|mix\/aweme|aweme\/post|(multi\/)?aweme\/detail|follow\/feed|nearby\/feed|search\/item|general\/search\/single|hot\/search\/video\/list|aweme\/favorite) script-path=https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Resource/Script/TikTok/TikTok_remove_watermark.js, requires-body=true, timeout=10, tag=TikTok去水印
+http-response https?:\/\/.*\.tiktokv\.com\/aweme\/v\d\/(feed|mix\/aweme|aweme\/post|(multi\/)?aweme\/detail|follow\/feed|nearby\/feed|search\/item|general\/search\/single|hot\/search\/video\/list|aweme\/favorite) script-path=https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Resource/Script/TikTok/TikTok_remove_watermark.js, requires-body=true, timeout=10, tag=TikTok去水印
