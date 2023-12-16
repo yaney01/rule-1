@@ -5,7 +5,7 @@ on:
     branches:
       - main # 或者是你要同步的分支
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 */3 * * *'
   
 jobs:
   sync:
