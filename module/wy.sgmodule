@@ -1,11 +1,11 @@
 #!name= Netease Music
-#!desc= dataDecrypt Beta
+#!desc= dataDecrypt Beta 测试版，日志爆表
 #!system=ios
 
 [MITM]
 hostname = %APPEND% interface.music.163.com, interface3.music.163.com, httpdns.n.netease.com, interface.music.163.com.163jiasu.com, interface3.music.163.com.163jiasu.com, ipv4.music.163.com
 
 [Script]
-NeteaseReq = type=http-request,pattern=^https?:\/\/interface3\.music\.163\.com\/eapi\/,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/reqParam.js
-NeteaseRes = type=http-response,pattern=^https?:\/\/interface3\.music\.163\.com\/eapi\/,requires-body=1,max-size=0,timeout=20,binary-body-mode=true,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/reqParam.js
+NeteaseReq = type=http-request,pattern=^https?:\/\/interface3\.music\.163\.com\/eapi\/,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/wyreqParam.js
+NeteaseRes = type=http-response,pattern=^https?:\/\/interface3\.music\.163\.com\/eapi\/,requires-body=1,max-size=0,timeout=20,binary-body-mode=true,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/wyreqParam.js
 
