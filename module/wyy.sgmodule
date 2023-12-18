@@ -44,7 +44,7 @@ DOMAIN-SUFFIX,163jiasu.com,REJECT-NO-DROP
 # 侧边栏
 ^https?:\/\/interface3?\.music\.163\.com\/eapi\/(side-bar\/mini-program\/music-service\/account|delivery\/batch-deliver) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
 
-^https?:\/\/(ipv4|interface3?)\.music\.163.com\/eapi\/ad data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
+^https?:\/\/(ipv4|interface3?)\.music\.163.com\/e?api\/ad data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
 
 [MITM]
 hostname = %APPEND% interface.music.163.com, interface3.music.163.com, httpdns.n.netease.com, interface.music.163.com.163jiasu.com, interface3.music.163.com.163jiasu.com, ipv4.music.163.com
