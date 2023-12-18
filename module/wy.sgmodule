@@ -1,6 +1,7 @@
 #!name= Netease Music
 #!desc= dataDecrypt Beta 测试版，日志爆表
 #!system=ios
+#[正式版] https://github.com/Keywos/rule/raw/main/module/wyy.sgmodule
 
 [MITM]
 hostname = %APPEND% interface.music.163.com, interface3.music.163.com, httpdns.n.netease.com, interface.music.163.com.163jiasu.com, interface3.music.163.com.163jiasu.com, ipv4.music.163.com
