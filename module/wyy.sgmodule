@@ -1,9 +1,14 @@
 #!name=网易云音乐 
-#!desc=version:8.9.20
+#!desc=version:8.9.20+ 评论区全面净化 @Key
 #Thank RuCu6, kokoryh 
 
-[General]
-force-http-engine-hosts = %APPEND% 59.111.*:0, iadmusicmatvideo.music.126.net
+
+[Script]
+# NeteaseReq = type=http-request,pattern=^https?:\/\/interface3\.music\.163\.com\/eapi\/,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/wyreqParam.js
+
+# 热推、有话想说、分享一下、歌曲下的祝福等小提示去除 ｜ 评论区 乐迷、星评等级等 图标去除
+NeteaseRes = type=http-response,pattern=^https?:\/\/(ipv4|interface3?)\.music\.163\.com\/w?e?api\/batch,requires-body=1,max-size=0,timeout=20,binary-body-mode=true,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/wyresParam_nolog.js
+
 
 [URL Rewrite]
 ^https?:\/\/httpdns.n\.netease\.com - reject
@@ -20,6 +25,9 @@ DOMAIN-SUFFIX,163jiasu.com,REJECT-NO-DROP
 [Map Local]
 ^http:\/\/iadmusicmatvideo\.music\.126\.net data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank.mp4"
 ^https?:\/\/interface3?\.music\.163\.com\/eapi\/(community\/friends\/fans-group\/artist\/group\/get|user\/sub\/artist|music\/songshare\/text\/recommend\/get|mine\/applet\/redpoint|resniche\/position\/play\/new\/get) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
+
+# 今日运势 商城 Beat专区 音乐收藏家 | type:ACTIVITY | 低至5.2折
+^http:\/\/interface3\.music\.163\.com\/eapi\/(side-bar\/mini-program\/music-service\/account|content\/activity\/music｜delivery\/deliver) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
 
 # (评论区｜评论右上角热评馆｜播放页评论)｜回复
 ^https?:\/\/interface3?\.music\.163.com\/eapi\/(comment\/(feed\/inserted|hotcomment\/collect|tips\/v2\/get)|v\d\/content\/exposure\/comment\/banner) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
@@ -38,8 +46,6 @@ DOMAIN-SUFFIX,163jiasu.com,REJECT-NO-DROP
 
 ^https?:\/\/(ipv4|interface3?)\.music\.163.com\/eapi\/ad data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
 
-[Header Rewrite]
-^https?:\/\/interface3?\.music\.163\.com\/eapi\/batch header-replace-regex cookie appver=.+$ appver=2333
-
 [MITM]
-hostname = %APPEND% 59.111.*, 112.13.119.52, 117.147.199.59, interface*.music.163.com:0, httpdns.n.netease.com, *.163jiasu.com, ipv4.music.163.com
+hostname = %APPEND% interface.music.163.com, interface3.music.163.com, httpdns.n.netease.com, interface.music.163.com.163jiasu.com, interface3.music.163.com.163jiasu.com, ipv4.music.163.com
+#, p1.music.126.net
