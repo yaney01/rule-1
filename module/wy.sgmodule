@@ -15,7 +15,7 @@ NeteaseRes = type=http-response,pattern=^https?:\/\/interface3\.music\.163\.com\
 [Map Local]
 ^https?:\/\/(ipv4|interface3?)\.music\.163.com\/e?api\/ad data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
 
-^https?:\/\/interface3\.music\.163\.com\/W?e?api\/(side-bar\/mini-program\/music-service\/account|content\/activity\/music｜delivery\/deliver|moment\/tab\/info\/get) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
+^https?:\/\/interface3\.music\.163\.com\/w?e?api\/(side-bar\/mini-program\/music-service\/account|content\/activity\/music｜delivery\/deliver|moment\/tab\/info\/get) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
 
 [URL Rewrite]
 ^http:\/\/httpdns.n\.netease\.com - reject
