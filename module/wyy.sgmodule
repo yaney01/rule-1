@@ -7,7 +7,7 @@
 # NeteaseReq = type=http-request,pattern=^https?:\/\/interface3\.music\.163\.com\/eapi\/,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/wyreqParam.js
 
 # 热推、有话想说、分享一下、歌曲下的祝福等小提示去除 ｜ 评论区 乐迷、星评等级等 图标去除
-NeteaseRes = type=http-response,pattern=^https?:\/\/(ipv4|interface3?)\.music\.163\.com\/w?e?api\/batch,requires-body=1,max-size=0,timeout=20,binary-body-mode=true,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/wyresParam_nolog.js
+NeteaseRes = type=http-response,pattern=^https?:\/\/(ipv4|interface3?)\.music\.163\.com\/w?e?api\/(batch|v\d\/resource\/comment\/floor\/get),requires-body=1,max-size=0,timeout=20,binary-body-mode=true,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/wyresParam_nolog.js
 
 [URL Rewrite]
 ^https?:\/\/httpdns.n\.netease\.com - reject
