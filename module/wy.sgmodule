@@ -18,7 +18,9 @@ NeteaseRes = type=http-response,pattern=^https?:\/\/interface3\.music\.163\.com\
 
 ^https?:\/\/(ipv4|interface3?)\.music\.163.com\/e?api\/ad data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
 
-^https?:\/\/interface3\.music\.163\.com\/w?e?api\/(side-bar\/mini-program\/music-service\/account|content\/activity\/music|delivery\/(batch-deliver|deliver)|moment\/tab\/info\/get) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
+# 今日运势 商城 Beat专区 音乐收藏家 | type:ACTIVITY | 低至5.2折
+^https?:\/\/interface3\.music\.163\.com\/w?e?api\/(side-bar\/mini-program\/music-service\/account|content\/activity\/music|delivery\/(batch-deliver|deliver)|moment\/tab\/info\/get|vipnewcenter\/app\/resource\/newaccountpage) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
+# 侧边黑胶提示 vipnewcenter\/app\/resource\/newaccountpagejson"
 
 
 
