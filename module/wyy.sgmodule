@@ -34,7 +34,8 @@ DOMAIN-SUFFIX,163jiasu.com,REJECT-NO-DROP
 
 # 今日运势 商城 Beat专区 音乐收藏家 | type:ACTIVITY | 低至5.2折
 ^https?:\/\/interface3\.music\.163\.com\/w?e?api\/(side-bar\/mini-program\/music-service\/account|content\/activity\/music|delivery\/(batch-deliver|deliver)|moment\/tab\/info\/get|vipnewcenter\/app\/resource\/newaccountpage|yunbei\/account\/entrance\/get) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
-# 侧边黑胶提示 vipnewcenter\/app\/resource\/newaccountpage
+# 侧边黑胶提示 vipnewcenter\/app\/resource\/newaccountpage    
+# 评论区瞬间 moment\/tab\/info\/get
  
 # (评论区｜评论右上角热评馆｜播放页评论)｜回复
 ^https?:\/\/interface3?\.music\.163.com\/eapi\/(comment\/(feed\/inserted|hotcomment\/collect|tips\/v2\/get)|v\d\/content\/exposure\/comment\/banner) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
