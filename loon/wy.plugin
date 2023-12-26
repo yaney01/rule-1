@@ -5,7 +5,7 @@
 #!homepage = https://github.com/Keywos
 #!icon = https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/Netease.png
 #https://raw.githubusercontent.com/LimeAroma/Loon/main/Plugin/NeteaseCloudMusic_remove_ads.plugin
-#!date = 2023-12-22 19:44:38
+#!date = 2023-12-27 02:23:25
 
 [MITM]
 hostname = interface.music.163.com, interface3.music.163.com, httpdns.n.netease.com, interface.music.163.com.163jiasu.com, interface3.music.163.com.163jiasu.com, ipv4.music.163.com
@@ -39,7 +39,7 @@ DOMAIN-SUFFIX,163jiasu.com,REJECT
 [Script]
 # homepage\/block\/page| 主页banner ad需要设置歌单模式, 并且显示的不能过多否则爆内存, 外面没加这个正则, 脚本里处理过了
 # 热推、有话想说、分享一下、歌曲下的祝福等小提示去除 ｜ 评论区 乐迷、星评等级等 图标去除 | homepage banner ad
-http-response ^https?:\/\/(ipv4|interface3?)\.music\.163\.com\/e?api\/(batch|v\d\/resource\/comment\/floor\/get|link\/position\/show\/resource|music-vip-membership\/client\/vip\/info) script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/wyresParam_nolog.js, requires-body=true, binary-body-mode=true, timeout=20, tag=NeteaseRes
+http-response ^https?:\/\/(ipv4|interface3?)\.music\.163\.com\/e?api\/(batch|v\d\/resource\/comment\/floor\/get|link\/position\/show\/resource|music-vip-membership\/client\/vip\/info|user\/follow\/users\/mixed\/get) script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/wyresParam_nolog.js, requires-body=true, binary-body-mode=true, timeout=20, tag=NeteaseRes
 
 # 首页搜索框关键词 返回加密后的空值,不会因dict而变成默认值
 http-request ^https?:\/\/interface3?\.music\.163.com\/w?e?api\/search\/default script-path=https://raw.githubusercontent.com/Keywos/rule/main/loon/script-hub-wy-keyword.js, timeout=60, tag=keyword
