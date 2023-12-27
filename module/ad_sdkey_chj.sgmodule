@@ -1,0 +1,15 @@
+#!name= 广告联盟去广告
+#!desc= 穿山甲广告联盟 修改加密广告配置/阻止上传等 汽水音乐/酷安等 需放行 DOMAIN-KEYWORD,api-access.pangolin-sdk-toutiao 否则不生效 @Key
+#!system= ios
+#!date= 2023-12-28 07:22:51
+
+[Rule]
+# 直接拦截会暴力请求或者使用缓存广告数据
+DOMAIN-KEYWORD,api-access.pangolin-sdk-toutiao,DIRECT
+
+[Script]
+# 汽水音乐/酷安等 穿山甲广告联盟 阻止上传，修改广告配置
+AD_SDKEY = type=http-response,pattern=^https:\/\/api-access\.pangolin-sdk-toutiao\d?\.com\/api\/ad\/union\/sdk\/settings,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/adsdk_chj.js
+
+[MITM]
+hostname = %APPEND% api-access.pangolin-sdk-toutiao*.com
