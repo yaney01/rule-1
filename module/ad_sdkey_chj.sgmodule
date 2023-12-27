@@ -5,6 +5,8 @@
 
 [Rule]
 # 直接拦截会暴力请求或者使用缓存广告数据
+DOMAIN-SUFFIX,api-access.pangolin-sdk-toutiao.com,DIRECT
+DOMAIN-SUFFIX,api-access.pangolin-sdk-toutiao1.com,DIRECT
 DOMAIN-KEYWORD,api-access.pangolin-sdk-toutiao,DIRECT
 
 [Script]
