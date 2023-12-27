@@ -1,5 +1,5 @@
 #!name= 广告联盟去广告
-#!desc= 穿山甲广告联盟 修改加密广告配置/阻止上传等 汽水音乐/酷安等 需放行 DOMAIN-KEYWORD,api-access.pangolin-sdk-toutiao 否则不生效 @Key
+#!desc= 穿山甲广告联盟 修改加密广告配置/阻止上传等 汽水音乐/酷安等 需放行 DOMAIN-KEYWORD,api-access.pangolin-sdk-toutiao 或者本模块优先级调高，否则不生效 @Key
 #!system= ios
 #!date= 2023-12-28 07:22:51
 
