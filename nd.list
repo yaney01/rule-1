@@ -10,10 +10,10 @@ DOMAIN-SUFFIX,statics.woozooo.com
 DOMAIN-SUFFIX,errlog.umeng.com
 DOMAIN-SUFFIX,nomoraw.dafork.com
 DOMAIN-SUFFIX,pangolin.snssdk.com
-DOMAIN-SUFFIX,pglstatp-toutiao.com
+#DOMAIN-SUFFIX,pglstatp-toutiao.com
 DOMAIN-SUFFIX,gorgon.youdao.com
 DOMAIN-SUFFIX,toblog.ctobsnssdk.com
 DOMAIN-SUFFIX,adashbc.ut.taobao.com
 DOMAIN-SUFFIX,adashxgc.ut.taobao.com
 DOMAIN-SUFFIX,h-adashx.ut.taobao.com
-DOMAIN-KEYWORD,pangolin-sdk-toutiao
+#DOMAIN-KEYWORD,pangolin-sdk-toutiao
