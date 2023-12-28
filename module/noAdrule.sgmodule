@@ -26,12 +26,15 @@ DOMAIN-SUFFIX,gorgon.youdao.com,REJECT-NO-DROP
 DOMAIN-SUFFIX,nex.163.com,REJECT-NO-DROP
 DOMAIN-SUFFIX,mi.gdt.qq.com,REJECT-NO-DROP
 # 酷安
-DOMAIN-KEYWORD,.pangolin-sdk-toutiao,REJECT-NO-DROP
 DOMAIN-SUFFIX,ulogs.umengcloud.com,REJECT-DROP
 DOMAIN-SUFFIX,toblog.ctobsnssdk.com,REJECT-NO-DROP
 DOMAIN-SUFFIX,adashbc.ut.taobao.com,REJECT-NO-DROP
-DOMAIN-SUFFIX,adashxgc.ut.taobao.com,REJECT-NO-DROP
-DOMAIN-SUFFIX,gromore.pangolin-sdk-toutiao.com,REJECT-NO-DROP
+
+# 直接拦截会暴力请求或者使用缓存广告数据
+DOMAIN-SUFFIX,api-access.pangolin-sdk-toutiao.com,DIRECT
+DOMAIN-SUFFIX,api-access.pangolin-sdk-toutiao1.com,DIRECT
+DOMAIN-KEYWORD,pangolin-sdk-toutiao,DIRECT
+
 
 [Map Local]
 # 中国移动开屏 client.app.coc.10086.cn
@@ -61,7 +64,11 @@ DOMAIN-SUFFIX,gromore.pangolin-sdk-toutiao.com,REJECT-NO-DROP
 # 彩云赏花
 ^https?:\/\/wrapper\.cyapi\.cn\/v1\/activity\? data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/caiyun.json"
 ^https?:\/\/api\.caiyunapp\.com\/v1\/activity data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/reject-dict.json"
+
 [Script]
+# 穿山甲广告联盟 修改加密广告配置/阻止上传等 汽水音乐/酷安/网易邮箱等
+AD_SDKEY = type=http-response,pattern=^https:\/\/api-access\.pangolin-sdk-toutiao\d?\.com\/api\/ad\/union\/sdk\/settings,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/adsdk_chj.js
+
 # 爱思推广全部干掉只保留搜索 list-app-m.i4.cn, search-app-m.i4.cn
 爱思 = type=http-response,pattern=^https?:\/\/(search|list)-app-m\.i4\.cn\/(getHotSearchList|getAppList)\.xhtml,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/aisi.js
 
@@ -70,4 +77,4 @@ it之家 = type=http-response,pattern=^https:\/\/napi\.ithome\.com\/api\/(news\/
 
 [MITM]
 h2 = true
-hostname = %APPEND% client.app.coc.10086.cn, list-app-m.i4.cn, search-app-m.i4.cn, mp.weixin.qq.com, webappcfg.paas.cmbchina.com, rescdn.qqmail.com, us.l.qq.com, napi.ithome.com, api.zuihuimai.com,mobads.baidu.com,dsp-x.jd.comdat.ruanmei.com,appconf.mail.163.com,home.mi.com, wrapper.cyapi.cn,api.caiyunapp.com
+hostname = %APPEND% client.app.coc.10086.cn, list-app-m.i4.cn, search-app-m.i4.cn, mp.weixin.qq.com, webappcfg.paas.cmbchina.com, rescdn.qqmail.com, us.l.qq.com, napi.ithome.com, api.zuihuimai.com,mobads.baidu.com,dsp-x.jd.comdat.ruanmei.com,appconf.mail.163.com,home.mi.com, wrapper.cyapi.cn,api.caiyunapp.com, api-access.pangolin-sdk-toutiao*.com
