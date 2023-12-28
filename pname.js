@@ -22,13 +22,19 @@ let timeout = iar.timeout || 2000,
 const { isLoon: isLoon, isSurge: isSurge } = $substore.env,
   target = isLoon ? "Loon" : isSurge ? "Surge" : undefined;    
 async function operator(e = [], targetPlatform, env) {
-  let tzname = "",subcoll = "";
-  if (env?.source?.[e?.[0]?.subName]) {
+  let tzname = "", subcoll = "", x = false, xy = false;
+  if (env?.source?.[e?.[0]?.subName]) x = true;
+  if (env?.source?._collection?.name) xy = true;
+  if (x && xy) {
+    tzname =
+      env.source._collection.name + ": [" + env.source._collection.subscriptions + "]";
+    subcoll = "组合订阅内单条订阅加了脚本, 输出组合订阅";
+  } else if (x) {
     tzname = env.source[e[0].subName].name;
-    subcoll = "单个订阅 ";
-  } else if (env?.source?._collection?.name){
+    subcoll = "单条订阅脚本";
+  } else {
     tzname = env.source._collection.name;
-    subcoll = "组合订阅 ";
+    subcoll = "组合订阅脚本";
   }
 
   const startTime = new Date();
