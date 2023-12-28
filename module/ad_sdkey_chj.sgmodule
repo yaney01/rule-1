@@ -12,5 +12,8 @@ DOMAIN-KEYWORD,pangolin-sdk-toutiao,DIRECT
 [Script]
 AD_SDKEY = type=http-response,pattern=^https:\/\/api-access\.pangolin-sdk-toutiao\d?\.com\/api\/ad\/union\/sdk\/settings,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/adsdk_chj.js
 
+[Map Local]
+^https:\/\/api-access\.pangolin-sdk-toutiao\d?\.com\/api\/ad\/union\/sdk\/get_ads data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/reject-dict.json"
+
 [MITM]
 hostname = %APPEND% api-access.pangolin-sdk-toutiao*.com
