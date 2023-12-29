@@ -24,6 +24,8 @@ DOMAIN,gdt.qq.com,REJECT-NO-DROP
 DOMAIN-SUFFIX,163jiasu.com,REJECT-NO-DROP
 
 [Map Local]
+^https?:\/\/(ipv4|interface3?)\.music\.163.com\/e?api\/ad data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/eapiad.json"
+
 # 首页搜索框关键词 返回加密后的空值,不会因dict而变成默认值
 ^https?:\/\/interface3?\.music\.163.com\/w?e?api\/search\/default data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/keyword.json"
 
@@ -47,8 +49,6 @@ DOMAIN-SUFFIX,163jiasu.com,REJECT-NO-DROP
 
 # 搜索页热搜卡片｜猜你喜欢｜我的应用下方提醒
 ^https?:\/\/interface3?\.music\.163.com\/w?e?api\/(search\/(chart|rcmd\/keyword|specialkeyword)|resource-exposure\/|activity\/bonus\/playpage\/time\/query) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
-
-^https?:\/\/(ipv4|interface3?)\.music\.163.com\/e?api\/ad data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
 
 [MITM]
 hostname = %APPEND% interface.music.163.com, interface3.music.163.com, httpdns.n.netease.com, interface.music.163.com.163jiasu.com, interface3.music.163.com.163jiasu.com, ipv4.music.163.com
