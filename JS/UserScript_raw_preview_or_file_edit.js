@@ -40,7 +40,7 @@
         const button = document.createElement("button");
         button.innerHTML = text;
         button.style.position = "fixed";
-        button.style.backgroundColor = "#303033cf";
+        button.style.backgroundColor = "#303033ab";
         button.style.color = "#eeeeee";
         button.style.border = "none";
         button.style.padding = "8px 16px";
