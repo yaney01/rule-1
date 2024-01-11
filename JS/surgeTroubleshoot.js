@@ -1,3 +1,4 @@
+// 2024-01-11 14:58:00
 const NAMESPACE = `xream`;
 const NAME = `troubleshoot`;
 
@@ -53,7 +54,7 @@ let result = {};
       if (/^RULE-SET,/.test(e)) {
         RULE_SET_NUM++;
         const rsUrl = e.split(",")[1];
-        if (/^https?\/\//.test(rsUrl)) {
+        if (/http/.test(rsUrl)) {
           console.log("[RULE-SET_GET]: " + rsUrl);
           try {
             ruleSetRaw += (await $.http.get(rsUrl)).body;
@@ -65,7 +66,7 @@ let result = {};
       if (/^DOMAIN-SET,/.test(e)) {
         DOMAIN_SET_NUM++;
         const rdurl = e.split(",")[1];
-        if (/^https?\/\//.test(rdurl)) {
+        if (/http/.test(rdurl)) {
           console.log("[DOMAIN-SET_GET]: " + rdurl);
           try {
             const DOMAIN_SET_RAW_BODY = (await $.http.get(rdurl)).body
