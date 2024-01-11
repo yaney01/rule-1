@@ -52,7 +52,7 @@ let result = {};
         if (/http/.test(rsUrl)) {
           console.log("[RULE-SET_GET]: " + rsUrl);
           try {
-            ruleSetRaw += (await tKey(rsUrl)).body;
+            ruleSetRaw += await tKey(rsUrl);
           } catch (e) {
             console.log(e.message);
           }
@@ -64,9 +64,7 @@ let result = {};
         if (/http/.test(rdurl)) {
           console.log("[DOMAIN-SET_GET]: " + rdurl);
           try {
-            const DOMAIN_SET_RAW_BODY = (await tKey(rdurl)).body
-              .split("\n")
-              .filter((i) => !/#|\s/.test(i));
+            const DOMAIN_SET_RAW_BODY = (await tKey(rdurl)).split("\n").filter((i) => !/#|\s/.test(i));
             DOMAIN_SET_RAW += DOMAIN_SET_RAW_BODY.length;
             ALL_NUM += DOMAIN_SET_RAW;
           } catch (e) {
