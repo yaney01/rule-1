@@ -41,7 +41,10 @@ if (typeof $argument !== "undefined" && $argument !== "") {
       RULELIST = {};
     // prettier-ignore
     let DOMAIN_NUM = 0,DOMAIN_SUFFIX_NUM = 0, DOMAIN_KEYWORD_NUM = 0, IP_CIDR_NUM = 0, IP_CIDR6_NUM = 0, IP_ASN_NUM = 0, OR_NUM = 0, AND_NUM = 0, NOT_NUM = 0, DEST_PORT_NUM = 0, IN_PORT_NUM = 0, SRC_IP_NUM = 0, PROTOCOL_NUM = 0, PROCESS_NAME_NUM = 0, DEVICE_NAME_NUM = 0, USER_AGENT_NUM = 0, URL_REGEX_NUM = 0, SUBNET_NUM = 0, DOMAIN_SET_NUM = 0, RULE_SET_NUM = 0, ALL_NUM = 0;
-    const scRule = profile.match(/\[Rule\][\s\S]+/gm)[0].split("\n");
+    const scRule = profile
+      .match(/\[Rule\]([\s\S]+?)\[/gm)[0]
+      .split("\n")
+      .filter((i) => /^\s?(?![#;\s[//])./.test(i));
     AllRule = AllRule.concat(scRule);
     for (const e of scRule) {
       if (/^RULE-SET,/.test(e)) {
@@ -52,7 +55,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
           try {
             const ruleSetRaw = (await tKey(rsUrl))
               .split("\n")
-              .filter((i) => !/^\s?(#|\s|;)/.test(i));
+              .filter((i) => /^\s?(?![#;\s[//])./.test(i));
             RULELIST[rsUrl.split("/").pop()] = ruleSetRaw.length;
             AllRule = AllRule.concat(ruleSetRaw);
           } catch (e) {
@@ -68,7 +71,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
           try {
             const DOMAIN_SET_RAW_BODY = (await tKey(rdurl))
               .split("\n")
-              .filter((i) => !/^\s?(#|\s|;)/.test(i));
+              .filter((i) => /^\s?(?![#;\s[//])./.test(i));
             const l = DOMAIN_SET_RAW_BODY.length;
             RULELIST[rdurl.split("/").pop()] = l;
             ALL_NUM += l;
@@ -78,6 +81,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
         }
       }
     }
+    console.log(AllRule);
     AllRule.forEach((e) => {
       ALL_NUM++;
       /^DOMAIN,/.test(e) && DOMAIN_NUM++;
@@ -138,7 +142,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
       }
 
       result = {
-        title: "Surge Tool Rule: "+ ALL_NUM,
+        title: "Surge Tool Rule: " + ALL_NUM,
         content:
           text +
           `Rewrite:${rewrite ? "☑" : "☒"} Scripting:${
