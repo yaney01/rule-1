@@ -1,5 +1,6 @@
 // @xream @key 2024-01-11 19:50:46
 const isPanel = typeof $input != "undefined";
+const stname = "SurgeTool_Rule_NUM";
 let result = {},
   icons = "heart.text.square",
   icolor = "#6699FF",
@@ -38,7 +39,8 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     }
 
     let AllRule = [],
-      RULELIST = {};
+      RULELIST = {},
+      SurgeTool = {};
     // prettier-ignore
     let DOMAIN_NUM = 0,DOMAIN_SUFFIX_NUM = 0, DOMAIN_KEYWORD_NUM = 0, IP_CIDR_NUM = 0, IP_CIDR6_NUM = 0, IP_ASN_NUM = 0, OR_NUM = 0, AND_NUM = 0, NOT_NUM = 0, DEST_PORT_NUM = 0, IN_PORT_NUM = 0, SRC_IP_NUM = 0, PROTOCOL_NUM = 0, PROCESS_NAME_NUM = 0, DEVICE_NAME_NUM = 0, USER_AGENT_NUM = 0, URL_REGEX_NUM = 0, SUBNET_NUM = 0, DOMAIN_SET_NUM = 0, RULE_SET_NUM = 0, ALL_NUM = 0;
     const scRule = profile
@@ -50,7 +52,27 @@ if (typeof $argument !== "undefined" && $argument !== "") {
       if (/^RULE-SET,/.test(e)) {
         RULE_SET_NUM++;
         const rsUrl = e.split(",")[1];
-        if (/http/.test(rsUrl)) {
+        if (/^https?:\/\/script\.hub\/file\/_start_\//.test(rsUrl)) {
+          console.log("[RULE-SET_GET_Script-Hub]: " + rsUrl);
+          try {
+            SurgeTool = JSON.parse($persistentStore.read(stname));
+            if (!SurgeTool && SurgeTool?.length > 10000) {
+              clearcr();
+            } else {
+              const cacheNum = SurgeTool[rsUrl];
+              if (typeof cacheNum == "number" && cacheNum > 0) {
+                console.log("读取ScriptHub 缓存" + cacheNum);
+                ALL_NUM += cacheNum;
+                RULELIST[rsUrl.split("/").pop().replace(/\?.+/, "")] = cacheNum;
+              }
+            }
+          } catch (error) {
+            clearcr();
+          }
+          function clearcr() {
+            $persistentStore.write(JSON.stringify({}), stname);
+          }
+        } else if (/http/.test(rsUrl)) {
           console.log("[RULE-SET_GET]: " + rsUrl);
           try {
             const ruleSetRaw = (await tKey(rsUrl))
@@ -67,7 +89,27 @@ if (typeof $argument !== "undefined" && $argument !== "") {
       if (/^DOMAIN-SET,/.test(e)) {
         DOMAIN_SET_NUM++;
         const rdurl = e.split(",")[1];
-        if (/http/.test(rdurl)) {
+        if (/^https?:\/\/script\.hub\/file\/_start_\//.test(rdurl)) {
+          console.log("[DOMAIN-SET_GET_Script-Hub]: " + rsUrrdurll);
+          try {
+            SurgeTool = JSON.parse($persistentStore.read(stname));
+            if (!SurgeTool && SurgeTool?.length > 10000) {
+              clearcr();
+            } else {
+              const cacheNum = SurgeTool[rdurl];
+              if (typeof cacheNum == "number" && cacheNum > 0) {
+                console.log("读取ScriptHub 缓存" + cacheNum);
+                ALL_NUM += cacheNum;
+                RULELIST[rdurl.split("/").pop().replace(/\?.+/, "")] = cacheNum;
+              }
+            }
+          } catch (error) {
+            clearcr();
+          }
+          function clearcr() {
+            $persistentStore.write(JSON.stringify({}), stname);
+          }
+        } else if (/http/.test(rdurl)) {
           console.log("[DOMAIN-SET_GET]: " + rdurl);
           try {
             const DOMAIN_SET_RAW_BODY = (await tKey(rdurl))
@@ -197,7 +239,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
           )
             .map(([k, v]) => (v !== 0 ? `<i>${k}: ${v}\n</i>` : ""))
             .join("")}</code></pre>
-          <h3 style="margin-bottom: -4px; padding-top:6px;">RuleList</h3><pre><code>${Object.entries(
+          <h3 style="margin-bottom: -4px; padding-top:6px;">Rule List</h3><pre><code>${Object.entries(
             RULELIST
           )
             .map(([k, v]) => (v !== 0 ? `<i>${k}: ${v}\n</i>` : ""))
