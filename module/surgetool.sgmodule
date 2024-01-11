@@ -15,4 +15,4 @@ troubleshoot = type=http-request, pattern=^https?:\/\/(trouble\.shoot|surge\.too
 // type 各类型数
 // list 各远程规则数
 // argument=icon="heart.text.square"&color="#6699FF"&type&list
-troubleshootPanpel = type=generic,timeout=10,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/surgeTroubleshoot.js,argument=type
+troubleshootPanpel = type=generic,timeout=60,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/surgeTroubleshoot.js,argument=type
