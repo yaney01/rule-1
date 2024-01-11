@@ -170,7 +170,7 @@ let result = {};
           .map(([k, v]) => (v !== 0 ? `<i>${k}: ${v}\n</i>` : ""))
           .join(
             ""
-          )}</code></pre><fƒooter>Made With &hearts; By <a href="https://t.me/zhetengsha">@xream @key</a></footer></body></html>`,
+          )}</code></pre><tƒooter style="text-align:center;padding:20px;">Made With &hearts; By <a  style="text-decoration:none;" href="https://t.me/zhetengsha">@xream @key</a></footer></body></html>`,
       },
     };
   } catch (e) {
