@@ -44,7 +44,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     const scRule = profile
       .match(/\[Rule\]([\s\S]+?)\[/gm)[0]
       .split("\n")
-      .filter((i) => /^\s?(?![#;\s[//GEOIP])./.test(i));
+      .filter((i) => /^\s?(?![#;\s[//])./.test(i));
     AllRule = AllRule.concat(scRule);
     for (const e of scRule) {
       if (/^RULE-SET,/.test(e)) {
