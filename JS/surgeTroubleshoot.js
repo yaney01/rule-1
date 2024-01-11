@@ -44,7 +44,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     const scRule = profile
       .match(/\[Rule\]([\s\S]+?)\[/gm)[0]
       .split("\n")
-      .filter((i) => /^\s?(?![#;\s[//])./.test(i));
+      .filter((i) => /^\s?(?![#;\s[//GEOIP])./.test(i));
     AllRule = AllRule.concat(scRule);
     for (const e of scRule) {
       if (/^RULE-SET,/.test(e)) {
@@ -109,9 +109,9 @@ if (typeof $argument !== "undefined" && $argument !== "") {
       AND: AND_NUM,
       NOT: NOT_NUM,
       SRC_IP: SRC_IP_NUM,
+      IP_ASN: IP_ASN_NUM,
       DOMAIN: DOMAIN_NUM,
       SUBNET: SUBNET_NUM,
-      IP_ASN: IP_ASN_NUM,
       IN_PORT: IN_PORT_NUM,
       IP_CIDR: IP_CIDR_NUM,
       RULE_SET: RULE_SET_NUM,
