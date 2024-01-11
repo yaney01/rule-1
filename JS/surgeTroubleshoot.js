@@ -56,7 +56,8 @@ if (typeof $argument !== "undefined" && $argument !== "") {
             const ruleSetRaw = (await tKey(rsUrl))
               .split("\n")
               .filter((i) => /^\s?(?![#;\s[//])./.test(i));
-            RULELIST[rsUrl.split("/").pop()] = ruleSetRaw.length;
+            RULELIST[rsUrl.split("/").pop().replace(/\?.+/, "")] =
+              ruleSetRaw.length;
             AllRule = AllRule.concat(ruleSetRaw);
           } catch (e) {
             console.log(e.message);
@@ -73,7 +74,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
               .split("\n")
               .filter((i) => /^\s?(?![#;\s[//])./.test(i));
             const l = DOMAIN_SET_RAW_BODY.length;
-            RULELIST[rdurl.split("/").pop()] = l;
+            RULELIST[rdurl.split("/").pop().replace(/\?.+/, "")] = l;
             ALL_NUM += l;
           } catch (e) {
             console.log(e.message);
@@ -248,5 +249,6 @@ function getin() {
       .map(([k, v]) => [k, decodeURIComponent(v)])
   );
 }
+
 // prettier-ignore
 async function tKey(e,t="3000"){let o=1,r=1;const s=new Promise(((s,i)=>{const c=async l=>{try{const o=await Promise.race([new Promise(((t,o)=>{$httpClient.get({url:e},((e,n,r)=>{if(e){o(e)}else{t(r)}}))})),new Promise(((e,o)=>{setTimeout((()=>o(new Error("timeout"))),t)}))]);if(o){s(o)}else{i(new Error(n.message))}}catch(e){if(l<o){r++;c(l+1)}else{console.log("reget"+r);s("reget"+r)}}};c(0)}));return s}
