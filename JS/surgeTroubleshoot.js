@@ -1,4 +1,4 @@
-// @xream @key 2024-01-11 22:25:38
+// @xream @key 2024-01-11 22:26:05
 const isPanel = typeof $input != "undefined";
 const stname = "SurgeTool_Rule_NUM";
 let result = {},
@@ -94,7 +94,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
         DOMAIN_SET_NUM++;
         const rdurl = e.split(",")[1];
         if (/^https?:\/\/script\.hub\/file\/_start_\//.test(rdurl)) {
-          console.log("[DOMAIN-SET_GET_Script-Hub]: " + rsUrrdurll);
+          console.log("[DOMAIN-SET_GET_Script-Hub]: " + rdurl);
           try {
             SurgeTool = JSON.parse($persistentStore.read(stname));
             if (!SurgeTool && SurgeTool?.length > 10000) {
