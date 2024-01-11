@@ -1,4 +1,4 @@
-// @xream @key 2024-01-11 19:25:38
+// @xream @key 2024-01-11 19:50:46
 const isPanel = typeof $input != "undefined";
 let result = {},
   icons = "heart.text.square",
@@ -126,6 +126,12 @@ if (typeof $argument !== "undefined" && $argument !== "") {
       DOMAIN_KEYWORD: DOMAIN_KEYWORD_NUM,
     };
 
+    Object.entries(AROBJ).forEach(
+      ([k, v]) => v != 0 && console.log(`${k}: ${v}`)
+    );
+    Object.entries(RULELIST).forEach(
+      ([k, v]) => v != 0 && console.log(`${k}: ${v}`)
+    );
     if (isPanel) {
       let text = "";
       if (type) {
