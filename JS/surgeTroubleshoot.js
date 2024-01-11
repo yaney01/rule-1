@@ -166,7 +166,7 @@ let result = {};
                 )
                 .join("\n")
             : "❌ empty"
-        }</pre></code><h3 style="margin-bottom: -4px; padding-top:6px;">Rule(${ALL_NUM} )</h3><pre><code>${Object.entries(AROBJ)
+        }</pre></code><h3 style="margin-bottom: -4px; padding-top:6px;">Rule(${ALL_NUM})</h3><pre><code>${Object.entries(AROBJ)
           .map(([k, v]) => (v !== 0 ? `<i>${k}: ${v}\n</i>` : ""))
           .join(
             ""
