@@ -81,7 +81,6 @@ if (typeof $argument !== "undefined" && $argument !== "") {
         }
       }
     }
-    console.log(AllRule);
     AllRule.forEach((e) => {
       ALL_NUM++;
       /^DOMAIN,/.test(e) && DOMAIN_NUM++;
