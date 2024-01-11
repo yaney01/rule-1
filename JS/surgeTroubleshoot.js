@@ -1,4 +1,4 @@
-// @xream @key 2024-01-11 18:32:14
+// @xream @key 2024-01-11 19:25:38
 const isPanel = typeof $input != "undefined";
 let result = {},
   icons = "heart.text.square",
