@@ -42,7 +42,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     // prettier-ignore
     let DOMAIN_NUM = 0,DOMAIN_SUFFIX_NUM = 0, DOMAIN_KEYWORD_NUM = 0, IP_CIDR_NUM = 0, IP_CIDR6_NUM = 0, IP_ASN_NUM = 0, OR_NUM = 0, AND_NUM = 0, NOT_NUM = 0, DEST_PORT_NUM = 0, IN_PORT_NUM = 0, SRC_IP_NUM = 0, PROTOCOL_NUM = 0, PROCESS_NAME_NUM = 0, DEVICE_NAME_NUM = 0, USER_AGENT_NUM = 0, URL_REGEX_NUM = 0, SUBNET_NUM = 0, DOMAIN_SET_NUM = 0, RULE_SET_NUM = 0, ALL_NUM = 0;
     const scRule = profile
-      .match(/\[Rule\]([\s\S]+?)\[/gm)[0]
+      .match(/\[Rule\]([\s\S]+?)^\[/gm)[0]
       .split("\n")
       .filter((i) => /^\s?(?![#;\s[//])./.test(i));
     AllRule = AllRule.concat(scRule);
