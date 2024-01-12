@@ -1,5 +1,5 @@
 // @xream @key
-const UPDATA = "2024-01-13 01:41:56";
+const UPDATA = "2024-01-13 02:36:04";
 const isPanel = typeof $input != "undefined",
   stname = "SurgeTool_Rule_NUM",
   STversion = "V2.0",
@@ -169,23 +169,32 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     } // get
 
     try {
-      Header_RewriteNUM = profile
-        .match(/^\[Header Rewrite\]([\s\S]+?)^\[/gm)[0]
-        .split("\n")
-        .filter((i) => /^\s?(?![#;\s[//])./.test(i)).length;
-      Map_LocalNUM = profile
-        .match(/^\[Map Local\]([\s\S]+?)^\[/gm)[0]
-        .split("\n")
-        .filter((i) => /^\s?(?![#;\s[//])./.test(i)).length;
-      URL_RewriteNUM = profile
-        .match(/^\[URL Rewrite\]([\s\S]+?)^\[/gm)[0]
-        .split("\n")
-        .filter((i) => /^\s?(?![#;\s[//])./.test(i)).length;
-      ScriptNUM = profile
-        .match(/^\[Script\]([\s\S]+?)^\[/gm)[0]
-        .split("\n")
-        .filter((i) => /^\s?(?![#;\s[//])./.test(i)).length;
-    } catch (error) {}
+      const H = profile.match(/^\[Header Rewrite\]([\s\S]+?)^\[/gm);
+      Header_RewriteNUM =
+        H?.length > 0
+          ? H[0].split("\n").filter((i) => /^\s?(?![#;\s[//])./.test(i)).length
+          : 0;
+
+      const M = profile.match(/^\[Map Local\]([\s\S]+?)^\[/gm);
+      Map_LocalNUM =
+        M?.length > 0
+          ? M[0].split("\n").filter((i) => /^\s?(?![#;\s[//])./.test(i)).length
+          : 0;
+
+      const U = profile.match(/^\[URL Rewrite\]([\s\S]+?)^\[/gm);
+      URL_RewriteNUM =
+        U?.length > 0
+          ? U[0].split("\n").filter((i) => /^\s?(?![#;\s[//])./.test(i)).length
+          : 0;
+
+      const S = profile.match(/^\[Script\]([\s\S]+?)^\[/gm);
+      ScriptNUM =
+        S?.length > 0
+          ? S[0].split("\n").filter((i) => /^\s?(?![#;\s[//])./.test(i)).length
+          : 0;
+    } catch (e) {
+      console.log(e.message);
+    }
 
     RewriteNUM = Header_RewriteNUM + Map_LocalNUM + URL_RewriteNUM;
     RewriteNUM = RewriteNUM > 0 ? `: ${RewriteNUM}` : "";
