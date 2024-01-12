@@ -1,5 +1,5 @@
 // @xream @key
-const UPDATA = "2024-01-13 01:41:56";
+const UPDATA = "2024-01-13 03:38:47";
 const isPanel = typeof $input != "undefined",
   stname = "SurgeTool_Rule_NUM",
   STversion = "V2.33",
