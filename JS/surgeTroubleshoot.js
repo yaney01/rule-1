@@ -237,13 +237,13 @@ if (typeof $argument !== "undefined" && $argument !== "") {
       let text = "";
       if (type) {
         Object.entries(AROBJ).forEach(([k, v]) => {
-          v != 0 && (text += `${k}: \x20\x20${v}\t\n`);
+          v != 0 && (text += `${k}: \x20\x20${v}\n`);
         });
       }
       if (list) {
         console.log("list");
         Object.entries(RULELIST).forEach(([k, v]) => {
-          v != 0 && (text += `${k}: \x20\x20${v}\t\n`);
+          v != 0 && (text += `${k}: \x20\x20${v}\n`);
         });
       }
       result = {
