@@ -37,9 +37,9 @@ DOMAIN-SUFFIX,163jiasu.com,REJECT
 ^https?:\/\/(ipv4|interface3?)\.music\.163.com\/e?api\/ad - reject-dict
 
 [Script]
-# homepage\/block\/page| 主页banner ad需要设置歌单模式, 并且显示的不能过多否则爆内存, 外面没加这个正则, 脚本里处理过了
-# 热推、有话想说、分享一下、歌曲下的祝福等小提示去除 ｜ 评论区 乐迷、星评等级等 图标去除 | homepage banner ad
-http-response ^https?:\/\/(ipv4|interface3?)\.music\.163\.com\/e?api\/(batch|v\d\/resource\/comment\/floor\/get|link\/position\/show\/resource|music-vip-membership\/client\/vip\/info|user\/follow\/users\/mixed\/get) script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/wyresParam_nolog.js, requires-body=true, binary-body-mode=true, timeout=20, tag=NeteaseRes
+# 旧ui homepage\/block\/page| 主页banner ad需要设置歌单模式, 并且显示的不能过多否则爆内存, 外面没加这个正则, 脚本里处理过了
+# 热推、有话想说、分享一下、歌曲下的祝福等小提示去除 ｜ 评论区 乐迷、星评等级等 图标去除 | homepage banner ad | 2024 newui首页 问候语/ad横幅
+http-response ^https?:\/\/(ipv4|interface3?)\.music\.163\.com\/e?api\/(batch|v\d\/resource\/comment\/floor\/get|link\/position\/show\/resource|link\/page\/rcmd\/resource\/show|music-vip-membership\/client\/vip\/info|user\/follow\/users\/mixed\/get) script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/wyresParam_nolog.js, requires-body=true, binary-body-mode=true, timeout=20, tag=NeteaseRes
 
 # 首页搜索框关键词 返回加密后的空值,不会因dict而变成默认值
 http-request ^https?:\/\/interface3?\.music\.163.com\/w?e?api\/search\/default script-path=https://raw.githubusercontent.com/Keywos/rule/main/loon/script-hub-wy-keyword.js, timeout=60, tag=keyword
