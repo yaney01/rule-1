@@ -5,7 +5,7 @@
 #!homepage = https://github.com/Keywos
 #!icon = https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/Netease.png
 #https://raw.githubusercontent.com/LimeAroma/Loon/main/Plugin/NeteaseCloudMusic_remove_ads.plugin
-#!date = 2023-12-27 02:23:25
+#!date = 2024-01-12 12:58:55
 
 [MITM]
 hostname = interface.music.163.com, interface3.music.163.com, httpdns.n.netease.com, interface.music.163.com.163jiasu.com, interface3.music.163.com.163jiasu.com, ipv4.music.163.com
