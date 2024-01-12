@@ -1,5 +1,5 @@
 // @xream @key
-const UPDATA = "2024-01-13 02:59:04"
+const UPDATA = "2024-01-13 01:41:56";
 const isPanel = typeof $input != "undefined",
   stname = "SurgeTool_Rule_NUM",
   STversion = "V2.33",
@@ -35,12 +35,10 @@ if (typeof $argument !== "undefined" && $argument !== "") {
           httpAPI("/v1/features/scripting", "GET"),
         ]);
     }
-
     const { profile } = await httpAPI(
       "/v1/profiles/current?sensitive=0",
       "GET"
     );
-
     let hostname =
       profile.match(/\nhostname\s*=\s*(.*?)\n/)?.[1].split(/\s*,\s*/) || [];
     const hostname_disabled =
@@ -76,7 +74,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
               } else {
                 const cacheNum = SurgeTool[rsUrl];
                 if (typeof cacheNum == "number" && cacheNum > 0) {
-                  console.log("读取ScriptHub 缓存" + cacheNum);
+                  !nolog && console.log("读取ScriptHub 缓存" + cacheNum);
                   ALL_NUM += cacheNum;
                   const uname = rsUrl.split("/").pop().replace(/\?.+/, "");
                   RULELIST[uname] = cacheNum;
@@ -90,7 +88,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
               $persistentStore.write(JSON.stringify({}), stname);
             }
           } else if (/http/.test(rsUrl)) {
-            console.log("[RULE-SET_GET]: " + rsUrl);
+            !nolog && console.log("[RULE-SET_GET]: " + rsUrl);
             try {
               const ruleSetRaw = (await tKey(rsUrl))
                 .split("\n")
@@ -108,7 +106,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
           DOMAIN_SET_NUM++;
           const rdurl = e.split(",")[1];
           if (/^https?:\/\/script\.hub\/file\/_start_\//.test(rdurl)) {
-            console.log("[DOMAIN-SET_GET_Script-Hub]: " + rdurl);
+            !nolog && console.log("[DOMAIN-SET_GET_Script-Hub]: " + rdurl);
             try {
               SurgeTool = JSON.parse($persistentStore.read(stname));
               if (!SurgeTool && SurgeTool?.length > 10000) {
@@ -116,7 +114,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
               } else {
                 const cacheNum = SurgeTool[rdurl];
                 if (typeof cacheNum == "number" && cacheNum > 0) {
-                  console.log("读取ScriptHub 缓存" + cacheNum);
+                  !nolog && console.log("读取ScriptHub 缓存" + cacheNum);
                   ALL_NUM += cacheNum;
                   const uname = rdurl.split("/").pop().replace(/\?.+/, "");
                   RULELIST[uname] = cacheNum;
@@ -130,7 +128,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
               $persistentStore.write(JSON.stringify({}), stname);
             }
           } else if (/http/.test(rdurl)) {
-            console.log("[DOMAIN-SET_GET]: " + rdurl);
+            !nolog && console.log("[DOMAIN-SET_GET]: " + rdurl);
             try {
               const DOMAIN_SET_RAW_BODY = (await tKey(rdurl))
                 .split("\n")
