@@ -52,7 +52,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
       RULELIST_URL = {},
       SurgeTool = {};
     // prettier-ignore
-    let DOMAIN_NUM = 0,DOMAIN_SUFFIX_NUM = 0, DOMAIN_KEYWORD_NUM = 0, IP_CIDR_NUM = 0, IP_CIDR6_NUM = 0, IP_ASN_NUM = 0, OR_NUM = 0, AND_NUM = 0, NOT_NUM = 0, DEST_PORT_NUM = 0, IN_PORT_NUM = 0, SRC_IP_NUM = 0, PROTOCOL_NUM = 0, PROCESS_NAME_NUM = 0, DEVICE_NAME_NUM = 0, USER_AGENT_NUM = 0, URL_REGEX_NUM = 0, SUBNET_NUM = 0, DOMAIN_SET_NUM = 0, RULE_SET_NUM = 0, ALL_NUM = 0, ScriptNUM = 0,URL_RewriteNUM=0,Map_LocalNUM=0,Header_RewriteNUM=0,RewriteNUM=0,hostnameNUM=0;
+    let DOMAIN_NUM=0,DOMAIN_SUFFIX_NUM=0,DOMAIN_KEYWORD_NUM=0,IP_CIDR_NUM=0,IP_CIDR6_NUM=0,IP_ASN_NUM=0,OR_NUM=0,AND_NUM=0,NOT_NUM=0,DEST_PORT_NUM=0,IN_PORT_NUM=0,SRC_IP_NUM=0,PROTOCOL_NUM=0,PROCESS_NAME_NUM=0,DEVICE_NAME_NUM=0,USER_AGENT_NUM=0,URL_REGEX_NUM=0,SUBNET_NUM=0,DOMAIN_SET_NUM=0,RULE_SET_NUM=0,ALL_NUM=0,ScriptNUM=0,URL_RewriteNUM=0,Map_LocalNUM=0,Header_RewriteNUM=0,RewriteNUM=0,hostnameNUM=0;
 
     if (isFetch || isPanel) {
       const scRule = profile
@@ -174,25 +174,21 @@ if (typeof $argument !== "undefined" && $argument !== "") {
           .match(/^\[Header Rewrite\]([\s\S]+?)^\[/gm)?.[0]
           .split("\n")
           .filter((i) => /^\s?(?![#;\s[//])./.test(i)).length || 0;
-
       Map_LocalNUM =
         profile
           .match(/^\[Map Local\]([\s\S]+?)^\[/gm)?.[0]
           .split("\n")
           .filter((i) => /^\s?(?![#;\s[//])./.test(i)).length || 0;
-
       URL_RewriteNUM =
         profile
           .match(/^\[URL Rewrite\]([\s\S]+?)^\[/gm)?.[0]
           .split("\n")
           .filter((i) => /^\s?(?![#;\s[//])./.test(i)).length || 0;
-
       ScriptNUM =
         profile
           .match(/^\[Script\]([\s\S]+?)^\[/gm)?.[0]
           .split("\n")
           .filter((i) => /^\s?(?![#;\s[//])./.test(i)).length || 0;
-
       ScriptNUM =
         profile
           .match(/^\[Script\]([\s\S]+?)^\[/gm)?.[0]
@@ -206,6 +202,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     RewriteNUM = RewriteNUM > 0 ? `: ${RewriteNUM}` : "";
     ScriptNUM = ScriptNUM > 0 ? `: ${ScriptNUM}` : "";
     hostnameNUM = hostname.length > 0 ? `: ${hostname.length}` : "";
+
     const AROBJ = {
       OR: OR_NUM,
       AND: AND_NUM,
