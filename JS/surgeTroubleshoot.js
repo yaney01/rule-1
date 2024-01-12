@@ -5,10 +5,7 @@ const isPanel = typeof $input != "undefined",
   STversion = "V2.33",
   nowt = Date.now();
 let url = typeof $request !== "undefined" && $request.url ? $request.url : "0",
-  isFetch = /(trouble\.shoot|surge\.tool)\/getkey/.test(url),
-  mitm = false,
-  rewrite = false,
-  scripting = false;
+  isFetch = /(trouble\.shoot|surge\.tool)\/getkey/.test(url);
 
 let result = {},
   icons = "heart.text.square",
@@ -27,18 +24,17 @@ if (typeof $argument !== "undefined" && $argument !== "") {
 
 !(async () => {
   try {
-    if (!isFetch || isPanel) {
-      [{ enabled: mitm }, { enabled: rewrite }, { enabled: scripting }] =
-        await Promise.all([
-          httpAPI("/v1/features/mitm", "GET"),
-          httpAPI("/v1/features/rewrite", "GET"),
-          httpAPI("/v1/features/scripting", "GET"),
-        ]);
-    }
-    const { profile } = await httpAPI(
-      "/v1/profiles/current?sensitive=0",
-      "GET"
-    );
+    const [
+      { enabled: mitm },
+      { enabled: rewrite },
+      { enabled: scripting },
+      { profile },
+    ] = await Promise.all([
+      httpAPI("/v1/features/mitm", "GET"),
+      httpAPI("/v1/features/rewrite", "GET"),
+      httpAPI("/v1/features/scripting", "GET"),
+      httpAPI("/v1/profiles/current?sensitive=0", "GET"),
+    ]);
     let hostname =
       profile.match(/\nhostname\s*=\s*(.*?)\n/)?.[1].split(/\s*,\s*/) || [];
     const hostname_disabled =
