@@ -1,5 +1,5 @@
 // @xream @key
-const UPDATA = "2024-01-13 03:38:47";
+const UPDATA = "2024-01-13 14:38:21";
 const isPanel = typeof $input != "undefined",
   stname = "SurgeTool_Rule_NUM",
   STversion = "V2.33",
@@ -46,18 +46,30 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     let AllRule = [],
       RULELIST = {},
       RULELIST_URL = {},
-      SurgeTool = {};
+      SurgeTool = {},
+      LGLIST = {};
     // prettier-ignore
     let DOMAIN_NUM=0,DOMAIN_SUFFIX_NUM=0,DOMAIN_KEYWORD_NUM=0,IP_CIDR_NUM=0,IP_CIDR6_NUM=0,IP_ASN_NUM=0,OR_NUM=0,AND_NUM=0,NOT_NUM=0,DEST_PORT_NUM=0,IN_PORT_NUM=0,SRC_IP_NUM=0,PROTOCOL_NUM=0,PROCESS_NAME_NUM=0,DEVICE_NAME_NUM=0,USER_AGENT_NUM=0,URL_REGEX_NUM=0,SUBNET_NUM=0,DOMAIN_SET_NUM=0,RULE_SET_NUM=0,ALL_NUM=0,ScriptNUM=0,URL_RewriteNUM=0,Map_LocalNUM=0,Header_RewriteNUM=0,RewriteNUM=0,hostnameNUM=0;
 
-    if (isFetch || isPanel) {
-      const scRule = profile
-        .match(/^\[Rule\]([\s\S]+?)^\[/gm)[0]
-        .split("\n")
-        .filter((i) => /^\s?(?![#;\s[//])./.test(i));
-
+    if (isFetch || isPanel || 1) {
+      const scRuleRaw =
+        profile.match(/^\[Rule\]([\s\S]+?)^\[/gm)?.[0].split("\n") || [];
+      const scRule = scRuleRaw.filter((i) => /^\s?(?![#;\s[//])./.test(i));
+      scRuleRaw.forEach((e) => {
+        if (/^(OR|AND|NOT),/.test(e)) {
+          const LG = e
+            .split(/\s?\(|\)/)
+            .filter((i) => /^\s?(?![,#;\s[//]|AND|OR|NOT)./.test(i));
+          AllRule = AllRule.concat(LG);
+          LG.forEach((k) => {
+            if (/^(DOMAIN|RULE)-SET,/.test(k)) {
+              LGLIST[k.split(",")[1]] = e.split(",")[0];
+            }
+          });
+        }
+      });
       AllRule = AllRule.concat(scRule);
-      for (const e of scRule) {
+      for (const e of AllRule) {
         if (/^RULE-SET,/.test(e)) {
           RULE_SET_NUM++;
           const rsUrl = e.split(",")[1];
@@ -72,7 +84,9 @@ if (typeof $argument !== "undefined" && $argument !== "") {
                 if (typeof cacheNum == "number" && cacheNum > 0) {
                   !nolog && console.log("读取ScriptHub 缓存" + cacheNum);
                   ALL_NUM += cacheNum;
-                  const uname = rsUrl.split("/").pop().replace(/\?.+/, "");
+                  const fname = LGLIST[rsUrl] ? LGLIST[rsUrl] + ": " : "";
+                  const uname =
+                    fname + rsUrl.split("/").pop().replace(/\?.+/, "");
                   RULELIST[uname] = cacheNum;
                   RULELIST_URL[uname] = rsUrl;
                 }
@@ -89,7 +103,8 @@ if (typeof $argument !== "undefined" && $argument !== "") {
               const ruleSetRaw = (await tKey(rsUrl))
                 .split("\n")
                 .filter((i) => /^\s?(?![#;\s[//])./.test(i));
-              const uname = rsUrl.split("/").pop().replace(/\?.+/, "");
+              const fname = LGLIST[rsUrl] ? LGLIST[rsUrl] + ": " : "";
+              const uname = fname + rsUrl.split("/").pop().replace(/\?.+/, "");
               RULELIST[uname] = ruleSetRaw.length;
               RULELIST_URL[uname] = rsUrl;
               AllRule = AllRule.concat(ruleSetRaw);
@@ -112,7 +127,9 @@ if (typeof $argument !== "undefined" && $argument !== "") {
                 if (typeof cacheNum == "number" && cacheNum > 0) {
                   !nolog && console.log("读取ScriptHub 缓存" + cacheNum);
                   ALL_NUM += cacheNum;
-                  const uname = rdurl.split("/").pop().replace(/\?.+/, "");
+                  const fname = LGLIST[rdurl] ? LGLIST[rdurl] + ": " : "";
+                  const uname =
+                    fname + rdurl.split("/").pop().replace(/\?.+/, "");
                   RULELIST[uname] = cacheNum;
                   RULELIST_URL[uname] = rdurl;
                 }
@@ -130,7 +147,8 @@ if (typeof $argument !== "undefined" && $argument !== "") {
                 .split("\n")
                 .filter((i) => /^\s?(?![#;\s[//])./.test(i));
               const l = DOMAIN_SET_RAW_BODY.length;
-              const uname = rdurl.split("/").pop().replace(/\?.+/, "");
+              const fname = LGLIST[rdurl] ? LGLIST[rdurl] + ": " : "";
+              const uname = fname + rdurl.split("/").pop().replace(/\?.+/, "");
               RULELIST[uname] = l;
               RULELIST_URL[uname] = rdurl;
               ALL_NUM += l;
