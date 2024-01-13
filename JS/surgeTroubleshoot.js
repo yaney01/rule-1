@@ -1,5 +1,5 @@
 // @xream @key
-const UPDATA = "2024-01-13 14:49:10";
+const UPDATA = "2024-01-13 01:41:56";
 const isPanel = typeof $input != "undefined",
   stname = "SurgeTool_Rule_NUM",
   STversion = "V2.35",
@@ -238,7 +238,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
           },
           body: JSON.stringify({
             VERSION: STversion,
-            timestamp: nowt,
+            TIMESTAMP: nowt,
             AROBJ: AROBJ,
             RULELIST: RULELIST,
             ALL_NUM: ALL_NUM,
