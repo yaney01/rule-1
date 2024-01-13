@@ -1,8 +1,8 @@
 // @xream @key
-const UPDATA = "2024-01-13 15:26:13";
+const UPDATA = "2024-01-13 15:42:58";
 const isPanel = typeof $input != "undefined",
   stname = "SurgeTool_Rule_NUM",
-  STversion = "V2.37",
+  STversion = "V2.39",
   nowt = Date.now();
 let url = typeof $request !== "undefined" && $request.url ? $request.url : "0",
   isFetch = /(trouble\.shoot|surge\.tool)\/getkey/.test(url);
@@ -278,7 +278,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
             LGLIST: LGLIST,
             LGLISTNC: LGLISTNC,
             UPDATA: UPDATA,
-          }),
+          },null,4),
         },
       });
     } else if (isPanel) {
