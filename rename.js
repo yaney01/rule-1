@@ -33,7 +33,7 @@
  * [blnx]   只保留高倍率
  * [clear]  清理乱名
  * [blpx]   如果用了上面的bl参数,对保留标识后的名称分组排序,如果没用上面的bl参数单独使用blpx则不起任何作用
- * 
+ * [blockquic] blockquic=on 阻止; blockquic=off 不阻止
  */
 
 
