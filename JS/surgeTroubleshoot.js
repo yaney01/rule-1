@@ -1,8 +1,8 @@
 // @xream @key
-const UPDATA = "2024-01-13 01:41:56";
+const UPDATA = "2024-01-13 15:26:13";
 const isPanel = typeof $input != "undefined",
   stname = "SurgeTool_Rule_NUM",
-  STversion = "V2.35",
+  STversion = "V2.36",
   nowt = Date.now();
 let url = typeof $request !== "undefined" && $request.url ? $request.url : "0",
   isFetch = /(trouble\.shoot|surge\.tool)\/getkey/.test(url);
@@ -47,7 +47,8 @@ if (typeof $argument !== "undefined" && $argument !== "") {
       RULELIST = {},
       RULELIST_URL = {},
       SurgeTool = {},
-      LGLIST = {};
+      LGLIST = {},
+      LGLISTNC = {};
     // prettier-ignore
     let DOMAIN_NUM=0,DOMAIN_SUFFIX_NUM=0,DOMAIN_KEYWORD_NUM=0,IP_CIDR_NUM=0,IP_CIDR6_NUM=0,IP_ASN_NUM=0,OR_NUM=0,AND_NUM=0,NOT_NUM=0,DEST_PORT_NUM=0,IN_PORT_NUM=0,SRC_IP_NUM=0,PROTOCOL_NUM=0,PROCESS_NAME_NUM=0,DEVICE_NAME_NUM=0,USER_AGENT_NUM=0,URL_REGEX_NUM=0,SUBNET_NUM=0,DOMAIN_SET_NUM=0,RULE_SET_NUM=0,ALL_NUM=0,ScriptNUM=0,URL_RewriteNUM=0,Map_LocalNUM=0,Header_RewriteNUM=0,RewriteNUM=0,hostnameNUM=0;
 
@@ -59,13 +60,26 @@ if (typeof $argument !== "undefined" && $argument !== "") {
         if (/^(OR|AND|NOT),/.test(e)) {
           const LG = e
             .split(/\s?\(|\)/)
-            .filter((i) => /^\s?(?![,#;\s[//]|AND|OR|NOT)./.test(i));
-          AllRule = AllRule.concat(LG);
-          LG.forEach((k) => {
-            if (/^(DOMAIN|RULE)-SET,/.test(k)) {
-              LGLIST[k.split(",")[1]] = e.split(",")[0];
+            .filter((i) => /^\s?(?![,#;\s[//])./.test(i));
+          if (LG?.length > 0) {
+            const FLG = LG.filter((i) => !/^(AND|OR|NOT)/.test(i));
+            if (FLG?.length > 0) {
+              const leng = LG.length - FLG.length;
+              AllRule = AllRule.concat(FLG);
+              let tf = false;
+              FLG.forEach((k) => {
+                if (/^(DOMAIN|RULE)-SET,/.test(k)) {
+                  const key = k.split(",")[1];
+                  LGLIST[key] = e.split(",")[0];
+                  LGLISTNC[key] = leng;
+                  tf = true;
+                }
+              });
+              if (!tf) {
+                ALL_NUM += leng * FLG.length;
+              }
             }
-          });
+          }
         }
       });
       AllRule = AllRule.concat(scRule);
@@ -83,8 +97,12 @@ if (typeof $argument !== "undefined" && $argument !== "") {
                 const cacheNum = SurgeTool[rsUrl];
                 if (typeof cacheNum == "number" && cacheNum > 0) {
                   !nolog && console.log("读取ScriptHub 缓存" + cacheNum);
-                  ALL_NUM += cacheNum;
                   const fname = LGLIST[rsUrl] ? LGLIST[rsUrl] + ": " : "";
+                  if (LGLISTNC[rsUrl] > 0) {
+                    ALL_NUM += LGLISTNC[rsUrl] * cacheNum;
+                  } else {
+                    ALL_NUM += cacheNum;
+                  }
                   const uname =
                     fname + rsUrl.split("/").pop().replace(/\?.+/, "");
                   RULELIST[uname] = cacheNum;
@@ -105,7 +123,13 @@ if (typeof $argument !== "undefined" && $argument !== "") {
                 .filter((i) => /^\s?(?![#;\s[//])./.test(i));
               const fname = LGLIST[rsUrl] ? LGLIST[rsUrl] + ": " : "";
               const uname = fname + rsUrl.split("/").pop().replace(/\?.+/, "");
-              RULELIST[uname] = ruleSetRaw.length;
+              const ruleSetRawleng = ruleSetRaw.length;
+              if (LGLISTNC[rsUrl] > 0) {
+                ALL_NUM += LGLISTNC[rsUrl] * ruleSetRawleng;
+              } else {
+                ALL_NUM += ruleSetRawleng;
+              }
+              RULELIST[uname] = ruleSetRawleng;
               RULELIST_URL[uname] = rsUrl;
               AllRule = AllRule.concat(ruleSetRaw);
             } catch (e) {
@@ -126,7 +150,11 @@ if (typeof $argument !== "undefined" && $argument !== "") {
                 const cacheNum = SurgeTool[rdurl];
                 if (typeof cacheNum == "number" && cacheNum > 0) {
                   !nolog && console.log("读取ScriptHub 缓存" + cacheNum);
-                  ALL_NUM += cacheNum;
+                  if (LGLISTNC[rdurl] > 0) {
+                    ALL_NUM += LGLISTNC[rdurl] * cacheNum;
+                  } else {
+                    ALL_NUM += cacheNum;
+                  }
                   const fname = LGLIST[rdurl] ? LGLIST[rdurl] + ": " : "";
                   const uname =
                     fname + rdurl.split("/").pop().replace(/\?.+/, "");
@@ -146,12 +174,16 @@ if (typeof $argument !== "undefined" && $argument !== "") {
               const DOMAIN_SET_RAW_BODY = (await tKey(rdurl))
                 .split("\n")
                 .filter((i) => /^\s?(?![#;\s[//])./.test(i));
-              const l = DOMAIN_SET_RAW_BODY.length;
+              const dleng = DOMAIN_SET_RAW_BODY.length;
               const fname = LGLIST[rdurl] ? LGLIST[rdurl] + ": " : "";
               const uname = fname + rdurl.split("/").pop().replace(/\?.+/, "");
-              RULELIST[uname] = l;
+              RULELIST[uname] = dleng;
               RULELIST_URL[uname] = rdurl;
-              ALL_NUM += l;
+              if (LGLISTNC[rdurl] > 0) {
+                ALL_NUM += LGLISTNC[rdurl] * dleng;
+              } else {
+                ALL_NUM += dleng;
+              }
             } catch (e) {
               console.log(e.message);
             }
@@ -243,6 +275,8 @@ if (typeof $argument !== "undefined" && $argument !== "") {
             RULELIST: RULELIST,
             ALL_NUM: ALL_NUM,
             RULELIST_URL: RULELIST_URL,
+            LGLIST: LGLIST,
+            LGLISTNC: LGLISTNC,
             UPDATA: UPDATA,
           }),
         },
