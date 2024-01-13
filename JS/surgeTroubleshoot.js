@@ -2,7 +2,7 @@
 const UPDATA = "2024-01-13 14:38:21";
 const isPanel = typeof $input != "undefined",
   stname = "SurgeTool_Rule_NUM",
-  STversion = "V2.33",
+  STversion = "V2.34",
   nowt = Date.now();
 let url = typeof $request !== "undefined" && $request.url ? $request.url : "0",
   isFetch = /(trouble\.shoot|surge\.tool)\/getkey/.test(url);
