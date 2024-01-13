@@ -2,7 +2,7 @@
 const UPDATA = "2024-01-13 15:26:13";
 const isPanel = typeof $input != "undefined",
   stname = "SurgeTool_Rule_NUM",
-  STversion = "V2.36",
+  STversion = "V2.37",
   nowt = Date.now();
 let url = typeof $request !== "undefined" && $request.url ? $request.url : "0",
   isFetch = /(trouble\.shoot|surge\.tool)\/getkey/.test(url);
@@ -52,7 +52,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     // prettier-ignore
     let DOMAIN_NUM=0,DOMAIN_SUFFIX_NUM=0,DOMAIN_KEYWORD_NUM=0,IP_CIDR_NUM=0,IP_CIDR6_NUM=0,IP_ASN_NUM=0,OR_NUM=0,AND_NUM=0,NOT_NUM=0,DEST_PORT_NUM=0,IN_PORT_NUM=0,SRC_IP_NUM=0,PROTOCOL_NUM=0,PROCESS_NAME_NUM=0,DEVICE_NAME_NUM=0,USER_AGENT_NUM=0,URL_REGEX_NUM=0,SUBNET_NUM=0,DOMAIN_SET_NUM=0,RULE_SET_NUM=0,ALL_NUM=0,ScriptNUM=0,URL_RewriteNUM=0,Map_LocalNUM=0,Header_RewriteNUM=0,RewriteNUM=0,hostnameNUM=0;
 
-    if (isFetch || isPanel) {
+    if (isFetch || isPanel || 1) {
       const scRuleRaw =
         profile.match(/^\[Rule\]([\s\S]+?)^\[/gm)?.[0].split("\n") || [];
       const scRule = scRuleRaw.filter((i) => /^\s?(?![#;\s[//])./.test(i));
@@ -100,9 +100,10 @@ if (typeof $argument !== "undefined" && $argument !== "") {
                   const fname = LGLIST[rsUrl] ? LGLIST[rsUrl] + ": " : "";
                   if (LGLISTNC[rsUrl] > 0) {
                     ALL_NUM += LGLISTNC[rsUrl] * cacheNum;
-                  } else {
-                    ALL_NUM += cacheNum;
                   }
+                  // else {
+                  //   ALL_NUM += cacheNum;
+                  // }
                   const uname =
                     fname + rsUrl.split("/").pop().replace(/\?.+/, "");
                   RULELIST[uname] = cacheNum;
@@ -126,9 +127,10 @@ if (typeof $argument !== "undefined" && $argument !== "") {
               const ruleSetRawleng = ruleSetRaw.length;
               if (LGLISTNC[rsUrl] > 0) {
                 ALL_NUM += LGLISTNC[rsUrl] * ruleSetRawleng;
-              } else {
-                ALL_NUM += ruleSetRawleng;
               }
+              //  else {
+              //   ALL_NUM += ruleSetRawleng;
+              // }
               RULELIST[uname] = ruleSetRawleng;
               RULELIST_URL[uname] = rsUrl;
               AllRule = AllRule.concat(ruleSetRaw);
@@ -190,7 +192,6 @@ if (typeof $argument !== "undefined" && $argument !== "") {
           }
         }
       }
-
       AllRule.forEach((e) => {
         ALL_NUM++;
         /^DOMAIN,/.test(e) && DOMAIN_NUM++;
@@ -213,7 +214,6 @@ if (typeof $argument !== "undefined" && $argument !== "") {
         /^SUBNET,/.test(e) && SUBNET_NUM++;
       });
     } // get
-
     try {
       Header_RewriteNUM =
         profile
