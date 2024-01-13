@@ -1,5 +1,5 @@
 /**
- * 更新日期：2023-09-30 00:35:25
+ * 更新日期：2024-01-13 17:24:40
  * 用法：Sub-Store 脚本操作添加
  * rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数使用"&"连接，参考上述地址为例使用参数。
  * 
@@ -52,11 +52,13 @@ debug = inArg.debug || false,
 clear = inArg.clear || false,
 addflag = inArg.flag || false;
 
+
 const
 FGF = inArg.fgf == undefined ? ' ' : decodeURI(inArg.fgf),
 XHFGF = inArg.sn == undefined ? ' ' : decodeURI(inArg.sn),
 FNAME = inArg.name == undefined ? '' : decodeURI(inArg.name),
 BLKEY = inArg.blkey == undefined ? '' : decodeURI(inArg.blkey),
+blockquic = inArg.blockquic == undefined ? '': decodeURI(inArg.blockquic),
 nameMap = { cn: 'cn', zh: 'cn', us: 'us', en: 'us', quan: 'quan', gq: 'gq', flag: 'gq'}, 
 inname = nameMap[inArg.in] || '', 
 outputName = nameMap[inArg.out] || '';
@@ -144,14 +146,23 @@ function operator(pro) {
         });
     };
     
-    // 预处理 防止预判或遗漏
+    
     pro.forEach((e) => {
+        // 预处理 防止预判或遗漏
         Object.keys(rurekey).forEach((ikey) => {
         if (rurekey[ikey].test(e.name)) {
             e.name = e.name.replace(rurekey[ikey], ikey);
         }
         });
 
+        if (blockquic =='on') {
+            e['block-quic'] ='on';
+        } else if(blockquic =='off'){
+            e['block-quic'] = 'off';
+        } else {
+            delete e['block-quic'];
+        }
+        
         // 自定义
         if (BLKEY) {
             const BLKEYS = BLKEY.split('+');
