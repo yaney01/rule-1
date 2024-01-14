@@ -17,7 +17,7 @@ DOMAIN,iadmatapk.nosdn.127.net,REJECT
 DOMAIN,httpdns.n.netease.com,REJECT
 DOMAIN-SUFFIX,163jiasu.com,REJECT
 
-[URL Rewrite]
+[Rewrite]
 ^https?:\/\/httpdns.n\.netease\.com - reject
 ^https?:\/\/httpdns\.music\.163\.com - reject
 ^https?:\/\/(ipv4|interface3?)\.music\.163.com\/e?api\/ad - reject-dict
