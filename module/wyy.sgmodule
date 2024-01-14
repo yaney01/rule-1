@@ -4,14 +4,31 @@
 #!date=2024-01-12 12:57:19
 #!icon = https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/Netease.png
 #Thank RuCu6, kokoryh 
-#[Beta] https://github.com/Keywos/rule/raw/main/module/wy.sgmodule
 
 [Script]
-# 旧ui homepage\/block\/page| 主页banner ad需要设置歌单模式, 并且显示的不能过多否则爆内存, 默认注释
-# NetHomepage = type=http-response,pattern=^https?:\/\/(ipv4|interface3?)\.music\.163\.com\/e?api\/homepage\/block\/page,requires-body=1,max-size=0,timeout=20,binary-body-mode=1,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/wyresParam_nolog.js
+# mian | 热推、有话想说、分享一下、歌曲下的祝福等小提示去除 ｜ 评论区 乐迷、星评等级 关注 等 图标去除
+ne_mian = type=http-response,pattern=^https?:\/\/(ipv4|interface3?)\.music\.163\.com\/e?api\/(batch|eapi\/v\d\/resource\/comment\/floor\/get),requires-body=1,max-size=0,timeout=20,binary-body-mode=1,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/wyresParam_nolog.js
 
-# 热推、有话想说、分享一下、歌曲下的祝福等小提示去除 ｜ 评论区 乐迷、星评等级等 图标去除 | homepage banner ad | 展示关注列表里未关注你的人 | 2024 newui首页 问候语/ad横幅
-NeteaseRes = type=http-response,pattern=^https?:\/\/(ipv4|interface3?)\.music\.163\.com\/e?api\/(batch|v\d\/resource\/comment\/floor\/get|link\/position\/show\/resource|link\/page\/(discovery|rcmd)\/(resource\/show|block\/resource\/multi\/refresh)|music-vip-membership\/client\/vip\/info|user\/follow\/users\/mixed\/get),requires-body=1,max-size=0,timeout=20,binary-body-mode=1,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/wyresParam_nolog.js
+# 伪vip
+ne_vip = type=http-response,pattern=^https?:\/\/(ipv4|interface3?)\.music\.163\.com\/e?api\/(music-vip-membership\/client\/vip\/info|vipauth\/app\/auth\/recycle|vipnewcenter\/app\/resource\/newaccountpage),requires-body=1,max-size=0,timeout=20,binary-body-mode=1,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/wyresParam_nolog.js
+
+# tab
+ne_tab = type=http-response,pattern=^https?:\/\/(ipv4|interface3?)\.music\.163\.com\/e?api\/link\/home\/framework\/tab,requires-body=1,max-size=0,timeout=20,binary-body-mode=1,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/wyresParam_nolog.js
+
+# 推荐 | home | 主页
+ne_home = type=http-response,pattern=^https?:\/\/(ipv4|interface3?)\.music\.163\.com\/e?api\/(homepage\/block\/page|link\/page\/rcmd\/(resource\/show|block\/resource\/multi\/refresh)),requires-body=1,max-size=0,timeout=20,binary-body-mode=1,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/wyresParam_nolog.js
+
+# 发现
+ne_fx = type=http-response,pattern=^https?:\/\/(ipv4|interface3?)\.music\.163\.com\/e?api\/link\/page\/discovery\/resource\/show,requires-body=1,max-size=0,timeout=20,binary-body-mode=1,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/wyresParam_nolog.js
+
+# effect
+ne_effect = type=http-response,pattern=^https?:\/\/(ipv4|interface3?)\.music\.163\.com\/e?api\/song\/play\/more\/list\/v\d,requires-body=1,max-size=0,timeout=20,binary-body-mode=1,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/wyresParam_nolog.js
+
+# 我的 MyPageBar ad
+ne_mybarad = type=http-response,pattern=^https?:\/\/(ipv4|interface3?)\.music\.163\.com\/e?api\/link\/position\/show\/resource,requires-body=1,max-size=0,timeout=20,binary-body-mode=1,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/wyresParam_nolog.js
+
+# 显示未关注你
+ne_foll = type=http-response,pattern=^https?:\/\/(ipv4|interface3?)\.music\.163\.com\/e?api\/user\/follow\/users\/mixed\/get,requires-body=1,max-size=0,timeout=20,binary-body-mode=1,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/wyresParam_nolog.js
 
 
 [URL Rewrite]
@@ -23,35 +40,22 @@ DOMAIN,iadmusicmat.music.126.net,REJECT-NO-DROP
 DOMAIN,iadmat.nosdn.127.net,REJECT-NO-DROP
 DOMAIN,iadmatapk.nosdn.127.net,REJECT-NO-DROP
 DOMAIN,httpdns.n.netease.com,REJECT-NO-DROP
-DOMAIN,gdt.qq.com,REJECT-NO-DROP
 DOMAIN-SUFFIX,163jiasu.com,REJECT-NO-DROP
 
 [Map Local]
 ^https?:\/\/(ipv4|interface3?)\.music\.163.com\/e?api\/ad data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/eapiad.json"
 
-# 首页搜索框关键词 返回加密后的空值,不会因dict而变成默认值
-^https?:\/\/interface3?\.music\.163.com\/w?e?api\/search\/default data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/keyword.json"
-
-^http:\/\/iadmusicmatvideo\.music\.126\.net data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank.mp4"
-
-^https?:\/\/interface3?\.music\.163\.com\/eapi\/(community\/friends\/fans-group\/artist\/group\/get|user\/sub\/artist|music\/songshare\/text\/recommend\/get|mine\/applet\/redpoint|resniche\/position\/play\/new\/get) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
-
 # 今日运势 商城 Beat专区 音乐收藏家 | type:ACTIVITY | 低至5.2折
-^https?:\/\/interface3\.music\.163\.com\/w?e?api\/(side-bar\/mini-program\/music-service\/account|content\/activity\/music|delivery\/(batch-deliver|deliver)|moment\/tab\/info\/get|vipnewcenter\/app\/resource\/newaccountpage|yunbei\/account\/entrance\/get) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
-# 侧边黑胶提示 vipnewcenter\/app\/resource\/newaccountpage    
-# 评论区瞬间 moment\/tab\/info\/get
- 
-# (评论区｜评论右上角热评馆｜播放页评论)｜回复
-^https?:\/\/interface3?\.music\.163.com\/eapi\/(comment\/(feed\/inserted|hotcomment\/collect|tips\/v2\/get)|v\d\/content\/exposure\/comment\/banner) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
+^https?:\/\/interface3?\.music\.163\.com\/w?e?api\/(side-bar\/mini-program\/music-service\/account|content\/activity\/music|delivery\/(batch-deliver|deliver)|moment\/tab\/info\/get|yunbei\/account\/entrance\/get) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
 
-# 播放页live或直播｜(首页免或vip图标｜小提示)
-^https?:\/\/interface3?\.music\.163.com\/eapi\/(mlivestream\/entrance\/playpage|link\/(position\/show\/strategy|scene\/show)) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
+# 播放页歌名下方∶乐迷团｜关注｜播放页提示｜音乐应用红点｜播放提示?
+^https?:\/\/interface3?\.music\.163\.com\/eapi\/(resource\/comments?\/musiciansaid|community\/friends\/fans-group\/artist\/group\/get|user\/sub\/artist|music\/songshare\/text\/recommend\/get|mine\/applet\/redpoint|resniche\/position\/play\/new\/get) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
 
-# 黑胶弹窗｜会员试用
-^https?:\/\/interface3?\.music\.163.com\/eapi\/(vipcenter\/tspopup\/get|zone\/songplay\/entry\/get) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
+# 搜索词
+^https?:\/\/interface3?\.music\.163.com\/w?e?api\/search\/default data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/keyword.json"
 
 # 搜索页热搜卡片｜猜你喜欢｜我的应用下方提醒
 ^https?:\/\/interface3?\.music\.163.com\/w?e?api\/(search\/(chart|rcmd\/keyword|specialkeyword)|resource-exposure\/|activity\/bonus\/playpage\/time\/query) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
 
 [MITM]
-hostname = %APPEND% interface.music.163.com, interface3.music.163.com, httpdns.n.netease.com, interface.music.163.com.163jiasu.com, interface3.music.163.com.163jiasu.com, ipv4.music.163.com
+hostname = %APPEND% interface.music.163.com, interface3.music.163.com, httpdns.n.netease.com, ipv4.music.163.com
