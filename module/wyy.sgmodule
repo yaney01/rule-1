@@ -56,6 +56,7 @@ DOMAIN-SUFFIX,163jiasu.com,REJECT-NO-DROP
 
 # 搜索页热搜卡片｜猜你喜欢｜我的应用下方提醒
 ^https?:\/\/interface3?\.music\.163.com\/w?e?api\/(search\/(chart|rcmd\/keyword|specialkeyword)|resource-exposure\/|activity\/bonus\/playpage\/time\/query) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
+^https?:\/\/interface3?\.music\.163.com\/eapi\/(mlivestream\/entrance\/playpage|link\/(position\/show\/strategy|scene\/show)|ios\/version) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/blank_dict.json"
 
 [MITM]
 hostname = %APPEND% interface.music.163.com, interface3.music.163.com, httpdns.n.netease.com, ipv4.music.163.com
