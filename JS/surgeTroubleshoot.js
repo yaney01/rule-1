@@ -24,27 +24,6 @@ if (typeof $argument !== "undefined" && $argument !== "") {
 
 !(async () => {
   try {
-    if (/(trouble\.shoot|surge\.tool|st\.com)\/v/.test(url)) {
-      $done({
-        response: {
-          status: 200,
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-            "Access-Control-Allow-Origin": "*",
-          },
-          body: JSON.stringify(
-            {
-              VERSION: STversion,
-              TIMESTAMP: nowt,
-              UPDATA: UPDATA,
-            },
-            null,
-            4
-          ),
-        },
-      });
-      return;
-    }
     const [
       { enabled: mitm },
       { enabled: rewrite },
