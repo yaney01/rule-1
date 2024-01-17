@@ -281,7 +281,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     ScriptNUM = ScriptNUM > 0 ? `: ${ScriptNUM}` : "";
     hostnameNUM = hostname.length > 0 ? `: ${hostname.length}` : "";
     // prettier-ignore
-    const AROBJ = { ALL:ALL_NUM,OR:OR_NUM, AND:AND_NUM, NOT:NOT_NUM, SRC_IP:SRC_IP_NUM, IP_ASN:IP_ASN_NUM, DOMAIN:DOMAIN_NUM, SUBNET:SUBNET_NUM, IN_PORT:IN_PORT_NUM, IP_CIDR:IP_CIDR_NUM, RULE_SET:RULE_SET_NUM, IP_CIDR6:IP_CIDR6_NUM, PROTOCOL:PROTOCOL_NUM, DEST_PORT:DEST_PORT_NUM, URL_REGEX:URL_REGEX_NUM, DOMAIN_SET:DOMAIN_SET_NUM, USER_AGENT:USER_AGENT_NUM, DEVICE_NAME:DEVICE_NAME_NUM, PROCESS_NAME:PROCESS_NAME_NUM, DOMAIN_SUFFIX:DOMAIN_SUFFIX_NUM, DOMAIN_KEYWORD:DOMAIN_KEYWORD_NUM, };
+    const AROBJ = { OR:OR_NUM, AND:AND_NUM, NOT:NOT_NUM, SRC_IP:SRC_IP_NUM, IP_ASN:IP_ASN_NUM, DOMAIN:DOMAIN_NUM, SUBNET:SUBNET_NUM, IN_PORT:IN_PORT_NUM, IP_CIDR:IP_CIDR_NUM, RULE_SET:RULE_SET_NUM, IP_CIDR6:IP_CIDR6_NUM, PROTOCOL:PROTOCOL_NUM, DEST_PORT:DEST_PORT_NUM, URL_REGEX:URL_REGEX_NUM, DOMAIN_SET:DOMAIN_SET_NUM, USER_AGENT:USER_AGENT_NUM, DEVICE_NAME:DEVICE_NAME_NUM, PROCESS_NAME:PROCESS_NAME_NUM, DOMAIN_SUFFIX:DOMAIN_SUFFIX_NUM, DOMAIN_KEYWORD:DOMAIN_KEYWORD_NUM, };
 
     if (!nolog) {
       Object.entries(AROBJ).forEach(
@@ -291,7 +291,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
         ([k, v]) => v != 0 && console.log(`${v.n}: ${v.l}`)
       );
     }
- 
+
     if (isFetch) {
       $done({
         response: {
@@ -307,9 +307,9 @@ if (typeof $argument !== "undefined" && $argument !== "") {
               HOSTNAMENUM: hostnameNUM,
               SCRIPTNUM: ScriptNUM,
               REWRITENUM: RewriteNUM,
-              RE:rewrite,
-              MI:mitm,
-              SC:scripting,
+              RE: rewrite,
+              MI: mitm,
+              SC: scripting,
               UPDATA: UPDATA,
               TIMESTAMP: nowt,
               AROBJ: AROBJ,
@@ -322,7 +322,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
         },
       });
     } else if (isPanel) {
-      let text = "";
+      let text = "ALL:" + ALL_NUM;
       if (type) {
         Object.entries(AROBJ).forEach(([k, v]) => {
           v != 0 && (text += `${k}: \x20\x20${v}\n`);
