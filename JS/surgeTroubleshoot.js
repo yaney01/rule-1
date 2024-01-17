@@ -1,8 +1,8 @@
 // @xream @key
-const UPDATA = "2024-01-17 23:12:11";
+const UPDATA = "2024-01-17 22:39:17";
 const isPanel = typeof $input != "undefined",
   stname = "SurgeTool_Rule_NUM",
-  STversion = "V2.9",
+  STversion = "V2.33",
   nowt = Date.now();
 let url = typeof $request !== "undefined" && $request.url ? $request.url : "0",
   isFetch = /(trouble\.shoot|surge\.tool|st\.com)\/getkey/.test(url);
@@ -291,7 +291,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
         ([k, v]) => v != 0 && console.log(`${v.n}: ${v.l}`)
       );
     }
-
+ 
     if (isFetch) {
       $done({
         response: {
@@ -304,9 +304,12 @@ if (typeof $argument !== "undefined" && $argument !== "") {
             {
               VERSION: STversion,
               ALL_NUM: ALL_NUM,
-              HOSTNAMEeNUM: hostnameNUM,
+              HOSTNAMENUM: hostnameNUM,
               SCRIPTNUM: ScriptNUM,
               REWRITENUM: RewriteNUM,
+              RE:rewrite,
+              MI:mitm,
+              SC:scripting,
               UPDATA: UPDATA,
               TIMESTAMP: nowt,
               AROBJ: AROBJ,
