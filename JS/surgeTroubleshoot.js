@@ -322,7 +322,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
         },
       });
     } else if (isPanel) {
-      let text = "ALL:" + ALL_NUM;
+      let text = "ALL:" + ALL_NUM + "\n";
       if (type) {
         Object.entries(AROBJ).forEach(([k, v]) => {
           v != 0 && (text += `${k}: \x20\x20${v}\n`);
