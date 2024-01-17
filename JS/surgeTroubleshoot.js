@@ -338,7 +338,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
         });
       }
       $notification.post("", text, "点击跳转浏览器打开", {
-        url: "https://st.com",
+        url: "https://surge.tool/",
       });
       result = {
         title: "Surge Tool Rule: " + ALL_NUM,
