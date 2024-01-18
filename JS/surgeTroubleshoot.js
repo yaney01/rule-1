@@ -341,7 +341,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
         url: "http://surge.tool/",
       });
       result = {
-        title: "Surge Tool Rule: " + ALL_NUM,
+        title: "Surge Rule: " + ALL_NUM,
         content: `MitM${hostnameNUM} ${mitm ? "☑" : "☒"} Script${ScriptNUM} ${
           scripting ? "☑" : "☒"
         } Re ${RewriteNUM} ${rewrite ? "☑" : "☒"}`,
