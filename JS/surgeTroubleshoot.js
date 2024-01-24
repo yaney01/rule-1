@@ -18,7 +18,7 @@ let result = {},
 if (typeof $argument !== "undefined" && $argument !== "") {
   const ins = getin("$argument");
   icons = ins.icon || icons;
-  icolor = ins.color || icolor;
+  icolor = ins.icolor || icolor;
   ptitle = ins.title || ptitle;
   type = ins.type != 0;
   list = ins.list != 0;
