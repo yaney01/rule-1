@@ -342,9 +342,9 @@ if (typeof $argument !== "undefined" && $argument !== "") {
       });
       result = {
         title: "Surge Rule: " + ALL_NUM,
-        content: `MitM${hostnameNUM} ${mitm ? "☑" : "☒"} Sc${ScriptNUM} ${
+        content: `MitM${mitm ? "☑" : "☒"}${hostnameNUM}  Script${
           scripting ? "☑" : "☒"
-        } Re${RewriteNUM} ${rewrite ? "☑" : "☒"}`,
+        }${ScriptNUM}  Re${rewrite ? "☑" : "☒"}${RewriteNUM}`,
         icon: icons,
         "icon-color": icolor,
       };
