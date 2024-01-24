@@ -8,18 +8,22 @@ let url = typeof $request !== "undefined" && $request.url ? $request.url : "0",
   isFetch = /(trouble\.shoot|surge\.tool|st\.com)\/getkey/.test(url);
 
 let result = {},
+  ptitle = "Surge Rule",
   icons = "heart.text.square",
   icolor = "#6699FF",
   type = false,
   list = false,
-  nolog = false;
+  push = true,
+  LogTF = false;
 if (typeof $argument !== "undefined" && $argument !== "") {
   const ins = getin("$argument");
   icons = ins.icon || icons;
-  icolor = ins.color || icolor;
-  type = ins.type !== undefined;
-  list = ins.list !== undefined;
-  nolog = ins.nolog !== undefined;
+  icolor = ins.icolor || icolor;
+  ptitle = ins.title || ptitle;
+  type = ins.type != 0;
+  list = ins.list != 0;
+  LogTF = ins.LogTF != 0;
+  push = ins.push != 0;
 }
 
 !(async () => {
@@ -63,14 +67,16 @@ if (typeof $argument !== "undefined" && $argument !== "") {
               FLG.forEach((k) => {
                 if (/^(DOMAIN|RULE)-SET,/.test(k)) {
                   const key = k.split(",")[1];
-                  // Url 作为键
-                  RULELISTALL[key] = {
-                    n: "",
-                    o: e.split(",")[0] + ": ",
-                    c: leng,
-                    l: "",
-                  };
-                  tf = true;
+                  if (/http/.test(key)) {
+                    // Url 作为键
+                    RULELISTALL[key] = {
+                      n: "",
+                      o: e.split(",")[0] + ": ",
+                      c: leng,
+                      l: "",
+                    };
+                    tf = true;
+                  }
                 }
               });
               if (!tf) {
@@ -87,7 +93,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
           RULE_SET_NUM++;
           const rsUrl = e.split(",")[1];
           if (/^https?:\/\/script\.hub\/file\/_start_\//.test(rsUrl)) {
-            !nolog && console.log("[RULE-SET_GET_Script-Hub]: " + rsUrl);
+            LogTF && console.log("[RULE-SET_GET_Script-Hub]: " + rsUrl);
             try {
               // ScriptHub 规则缓存
               SurgeTool = JSON.parse($persistentStore.read(stname));
@@ -96,7 +102,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
               } else {
                 const cacheNum = SurgeTool[rsUrl];
                 if (typeof cacheNum == "number" && cacheNum > 0) {
-                  !nolog && console.log("读取ScriptHub 缓存" + cacheNum);
+                  LogTF && console.log("读取ScriptHub 缓存" + cacheNum);
                   let fname = ""; // 逻辑规则类型 前缀
                   if (RULELISTALL[rsUrl]?.o) {
                     fname = RULELISTALL[rsUrl].o || "";
@@ -124,7 +130,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
               $persistentStore.write(JSON.stringify({}), stname);
             }
           } else if (/http/.test(rsUrl)) {
-            !nolog && console.log("[RULE-SET_GET]: " + rsUrl);
+            LogTF && console.log("[RULE-SET_GET]: " + rsUrl);
             try {
               const ruleSetRaw = (await tKey(rsUrl))
                 .split("\n")
@@ -157,7 +163,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
           DOMAIN_SET_NUM++;
           const rdurl = e.split(",")[1];
           if (/^https?:\/\/script\.hub\/file\/_start_\//.test(rdurl)) {
-            !nolog && console.log("[DOMAIN-SET_GET_Script-Hub]: " + rdurl);
+            LogTF && console.log("[DOMAIN-SET_GET_Script-Hub]: " + rdurl);
             try {
               SurgeTool = JSON.parse($persistentStore.read(stname));
               if (!SurgeTool && SurgeTool?.length > 10000) {
@@ -165,7 +171,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
               } else {
                 const cacheNum = SurgeTool[rdurl];
                 if (typeof cacheNum == "number" && cacheNum > 0) {
-                  !nolog && console.log("读取ScriptHub 缓存" + cacheNum);
+                  LogTF && console.log("读取ScriptHub 缓存" + cacheNum);
                   let fname = "";
                   if (RULELISTALL[rdurl]?.o) {
                     fname = RULELISTALL[rdurl].o || "";
@@ -194,7 +200,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
               $persistentStore.write(JSON.stringify({}), stname);
             }
           } else if (/http/.test(rdurl)) {
-            !nolog && console.log("[DOMAIN-SET_GET]: " + rdurl);
+            LogTF && console.log("[DOMAIN-SET_GET]: " + rdurl);
             try {
               const DOMAIN_SET_RAW_BODY = (await tKey(rdurl))
                 .split("\n")
@@ -283,7 +289,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
     // prettier-ignore
     const AROBJ = { OR:OR_NUM, AND:AND_NUM, NOT:NOT_NUM, SRC_IP:SRC_IP_NUM, IP_ASN:IP_ASN_NUM, DOMAIN:DOMAIN_NUM, SUBNET:SUBNET_NUM, IN_PORT:IN_PORT_NUM, IP_CIDR:IP_CIDR_NUM, RULE_SET:RULE_SET_NUM, IP_CIDR6:IP_CIDR6_NUM, PROTOCOL:PROTOCOL_NUM, DEST_PORT:DEST_PORT_NUM, URL_REGEX:URL_REGEX_NUM, DOMAIN_SET:DOMAIN_SET_NUM, USER_AGENT:USER_AGENT_NUM, DEVICE_NAME:DEVICE_NAME_NUM, PROCESS_NAME:PROCESS_NAME_NUM, DOMAIN_SUFFIX:DOMAIN_SUFFIX_NUM, DOMAIN_KEYWORD:DOMAIN_KEYWORD_NUM, };
 
-    if (!nolog) {
+    if (LogTF) {
       Object.entries(AROBJ).forEach(
         ([k, v]) => v != 0 && console.log(`${k}: ${v}`)
       );
@@ -337,11 +343,12 @@ if (typeof $argument !== "undefined" && $argument !== "") {
             }`);
         });
       }
-      $notification.post("", text, "点击跳转浏览器打开", {
-        url: "http://surge.tool/",
-      });
+      push &&
+        $notification.post("", text, "点击跳转浏览器打开", {
+          url: "http://surge.tool",
+        });
       result = {
-        title: "Surge Rule: " + ALL_NUM,
+        title: ptitle + ": " + ALL_NUM,
         content: `MitM${mitm ? "☑" : "☒"}${hostnameNUM}  Script${
           scripting ? "☑" : "☒"
         }${ScriptNUM}  Re${rewrite ? "☑" : "☒"}${RewriteNUM}`,
@@ -358,13 +365,9 @@ if (typeof $argument !== "undefined" && $argument !== "") {
           body: `<html><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><link rel="shortcut icon" href="data:image/x-icon;base64,AAABAAIAICAAAAEAIAAoEQAAJgAAABAQAAABACAAaAQAAE4RAAAoAAAAIAAAAEAAAAABACAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABqBOAiS+XQBN1mkAct5sAI7hawKb4WsCm95sAI7WaQByvl0ATaBOAiQAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWzIADsVhAk/icAGe8HcB2Pp7APX8fQD9/34A//9/AP//fwD//34A//x9AP36ewD18HcB2OJwAZ7FYQJPWzIADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAr1cAUPodACx+nwA9P+AAP//fwD//34A//99AP//fAD//3wA//98AP//fAD//30A//9+AP//fwD//4AA//p8APTodACxvVwBQwAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHU3AA3abQB79nsA6f+BAP//gAD//34A//9+AP//fgD//34A//9+AP//fgD//34A//9+AP//fgD//34A//9+AP//fgD//4AA//+BAP/2ewDp2m0Ae3U3AA0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACeVQAU5nYDmvuAAf3/gQH//4AA//+AAP//gAD//4AA//+AAP//gAD//4AA//+AAP//gAD//4AA//+AAP//gAD//4AA//+AAP//gAD//4AA//+BAf/7gAH95nYDmp5VABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgDUADuZ4Apv9ggH//4IB//+BAf//gQH//4EB//+BAf//gQD//4AA//+BAf//gQH//4EB//+BAf//gQH//4EB//+BAf//gQH//4EB//+BAf//gQH//4EB//+CAf/9ggH/5ngCm4A1AA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPedAB9/IQA/f+FAP//gwD//4MA//+DAP//gwD//4MA//+KGf//jiT//4MA//+DAP//gwD//4MA//+DAP//gwD//4MA//+DAP//gwD//4MA//+DAP//gwD//4MA//+FAP/8hAD93nQAfQAAAAMAAAAAAAAAAAAAAAAAAAAAzGwCRfiEAez/iAD//4YB//+GAf//hgH//4YB//+FAP//iQ///9Kq///m0P//ljP//4MA//+CAP//ggD//4YA//+GAf//hgH//4YB//+GAf//hgH//4YB//+GAf//hgH//4YB//+IAP/4hAHszGwCRQAAAAAAAAAAAAAAAKNMAA7tgQKz/4sC//+IAP//iAD//4gA//+FAP//gwD//4UA//+QJP//59L///r0//+kUP//hQD//6pe//+qXv//iQX//4gA//+IAP//iAD//4gA//+IAP//iAD//4gA//+IAP//iAD//4gA//+LAv/vgQKzo0wADgAAAAAAAAAA2HYETvqKAvX/jAD//4oA//+KAP//iQD//509//+vZv//jRP//5Ei///nzv//+fD//6NM//+TKP//793//+/d//+XLv//iAD//4oA//+KAP//igD//4oA//+KAP//igD//4oA//+KAP//igD//4wA//uKAvXYdgROAAAAAFFQAATtgwGd/48A//6MAf/+jAH//owA//6MA///17L///v0//+tX///jxv//+fN///58P/+pEz//pgw///x4v//8eL//pw3//6JAP/+jAH//owB//6MAf/+jAH//owB//6MAf/+jAH//owB//6MAf/+jAH//48A/+2DAZ1RUAAEyXEAH/eNANP/kgD//o8A//6PAP/+jwD//pAK///fvv///fj//rVv//+RG///587///nw//6mTP/+mi7///Hg///x4P/+nTX//o0A//6PAP/+jwD//o8A//6PAP/+jwD//o8A//6PAP/+jwD//o8A//6PAP//kgD/940A08lxAB/NdgBL+5AA8v+UAP/+kgD//pIA//6RAP/+kgb//9++/////f/+tWz//5Qb///nzv//+fD//qhM//6dMP//8eD///Hg//6fNf/+jwD//o8A//6QAP/+kgD//pIA//6SAP/+kgD//pIA//6SAP/+kgD//pIA//+UAP/7kADyzXYAS+GDAHj9lAD6/5UA//6VAP/+lQD//pQB//6SAP/+u3L//9eu//+gMv//mR///+fO///58P/+q0v//p4w///x4P//8eD//qI1//6SAP/+oDH//pwk//6UAP/+lQD//pUA//6VAP/+lQD//pUA//6VAP/+lQD//5UA//2UAPrhgwB46I0ElP+ZAPv/lwD//pYA//6WAP/+lgD//pYA//6VAP/+lQD//pQA//+dJP//587///nw//6sS//+oC////Hg///x4P/+ojH//qIz///t2f//2rL//pkU//6WAP/+lgD//pYA//6WAP/+lgD//pYA//6WAP//lwD//5kA++iNBJTrkAGb/5wA+/+ZAf/+mQH//pkB//6ZAf/+mQH//pkB//6ZAP/+lwD//58l///q0v//+/X//q5N//6iL///8eD///Hg//6iL//+rk7///rz///q0f//oCb//pcA//6YAP/+mQD//pkB//6ZAf/+mQH//pkB//+ZAf//nAD765ABm+mSAIv/nwD6/5wA//6cAP/+nAD//pwA//6cAP/+nAD//pwA//6bAP/+nA7//tGZ//7hvv/+pCn//qYx///x4P//8eD//qQw//6wTP//+fD//+jO//+iJP/+mgD//qEe//6cC//+mwD//pwA//6cAP/+nAD//5wA//+eAPrpkgCL444AZv6fAPj/oAH//p8B//6fAf/+nwH//p8B//6fAf/+nwH//p8B//6eAP/+oA///qEX//6bAP/+qjX///Lg///y4P/+pzD//rFM///58P//6M7//6Ee//6uRP//58z//suL//6dAP/+nwH//p8B//6fAf//oAH//p8A+OOOAGbhiQA1+6AA6f+jAP/+oQD//qEA//6hAP/+oQD//qEA//6hAP/+oQD//qEA//6hAP/+oQD//qAA//6sNf//8uD///Lg//6oMP/+sk3///nw///pzf//ohr//r9w///+/P//4sD//qEJ//6hAP/+oQD//qEA//+jAP/7oADp4YkANduNARH4ogDA/6cA//6kAP/+pAD//qQA//6kAP/+pAD//qQA//6kAP/+pAD//qQA//6kAP/+ogD//q03///y4P//8uD//qsw//60Tf//+PD//+nN//+kGf/+wXD///35///iv//+pAf//qQA//6kAP/+pAD//6cA//ijAL/bjQERAAAAAPSgA37+qQL//6cB//6nAf/+pwH//qcB//6nAf/+pwH//qcB//6nAf/+pwH//qcB//6lAP/+sDf///Pj///z4//+rTL//rdN///48P//6s7//6cd//65VP//9ef//9ej//6kAP/+pwH//qcB//+nAf//qQL/9KADfgAAAAAAAAAA5ZkCLvuoAuP/rAH//agA//2oAP/9qAD//agA//2oAP/9qAD//agA//2oAP/9qAD//acA//6uKf//69D//+vQ//2rI//+uE7///jw///qzv/9rCT//agA//21Qv/9rSb//acA//2oAP/9qAD//6wB//uoAuPpmQIuAAAAAAAAAAC5awAD9aYCh/+vAP/+rAH//asB//2rAf/9qwH//asB//2rAf/9qwH//asB//2rAf/9qwD//aoC//63QP/+t0D//acA//67UP//+vX//+vS//2uJv/9qgD//akA//2qAP/9qwH//asB//6sAf//rwD/9aQDh7lrAAMAAAAAAAAAAAAAAADqoAId+60Ayf+xAP/9rQD//a0A//2tAP/9rQD//a0A//2tAP/9rQD//a0A//2tAP/9rQD//awA//2sAP/9rAD//bIq//7fsf/+0o///awK//2tAP/9rQD//a0A//2tAP/9rQD//7EA//utAMnqoAIdAAAAAAAAAAAAAAAAAAAAAAAAAADwpwJD/bAA5f+yAP/9sAD//bAA//2wAP/9sAD//bAA//2wAP/9sAD//bAA//2wAP/9sAD//bAA//2wAP/9rgD//a4K//2uAv/9rwD//bAA//2wAP/9sAD//bAA//+yAP/9sADl8KcCQwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD0rQJZ/rMA6f+2AP/9sQL//bEC//2xAf/9sQH//bEB//2xAf/9sQH//bEB//2xAf/9sQH//bEB//2xAf/9sQD//bEA//2xAf/9sQH//bEC//2xAv//tgD//rMA6fStAlkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD4rwBR/bUA3f+4Af//tAD//bMA//2zAP/9swD//bMA//2zAP/9swD//bMA//2zAP/9swD//bMA//2zAP/9swD//bMA//2zAP//tAD//7gB//21AN34rwBRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADzrwIy+7UAsP63APr/ugD//7YA//21AP/9tQD//bUA//21AP/9tQD//bUA//21AP/9tQD//bUA//21AP//tgD//7oA//63APr7tQCw868CMgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADvrgIN9rQAX/y4Ab/+uAH0/7sA//+7A///uQT//7gB//+3Av//twL//7gB//+5BP//uwP//7sA//64AfT8uAG/9rQAX++uAg0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA86gAEfq1Akr7uAGP/LoAv/67At3+uQDv/rgB9v64Afb+uQDv/rsC3fy6AL/7uAGP+rUCSvOoABEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADmrwAQ9LAEJfGvADrysABK8rAASvGvADr0sAQl5q8AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAEAAAACAAAAABACAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoFUAEMNaACPDWgAjoFUAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADebgBF73YBpfd5ANv6egHv+noB7/d5ANvvdgGl3m4ARQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALNfAA7veQCY/H8A+/+BAP//gAD//38A//9/AP//gAD//4EA//x/APvveQCYs18ADgAAAAAAAAAAAAAAAK9WAAjzfQKr/4YA//+CAf//ggL//4IF//+BAP//gQD//4EB//+BAf//ggH//4YA//N9AquvVgAIAAAAAAAAAADufwB0/4oA//+GAP//fwD//6xl///Cj///iRH//40c//+GAP//hwH//4cB//+HAf//igD/7n8AdAAAAADWcQYU+ooC4P+MAP//mzf//7Nu//66fv/+063//r+H//7Ejf//hwD//4sA//+LAP//iwD//40A//qKAuDWcQYU5YMAVf+RAP//jQD//rFh///hxf/+vHv//tKo//7Ikv/+y5n//okA//6PAP/+kAL//pAA//+QAP//kQD/5YMAVeuMAJz/mAD//pUA//6eJv//qkr//r99//7WrP/+yZH//suU//6vWP/+qET//pMA//6VAP/+lQD//5gA/+uMAJzxlQCn/50A//6bAP/+mgD//pUA//66aP/+yo7//syS//7Lkf/+2K7//sN///6aAf/+mwj//psA//+dAP/xlQCn7pcDav+jAP/+oQD//qAA//6gAP/+oQb//p0A//7Ql//+zZL//teo//7DfP/+16n//rZU//6eAP//owD/7pUEau6YACP9pgHv/6cB//6mAf/+pgH//qUA//6hAP/+1Jv//tGV//7Zqf/+x33//tmo//65VP//pQD//aYB7+6YACMAAAAA+qoAmv+xAv/9qgD//aoA//2qAP/9qQD//rxQ//64SP/+3Kz//sl8//2pAP/9qwT//7EA//qqAJoAAAAAAAAAAPGlARz8rwDW/7QA//2vAP/9rwD//a8A//2tAP/9rAD//bk8//21Kf/9rgD//7QA//yvANbxpQEcAAAAAAAAAAAAAAAA9q4ALP60AM7/uQH//7YA//6zAP/9swD//bMA//6yAP//tQD//7kB//60AM72rgAsAAAAAAAAAAAAAAAAAAAAAAAAAAD1thEU+7UCg/64Adz+twL9/7oA//+6AP/+twL9/rgB3Pu1AoP1thEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADztQAR+bYAP/e2AGT3tgBk+bYAP/O1ABEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=">
 <style>
-::backdrop,:root {--sans-font:"Chinese Quotes","Inster var",-apple-system,BlinkMacSystemFont,"Avenir Next",Avenir,"Nimbus Sans L",Roboto,"Noto Sans","Segoe UI",Arial,Helvetica,"Helvetica Neue",sans-serif;--mono-font:Consolas,Menlo,Monaco,"Andale Mono","Ubuntu Mono",monospace;--standard-border-radius:5px;--bg:#f7f8fa;--accent-bg:#89899c16;--text:#23242fc2;--text-light:#585858;--border:#898EA4;--accent:#0d47a1;--code:#d81b60;--preformatted:#444;--marked:#ffdd33;--disabled:#efefef }.tline {color:#191818a1;}.title {color:#272424d7;}.action {color:#212223d9;}.ebutton.brand {background-color:#bdc7e56a;}.ebutton.alt {background-color:#bdc7e53b;}.action a:active {background-color: #4164d766;}.action a:hover {background-color: #4164d776;}@media (prefers-color-scheme:dark) {.action a:active {background-color: #4164d7;}.action a:hover {background-color: #4164d7;}.ebutton.brand {background-color:#4164d7;}.ebutton.alt {background-color:#aab7c91d;}.action {color:#d1d5d9d9;}.tline {color:#f2f0ef9f;}.title {color:#ffffffb3;}::backdrop,:root {color-scheme:dark;--bg:#17171A;--accent-bg:#0b0b0c7a;--text:#e2e3eab8;--text-light:#ababab;--accent:#8495b0;--code:#f06292;--preformatted:#97a4b8;--disabled:#111 }img,video {opacity:.8 }}*,::after,::before {box-sizing:border-box }html {font-family:var(--sans-font);scroll-behavior:smooth }body {color:var(--text);background-color:var(--bg);line-height:1.5;display:grid;margin:0 }aside,details,pre,progress {background-color:var(--accent-bg);border:0px solid var(--border);border-radius:var(--standard-border-radius);margin-bottom:1rem;}code,kbd,pre,pre span,samp {font-family:var(--mono-font);color:var(--code) }
-
-pre {padding:42px 0 20px 25px;
-min-height:300px;
+::backdrop,:root {--sans-font:"Chinese Quotes","Inster var",-apple-system,BlinkMacSystemFont,"Avenir Next",Avenir,"Nimbus Sans L",Roboto,"Noto Sans","Segoe UI",Arial,Helvetica,"Helvetica Neue",sans-serif;--mono-font:Consolas,Menlo,Monaco,"Andale Mono","Ubuntu Mono",monospace;--standard-border-radius:5px;--bg:#f7f8fa;--accent-bg:#89899c16;--text:#23242fc2;--text-light:#585858;--border:#898EA4;--accent:#0d47a1;--code:#d81b60;--preformatted:#444;--marked:#ffdd33;--disabled:#efefef }.tline {color:#191818a1;}.title {color:#272424d7;}.action {color:#212223d9;}.ebutton.brand {background-color:#bdc7e56a;}.ebutton.alt {background-color:#bdc7e53b;}.action a:active {background-color: #4164d766;}.action a:hover {background-color: #4164d776;}@media (prefers-color-scheme:dark) {.action a:active {background-color: #4164d7;}.action a:hover {background-color: #4164d7;}.ebutton.brand {background-color:#4164d7;}.ebutton.alt {background-color:#aab7c91d;}.action {color:#d1d5d9d9;}.tline {color:#f2f0ef9f;}.title {color:#ffffffb3;}::backdrop,:root {color-scheme:dark;--bg:#17171A;--accent-bg:#0b0b0c7a;--text:#e2e3eab8;--text-light:#ababab;--accent:#8495b0;--code:#f06292;--preformatted:#97a4b8;--disabled:#111 }img,video {opacity:.8 }}*,::after,::before {box-sizing:border-box }html {font-family:var(--sans-font);scroll-behavior:smooth }body {color:var(--text);background-color:var(--bg);line-height:1.5;display:grid;margin:0 }aside,details,pre,progress {background-color:var(--accent-bg);border:0px solid var(--border);border-radius:var(--standard-border-radius);margin-bottom:1rem;}code,kbd,pre,pre span,samp {font-family:var(--mono-font);color:var(--code) }pre {padding:42px 0 20px 25px;min-height:300px;
 overflow-x:hidden;overflow-y:auto;white-space:pre-line;max-width:100%;color:var(--preformatted);border-radius:18px;/* backdrop-filter:blur(50px);-webkit-backdrop-filter:blur(50px);*/ }pre code {color:var(--preformatted);background:0 0;margin:0;padding:0 }/* \/\*[\s\S\n]+?\*\/ */ .button:focus,.button:hover {filter:brightness(1.4);cursor:pointer }blockquote {margin-inline-start:0;margin-inline-end:0;margin-block:0 }.kpage.has-image .container {text-align:center;}.image-src {max-width:144px;max-height:144px;}.name {color:var(--vp-home-hero-name-color);}.name,.text {letter-spacing:-.4px;font-size:42px;font-weight:700;white-space:pre-wrap;}.kpage {margin-top:80px;}.image-bg {position:absolute;top:50%;left:50%;border-radius:50%;width:192px;height:192px;/* background-image:linear-gradient(-45deg,#bd34fe88 50%,#47caff88 50%);*/ background-image:linear-gradient(25deg,#4d9ae06b 50%,#5448e95c 50%);filter:blur(56px);transform:translate(-50%,-50%);z-index:-10;}.image-bgs {position:absolute;/* top:90%;*/ /* bottom:10%;*/ left:80%;/* border-radius:50%;*/ width:40%;height:192px;/* background-image:linear-gradient(-45deg,#bd34fe88 50%,#47caff88 50%);*/ background-image:linear-gradient(25deg,#4d99e03d 50%,#5348e936 50%);filter:blur(90px);transform:translate(-50%,-50%);z-index:-10;}.titleh {background:-webkit-linear-gradient(128deg,#a245ced9,#52c4ead7);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}.kpage.has-image .actions {justify-content:center;}.ebutton.mdi {border-radius:20px;padding:0 20px;line-height:38px;font-size:14px;}.actions {display:flex;flex-wrap:wrap;margin:-6px;padding:10px;}.ebutton {display:inline-block;text-align:center;font-weight:600;white-space:nowrap;}.action {flex-shrink:0;padding:6px;}a {color:inherit;text-decoration:inherit;}.title {display:flex;align-items:center;width:100%;height:10px;font-size:14px;font-weight:600;} .topimg.logo {margin-right:8px;height:20px;width:20px;}.toptittle {padding-top:20px;padding-left:20px;}body {margin:10;max-width:100%;}.sglogoh {position:relative;margin:0 auto;width:144px;height:144px;}.container {display:flex;flex-direction:column;margin:0 auto;max-width:1152px;}.image {margin:0;min-height:100%;}.main {    max-height: 110vh;position:relative;z-index:10;order:2;flex-grow:1;flex-shrink:0;}.tline {padding-left: 40px;padding-right: 40px;line-height:28px;font-size:18px;font-weight:400;white-space:pre-line;}.lists {order:2;padding:10px 30px;text-align:start;}.tƒooters {opacity:0.35;text-align:center;width:100%;font-size:12;padding:20px;}.pretit {color:var(--text);position:relative;border-top-left-radius:14px;border-top-right-radius:14px;padding:10px 0 12px 100px;top:59px;backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);background:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSI0NTBweCIgaGVpZ2h0PSIxMzBweCI+CiAgICA8ZWxsaXBzZSBjeD0iNjUiIGN5PSI2NSIgcng9IjUwIiByeT0iNTIiIHN0cm9rZT0icmdiKDIyMCw2MCw1NCkiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0icmdiKDIzNywxMDgsOTYpIi8+CiAgICA8ZWxsaXBzZSBjeD0iMjI1IiBjeT0iNjUiIHJ4PSI1MCIgcnk9IjUyIiBzdHJva2U9InJnYigyMTgsMTUxLDMzKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJyZ2IoMjQ3LDE5Myw4MSkiLz4KICAgIDxlbGxpcHNlIGN4PSIzODUiIGN5PSI2NSIgcng9IjUwIiByeT0iNTIiIHN0cm9rZT0icmdiKDI3LDE2MSwzNykiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0icmdiKDEwMCwyMDAsODYpIi8+Cjwvc3ZnPgo=");background-size:70px;background-repeat:no-repeat;background-position:10px;}a {text-decoration:none;}@media (min-width:960px) {.kpage {margin-top:-70px;}.lists {padding:10px 60px;min-width:592px;text-align:start;}.main {padding:40px;display:flex;max-width:521px;flex-direction:column;flex-wrap:wrap;justify-content:center;}.container {flex-direction:row;}}@media (min-width:1160px) {.kpage {margin-top:-70px;}.lists {padding:10px 20px 10px 70px;min-width:592px;max-width:992px;text-align:start;}.main {padding:40px;display:flex;max-width:521px;flex-direction:column;flex-wrap:wrap;justify-content:center;}.container {flex-direction:row;}}img,video {max-width:100%;}
 </style></head><body>
-
 <div class="toptittle"><a class="title"><div class="topimg logo" id="imgelogoL"></div>Surge Tool</a></div><div class="container"><div class="title"></div></div><div class="kpage has-image"><div class="container"><div class="main"><div class="sglogoh"><div id="imgelogoH"></div><div class="image-bg"></div></div><h1 class="name"><span class="titleh">Troubleshoot</span></h1><p class="tline">The parts marked in <span style="color: #ca2525">Red</span> do not necessarily indicate a problem, But rather serve as a noteworthy reminder</p><div class="actions"><!-- brand -->
 <div class="action"><a class="ebutton mdi alt">MitM ${hostnameNUM} ${
             mitm ? "&#10003;" : "&#10007;"
@@ -376,12 +379,9 @@ overflow-x:hidden;overflow-y:auto;white-space:pre-line;max-width:100%;color:var(
             rewrite ? "&#10003;" : "&#10007;"
           }</a></div></div></div>
 <div class="lists">
-
-
         <div class="image-bgs"></div>
         <div class="pretit">Rule<span id="ALL_NUM"> Request ing ...</span></div>
         <pre id="AROBJ"></pre><div id="RULELISTPRE" class="pretit">Rule List</div><pre id="RULELIST"></pre>
-        
         <div class="pretit">Hostname</div>
         <pre><code>${
           hostname.length > 0
