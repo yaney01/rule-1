@@ -1,5 +1,5 @@
 #!name=Troubleshoot
-#!desc=故障排除/规则统计 访问 http://trouble.shoot  http://surge.tool 查看
+#!desc=故障排除/规则统计 访问 http://trouble.shoot  http://surge.tool 查看; 规则集支持远程/本地单条规则, 本地规则集无法读取不支持
 #!author=@xream @key
 #!category=Key
 #!arguments=Type:1, Log:0, List:1, Push:1,title:Surge Rule, color:#6699FF, icon:heart.text.square, ST Panel:ST Panel
