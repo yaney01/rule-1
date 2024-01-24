@@ -67,14 +67,16 @@ if (typeof $argument !== "undefined" && $argument !== "") {
               FLG.forEach((k) => {
                 if (/^(DOMAIN|RULE)-SET,/.test(k)) {
                   const key = k.split(",")[1];
-                  // Url 作为键
-                  RULELISTALL[key] = {
-                    n: "",
-                    o: e.split(",")[0] + ": ",
-                    c: leng,
-                    l: "",
-                  };
-                  tf = true;
+                  if (/http/.test(key)) {
+                    // Url 作为键
+                    RULELISTALL[key] = {
+                      n: "",
+                      o: e.split(",")[0] + ": ",
+                      c: leng,
+                      l: "",
+                    };
+                    tf = true;
+                  }
                 }
               });
               if (!tf) {
