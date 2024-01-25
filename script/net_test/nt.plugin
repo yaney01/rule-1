@@ -1,0 +1,10 @@
+#!name = 测试
+#!desc = 测试性能
+#!openUrl = 
+#!author = @key
+#!homepage = https://github.com/Keywos
+#!icon = https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/Netease.png
+#!date = 2024-01-26 03:02:13
+
+[Script]
+generic script-path = https://gist.githubusercontent.com/Keywos/22ef119f18e04ce31f3b7bbb827933c3/raw/NeteaseTest.js, tag = 测试加解密耗时, img-url = network,enabled=false

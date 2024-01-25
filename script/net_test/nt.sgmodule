@@ -1,0 +1,9 @@
+#!name=测试加解密耗时
+#!desc=@key
+#!category=Key
+#!date = 2024-01-26 03:02:13
+#!icon = https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/Netease.png
+
+
+[Script]
+#加解密耗时测试 = type=http-response,pattern=^https?:\/\/aaaaaa\.xxxx$,requires-body=1,max-size=0,timeout=20,binary-body-mode=1,script-path=https://gist.githubusercontent.com/Keywos/22ef119f18e04ce31f3b7bbb827933c3/raw/NeteaseTest.js
