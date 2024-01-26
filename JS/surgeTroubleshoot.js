@@ -349,9 +349,9 @@ if (typeof $argument !== "undefined" && $argument !== "") {
         });
       result = {
         title: ptitle +' '+ ALL_NUM,
-        content: `MitM${mitm ? "☑" : "☒"}${hostnameNUM}  JS${
+        content: `MitM${mitm ? "☑" : "☒"}${hostnameNUM} JS${
           scripting ? "☑" : "☒"
-        }${ScriptNUM}  Rewrite${rewrite ? "☑" : "☒"}${RewriteNUM}`,
+        }${ScriptNUM} Rewrite${rewrite ? "☑" : "☒"}${RewriteNUM}`,
         icon: icons,
         "icon-color": icolor,
       };
