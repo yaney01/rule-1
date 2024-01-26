@@ -1,0 +1,1 @@
+{"name":"Keywos","description":"加解密测试","task":[ "0 8 * * * https://gist.githubusercontent.com/Keywos/22ef119f18e04ce31f3b7bbb827933c3/raw/NeteaseTest.js, tag=测试加解密耗时, img-url=https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/Netease.png, enabled=true"]}
