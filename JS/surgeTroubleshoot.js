@@ -348,10 +348,10 @@ if (typeof $argument !== "undefined" && $argument !== "") {
           url: "http://surge.tool",
         });
       result = {
-        title: ptitle + ": " + ALL_NUM,
-        content: `MitM${mitm ? "☑" : "☒"}${hostnameNUM}  Script${
+        title: ptitle +' '+ ALL_NUM,
+        content: `MitM${mitm ? "☑" : "☒"}${hostnameNUM} JS${
           scripting ? "☑" : "☒"
-        }${ScriptNUM}  Re${rewrite ? "☑" : "☒"}${RewriteNUM}`,
+        }${ScriptNUM} Rewrite${rewrite ? "☑" : "☒"}${RewriteNUM}`,
         icon: icons,
         "icon-color": icolor,
       };
