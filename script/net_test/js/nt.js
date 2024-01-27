@@ -21,7 +21,7 @@ try {
   if (ios == "Loon") {
     const s = $loon.split(" ");
     ios = {
-      mobile: s[0],
+      device: s[0],
       ios: s[1],
       version: s[2],
     };
