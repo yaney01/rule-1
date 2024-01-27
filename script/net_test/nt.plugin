@@ -7,4 +7,7 @@
 #!date = 2024-01-26 03:02:13
 
 [Script]
-generic script-path = https://gist.githubusercontent.com/Keywos/22ef119f18e04ce31f3b7bbb827933c3/raw/NeteaseTest.js, tag = 测试加解密耗时, img-url = network,enabled=false
+http-request ^https?:\/\/neteasems\.test(\/)?$ script-path=https://raw.githubusercontent.com/Keywos/rule/main/script/net_test/js/nt.js, requires-body=true, timeout=20, tag=测试加解密耗时
+
+[MITM]
+hostname = neteasems.test
