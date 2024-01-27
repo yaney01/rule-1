@@ -17,14 +17,25 @@ try {
       : void 0;
   };
   console.log(getEnv());
+  let ios = getEnv();
+  if ((ios = Loon)) {
+    const s = $loon.split(" ");
+    ios = {
+      dev: s[0],
+      ios: s[1],
+      version: s[2],
+    };
+  } else if (ios == "Surge") {
+    ios = JSON.stringify($environment, null, 2);
+  }
   const body = JSON.stringify(
     {
-      设备: getEnv(),
+      设备: ios,
       长度: $.length,
       耗时: Date.now() - q + "ms",
     },
     null,
-    4
+    3
   );
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
@@ -45,5 +56,6 @@ try {
         body: body,
       },
     });
-  }  
+  }
+  
 }catch(e){}})();
