@@ -6,4 +6,7 @@
 
 
 [Script]
-#加解密耗时测试 = type=http-response,pattern=^https?:\/\/aaaaaa\.xxxx$,requires-body=1,max-size=0,timeout=20,binary-body-mode=1,script-path=https://gist.githubusercontent.com/Keywos/22ef119f18e04ce31f3b7bbb827933c3/raw/NeteaseTest.js
+加解密耗时 = type=http-request, pattern=^https?:\/\/neteasems\.test(\/)?$, requires-body=1, timeout=300, script-path=https://raw.githubusercontent.com/Keywos/rule/main/script/net_test/js/nt.js
+
+[MITM]
+hostname = %APPEND% neteasems.test
