@@ -17,16 +17,16 @@ try {
       : void 0;
   };
   console.log(getEnv());
-  let ios = getEnv();
+  let ios = getEnv()
   if (ios == "Loon") {
     const s = $loon.split(" ");
     ios = {
-      dev: s[0],
+      mobile: s[0],
       ios: s[1],
       version: s[2],
     };
   } else if (ios == "Surge") {
-    ios = JSON.stringify($environment, null, 2);
+    ios = $environment;
   }
   const body = JSON.stringify(
     {
