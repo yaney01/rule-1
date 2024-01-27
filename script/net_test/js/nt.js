@@ -28,32 +28,46 @@ try {
   } else if (ios == "Surge") {
     ios = $environment;
   }
-  const body = JSON.stringify(
-    {
-      设备: ios,
-      长度: $.length,
-      耗时: Date.now() - q + "ms",
-    },
-    null,
-    3
-  );
+
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
     "Access-Control-Allow-Origin": "*",
   };
   
   if (getEnv() == "Quantumult X") {
+    const s = $environment.version.split(" ");
+    ios = {
+      device: s[0],
+      ios: s[1],
+      version: s[2],
+    };
     $done({
       status: "HTTP/1.1 200 OK",
       headers: headers,
-      body: body,
+      body: JSON.stringify(
+        {
+          设备: ios,
+          长度: $.length,
+          耗时: Date.now() - q + "ms",
+        },
+        null,
+        3
+      ),
     });
   } else {
     $done({
       response: {
         status: 200,
         headers: headers,
-        body: body,
+        body: JSON.stringify(
+          {
+            设备: ios,
+            长度: $.length,
+            耗时: Date.now() - q + "ms",
+          },
+          null,
+          3
+        ),
       },
     });
   }
