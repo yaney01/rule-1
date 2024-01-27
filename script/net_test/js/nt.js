@@ -18,7 +18,7 @@ try {
   };
   console.log(getEnv());
   let ios = getEnv();
-  if ((ios = Loon)) {
+  if (ios == "Loon") {
     const s = $loon.split(" ");
     ios = {
       dev: s[0],
