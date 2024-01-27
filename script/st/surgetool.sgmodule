@@ -1,5 +1,5 @@
 #!name=Troubleshoot
-#!desc=故障排除/规则统计 访问 http://trouble.shoot  http://surge.tool 查看;
+#!desc=故障排除/规则统计 访问 http://trouble.shoot  http://surge.tool 查看
 #!author=@xream @key
 #!category=Key
 #!arguments=Type:1, Log:0, List:1, Push:1,title:规则详情 | , color:#6699FF, icon:heart.text.square, ST Panel:ST Panel,script-update:-1
