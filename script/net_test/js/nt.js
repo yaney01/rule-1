@@ -21,12 +21,14 @@ try {
   if (ios == "Loon") {
     const s = $loon.split(" ");
     ios = {
+      app: "Loon",
       device: s[0],
       ios: s[1],
       version: s[2],
     };
   } else if (ios == "Surge") {
-    ios = $environment;
+    ios = $environment
+    ios['app'] = "Surge"
   }
 
   const headers = {
@@ -37,6 +39,7 @@ try {
   if (getEnv() == "Quantumult X") {
     const s = $environment.version.split(" ");
     ios = {
+      app: "Quantumult X",
       device: s[0],
       ios: s[1],
       version: s[2],
