@@ -17,22 +17,33 @@ try {
       : void 0;
   };
   console.log(getEnv());
+  const body = JSON.stringify(
+    {
+      设备: getEnv(),
+      长度: $.length,
+      耗时: Date.now() - q + "ms",
+    },
+    null,
+    4
+  );
+  const headers = {
+    "Content-Type": "application/json; charset=utf-8",
+    "Access-Control-Allow-Origin": "*",
+  };
+  
+  if (getEnv() == "Quantumult X") {
     $done({
-        response: {
-          status: getEnv() == "Quantumult X" ? "HTTP/1.1 200 OK" : 200,
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-            "Access-Control-Allow-Origin": "*",
-          },
-          body: JSON.stringify(
-            {
-              '设备':getEnv(),
-              '长度': $.length,
-              '耗时': Date.now()-q+"ms",
-            },
-            null,
-            4
-          ),
-        },
-      });
+      status: "HTTP/1.1 200 OK",
+      headers: headers,
+      body: body,
+    });
+  } else {
+    $done({
+      response: {
+        status: 200,
+        headers: headers,
+        body: body,
+      },
+    });
+  }  
 }catch(e){}})();
