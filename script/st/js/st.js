@@ -1,8 +1,8 @@
 // @xream @key
-const UPDATA = "2024-01-17 22:39:17";
+const UPDATA = "2024-01-27 10:05:06";
 const isPanel = typeof $input != "undefined",
   stname = "SurgeTool_Rule_NUM",
-  STversion = 3.01,
+  STversion = 3.02,
   nowt = Date.now();
 let url = typeof $request !== "undefined" && $request.url ? $request.url : "0",
   isFetch = /(trouble\.shoot|surge\.tool|st\.com)\/getkey/.test(url);
