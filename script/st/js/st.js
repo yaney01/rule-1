@@ -4,7 +4,7 @@ const isPanel = typeof $input != "undefined",
   stname = "SurgeTool_Rule_NUM",
   STversion = 3.02,
   nowt = Date.now();
-let url = typeof $request !== "undefined" && $request.url ? $request.url : "0",
+let url = (typeof $request !== "undefined" && $request.url) || 0,
   isFetch = /(trouble\.shoot|surge\.tool|st\.com)\/getkey/.test(url);
 
 let result = {},
@@ -348,7 +348,7 @@ if (typeof $argument !== "undefined" && $argument !== "") {
           url: "http://surge.tool",
         });
       result = {
-        title: ptitle +' '+ ALL_NUM,
+        title: ptitle + " " + ALL_NUM,
         content: `MitM${mitm ? "☑" : "☒"}${hostnameNUM} JS${
           scripting ? "☑" : "☒"
         }${ScriptNUM} Rewrite${rewrite ? "☑" : "☒"}${RewriteNUM}`,
