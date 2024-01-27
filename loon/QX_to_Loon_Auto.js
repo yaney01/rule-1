@@ -23,8 +23,11 @@ console.log(resourceType)
 console.log(resource)
 
 
+
 console.log("++++")
 */
+
+
 let yreq = $request, yurl = yreq.url, loonua = false,
 	yua = yreq.headers["User-Agent"] || yreq.headers["user-agent"];
 	(yua.includes("Loon") && /conf|snippet|txt|\?/.test(yurl)) && (loonua = true);
