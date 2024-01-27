@@ -19,7 +19,7 @@ try {
   console.log(getEnv());
     $done({
         response: {
-          status: 200,
+          status: getEnv() == "Quantumult X" ? "HTTP/1.1 200 OK" : 200,
           headers: {
             "Content-Type": "application/json; charset=utf-8",
             "Access-Control-Allow-Origin": "*",
