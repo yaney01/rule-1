@@ -1,5 +1,5 @@
-#!name = 测试
-#!desc = 测试性能
+#!name = 测试性能
+#!desc = 打开 https://neteasems.test 查看
 #!openUrl = 
 #!author = @key
 #!homepage = https://github.com/Keywos

@@ -1,5 +1,5 @@
 name: "测试加解密耗时"
-desc: "@key"
+desc: "@key 打开 https://neteasems.test 查看" 
 category: "Key"
 date: "2024-01-26 03:02:13"
 icon: "https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/Netease.png"
