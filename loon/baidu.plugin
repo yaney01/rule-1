@@ -3,11 +3,11 @@
 #!openUrl = https://m.baidu.com
 #!author = @Key
 #!homepage = https://github.com/Keywos
-#!icon = https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/Baidu.png
+#!icon = https://raw.githubusercontent.com/yaney01/rule-1/main/tv/app/144px/Baidu.png
 #!date = 2023-09-12 18:19:14
 
 [Script]
-http-response ^https?:\/\/(www|m)\.baidu\.com\/?($|\?(from=\w{8,9}|tn=&from=)) script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/baiduindex.js, requires-body = true, tag = 百度首页
+http-response ^https?:\/\/(www|m)\.baidu\.com\/?($|\?(from=\w{8,9}|tn=&from=)) script-path=https://raw.githubusercontent.com/yaney01/rule-1/main/JS/baiduindex.js, requires-body = true, tag = 百度首页
 
 [Mitm]
 hostname = m.baidu.com, www.baidu.com
