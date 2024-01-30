@@ -3,8 +3,8 @@
 #!system=ios
 
 [Script]
-CNPing = type=generic,timeout=5,script-path=https://github.com/Keywos/rule/raw/main/JS/CNPingMini.js
-USPing = type=generic,timeout=5,script-path=https://github.com/Keywos/rule/raw/main/JS/USPingMini.js
+CNPing = type=generic,timeout=5,script-path=https://github.com/yaney01/rule-1/raw/main/JS/CNPingMini.js
+USPing = type=generic,timeout=5,script-path=https://github.com/yaney01/rule-1/raw/main/JS/USPingMini.js
 
 [Panel]
 CNPing = script-name=CNPing,update-interval=60
