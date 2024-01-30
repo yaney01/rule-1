@@ -15,7 +15,7 @@
 hostname=sub.store
 
 [Script]
-http-request https?:\/\/sub\.store script-path=https://github.com/Keywos/rule/raw/main/JS/sub-store.script.cache.js, requires-body=true, timeout=120, tag=Sub-Store  
+http-request https?:\/\/sub\.store script-path=https://github.com/yaney01/rule-1/raw/main/JS/sub-store.script.cache.js, requires-body=true, timeout=120, tag=Sub-Store  
 
 #!input = appName
 #!input = author
