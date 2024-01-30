@@ -7,4 +7,4 @@
 # 工具>脚本编辑器>左下角齿轮图标>$persistentStore 添加key 为 yj 里面内容为地区
 [Script]
 
-YJCRON=type=cron,cronexp={{{interval}}},wake-system={{{wake-system}}},timeout={{{timeout}}},script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/surgepushYJ.js,argument={{{diqu}}}
+YJCRON=type=cron,cronexp={{{interval}}},wake-system={{{wake-system}}},timeout={{{timeout}}},script-path=https://raw.githubusercontent.com/yaney01/rule-1/main/JS/surgepushYJ.js,argument={{{diqu}}}
