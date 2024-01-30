@@ -1,6 +1,6 @@
 #!name=Sub-Store Mock-PWA
 #!desc=前端页面加速模块: 提升加载速度/减少资源使用/新主题 需要搭配 SubStore 主程序使用 @key
-#!icon = https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/substore.png
+#!icon = https://raw.githubusercontent.com/yaney01/rule-1/main/tv/app/144px/substore.png
 
 # 关于： Sub Store https://github.com/Keywos/Sub-Store-PWA
 # 前端： V 2.14.6
@@ -27,9 +27,9 @@
  # 改进 Service Worker 通过将资源预缓存，更快、流畅地加载网络连接稳定或不可用时仍能够访问程序
  # 增加预览时候的 V2Ray 入口
  # 新增长按卡片拖动排序，前端需 v2.14.6+ 后端 v2.14.13+
-# 本地重命名：https://raw.githubusercontent.com/Keywos/rule/main/rename.js
-# Ping清除无效节点：https://raw.githubusercontent.com/Keywos/rule/main/pname.js
-# Api去重、查询ISP等：https://raw.githubusercontent.com/Keywos/rule/main/cname.js
+# 本地重命名：https://raw.githubusercontent.com/yaney01/rule-1/main/rename.js
+# Ping清除无效节点：https://raw.githubusercontent.com/yaney01/rule-1/main/pname.js
+# Api去重、查询ISP等：https://raw.githubusercontent.com/yaney01/rule-1/main/cname.js
 
 [Map Local]
 # HTML
