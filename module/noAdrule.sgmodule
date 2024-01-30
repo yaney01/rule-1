@@ -38,40 +38,40 @@ DOMAIN-KEYWORD,pangolin-sdk-toutiao,DIRECT
 
 [Map Local]
 # 中国移动开屏 client.app.coc.10086.cn
-^https?:\/\/client\.app\.coc\.10086\.cn\/biz-orange\/DN\/(explorePage\/getAdverList|init\/startInit) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks//reject-200.txt"
+^https?:\/\/client\.app\.coc\.10086\.cn\/biz-orange\/DN\/(explorePage\/getAdverList|init\/startInit) data="https://raw.githubusercontent.com/yaney01/rule-1/main/mocks//reject-200.txt"
 
 # 微信公众号底部 mp.weixin.qq.com
-^https?:\/\/mp\.weixin\.qq\.com\/mp\/getappmsgad data="https://raw.githubusercontent.com/Keywos/rule/main/mocks//WeChat.json"
+^https?:\/\/mp\.weixin\.qq\.com\/mp\/getappmsgad data="https://raw.githubusercontent.com/yaney01/rule-1/main/mocks//WeChat.json"
 
 # 网易邮箱大师开屏 appconf.mail.163.com
-^https?:\/\/appconf\.mail\.163\.com\/mmad\/ data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/reject-200.txt"
-^https?:\/\/mail\.163\.com\/smflow\/(config|get)\.do data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/reject-dict.json"
-^https?:\/\/iad\.g\.163\.com\/ma\/ad data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/reject-dict.json"
-^https:\/\/api-access\.pangolin-sdk-toutiao(\d|-\w)?\.com\/api\/ad\/union\/sdk\/get_ads data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/reject-dict.json"
+^https?:\/\/appconf\.mail\.163\.com\/mmad\/ data="https://raw.githubusercontent.com/yaney01/rule-1/main/mocks/reject-200.txt"
+^https?:\/\/mail\.163\.com\/smflow\/(config|get)\.do data="https://raw.githubusercontent.com/yaney01/rule-1/main/mocks/reject-dict.json"
+^https?:\/\/iad\.g\.163\.com\/ma\/ad data="https://raw.githubusercontent.com/yaney01/rule-1/main/mocks/reject-dict.json"
+^https:\/\/api-access\.pangolin-sdk-toutiao(\d|-\w)?\.com\/api\/ad\/union\/sdk\/get_ads data="https://raw.githubusercontent.com/yaney01/rule-1/main/mocks/reject-dict.json"
 
-^https?:\/\/mobads\.baidu\.com\/cpro\/ui\/mads\.php\? data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/reject-dict.json"
+^https?:\/\/mobads\.baidu\.com\/cpro\/ui\/mads\.php\? data="https://raw.githubusercontent.com/yaney01/rule-1/main/mocks/reject-dict.json"
 
-^https?:\/\/dsp-x\.jd\.com\/adx\/sdk data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/reject-dict.json"
+^https?:\/\/dsp-x\.jd\.com\/adx\/sdk data="https://raw.githubusercontent.com/yaney01/rule-1/main/mocks/reject-dict.json"
 
 # 招商银行开屏 webappcfg.paas.cmbchina.com
-^https?:\/\/webappcfg\.paas\.cmbchina\.com\/v\d\/func\/getmarketconfig data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/reject-dict.json"
+^https?:\/\/webappcfg\.paas\.cmbchina\.com\/v\d\/func\/getmarketconfig data="https://raw.githubusercontent.com/yaney01/rule-1/main/mocks/reject-dict.json"
 
 # 大师兄 sdk.alibaba.com.ailbaba.me
-^https?:\/\/sdk\.alibaba\.com\.ailbaba\.me\/(dsx|xgapp)\.php\/v\d\/(top_notice\?|app_config|search_hot|version|advert\?position=[^2]+) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/reject-dict.json"
+^https?:\/\/sdk\.alibaba\.com\.ailbaba\.me\/(dsx|xgapp)\.php\/v\d\/(top_notice\?|app_config|search_hot|version|advert\?position=[^2]+) data="https://raw.githubusercontent.com/yaney01/rule-1/main/mocks/reject-dict.json"
 
 # 米家
-^https?:\/\/home\.mi\.com\/cgi-op\/api\/v1\/recommendation\/(banner|carousel\/banners|myTab|openingBanner) data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/reject-dict.json"
+^https?:\/\/home\.mi\.com\/cgi-op\/api\/v1\/recommendation\/(banner|carousel\/banners|myTab|openingBanner) data="https://raw.githubusercontent.com/yaney01/rule-1/main/mocks/reject-dict.json"
 
 # 彩云赏花
-^https?:\/\/wrapper\.cyapi\.cn\/v1\/activity\? data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/caiyun.json"
-^https?:\/\/api\.caiyunapp\.com\/v1\/activity data="https://raw.githubusercontent.com/Keywos/rule/main/mocks/reject-dict.json"
+^https?:\/\/wrapper\.cyapi\.cn\/v1\/activity\? data="https://raw.githubusercontent.com/yaney01/rule-1/main/mocks/caiyun.json"
+^https?:\/\/api\.caiyunapp\.com\/v1\/activity data="https://raw.githubusercontent.com/yaney01/rule-1/main/mocks/reject-dict.json"
 
 [Script]
 # 穿山甲广告联盟 修改加密广告配置/阻止上传等 汽水音乐/酷安/网易邮箱等
-AD_SDKEY = type=http-response,pattern=^https:\/\/api-access\.pangolin-sdk-toutiao(\d|-\w)??\.com\/api\/ad\/union\/sdk\/settings,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/adsdk_chj.js
+AD_SDKEY = type=http-response,pattern=^https:\/\/api-access\.pangolin-sdk-toutiao(\d|-\w)??\.com\/api\/ad\/union\/sdk\/settings,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/yaney01/rule-1/main/JS/adsdk_chj.js
 
 # 爱思推广全部干掉只保留搜索 list-app-m.i4.cn, search-app-m.i4.cn
-爱思 = type=http-response,pattern=^https?:\/\/(search|list)-app-m\.i4\.cn\/(getHotSearchList|getAppList)\.xhtml,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/aisi.js
+爱思 = type=http-response,pattern=^https?:\/\/(search|list)-app-m\.i4\.cn\/(getHotSearchList|getAppList)\.xhtml,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/yaney01/rule-1/main/JS/aisi.js
 
 
 [MITM]
