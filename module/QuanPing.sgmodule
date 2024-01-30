@@ -9,7 +9,7 @@
 
 [Script]
 
-QuanPing = type=http-response,pattern=^https:\/\/(chat\.openai\.com\/$|www\.bing\.com(\/$|\/search)),requires-body=1,script-path=https://github.com/Keywos/rule/raw/main/JS/qp.js,max-size=0
+QuanPing = type=http-response,pattern=^https:\/\/(chat\.openai\.com\/$|www\.bing\.com(\/$|\/search)),requires-body=1,script-path=https://github.com/yaney01/rule-1/raw/main/JS/qp.js,max-size=0
 
 
 [MITM]
