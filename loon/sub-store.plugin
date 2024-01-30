@@ -3,7 +3,7 @@
 #!openUrl = https://sub.store
 #!author = Peng-YM
 #!homepage = https://github.com/Keywos/Sub-Store
-#!icon = https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/substore.png
+#!icon = https://raw.githubusercontent.com/yaney01/rule-1/main/tv/app/144px/substore.png
 #https://github.com/xream/Sub-Store/tree/feature/scriptResourceCache
 #!select = 节点缓存有效期,1分钟,5分钟,10分钟,30分钟,1小时,2小时,3小时,6小时,12小时,24小时,48小时,72小时,参数传入
 
@@ -15,5 +15,5 @@ DOMAIN, ip-api.com, PROXY
 hostname=sub.store
 
 [Script]
-http-request https?:\/\/sub\.store script-path=https://raw.githubusercontent.com/Keywos/rule/main/Sub-Store/sub-store.min.js, requires-body=true, timeout=120, tag=Sub-Store-Cache  
-cron "0 0 * * *" script-path=https://raw.githubusercontent.com/Keywos/rule/main/Sub-Store/cron-sync-artifacts.min.js, tag=Sub-Store Sync
+http-request https?:\/\/sub\.store script-path=https://raw.githubusercontent.com/yaney01/rule-1/main/Sub-Store/sub-store.min.js, requires-body=true, timeout=120, tag=Sub-Store-Cache  
+cron "0 0 * * *" script-path=https://raw.githubusercontent.com/yaney01/rule-1/main/Sub-Store/cron-sync-artifacts.min.js, tag=Sub-Store Sync
