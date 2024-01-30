@@ -13,9 +13,9 @@
 # 例如 https://raw.githubusercontent.com/RuCu6/QuanX/main/Rewrites/Cube/cloudmusic.snippetqx?n=Neteasename+descdate
 
 [Script]
-QxtoSurge = type=http-request,pattern=^https?:\/\/(github|raw\.githubusercontent)\.com\/.+(qx$|qx\?(jsc|hnadd|hndel|n|y|x|del|i)=),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/qs.js,script-update-interval=-1
+QxtoSurge = type=http-request,pattern=^https?:\/\/(github|raw\.githubusercontent)\.com\/.+(qx$|qx\?(jsc|hnadd|hndel|n|y|x|del|i)=),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/yaney01/rule-1/main/JS/qs.js,script-update-interval=-1
 
-LoontoSurge = type=http-request,pattern=^https?:\/\/(github|gitlab|raw\.githubusercontent)\.com\/.+pluginloon$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Keywos/rule/main/JS/Loon_to_Surge.js, timeout=120,script-update-interval=-1
+LoontoSurge = type=http-request,pattern=^https?:\/\/(github|gitlab|raw\.githubusercontent)\.com\/.+pluginloon$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/yaney01/rule-1/main/JS/Loon_to_Surge.js, timeout=120,script-update-interval=-1
 
 [MITM]
 hostname = %APPEND% github.com:443, raw.githubusercontent.com:443, gitlab.com
